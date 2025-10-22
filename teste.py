@@ -4,20 +4,23 @@ import mss
 import cv2
 import numpy as np
 import websockets
-from aiortc import RTCPeerConnection, RTCSessionDescription, VideoStreamTrack, RTCIceCandidate
+from aiortc import RTCPeerConnection, RTCSessionDescription, VideoStreamTrack
+from aiortc.sdp import candidate_from_sdp
 from av import VideoFrame
 
-
+# Track de vídeo que captura a tela continuamente, com cursor visível
 class ScreenCaptureTrack(VideoStreamTrack):
-    """Captura a tela inteira continuamente como um stream de vídeo."""
     def __init__(self):
         super().__init__()
         self.sct = mss.mss()
-        self.monitor = self.sct.monitors[1]  # monitor[0] é a tela toda (multi-monitor)
+        self.monitor = self.sct.monitors[1]  # monitor[0] é um pseudo-monitor com todos os monitores
+        self.width = self.monitor['width']
+        self.height = self.monitor['height']
 
     async def recv(self):
         pts, time_base = await self.next_timestamp()
 
+        # Captura a tela com cursor visível (mss por padrão captura cursor)
         img = np.array(self.sct.grab(self.monitor))
         img = cv2.cvtColor(img, cv2.COLOR_BGRA2BGR)
 
@@ -26,7 +29,7 @@ class ScreenCaptureTrack(VideoStreamTrack):
         frame.time_base = time_base
         return frame
 
-
+# Broadcaster WebRTC que se comunica via WebSocket
 class Broadcaster:
     def __init__(self, signaling_url):
         self.signaling_url = signaling_url
@@ -42,84 +45,65 @@ class Broadcaster:
                 data = json.loads(msg)
                 print("📩 Mensagem recebida:", data)
 
-                match data["type"]:
-                    case "new-viewer":
-                        await self._handle_new_viewer(data, socket)
+                if data["type"] == "new-viewer":
+                    viewer_id = data["viewerId"]
+                    print(f"👀 Novo viewer: {viewer_id}")
 
-                    case "answer":
-                        await self._handle_answer(data)
+                    pc = RTCPeerConnection()
+                    pc.addTrack(self.video_track)
 
-                    case "candidate":
-                        await self._handle_candidate(data)
+                    @pc.on("icecandidate")
+                    async def on_icecandidate(event):
+                        if event.candidate:
+                            candidate_data = {
+                                "candidate": event.candidate.candidate,
+                                "sdpMid": event.candidate.sdpMid,
+                                "sdpMLineIndex": event.candidate.sdpMLineIndex
+                            }
+                            await socket.send(json.dumps({
+                                "type": "candidate",
+                                "candidate": candidate_data,
+                                "targetId": viewer_id
+                            }))
+                            print(f"❄️ Enviando ICE para {viewer_id}")
 
-    async def _handle_new_viewer(self, data, socket):
-        viewer_id = data["viewerId"]
-        print(f"👀 Novo viewer: {viewer_id}")
+                    offer = await pc.createOffer()
+                    await pc.setLocalDescription(offer)
 
-        pc = RTCPeerConnection()
-        pc.addTrack(self.video_track)
+                    self.peers[viewer_id] = pc
 
-        @pc.on("icecandidate")
-        async def on_icecandidate(event):
-            if event.candidate:
-                await socket.send(json.dumps({
-                    "type": "candidate",
-                    "candidate": {
-                        "candidate": event.candidate.candidate,
-                        "sdpMid": event.candidate.sdpMid,
-                        "sdpMLineIndex": event.candidate.sdpMLineIndex
-                    },
-                    "targetId": viewer_id
-                }))
-                print(f"❄️ Enviando ICE para {viewer_id}")
+                    await socket.send(json.dumps({
+                        "type": "offer",
+                        "sdp": {
+                            "type": pc.localDescription.type,
+                            "sdp": pc.localDescription.sdp
+                        },
+                        "targetId": viewer_id
+                    }))
+                    print(f"📤 Offer enviado para {viewer_id}")
 
-        offer = await pc.createOffer()
-        await pc.setLocalDescription(offer)
+                elif data["type"] == "answer":
+                    viewer_id = data["senderId"]
+                    pc = self.peers.get(viewer_id)
+                    if pc:
+                        await pc.setRemoteDescription(
+                            RTCSessionDescription(sdp=data["sdp"]["sdp"], type=data["sdp"]["type"])
+                        )
+                        print(f"↩️ Answer aplicada de {viewer_id}")
 
-        self.peers[viewer_id] = pc
+                elif data["type"] == "candidate":
+                    viewer_id = data["senderId"]
+                    pc = self.peers.get(viewer_id)
+                    if pc:
+                        candidate_dict = data["candidate"]
+                        candidate = candidate_from_sdp(candidate_dict["candidate"])
+                        candidate.sdpMid = candidate_dict["sdpMid"]
+                        candidate.sdpMLineIndex = candidate_dict["sdpMLineIndex"]
 
-        await socket.send(json.dumps({
-            "type": "offer",
-            "sdp": {
-                "type": pc.localDescription.type,
-                "sdp": pc.localDescription.sdp
-            },
-            "targetId": viewer_id
-        }))
-        print(f"📤 Offer enviado para {viewer_id}")
-
-    async def _handle_answer(self, data):
-        viewer_id = data["senderId"]
-        pc = self.peers.get(viewer_id)
-
-        if pc:
-            await pc.setRemoteDescription(
-                RTCSessionDescription(sdp=data["sdp"]["sdp"], type=data["sdp"]["type"])
-            )
-            print(f"↩️ Answer aplicada de {viewer_id}")
-
-    async def _handle_candidate(self, data):
-        viewer_id = data["senderId"]
-        pc = self.peers.get(viewer_id)
-
-        if not pc:
-            print(f"⚠️ PeerConnection para {viewer_id} não encontrado.")
-            return
-
-        try:
-            candidate_dict = data["candidate"]
-            candidate = RTCIceCandidate(
-                candidate=candidate_dict["candidate"],
-                sdpMid=candidate_dict["sdpMid"],
-                sdpMLineIndex=candidate_dict["sdpMLineIndex"]
-            )
-            await pc.addIceCandidate(candidate)
-            print(f"📥 ICE Candidate adicionado de {viewer_id}")
-        except Exception as e:
-            print(f"❌ Erro ao adicionar ICE Candidate de {viewer_id}: {e}")
-
+                        await pc.addIceCandidate(candidate)
+                        print(f"📥 ICE Candidate adicionado de {viewer_id}")
 
 if __name__ == "__main__":
-    signaling_url = "ws://localhost:8080"
+    signaling_url = "ws://localhost:8080"  # Alterar para seu servidor de sinalização
     broadcaster = Broadcaster(signaling_url)
     asyncio.run(broadcaster.connect())
