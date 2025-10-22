@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Viewer</title>
+</head>
+<body>
+  <h2>👀 Assistindo a transmissão</h2>
+  <button id="startButton">▶️ Começar a assistir</button>
+  <video id="remoteVideo" autoplay playsinline style="width: 80%; border: 2px solid black;"></video>
+
+  <script>
+    const startButton = document.getElementById('startButton');
+    const remoteVideo = document.getElementById('remoteVideo');
+    let socket;
+    let peers = new Map();
+
+    // Só inicia a conexão WebRTC e WebSocket depois do clique
+    startButton.onclick = () => {
+      startButton.disabled = true;
+      startButton.textContent = 'Conectando...';
+
+      socket = new WebSocket(`ws://${location.host}`);
+
+      socket.onopen = () => {
+        console.log('WebSocket conectado');
+        socket.send(JSON.stringify({ type: 'viewer' }));
+      };
+
+      socket.onmessage = async (event) => {
+        const message = JSON.parse(event.data);
+
+        switch (message.type) {
+          case 'offer':
+            const pc = createPeerConnection(message.senderId);
+            peers.set(message.senderId, pc);
+
+            await pc.setRemoteDescription(new RTCSessionDescription(message.sdp));
+
+            const answer = await pc.createAnswer();
+            await pc.setLocalDescription(answer);
+
+            socket.send(JSON.stringify({
+              type: 'answer',
+              sdp: pc.localDescription,
+              targetId: message.senderId
+            }));
+
+            break;
+
+          case 'candidate':
+            const candidatePc = peers.get(message.senderId);
+            if (candidatePc) {
+              await candidatePc.addIceCandidate(new RTCIceCandidate(message.candidate));
+            }
+            break;
+
+          case 'broadcaster-left':
+            alert('❌ A transmissão acabou.');
+            remoteVideo.srcObject = null;
+            break;
+        }
+      };
+
+      startButton.style.display = 'none'; // esconde o botão após clicar
+    };
+
+    function createPeerConnection(id) {
+      const pc = new RTCPeerConnection({
+        iceServers: [{ urls: 'stun:stun.l.google.com:19302' }]
+      });
+
+      pc.onicecandidate = (event) => {
+        if (event.candidate) {
+          socket.send(JSON.stringify({
+            type: 'candidate',
+            candidate: event.candidate,
+            targetId: id
+          }));
+        }
+      };
+
+      pc.ontrack = (event) => {
+        console.log('Recebi stream:', event.streams);
+        if (remoteVideo.srcObject !== event.streams[0]) {
+          remoteVideo.srcObject = event.streams[0];
+          remoteVideo.play().catch(e => console.warn('Erro ao iniciar play:', e));
+        }
+      };
+
+      return pc;
+    }
+  </script>
+</body>
+</html>

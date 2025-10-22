@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Broadcaster</title>
+</head>
+<body>
+  <h2>📺 Transmitindo sua tela...</h2>
+  <video id="localVideo" autoplay muted playsinline style="width: 80%; border: 2px solid black;"></video>
+
+  <script>
+    const socket = new WebSocket(`ws://${location.host}`);
+    const peers = new Map();
+    let screenStream = null;
+
+    // Quando conectado ao servidor, se registra como broadcaster
+    socket.onopen = () => {
+      console.log('🔌 WebSocket conectado.');
+      socket.send(JSON.stringify({ type: 'broadcaster' }));
+    };
+
+    // Mensagens do servidor
+    socket.onmessage = async (event) => {
+      const message = JSON.parse(event.data);
+      console.log('📩 Broadcaster recebeu:', message);
+
+      switch (message.type) {
+        case 'new-viewer': {
+          const viewerId = message.viewerId;
+          console.log('👀 Novo viewer chegou:', viewerId);
+
+          if (!screenStream) {
+            console.log('🎥 Iniciando captura de tela...');
+            await startScreenCapture();
+            console.log('✅ Captura de tela iniciada.');
+          }
+
+          const pc = createPeerConnection(viewerId);
+          screenStream.getTracks().forEach(track => pc.addTrack(track, screenStream));
+
+          const offer = await pc.createOffer();
+          await pc.setLocalDescription(offer);
+
+          socket.send(JSON.stringify({
+            type: 'offer',
+            sdp: pc.localDescription,
+            targetId: viewerId
+          }));
+
+          console.log('📤 Offer enviada para viewer:', viewerId);
+          break;
+        }
+
+        case 'answer': {
+          const senderPc = peers.get(message.senderId);
+          if (senderPc) {
+            console.log('↩️ Answer recebida de:', message.senderId);
+            await senderPc.setRemoteDescription(new RTCSessionDescription(message.sdp));
+          }
+          break;
+        }
+
+        case 'candidate': {
+          const candidatePc = peers.get(message.senderId);
+          if (candidatePc) {
+            console.log('❄️ ICE Candidate recebido de:', message.senderId);
+            await candidatePc.addIceCandidate(new RTCIceCandidate(message.candidate));
+          }
+          break;
+        }
+      }
+    };
+
+    // Captura de tela do usuário
+    async function startScreenCapture() {
+      try {
+        screenStream = await navigator.mediaDevices.getDisplayMedia({
+          video: true,
+          audio: false
+        });
+        document.getElementById('localVideo').srcObject = screenStream;
+        console.log('🖥️ Stream da tela capturada com sucesso.');
+      } catch (err) {
+        alert('❌ Erro ao capturar a tela: ' + err.message);
+        console.error('Erro na captura:', err);
+      }
+    }
+
+    // Cria conexão WebRTC por viewer
+    function createPeerConnection(id) {
+      const pc = new RTCPeerConnection({
+        iceServers: [
+          { urls: 'stun:stun.l.google.com:19302' } // STUN público do Google
+        ]
+      });
+
+      pc.onicecandidate = (event) => {
+        if (event.candidate) {
+          socket.send(JSON.stringify({
+            type: 'candidate',
+            candidate: event.candidate,
+            targetId: id
+          }));
+          console.log('❄️ Enviando ICE Candidate para viewer:', id);
+        }
+      };
+
+      peers.set(id, pc);
+      return pc;
+    }
+  </script>
+</body>
+</html>
