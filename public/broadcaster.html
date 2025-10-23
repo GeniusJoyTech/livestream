@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <title>Broadcaster</title>
 </head>
+
 <body>
   <h2>📺 Transmitindo sua tela...</h2>
   <video id="localVideo" autoplay muted playsinline style="width: 80%; border: 2px solid black;"></video>
@@ -68,6 +70,16 @@
           }
           break;
         }
+        case 'watch':
+          // targetId = broadcaster escolhido
+          if (broadcasters.has(msg.targetId)) {
+            const broadcasterWs = broadcasters.get(msg.targetId);
+            if (broadcasterWs.readyState === WebSocket.OPEN) {
+              broadcasterWs.send(JSON.stringify({ type: 'new-viewer', viewerId: id }));
+            }
+          }
+          break;
+
       }
     };
 
@@ -110,4 +122,5 @@
     }
   </script>
 </body>
+
 </html>

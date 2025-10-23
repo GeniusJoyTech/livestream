@@ -104,6 +104,6 @@ class Broadcaster:
                         print(f"📥 ICE Candidate adicionado de {viewer_id}")
 
 if __name__ == "__main__":
-    signaling_url = "ws://localhost:8080"  # Alterar para seu servidor de sinalização
+    signaling_url = "ws://192.168.88.181:8080"  # Alterar para seu servidor de sinalização
     broadcaster = Broadcaster(signaling_url)
     asyncio.run(broadcaster.connect())
