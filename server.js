@@ -1,4 +1,3 @@
-// server.js
 const express = require('express');
 const http = require('http');
 const WebSocket = require('ws');
@@ -15,16 +14,13 @@ const PORT = 8080;
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Estruturas de dados
-// peers: Map<id, { ws, role }>
-const peers = new Map();
-
-// broadcasters: Map<broadcasterId, ws>
-const broadcasters = new Map();
+const peers = new Map();        // Map<id, { ws, role, monitor_number }>
+const broadcasters = new Map(); // Map<broadcasterId, { ws, monitor_number }>
 
 wss.on('connection', (ws) => {
   const id = uuidv4();
   ws.id = id;
-  peers.set(id, { ws, role: null });
+  peers.set(id, { ws, role: null, monitor_number: null });
 
   console.log(`🔗 Novo peer conectado: ${id}`);
 
@@ -44,8 +40,9 @@ wss.on('connection', (ws) => {
       // =======================
       case 'broadcaster':
         peers.get(id).role = 'broadcaster';
-        broadcasters.set(id, ws);
-        console.log(`✅ Broadcaster conectado: ${id}`);
+        peers.get(id).monitor_number = msg.monitor_number;
+        broadcasters.set(id, { ws, monitor_number: msg.monitor_number });
+        console.log(`✅ Broadcaster conectado: ${id} (Monitor: ${msg.monitor_number})`);
         break;
 
       // =======================
@@ -55,7 +52,6 @@ wss.on('connection', (ws) => {
         peers.get(id).role = 'viewer';
         console.log(`👀 Viewer conectado: ${id}`);
 
-        // enviar lista de broadcasters ativos
         const activeBroadcasters = [...broadcasters.keys()];
         ws.send(JSON.stringify({
           type: 'broadcaster-list',
@@ -64,16 +60,27 @@ wss.on('connection', (ws) => {
         break;
 
       // =======================
-      // Viewer escolhe broadcaster
+      // Viewer escolhe broadcaster e monitor
       // =======================
       case 'watch':
         const broadcasterId = msg.targetId;
+        const selectedMonitor = msg.monitor_number || 1;
+
         if (broadcasters.has(broadcasterId)) {
-          const broadcasterWs = broadcasters.get(broadcasterId);
+          const broadcasterWs = broadcasters.get(broadcasterId).ws;
+
           if (broadcasterWs.readyState === WebSocket.OPEN) {
+            // Envia notificação ao broadcaster sobre novo viewer e monitor escolhido
             broadcasterWs.send(JSON.stringify({
               type: 'new-viewer',
-              viewerId: id
+              viewerId: id,
+              monitor_number: selectedMonitor  // Passa o monitor escolhido pelo viewer
+            }));
+
+            // Envia confirmação ao viewer
+            ws.send(JSON.stringify({
+              type: 'viewer-joined',
+              monitor_number: selectedMonitor
             }));
           }
         }
@@ -140,7 +147,7 @@ wss.on('connection', (ws) => {
 
     if (peer.role === 'broadcaster') {
       broadcasters.delete(id);
-      // avisar viewers que esse broadcaster saiu
+      // Avisar viewers que broadcaster saiu
       for (const [vid, vpeer] of peers) {
         if (vpeer.role === 'viewer' && vpeer.ws.readyState === WebSocket.OPEN) {
           vpeer.ws.send(JSON.stringify({

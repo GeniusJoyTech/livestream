@@ -11,8 +11,17 @@
 
   <button id="connectButton">🔌 Conectar</button>
   <br><br>
+
   <label for="broadcasterSelect">Escolha um broadcaster:</label>
   <select id="broadcasterSelect"></select>
+  <br>
+
+  <label for="monitorSelect">Escolha um monitor:</label>
+  <select id="monitorSelect">
+    <option value="1">Monitor 1</option>
+    <option value="2">Monitor 2</option>
+  </select>
+
   <button id="watchButton">▶️ Assistir</button>
 
   <video id="remoteVideo" autoplay playsinline style="width: 80%; border: 2px solid black; margin-top:10px;"></video>
@@ -21,12 +30,14 @@
     const connectButton = document.getElementById('connectButton');
     const watchButton = document.getElementById('watchButton');
     const broadcasterSelect = document.getElementById('broadcasterSelect');
+    const monitorSelect = document.getElementById('monitorSelect');
     const remoteVideo = document.getElementById('remoteVideo');
 
     let socket;
     let peers = new Map();
     let selectedBroadcasterId = null;
-    let broadcasters = []; // lista atual de broadcasters
+    let selectedMonitorNumber = null;
+    let broadcasters = []; // Lista atual de broadcasters
 
     // ============================
     // Botão Conectar
@@ -35,12 +46,13 @@
       connectButton.disabled = true;
       connectButton.textContent = 'Conectando...';
 
+      // Conectar ao WebSocket do servidor de sinalização
       socket = new WebSocket(`ws://${location.host}`);
 
       socket.onopen = () => {
         console.log('WebSocket conectado');
         socket.send(JSON.stringify({ type: 'viewer' }));
-        connectButton.style.display = 'none';
+        connectButton.style.display = 'none';  // Esconde o botão após conectar
       };
 
       socket.onmessage = async (event) => {
@@ -48,10 +60,10 @@
 
         switch (message.type) {
 
-          // Lista inicial de broadcasters
+          // Lista de broadcasters disponíveis
           case 'broadcaster-list':
             broadcasters = message.broadcasters;
-            updateSelect();
+            updateSelect();  // Atualiza o select com os broadcasters disponíveis
             break;
 
           // Novo broadcaster entrou
@@ -68,21 +80,23 @@
             updateSelect();
 
             if (selectedBroadcasterId === message.broadcasterId) {
-              remoteVideo.srcObject = null;
+              remoteVideo.srcObject = null;  // Remove o vídeo do broadcaster que saiu
               selectedBroadcasterId = null;
+              selectedMonitorNumber = null;
               alert(`❌ O broadcaster ${message.broadcasterId} saiu.`);
             }
             break;
 
-          // Recebe offer do broadcaster
+          // Recebe oferta de WebRTC (SDP)
           case 'offer':
-            const pc = createPeerConnection(message.senderId);
+            const pc = createPeerConnection(message.senderId, message.monitor_number);
             peers.set(message.senderId, pc);
 
             await pc.setRemoteDescription(new RTCSessionDescription(message.sdp));
             const answer = await pc.createAnswer();
             await pc.setLocalDescription(answer);
 
+            // Envia a resposta de WebRTC (SDP)
             socket.send(JSON.stringify({
               type: 'answer',
               sdp: pc.localDescription,
@@ -90,7 +104,7 @@
             }));
             break;
 
-          // ICE Candidate
+          // ICE Candidate recebido
           case 'candidate':
             const candidatePc = peers.get(message.senderId);
             if (candidatePc) {
@@ -106,21 +120,27 @@
     // ============================
     watchButton.onclick = () => {
       selectedBroadcasterId = broadcasterSelect.value;
-      if (!selectedBroadcasterId || !socket || socket.readyState !== WebSocket.OPEN) return;
+      selectedMonitorNumber = monitorSelect.value;
 
-      console.log('Assistindo broadcaster:', selectedBroadcasterId);
+      if (!selectedBroadcasterId || !selectedMonitorNumber || !socket || socket.readyState !== WebSocket.OPEN) return;
 
+      console.log(`Assistindo broadcaster: ${selectedBroadcasterId} - Monitor: ${selectedMonitorNumber}`);
+
+      // Envia a mensagem para o servidor para assistir ao broadcaster escolhido
       socket.send(JSON.stringify({
         type: 'watch',
-        targetId: selectedBroadcasterId
+        targetId: selectedBroadcasterId,
+        monitor_number: selectedMonitorNumber
       }));
     };
 
     // ============================
-    // Atualiza select com a lista de broadcasters
+    // Atualiza o select com a lista de broadcasters
     // ============================
     function updateSelect() {
-      broadcasterSelect.innerHTML = '';
+      broadcasterSelect.innerHTML = '';  // Limpa as opções atuais
+
+      // Adiciona novos broadcasters ao select
       broadcasters.forEach(id => {
         const option = document.createElement('option');
         option.value = id;
@@ -130,9 +150,9 @@
     }
 
     // ============================
-    // Cria peer connection
+    // Cria uma conexão WebRTC
     // ============================
-    function createPeerConnection(id) {
+    function createPeerConnection(id, monitor_number) {
       const pc = new RTCPeerConnection({
         iceServers: [{ urls: 'stun:stun.l.google.com:19302' }]
       });
@@ -149,7 +169,7 @@
 
       pc.ontrack = (event) => {
         if (remoteVideo.srcObject !== event.streams[0]) {
-          remoteVideo.srcObject = event.streams[0];
+          remoteVideo.srcObject = event.streams[0];  // Exibe o stream no video element
           remoteVideo.play().catch(e => console.warn('Erro ao iniciar play:', e));
         }
       };
