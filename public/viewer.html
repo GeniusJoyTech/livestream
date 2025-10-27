@@ -3,31 +3,53 @@
 <head>
   <meta charset="UTF-8" />
   <title>Viewer Dinâmico</title>
+  <style>
+    #remoteVideo {
+      width: 80%;
+      border: 2px solid black;
+      margin-top: 10px;
+      position: relative;
+    }
+
+    .controls {
+      margin-top: 10px;
+    }
+  </style>
 </head>
 
 <body>
   <h2>👀 Assistindo a transmissão</h2>
 
-  <button id="connectButton">🔌 Conectar</button>
-  <br><br>
+  <div class="controls">
+    <button id="connectButton">🔌 Conectar</button>
+    <button id="disconnectButton" disabled>❌ Desconectar</button>
+    <button id="reconnectButton" disabled>🔄 Reconectar</button>
+    </div>
 
   <label for="broadcasterSelect">Escolha um broadcaster:</label>
   <select id="broadcasterSelect"></select>
   <br>
-
   <label for="monitorSelect">Escolha um monitor:</label>
   <select id="monitorSelect">
     <option value="1">Monitor 1</option>
     <option value="2">Monitor 2</option>
   </select>
+ <div id="controls">
+    <button id="watchButton">▶️ Assistir</button>
+    <button id="fullscreenButton">🖵 Tela cheia</button>
+  </div>
 
-  <button id="watchButton">▶️ Assistir</button>
-
-  <video id="remoteVideo" autoplay playsinline style="width: 80%; border: 2px solid black; margin-top:10px;"></video>
+  <div style="position: relative; display: inline-block;">
+    <video id="remoteVideo" autoplay playsinline></video>
+  </div>
 
   <script>
     const connectButton = document.getElementById('connectButton');
     const watchButton = document.getElementById('watchButton');
+    const disconnectButton = document.getElementById('disconnectButton');
+    const reconnectButton = document.getElementById('reconnectButton');
+    const fullscreenButton = document.getElementById('fullscreenButton');
+
     const broadcasterSelect = document.getElementById('broadcasterSelect');
     const monitorSelect = document.getElementById('monitorSelect');
     const remoteVideo = document.getElementById('remoteVideo');
@@ -36,12 +58,12 @@
     let peers = new Map();
     let selectedBroadcasterId = null;
     let selectedMonitorNumber = null;
-    let broadcasters = []; // [{ id, name }]
+    let broadcasters = [];
 
     // ============================
-    // Botão Conectar
+    // Conectar WebSocket
     // ============================
-    connectButton.onclick = () => {
+    async function connect() {
       connectButton.disabled = true;
       connectButton.textContent = 'Conectando...';
 
@@ -51,35 +73,26 @@
         console.log('WebSocket conectado');
         socket.send(JSON.stringify({ type: 'viewer' }));
         connectButton.style.display = 'none';
+        disconnectButton.disabled = false;
+        reconnectButton.disabled = true;
       };
 
       socket.onmessage = async (event) => {
         const message = JSON.parse(event.data);
-
         switch (message.type) {
-
-          // Lista inicial de broadcasters
           case 'broadcaster-list':
             broadcasters = message.broadcasters || [];
             updateSelect();
             break;
-
-          // Novo broadcaster entrou
           case 'new-broadcaster':
             if (!broadcasters.some(b => b.id === message.broadcasterId)) {
-              broadcasters.push({
-                id: message.broadcasterId,
-                name: message.broadcaster_name || `Broadcaster ${message.broadcasterId.slice(0, 6)}`
-              });
+              broadcasters.push({ id: message.broadcasterId, name: message.broadcaster_name || `Broadcaster ${message.broadcasterId.slice(0,6)}` });
               updateSelect();
             }
             break;
-
-          // Broadcaster saiu
           case 'broadcaster-left':
             broadcasters = broadcasters.filter(b => b.id !== message.broadcasterId);
             updateSelect();
-
             if (selectedBroadcasterId === message.broadcasterId) {
               remoteVideo.srcObject = null;
               alert(`❌ O broadcaster saiu.`);
@@ -87,44 +100,37 @@
               selectedMonitorNumber = null;
             }
             break;
-
-          // Recebe oferta WebRTC
           case 'offer':
             const pc = createPeerConnection(message.senderId, message.monitor_number);
             peers.set(message.senderId, pc);
-
             await pc.setRemoteDescription(new RTCSessionDescription(message.sdp));
             const answer = await pc.createAnswer();
             await pc.setLocalDescription(answer);
-
-            socket.send(JSON.stringify({
-              type: 'answer',
-              sdp: pc.localDescription,
-              targetId: message.senderId
-            }));
+            socket.send(JSON.stringify({ type: 'answer', sdp: pc.localDescription, targetId: message.senderId }));
             break;
-
-          // Recebe candidato ICE
           case 'candidate':
             const candidatePc = peers.get(message.senderId);
-            if (candidatePc) {
-              await candidatePc.addIceCandidate(new RTCIceCandidate(message.candidate));
-            }
+            if (candidatePc) await candidatePc.addIceCandidate(new RTCIceCandidate(message.candidate));
             break;
         }
       };
-    };
+
+      socket.onclose = () => {
+        console.log('WebSocket desconectado');
+        disconnectButton.disabled = true;
+        reconnectButton.disabled = false;
+      };
+    }
+
+    connectButton.onclick = connect;
 
     // ============================
-    // Botão Assistir
+    // Assistir
     // ============================
     watchButton.onclick = () => {
       selectedBroadcasterId = broadcasterSelect.value;
       selectedMonitorNumber = monitorSelect.value;
-
       if (!selectedBroadcasterId || !selectedMonitorNumber || !socket || socket.readyState !== WebSocket.OPEN) return;
-
-      console.log(`Assistindo broadcaster: ${selectedBroadcasterId} - Monitor: ${selectedMonitorNumber}`);
 
       socket.send(JSON.stringify({
         type: 'watch',
@@ -134,11 +140,38 @@
     };
 
     // ============================
-    // Atualiza o select de broadcasters
+    // Desconectar
+    // ============================
+    disconnectButton.onclick = () => {
+      peers.forEach(pc => pc.close());
+      peers.clear();
+      if (socket) socket.close();
+      remoteVideo.srcObject = null;
+      disconnectButton.disabled = true;
+      reconnectButton.disabled = false;
+      console.log('Desconectado');
+    };
+
+    // ============================
+    // Reconectar
+    // ============================
+    reconnectButton.onclick = () => {
+      connect();
+    };
+
+    // ============================
+    // Tela cheia
+    // ============================
+    fullscreenButton.onclick = () => {
+      if (remoteVideo.requestFullscreen) remoteVideo.requestFullscreen();
+      else if (remoteVideo.webkitRequestFullscreen) remoteVideo.webkitRequestFullscreen();
+    };
+
+    // ============================
+    // Atualiza select de broadcasters
     // ============================
     function updateSelect() {
       broadcasterSelect.innerHTML = '';
-
       if (broadcasters.length === 0) {
         const opt = document.createElement('option');
         opt.textContent = 'Nenhum broadcaster disponível';
@@ -146,30 +179,23 @@
         broadcasterSelect.appendChild(opt);
         return;
       }
-
       broadcasters.forEach(b => {
         const option = document.createElement('option');
         option.value = b.id;
-        option.textContent = `${b.name}`;
+        option.textContent = b.name;
         broadcasterSelect.appendChild(option);
       });
     }
 
     // ============================
-    // Cria uma conexão WebRTC
+    // Cria conexão WebRTC
     // ============================
     function createPeerConnection(id, monitor_number) {
-      const pc = new RTCPeerConnection({
-        iceServers: [{ urls: 'stun:stun.l.google.com:19302' }]
-      });
+      const pc = new RTCPeerConnection({ iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] });
 
       pc.onicecandidate = (event) => {
         if (event.candidate && socket.readyState === WebSocket.OPEN) {
-          socket.send(JSON.stringify({
-            type: 'candidate',
-            candidate: event.candidate,
-            targetId: id
-          }));
+          socket.send(JSON.stringify({ type: 'candidate', candidate: event.candidate, targetId: id }));
         }
       };
 

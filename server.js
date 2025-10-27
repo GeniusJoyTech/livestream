@@ -50,7 +50,7 @@ wss.on("connection", (ws) => {
           name: msg.broadcaster_name || `Broadcaster ${id.slice(0, 6)}`,
         });
 
-        console.log(`✅ Broadcaster conectado: ${peers.get(id).name} (Monitor ${msg.monitor_number})`);
+        console.log(`✅ Broadcaster conectado: ${peers.get(id).name} (Monitor ${msg.monitor_number}) `, new Date(Date.now()).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'medium' }));
 
         // Notifica todos os viewers sobre o novo broadcaster
         for (const [vid, vpeer] of peers) {
@@ -71,7 +71,7 @@ wss.on("connection", (ws) => {
       // =======================
       case "viewer":
         peers.get(id).role = "viewer";
-        console.log(`👀 Viewer conectado: ${id}`);
+        console.log(`👀 Viewer conectado: ${id} `, new Date(Date.now()).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'medium' }));
 
         // Envia lista de broadcasters ativos com nomes
         const activeBroadcasters = [...broadcasters.entries()].map(([bid, bdata]) => ({
@@ -86,7 +86,6 @@ wss.on("connection", (ws) => {
           })
         );
         break;
-
       // =======================
       // 🧭 Viewer escolhe broadcaster e monitor
       // =======================
@@ -119,7 +118,6 @@ wss.on("connection", (ws) => {
           }
         }
         break;
-
       // =======================
       // 🔄 WebRTC Offer
       // =======================
@@ -137,7 +135,6 @@ wss.on("connection", (ws) => {
           }
         }
         break;
-
       // =======================
       // 🔁 WebRTC Answer
       // =======================
@@ -155,7 +152,6 @@ wss.on("connection", (ws) => {
           }
         }
         break;
-
       // =======================
       // ❄️ ICE Candidate
       // =======================
@@ -175,7 +171,6 @@ wss.on("connection", (ws) => {
         break;
     }
   });
-
   // =======================
   // ❌ Peer desconectado
   // =======================
@@ -183,7 +178,7 @@ wss.on("connection", (ws) => {
     const peer = peers.get(id);
     if (!peer) return;
 
-    console.log(`❌ Peer desconectado: ${id} (${peer.role})`);
+    console.log(`❌ Peer desconectado: ${id} (${peer.role}) `, new Date(Date.now()).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'medium' }));
 
     if (peer.role === "broadcaster") {
       broadcasters.delete(id);
