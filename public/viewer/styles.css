@@ -1,0 +1,68 @@
+/* Estilo global */
+body {
+  background: #101010;
+  color: #f0f0f0;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+/* Estilo do vídeo */
+video {
+  width: 90%;
+  max-width: 1280px;
+  margin-top: 15px;
+  border-radius: 8px;
+  background: #000;
+  border: 2px solid #333;
+  box-shadow: 0 0 10px rgba(0,0,0,0.6);
+}
+
+/* Estilo dos controles */
+.controls {
+  margin-top: 15px;
+}
+
+select, button {
+  margin: 5px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: none;
+  font-size: 15px;
+}
+
+button {
+  cursor: pointer;
+  background: #1e90ff;
+  color: white;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background: #0074e4;
+}
+
+button:disabled {
+  background: #444;
+  cursor: not-allowed;
+}
+
+/* Estilo da status */
+.status {
+  margin-top: 12px;
+  color: #0f0;
+}
+
+/* Estilo das estatísticas */
+.stats {
+  margin-top: 15px;
+  background: rgba(255,255,255,0.1);
+  padding: 10px;
+  border-radius: 8px;
+  display: inline-block;
+  text-align: left;
+  min-width: 250px;
+  font-size: 14px;
+  line-height: 1.5;
+}

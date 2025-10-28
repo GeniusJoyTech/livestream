@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Viewer Dinâmico</title>
+  <!-- Importando o estilo externo -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <h2>👀 Viewer de Transmissão WebRTC</h2>
+
+  <div class="controls">
+    <button id="connectButton">🔌 Conectar</button>
+    <button id="disconnectButton" disabled>❌ Desconectar</button>
+    <button id="reconnectButton" disabled>🔄 Reconectar</button>
+  </div>
+
+  <div class="controls">
+    <label for="broadcasterSelect">Broadcaster:</label>
+    <select id="broadcasterSelect"></select>
+
+    <label for="monitorSelect">Monitor:</label>
+    <select id="monitorSelect">
+      <option value="1">Monitor 1</option>
+      <option value="2">Monitor 2</option>
+    </select>
+
+    <button id="watchButton">▶️ Assistir</button>
+    <button id="fullscreenButton">🖵 Tela Cheia</button>
+  </div>
+
+  <div class="status" id="status">Aguardando a conexão...</div>
+  <div class="stats" id="stats">📊 Nenhuma estatística disponível.</div>
+
+  <video id="remoteVideo" autoplay playsinline></video>
+
+  <!-- Importando o script externo -->
+  <script src="viewer.js"></script>
+</body>
+</html>

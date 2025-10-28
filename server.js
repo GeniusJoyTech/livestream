@@ -11,7 +11,12 @@ const wss = new WebSocket.Server({ server });
 const PORT = 8080;
 
 // Servir arquivos estáticos (ex: viewer.html)
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "./public/viewer")));
+
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, './public/viewer', 'viewer.html'));
+});
 
 // Estruturas de dados
 // peers: Map<id, { ws, role, monitor_number, name }>
