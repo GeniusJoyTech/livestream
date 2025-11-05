@@ -7,6 +7,8 @@ import websockets
 from aiortc import RTCPeerConnection, RTCSessionDescription, VideoStreamTrack
 from aiortc.sdp import candidate_from_sdp
 from av import VideoFrame
+import platform
+nome_computador = platform.node()
 
 class ScreenCaptureTrack(VideoStreamTrack):
     def __init__(self, monitor_number=1, fps=30):
@@ -168,8 +170,8 @@ class Broadcaster:
         print("🧹 Broadcaster encerrado e conexões limpas.")
 
 if __name__ == "__main__":
-    signaling_url = "ws://192.168.88.181:8080"  # ajuste para seu servidor
-    broadcaster = Broadcaster(signaling_url, broadcaster_name="Gabriel")
+    signaling_url = "ws://192.168.88.121:8080"  # ajuste para seu servidor
+    broadcaster = Broadcaster(signaling_url, broadcaster_name=nome_computador)
     try:
         asyncio.run(broadcaster.connect())
     except KeyboardInterrupt:
