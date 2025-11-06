@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  
   <h2>👀 Viewer de Transmissão WebRTC</h2>
 
   <div class="controls">
@@ -34,8 +35,11 @@
   <div class="stats" id="stats">📊 Nenhuma estatística disponível.</div>
 
   <video id="remoteVideo" autoplay playsinline></video>
-
+<div class="controls">
+  <button id="logoutButton" disabled>🚪 Logout</button>
+</div>
   <!-- Importando o script externo -->
   <script src="viewer.js"></script>
+  <script src="login.js"></script>
 </body>
 </html>
