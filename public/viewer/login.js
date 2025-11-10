@@ -28,3 +28,35 @@ async function connect() {
   };
 
 }
+const logoutButton = document.getElementById("logoutButton");
+
+logoutButton.addEventListener("click", () => {
+  // Remove o token do localStorage
+  localStorage.removeItem("token");
+
+  // Opcional: desabilita botões e limpa a interface
+  logoutButton.disabled = true;
+  document.getElementById("status").textContent = "Desconectado.";
+  document.getElementById("remoteVideo").srcObject = null;
+
+  // Redireciona para a página de login
+  window.location.href = "/login/login.html";
+});
+document.addEventListener("DOMContentLoaded", () => {
+  const logoutButton = document.getElementById("logoutButton");
+
+  // Verifica se o token existe; se não, redireciona para login
+  const token = localStorage.getItem("token");
+  if (!token) {
+    window.location.href = "/login/login.html";
+  } else {
+    logoutButton.disabled = false;
+  }
+
+  logoutButton.addEventListener("click", () => {
+    // Remove o token e redireciona
+    localStorage.removeItem("token");
+    logoutButton.disabled = true;
+    window.location.href = "/login/login.html";
+  });
+});

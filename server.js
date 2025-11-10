@@ -2,9 +2,10 @@ require("dotenv").config();
 const express = require("express");
 const http = require("http");
 const path = require("path");
-const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const { setupWebSocket } = require("./setupWebSocket");
+const { generateToken } = require("./jwt/jwtUtils");
+const { authenticateToken } = require("./jwt/authMiddleware");
 
 const app = express();
 const server = http.createServer(app);
@@ -23,41 +24,14 @@ app.use("/login", express.static(path.join(__dirname, "./public/login")));
 
 // ===========================
 // Mock de usuários
-// Em produção, substitua por DB
 // ===========================
 const users = [
   {
     id: 1,
     username: "admin",
-    passwordHash: bcrypt.hashSync("123456", 10), // senha: 123456
+    passwordHash: bcrypt.hashSync("123456", 10),
   },
 ];
-
-// ===========================
-// Gerar Token JWT
-// ===========================
-function generateToken(user) {
-  return jwt.sign(
-    { id: user.id, username: user.username },
-    process.env.JWT_SECRET,
-    { expiresIn: "2h" }
-  );
-}
-
-// ===========================
-// Middleware de autenticação
-// ===========================
-function authenticateToken(req, res, next) {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
-  if (!token) return res.status(401).json({ error: "Token ausente" });
-
-  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-    if (err) return res.status(403).json({ error: "Token inválido" });
-    req.user = user;
-    next();
-  });
-}
 
 // ===========================
 // Rotas HTTP
@@ -81,7 +55,7 @@ app.post("/login", async (req, res) => {
   res.json({ message: "Login bem-sucedido", token });
 });
 
-// Exemplo de rota protegida
+// Rota protegida
 app.get("/protected", authenticateToken, (req, res) => {
   res.json({ message: `Olá, ${req.user.username}! Você está autenticado.` });
 });
