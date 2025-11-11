@@ -172,7 +172,7 @@ class Broadcaster:
         print("🧹 Broadcaster encerrado e conexões limpas.")
 
 if __name__ == "__main__":
-    signaling_url = "ws://192.168.88.181:8080"  # ajuste para seu servidor
+    signaling_url = "ws://192.168.88.181:8080?role=broadcaster"  # agora com o papel na URL
     company_id = "1"
     broadcaster = Broadcaster(signaling_url, broadcaster_name=nome_computador, company_id=company_id)
     try:

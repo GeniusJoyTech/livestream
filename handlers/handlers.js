@@ -33,13 +33,14 @@ function registerBroadcaster(ws, id, msg, peers, broadcasters) {//egistra um usu
     }
 }
 function registerViewer(ws, id, peers, broadcasters) {//Registra um usuário como viewer (quem assiste à transmissão).
+    
     const peer = peers.get(id);
     peer.role = "viewer";
     const activeBroadcasters = [...broadcasters.entries()]
-        .filter(([bid, bdata]) => bdata.company_id === "1")
+        // .filter(([bid, bdata]) => bdata.company_id === "1")
         .map(([bid, bdata]) => {
             const obj = { id: bid, name: bdata.name, company_id: bdata.company_id };
-            // console.log("Itens filtrados: ", obj); // loga cada um encontrado
+            console.log("Itens filtrados: ", obj); // loga cada um encontrado
             return obj;
         })
         .sort((a, b) => a.name.localeCompare(b.name)); // ordena alfabeticamente pelo name

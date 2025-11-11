@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const remoteVideo = document.getElementById('remoteVideo');
   const statusDiv = document.getElementById('status');
   const statsDiv = document.getElementById('stats');
+  const logoutButton = document.getElementById('logoutButton');
 
   let socket;
   let peers = new Map();
@@ -17,26 +18,119 @@ document.addEventListener("DOMContentLoaded", () => {
   let broadcasters = [];
   let statsInterval = null;
 
-  // Função para atualizar o status na interface
+  // ===========================
+  // Verificação do token
+  // ===========================
+  const token = localStorage.getItem("token");
+  if (!token) {
+    alert("⚠️ Você precisa estar logado!");
+    window.location.href = "/login/login.html";
+    return;
+  } else {
+    logoutButton.disabled = false;
+  }
+
+  logoutButton.addEventListener("click", () => {
+    localStorage.removeItem("token");
+    logoutButton.disabled = true;
+    remoteVideo.srcObject = null;
+    setStatus("🔴 Desconectado", "#f00");
+    if (socket) socket.close();
+    window.location.href = "/login/login.html";
+  });
+
+  // ===========================
+  // Função para atualizar status
+  // ===========================
   function setStatus(msg, color = "#0f0") {
     statusDiv.style.color = color;
     statusDiv.textContent = msg;
   }
 
   // ===========================
-  // Conexão WebSocket
+  // Atualizar lista de broadcasters
+  // ===========================
+  function updateSelect() {
+    broadcasterSelect.innerHTML = '';
+    if (broadcasters.length === 0) {
+      const opt = document.createElement('option');
+      opt.textContent = 'Nenhum broadcaster disponível';
+      opt.disabled = true;
+      broadcasterSelect.appendChild(opt);
+      return;
+    }
+    broadcasters.forEach(b => {
+      const opt = document.createElement('option');
+      opt.value = b.id;
+      opt.textContent = b.name;
+      broadcasterSelect.appendChild(opt);
+    });
+  }
+
+  // ===========================
+  // Criar conexão WebRTC
+  // ===========================
+  function createPeerConnection(id, monitor_number) {
+    const pc = new RTCPeerConnection({ iceServers: [{ urls: "stun:stun.l.google.com:19302" }] });
+
+    pc.onicecandidate = (event) => {
+      if (event.candidate && socket.readyState === WebSocket.OPEN) {
+        socket.send(JSON.stringify({ type: "candidate", candidate: event.candidate, targetId: id }));
+      }
+    };
+
+    pc.ontrack = (event) => {
+      if (remoteVideo.srcObject !== event.streams[0]) {
+        remoteVideo.srcObject = event.streams[0];
+        remoteVideo.play().catch(err => console.warn("Erro ao iniciar vídeo:", err));
+        setStatus("🎥 Recebendo vídeo...", "#0f0");
+        startStats(pc);
+      }
+    };
+
+    return pc;
+  }
+
+  // ===========================
+  // Estatísticas
+  // ===========================
+  function startStats(pc) {
+    clearInterval(statsInterval);
+    statsInterval = setInterval(async () => {
+      const stats = await pc.getStats();
+      let info = "";
+      stats.forEach(report => {
+        if (report.type === "inbound-rtp" && report.kind === "video") {
+          info += `🧩 <b>Codec:</b> ${report.codecId || "?"}<br>`;
+          info += `📦 <b>Pacotes:</b> ${report.packetsReceived}<br>`;
+          info += `📊 <b>Bitrate:</b> ${(report.bytesReceived/1024).toFixed(1)} KB<br>`;
+          info += `🎞️ <b>Frames:</b> ${report.framesDecoded || "?"}<br>`;
+          info += `⚡ <b>FPS:</b> ${report.framesPerSecond || "?"}<br>`;
+        }
+        if (report.type === "track" && report.frameWidth) {
+          info += `🖥️ <b>Resolução:</b> ${report.frameWidth}x${report.frameHeight}<br>`;
+        }
+        if (report.type === "codec" && report.mimeType) {
+          info += `🎬 <b>Formato:</b> ${report.mimeType}<br>`;
+        }
+      });
+      statsDiv.innerHTML = info || "📊 Nenhuma estatística disponível.";
+    }, 1500);
+  }
+
+  // ===========================
+  // Conectar WebSocket
   // ===========================
   async function connect() {
     setStatus("🔌 Conectando ao servidor...", "#ff0");
     connectButton.disabled = true;
     connectButton.textContent = "Conectando...";
 
-    socket = new WebSocket(`ws://${location.host}`);
+    socket = new WebSocket(`ws://${location.host}?role=viewer&token=${token}`);
 
     socket.onopen = () => {
       console.log("✅ WebSocket conectado");
       setStatus("✅ Conectado ao servidor de sinalização", "#0f0");
-      socket.send(JSON.stringify({ type: "viewer" }));
       connectButton.style.display = "none";
       disconnectButton.disabled = false;
       reconnectButton.disabled = true;
@@ -96,26 +190,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   connectButton.onclick = connect;
 
-  // ===========================
-  // Assistir ao Broadcast
-  // ===========================
-  watchButton.onclick = () => {
-    selectedBroadcasterId = broadcasterSelect.value;
-    selectedMonitorNumber = monitorSelect.value;
-    if (!selectedBroadcasterId || !socket || socket.readyState !== WebSocket.OPEN) return;
-
-    setStatus("🎬 Solicitando transmissão...", "#ff0");
-
-    socket.send(JSON.stringify({
-      type: "watch",
-      targetId: selectedBroadcasterId,
-      monitor_number: selectedMonitorNumber
-    }));
-  };
-
-  // ===========================
-  // Desconectar
-  // ===========================
   disconnectButton.onclick = () => {
     peers.forEach(pc => pc.close());
     peers.clear();
@@ -130,143 +204,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
   reconnectButton.onclick = connect;
 
-  // ===========================
-  // Tela Cheia
-  // ===========================
+  watchButton.onclick = () => {
+    selectedBroadcasterId = broadcasterSelect.value;
+    selectedMonitorNumber = monitorSelect.value;
+    if (!selectedBroadcasterId || !socket || socket.readyState !== WebSocket.OPEN) return;
+
+    setStatus("🎬 Solicitando transmissão...", "#ff0");
+
+    socket.send(JSON.stringify({
+      type: "watch",
+      targetId: selectedBroadcasterId,
+      monitor_number: selectedMonitorNumber
+    }));
+  };
+
   fullscreenButton.onclick = () => {
     if (remoteVideo.requestFullscreen) remoteVideo.requestFullscreen();
   };
-
-  // ===========================
-  // Atualizar a lista de broadcasters
-  // ===========================
-  function updateSelect() {
-    broadcasterSelect.innerHTML = '';
-    if (broadcasters.length === 0) {
-      const opt = document.createElement('option');
-      opt.textContent = 'Nenhum broadcaster disponível';
-      opt.disabled = true;
-      broadcasterSelect.appendChild(opt);
-      return;
-    }
-    broadcasters.forEach(b => {
-      const opt = document.createElement('option');
-      opt.value = b.id;
-      opt.textContent = b.name;
-      broadcasterSelect.appendChild(opt);
-    });
-  }
-
-  // ===========================
-  // Criar uma conexão WebRTC
-  // ===========================
-  function createPeerConnection(id, monitor_number) {
-    const pc = new RTCPeerConnection({ iceServers: [{ urls: "stun:stun.l.google.com:19302" }] });
-
-    pc.onicecandidate = (event) => {
-      if (event.candidate && socket.readyState === WebSocket.OPEN) {
-        socket.send(JSON.stringify({ type: "candidate", candidate: event.candidate, targetId: id }));
-      }
-    };
-
-    pc.ontrack = (event) => {
-      if (remoteVideo.srcObject !== event.streams[0]) {
-        remoteVideo.srcObject = event.streams[0];
-        remoteVideo.play().catch(err => console.warn("Erro ao iniciar vídeo:", err));
-        setStatus("🎥 Recebendo vídeo...", "#0f0");
-        startStats(pc);
-      }
-    };
-
-    return pc;
-  }
-
-  // ===========================
-  // Estatísticas em tempo real
-  // ===========================
-  function startStats(pc) {
-    clearInterval(statsInterval);
-    statsInterval = setInterval(async () => {
-      const stats = await pc.getStats();
-      let info = "";
-      stats.forEach(report => {
-        if (report.type === "inbound-rtp" && report.kind === "video") {
-          info += `🧩 <b>Codec:</b> ${report.codecId || "?"}<br>`;
-          info += `📦 <b>Pacotes:</b> ${report.packetsReceived}<br>`;
-          info += `📊 <b>Bitrate:</b> ${(report.bytesReceived/1024).toFixed(1)} KB<br>`;
-          info += `🎞️ <b>Frames:</b> ${report.framesDecoded || "?"}<br>`;
-          info += `⚡ <b>FPS:</b> ${report.framesPerSecond || "?"}<br>`;
-        }
-        if (report.type === "track" && report.frameWidth) {
-          info += `🖥️ <b>Resolução:</b> ${report.frameWidth}x${report.frameHeight}<br>`;
-        }
-        if (report.type === "codec" && report.mimeType) {
-          info += `🎬 <b>Formato:</b> ${report.mimeType}<br>`;
-        }
-      });
-      statsDiv.innerHTML = info || "📊 Nenhuma estatística disponível.";
-    }, 1500);
-  }
-});
-// ===========================
-// Verificar token JWT
-// ===========================
-const token = localStorage.getItem("token");
-if (!token) {
-  alert("⚠️ Você precisa estar logado!");
-  window.location.href = "/login/login.html";
-}
-
-// ===========================
-// Conectar ao WebSocket
-// ===========================
-async function connect() {
-  setStatus("🔌 Conectando ao servidor...", "#ff0");
-  connectButton.disabled = true;
-  connectButton.textContent = "Conectando...";
-
-  // Enviar token na query string
-  socket = new WebSocket(`ws://${location.host}?token=${token}`);
-
-  socket.onopen = () => {
-    console.log("✅ WebSocket conectado");
-    setStatus("✅ Conectado ao servidor de sinalização", "#0f0");
-    socket.send(JSON.stringify({ type: "viewer" }));
-    connectButton.style.display = "none";
-    disconnectButton.disabled = false;
-    reconnectButton.disabled = true;
-  };
-
-}
-const logoutButton = document.getElementById("logoutButton");
-
-logoutButton.addEventListener("click", () => {
-  // Remove o token do localStorage
-  localStorage.removeItem("token");
-
-  // Opcional: desabilita botões e limpa a interface
-  logoutButton.disabled = true;
-  document.getElementById("status").textContent = "Desconectado.";
-  document.getElementById("remoteVideo").srcObject = null;
-
-  // Redireciona para a página de login
-  window.location.href = "/login/login.html";
-});
-document.addEventListener("DOMContentLoaded", () => {
-  const logoutButton = document.getElementById("logoutButton");
-
-  // Verifica se o token existe; se não, redireciona para login
-  const token = localStorage.getItem("token");
-  if (!token) {
-    window.location.href = "/login/login.html";
-  } else {
-    logoutButton.disabled = false;
-  }
-
-  logoutButton.addEventListener("click", () => {
-    // Remove o token e redireciona
-    localStorage.removeItem("token");
-    logoutButton.disabled = true;
-    window.location.href = "/login/login.html";
-  });
 });
