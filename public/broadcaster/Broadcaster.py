@@ -36,9 +36,10 @@ class ScreenCaptureTrack(VideoStreamTrack):
         return frame
 
 class Broadcaster:
-    def __init__(self, signaling_url, broadcaster_name="Broadcast Padrão"):
+    def __init__(self, signaling_url, broadcaster_name="Broadcast Padrão", company_id="0"):
         self.signaling_url = signaling_url
         self.broadcaster_name = broadcaster_name
+        self.company_id = company_id
         self.peers = {}  # viewer_id -> RTCPeerConnection
         self.should_reconnect = True
 
@@ -55,7 +56,8 @@ class Broadcaster:
                     await socket.send(json.dumps({
                         "type": "broadcaster",
                         "monitor_number": 1,
-                        "broadcaster_name": self.broadcaster_name
+                        "broadcaster_name": self.broadcaster_name,
+                        "company_id": self.company_id
                     }))
                     print(f"📡 Registrado como: {self.broadcaster_name}")
 
@@ -171,7 +173,8 @@ class Broadcaster:
 
 if __name__ == "__main__":
     signaling_url = "ws://192.168.88.181:8080"  # ajuste para seu servidor
-    broadcaster = Broadcaster(signaling_url, broadcaster_name=nome_computador)
+    company_id = "1"
+    broadcaster = Broadcaster(signaling_url, broadcaster_name=nome_computador, company_id=company_id)
     try:
         asyncio.run(broadcaster.connect())
     except KeyboardInterrupt:

@@ -1,9 +1,7 @@
 const WebSocket = require("ws");
 const { peers, broadcasters, createPeer, deletePeer } = require("./services/peers");
-const { registerBroadcaster } = require("./handlers/broadcaster");
-const { registerViewer, handleWatch } = require("./handlers/viewer");
-const { relayMessage } = require("./handlers/relay");
-const { handleDisconnect } = require("./handlers/disconnect");
+const { registerBroadcaster, registerViewer, handleWatch, relayMessage, handleDisconnect } = require("./handlers/handlers");
+
 
 function setupWebSocket(server) {
   const wss = new WebSocket.Server({ server });
