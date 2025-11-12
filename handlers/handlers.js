@@ -33,7 +33,7 @@ function registerBroadcaster(ws, id, msg, peers, broadcasters) {//egistra um usu
     }
 }
 function registerViewer(ws, id, peers, broadcasters) {//Registra um usuário como viewer (quem assiste à transmissão).
-    
+    console.log("📡 registerViewer chamado para:", id);
     const peer = peers.get(id);
     peer.role = "viewer";
     const activeBroadcasters = [...broadcasters.entries()]

@@ -128,12 +128,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     socket = new WebSocket(`ws://${location.host}?role=viewer&token=${token}`);
 
-    socket.onopen = () => {
+        socket.onopen = () => {
       console.log("✅ WebSocket conectado");
       setStatus("✅ Conectado ao servidor de sinalização", "#0f0");
       connectButton.style.display = "none";
       disconnectButton.disabled = false;
       reconnectButton.disabled = true;
+      socket.send(JSON.stringify({ type: "viewer" }));
     };
 
     socket.onmessage = async (event) => {
