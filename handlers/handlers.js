@@ -107,4 +107,29 @@ function handleWatch(ws, id, msg, peers, broadcasters) {
     }
 }
 
-module.exports = { registerViewer, handleWatch, relayMessage, registerBroadcaster, handleDisconnect };
+//Relatórios:
+function handleClientData(ws, id, msg, peers) {
+    const peer = peers.get(id);
+    if (!peer) return;
+
+    // Atualiza os dados do peer
+    peer.name = msg.host || peer.name;                  // nome do computador
+    peer.monitor_number = msg.eventos?.map(e => e.monitor) || peer.monitor_number;
+    peer.eventos = msg.eventos || [];
+    peer.desempenho = msg.desempenho || {};
+    peer.timestamp = msg.timestamp || new Date().toISOString();
+
+    console.log(`📊 Dados recebidos de ${peer.name} (${id}):`);
+    console.log(JSON.stringify(msg, null, 2));
+
+    // Aqui você poderia salvar em um banco de dados, se quiser
+}
+
+module.exports = { 
+    registerViewer,
+    handleWatch,
+    relayMessage,
+    registerBroadcaster,
+    handleDisconnect,
+    handleClientData  // <-- novo handler exportado
+};
