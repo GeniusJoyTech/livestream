@@ -126,7 +126,8 @@ document.addEventListener("DOMContentLoaded", () => {
     connectButton.disabled = true;
     connectButton.textContent = "Conectando...";
 
-    socket = new WebSocket(`ws://${location.host}?role=viewer&token=${token}`);
+    const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+    socket = new WebSocket(`${wsProtocol}//${location.host}?role=viewer&token=${token}`);
 
         socket.onopen = () => {
       console.log("✅ WebSocket conectado");
