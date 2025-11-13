@@ -3,13 +3,13 @@ const express = require("express");
 const http = require("http");
 const path = require("path");
 const bcrypt = require("bcrypt");
-const { setupWebSocket } = require("./setupWebSocket");
+const { setupWebSocket } = require("./setupWebsocket");
 const { generateToken } = require("./jwt/jwtUtils");
 const { authenticateToken } = require("./jwt/authMiddleware");
 
 const app = express();
 const server = http.createServer(app);
-const PORT = 8080;
+const PORT = process.env.PORT || 5000;
 
 // ===========================
 // Middleware
