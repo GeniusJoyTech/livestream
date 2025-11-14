@@ -87,6 +87,11 @@ SimplificaVideos is a real-time video streaming application built with WebRTC te
 - ✅ Heartbeat/ping-pong connection monitoring
 - ✅ Dynamic broadcaster list updates
 - ✅ Fullscreen video support
+- ✅ **Real-time application monitoring** (NEW)
+  - Monitor apps/windows open on broadcaster's computer
+  - Track foreground/background application status
+  - Live updates every 2 seconds
+  - Isolated telemetry per broadcaster-viewer connection
 
 ## File Structure
 ```
@@ -114,12 +119,20 @@ SimplificaVideos/
 ```
 
 ## Recent Changes
+- **2025-11-14**: Added real-time application monitoring system
+  - Broadcaster collects and sends app/window information (Python)
+  - Backend filters monitoring data per viewer subscription
+  - Frontend displays apps in styled table with foreground highlighting
+  - Monitoring isolated per broadcaster-viewer pair
+  - Uses psutil and win32gui (Windows) for app detection
+
 - **2025-11-13**: Configured for Replit environment
   - Updated server to use PORT environment variable (defaults to 5000)
   - Fixed module import path (setupWebsocket.js)
   - Added start script to package.json
   - Created .gitignore for Node.js
   - Configured workflow to run on port 5000 with webview
+  - Fixed WebSocket protocol to use wss:// for HTTPS connections
 
 ## User Preferences
 None specified yet.
