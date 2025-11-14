@@ -15,7 +15,9 @@ from datetime import datetime
 nome_computador = platform.node()
 sistema_operacional = platform.system()
 
+
 class ScreenCaptureTrack(VideoStreamTrack):
+
     def __init__(self, monitor_number=1, fps=30):
         super().__init__()
         self.sct = mss.mss()
@@ -40,8 +42,13 @@ class ScreenCaptureTrack(VideoStreamTrack):
         await asyncio.sleep(1 / self.fps)
         return frame
 
+
 class Broadcaster:
-    def __init__(self, signaling_url, broadcaster_name="Broadcast Padrão", company_id="0"):
+
+    def __init__(self,
+                 signaling_url,
+                 broadcaster_name="Broadcast Padrão",
+                 company_id="0"):
         self.signaling_url = signaling_url
         self.broadcaster_name = broadcaster_name
         self.company_id = company_id
@@ -53,18 +60,19 @@ class Broadcaster:
     def get_active_windows(self):
         apps = []
         foreground_app = None
-        
+
         try:
             if sistema_operacional == "Windows":
                 try:
                     import win32gui
                     import win32process
-                    
+
                     def callback(hwnd, windows):
                         if win32gui.IsWindowVisible(hwnd):
                             title = win32gui.GetWindowText(hwnd)
                             if title:
-                                _, pid = win32process.GetWindowThreadProcessId(hwnd)
+                                _, pid = win32process.GetWindowThreadProcessId(
+                                    hwnd)
                                 try:
                                     process = psutil.Process(pid)
                                     windows.append({
@@ -74,15 +82,16 @@ class Broadcaster:
                                     })
                                 except:
                                     pass
-                    
+
                     windows = []
                     win32gui.EnumWindows(callback, windows)
                     apps = windows[:10]
-                    
+
                     fg_hwnd = win32gui.GetForegroundWindow()
                     if fg_hwnd:
                         fg_title = win32gui.GetWindowText(fg_hwnd)
-                        _, fg_pid = win32process.GetWindowThreadProcessId(fg_hwnd)
+                        _, fg_pid = win32process.GetWindowThreadProcessId(
+                            fg_hwnd)
                         try:
                             fg_process = psutil.Process(fg_pid)
                             foreground_app = {
@@ -119,7 +128,7 @@ class Broadcaster:
                         pass
         except Exception as e:
             print(f"❌ Erro ao coletar apps: {e}")
-        
+
         return apps, foreground_app
 
     async def send_monitoring_data(self, socket):
@@ -127,7 +136,7 @@ class Broadcaster:
         while self.should_reconnect:
             try:
                 apps, foreground = self.get_active_windows()
-                
+
                 monitoring_data = {
                     "type": "monitoring",
                     "timestamp": datetime.now().isoformat(),
@@ -136,11 +145,11 @@ class Broadcaster:
                     "foreground": foreground,
                     "system": sistema_operacional
                 }
-                
+
                 print(f"📤 Enviando dados de monitoramento: {len(apps)} apps")
                 await socket.send(json.dumps(monitoring_data))
                 print("✅ Dados de monitoramento enviados")
-                
+
                 await asyncio.sleep(2)
             except Exception as e:
                 print(f"❌ Erro ao enviar monitoramento: {e}")
@@ -152,21 +161,25 @@ class Broadcaster:
         retry_delay = 1
         while self.should_reconnect:
             try:
-                print(f"🔌 Tentando conectar ao servidor de sinalização: {self.signaling_url}")
+                print(
+                    f"🔌 Tentando conectar ao servidor de sinalização: {self.signaling_url}"
+                )
                 async with websockets.connect(self.signaling_url) as socket:
                     self.socket = socket
                     print("✅ Conectado ao servidor de sinalização.")
                     retry_delay = 1
 
-                    await socket.send(json.dumps({
-                        "type": "broadcaster",
-                        "monitor_number": 1,
-                        "broadcaster_name": self.broadcaster_name,
-                        "company_id": self.company_id
-                    }))
+                    await socket.send(
+                        json.dumps({
+                            "type": "broadcaster",
+                            "monitor_number": 1,
+                            "broadcaster_name": self.broadcaster_name,
+                            "company_id": self.company_id
+                        }))
                     print(f"📡 Registrado como: {self.broadcaster_name}")
 
-                    self.monitoring_task = asyncio.create_task(self.send_monitoring_data(socket))
+                    self.monitoring_task = asyncio.create_task(
+                        self.send_monitoring_data(socket))
 
                     async for msg in socket:
                         data = json.loads(msg)
@@ -179,8 +192,11 @@ class Broadcaster:
                         elif data["type"] == "viewer-disconnected":
                             await self._handle_viewer_disconnected(data)
 
-            except (websockets.exceptions.ConnectionClosedError, ConnectionRefusedError) as e:
-                print(f"⚠️ Conexão perdida ({type(e).__name__}): tentando reconectar em {retry_delay}s...")
+            except (websockets.exceptions.ConnectionClosedError,
+                    ConnectionRefusedError) as e:
+                print(
+                    f"⚠️ Conexão perdida ({type(e).__name__}): tentando reconectar em {retry_delay}s..."
+                )
                 await asyncio.sleep(retry_delay)
                 retry_delay = min(retry_delay * 2, 30)
             except Exception as e:
@@ -201,15 +217,16 @@ class Broadcaster:
         @pc.on("icecandidate")
         async def on_icecandidate(event):
             if event.candidate:
-                await socket.send(json.dumps({
-                    "type": "candidate",
-                    "candidate": {
-                        "candidate": event.candidate.candidate,
-                        "sdpMid": event.candidate.sdpMid,
-                        "sdpMLineIndex": event.candidate.sdpMLineIndex
-                    },
-                    "targetId": viewer_id
-                }))
+                await socket.send(
+                    json.dumps({
+                        "type": "candidate",
+                        "candidate": {
+                            "candidate": event.candidate.candidate,
+                            "sdpMid": event.candidate.sdpMid,
+                            "sdpMLineIndex": event.candidate.sdpMLineIndex
+                        },
+                        "targetId": viewer_id
+                    }))
 
         @pc.on("connectionstatechange")
         async def on_connectionstatechange():
@@ -222,15 +239,18 @@ class Broadcaster:
 
         self.peers[viewer_id] = pc
 
-        await socket.send(json.dumps({
-            "type": "offer",
-            "sdp": {
-                "type": pc.localDescription.type,
-                "sdp": pc.localDescription.sdp
-            },
-            "targetId": viewer_id
-        }))
-        print(f"📤 Offer enviado para {viewer_id} — {len(self.peers)} viewer(s) conectados.")
+        await socket.send(
+            json.dumps({
+                "type": "offer",
+                "sdp": {
+                    "type": pc.localDescription.type,
+                    "sdp": pc.localDescription.sdp
+                },
+                "targetId": viewer_id
+            }))
+        print(
+            f"📤 Offer enviado para {viewer_id} — {len(self.peers)} viewer(s) conectados."
+        )
 
     async def _handle_answer(self, data):
         viewer_id = data["senderId"]
@@ -240,15 +260,14 @@ class Broadcaster:
 
         # Evita erro "Cannot handle answer in signaling state 'stable'"
         if pc.signalingState != "have-local-offer":
-            print(f"⚠️ Ignorando answer de {viewer_id} — estado: {pc.signalingState}")
+            print(
+                f"⚠️ Ignorando answer de {viewer_id} — estado: {pc.signalingState}"
+            )
             return
 
         await pc.setRemoteDescription(
-            RTCSessionDescription(
-                sdp=data["sdp"]["sdp"],
-                type=data["sdp"]["type"]
-            )
-        )
+            RTCSessionDescription(sdp=data["sdp"]["sdp"],
+                                  type=data["sdp"]["type"]))
         print(f"✅ Answer recebida de {viewer_id}")
 
     async def _handle_candidate(self, data):
@@ -281,10 +300,13 @@ class Broadcaster:
         self.socket = None
         print("🧹 Broadcaster encerrado e conexões limpas.")
 
+
 if __name__ == "__main__":
-    signaling_url = "wss://ee33b7a2-f8ee-40e6-907a-76ce0960df87-00-3c0nxu863cqln.janeway.replit.dev?role=broadcaster"
+    signaling_url = "wss://c8919525-d445-441c-bc03-8fb013f78c13-00-18ih1yomo7u09.janeway.replit.dev?role=broadcaster"
     company_id = "1"
-    broadcaster = Broadcaster(signaling_url, broadcaster_name=nome_computador, company_id=company_id)
+    broadcaster = Broadcaster(signaling_url,
+                              broadcaster_name=nome_computador,
+                              company_id=company_id)
     try:
         asyncio.run(broadcaster.connect())
     except KeyboardInterrupt:
