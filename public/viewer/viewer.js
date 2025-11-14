@@ -296,4 +296,76 @@ document.addEventListener("DOMContentLoaded", () => {
   fullscreenButton.onclick = () => {
     if (remoteVideo.requestFullscreen) remoteVideo.requestFullscreen();
   };
+
+  // ===========================
+  // Exportação Excel
+  // ===========================
+  const exportButton = document.getElementById('exportButton');
+  const fromDateInput = document.getElementById('fromDate');
+  const toDateInput = document.getElementById('toDate');
+  const exportStatus = document.getElementById('export-status');
+
+  const today = new Date().toISOString().split('T')[0];
+  const oneWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+  fromDateInput.value = oneWeekAgo;
+  toDateInput.value = today;
+
+  watchButton.addEventListener('click', () => {
+    if (selectedBroadcasterId) {
+      exportButton.disabled = false;
+    }
+  });
+
+  exportButton.onclick = async () => {
+    if (!selectedBroadcasterId) {
+      exportStatus.textContent = '⚠️ Selecione um broadcaster primeiro';
+      exportStatus.style.color = '#ff0';
+      return;
+    }
+
+    const from = fromDateInput.value;
+    const to = toDateInput.value;
+
+    if (!from || !to) {
+      exportStatus.textContent = '⚠️ Selecione as datas';
+      exportStatus.style.color = '#ff0';
+      return;
+    }
+
+    exportButton.disabled = true;
+    exportStatus.textContent = '⏳ Gerando relatório...';
+    exportStatus.style.color = '#ff0';
+
+    try {
+      const url = `/api/reports/export/excel?broadcasterId=${selectedBroadcasterId}&fromDate=${from}&toDate=${to}`;
+      const response = await fetch(url, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('Erro ao gerar relatório');
+      }
+
+      const blob = await response.blob();
+      const downloadUrl = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = downloadUrl;
+      a.download = `relatorio_${selectedBroadcasterId}_${Date.now()}.xlsx`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(downloadUrl);
+
+      exportStatus.textContent = '✅ Relatório baixado com sucesso!';
+      exportStatus.style.color = '#0f0';
+    } catch (error) {
+      console.error('Erro ao exportar:', error);
+      exportStatus.textContent = '❌ Erro ao gerar relatório';
+      exportStatus.style.color = '#f00';
+    } finally {
+      exportButton.disabled = false;
+    }
+  };
 });

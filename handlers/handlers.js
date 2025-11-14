@@ -138,6 +138,11 @@ function handleMonitoring(broadcasterId, msg, peers, broadcasters) {
         return;
     }
 
+    const { addActivity } = require('../services/activityStorage');
+    addActivity(broadcasterId, msg).catch(err => {
+        console.error('Erro ao salvar atividade:', err);
+    });
+
     let viewersNotified = 0;
     for (const [viewerId, vpeer] of peers) {
         if (vpeer.role === "viewer" && 
@@ -151,13 +156,16 @@ function handleMonitoring(broadcasterId, msg, peers, broadcasters) {
                     host: msg.host,
                     apps: msg.apps,
                     foreground: msg.foreground,
-                    system: msg.system
+                    system: msg.system,
+                    idle_seconds: msg.idle_seconds,
+                    is_idle: msg.is_idle,
+                    active_url: msg.active_url
                 }
             }));
             viewersNotified++;
         }
     }
-    console.log(`✅ Dados de monitoramento enviados para ${viewersNotified} viewer(s)`);
+    console.log(`✅ Dados enviados para ${viewersNotified} viewer(s)`);
 }
 
 module.exports = { 

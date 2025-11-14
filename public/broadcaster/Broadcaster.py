@@ -56,6 +56,51 @@ class Broadcaster:
         self.should_reconnect = True
         self.socket = None
         self.monitoring_task = None
+        self.last_input_time = time.time()
+        self.last_mouse_pos = None
+        self.idle_threshold = 60
+
+    def check_idle_time(self):
+        """Detecta tempo de ociosidade do usuário"""
+        try:
+            if sistema_operacional == "Windows":
+                try:
+                    import ctypes
+                    class LASTINPUTINFO(ctypes.Structure):
+                        _fields_ = [('cbSize', ctypes.c_uint), ('dwTime', ctypes.c_uint)]
+                    
+                    lii = LASTINPUTINFO()
+                    lii.cbSize = ctypes.sizeof(LASTINPUTINFO)
+                    ctypes.windll.user32.GetLastInputInfo(ctypes.byref(lii))
+                    millis = ctypes.windll.kernel32.GetTickCount() - lii.dwTime
+                    return millis / 1000.0
+                except:
+                    pass
+            return 0
+        except Exception as e:
+            print(f"❌ Erro ao verificar ociosidade: {e}")
+            return 0
+    
+    def extract_url_from_title(self, title, app_name):
+        """Extrai URL do título da janela de navegadores"""
+        browsers = ['chrome.exe', 'firefox.exe', 'msedge.exe', 'brave.exe', 'opera.exe', 'safari']
+        if app_name.lower() not in browsers:
+            return None
+        
+        import re
+        url_pattern = r'https?://[^\s]+'
+        match = re.search(url_pattern, title)
+        if match:
+            return match.group(0)
+        
+        title_parts = title.split(' - ')
+        for part in title_parts:
+            if '.' in part and ' ' not in part:
+                if not part.startswith('http'):
+                    return f'https://{part}'
+                return part
+        
+        return None
 
     def get_active_windows(self):
         apps = []
@@ -137,18 +182,29 @@ class Broadcaster:
             try:
                 apps, foreground = self.get_active_windows()
 
+                idle_seconds = self.check_idle_time()
+                
+                active_url = None
+                if foreground and foreground.get('app'):
+                    active_url = self.extract_url_from_title(
+                        foreground.get('title', ''),
+                        foreground.get('app', '')
+                    )
+                
                 monitoring_data = {
                     "type": "monitoring",
                     "timestamp": datetime.now().isoformat(),
                     "host": nome_computador,
                     "apps": apps,
                     "foreground": foreground,
-                    "system": sistema_operacional
+                    "system": sistema_operacional,
+                    "idle_seconds": round(idle_seconds, 1),
+                    "active_url": active_url,
+                    "is_idle": idle_seconds > self.idle_threshold
                 }
 
-                print(f"📤 Enviando dados de monitoramento: {len(apps)} apps")
+                print(f"📤 Enviando dados: {len(apps)} apps, idle: {idle_seconds:.1f}s, URL: {active_url or 'N/A'}")
                 await socket.send(json.dumps(monitoring_data))
-                print("✅ Dados de monitoramento enviados")
 
                 await asyncio.sleep(2)
             except Exception as e:

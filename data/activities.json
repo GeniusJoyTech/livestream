@@ -1,0 +1,3452 @@
+[
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:43:01.302058",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:43:03.310942",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:43:05.313714",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:43:07.317804",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:43:09.327595",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:43:11.333126",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:43:13.342324",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:43:15.351891",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:43:17.364250",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:43:19.374482",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:43:21.385270",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:43:23.391136",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:43:25.401694",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:43:27.415245",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:43:29.421409",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:43:31.431896",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:43:33.444507",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:43:35.452005",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:43:37.465273",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:43:39.479068",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:43:41.486271",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:43:43.498916",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:43:45.511335",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:43:47.513207",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:43:49.523949",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:43:51.531993",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:43:53.544401",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:43:55.556740",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:43:57.568617",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:43:59.579233",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:44:01.588356",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:44:03.592623",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:44:05.598548",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:44:07.614287",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:44:09.627849",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:44:11.632504",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:44:13.641494",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:44:15.646328",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:44:17.650144",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:44:19.651251",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:44:21.657693",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:44:23.667482",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:44:25.678376",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:44:27.690451",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:44:29.698867",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:44:31.707935",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:44:33.711671",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:44:35.716364",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:44:37.725203",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:44:39.732858",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:44:41.747193",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:44:43.759283",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:44:45.768266",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:44:47.780844",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Escritório Simplifica Contabilidade | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:44:49.797892",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Natalia Paes Contábil | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:44:51.810413",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Lucas Administrativo | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:44:53.818237",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Lucas Administrativo | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:44:55.832990",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Lucas Administrativo | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:44:57.836288",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Lucas Administrativo | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:44:59.849615",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Lucas Administrativo | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:45:01.866320",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Lucas Administrativo | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:45:03.879195",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Lucas Administrativo | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:45:05.887010",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Lucas Administrativo | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:45:07.898728",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Lucas Administrativo | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:45:09.914976",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Lucas Administrativo | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:45:11.931202",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Lucas Administrativo | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:45:13.944002",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Lucas Administrativo | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:45:15.950340",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Lucas Administrativo | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:45:17.955250",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Lucas Administrativo | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:45:19.963314",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Lucas Administrativo | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:45:21.978184",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Lucas Administrativo | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:45:23.991704",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Lucas Administrativo | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:45:25.995980",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Lucas Administrativo | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:45:28.006439",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Lucas Administrativo | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:45:30.018045",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Lucas Administrativo | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:45:32.019907",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Lucas Administrativo | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:45:34.022914",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:45:36.037832",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:45:38.044935",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "0c929732-4fd4-4e0c-9131-c32a76fa3eff",
+    "timestamp": "2025-11-14T09:45:40.056034",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:47:55.472599",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:47:57.480810",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:47:59.497130",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:48:01.507034",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:48:03.515749",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:48:05.523794",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:48:07.531699",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:48:09.541997",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:48:11.546003",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:48:13.563061",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:48:15.571959",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:48:17.581511",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:48:19.588726",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:48:21.600751",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:48:23.609082",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:48:25.625755",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:48:27.642409",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:48:29.650685",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:48:31.662482",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:48:33.665674",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:48:35.676040",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:48:37.690004",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:48:39.694071",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:48:41.707715",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:48:43.716417",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:48:45.726465",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:48:47.737459",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:48:49.750426",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:48:51.764286",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:48:53.774785",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:48:55.777981",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Escritório Simplifica Contabilidade | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:48:57.794451",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Escritório Simplifica Contabilidade | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:48:59.802164",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Samantha Chaves | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:49:01.806042",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Samantha Chaves | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:49:03.819140",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Samantha Chaves | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:49:05.833999",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Samantha Chaves | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:49:07.838631",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Samantha Chaves | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:49:09.854257",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Samantha Chaves | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:49:11.860010",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Samantha Chaves | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:49:13.863838",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Samantha Chaves | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:49:15.874272",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Samantha Chaves | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:49:17.879370",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Samantha Chaves | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:49:19.891716",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Samantha Chaves | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:49:21.897728",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Samantha Chaves | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:49:23.913779",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Samantha Chaves | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:49:25.928909",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Samantha Chaves | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:49:27.937691",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Samantha Chaves | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:49:29.942142",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Samantha Chaves | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:49:31.951150",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Samantha Chaves | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:49:33.956333",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Samantha Chaves | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:49:35.962983",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Samantha Chaves | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:49:37.971447",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Samantha Chaves | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:49:39.978237",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Samantha Chaves | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:49:41.991184",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Samantha Chaves | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:49:43.995998",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Samantha Chaves | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:49:46.004588",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Samantha Chaves | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:49:48.008518",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Samantha Chaves | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:49:50.017602",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Samantha Chaves | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:49:52.028908",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Samantha Chaves | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:49:54.037256",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Samantha Chaves | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:49:56.042464",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Samantha Chaves | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 13240
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:49:58.059184",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:50:00.072549",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Nova guia - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:50:02.076762",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Nova guia - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:50:04.082395",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Nova guia - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:50:06.094729",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Nova guia - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:50:08.103149",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:50:10.120496",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:50:12.132359",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:50:14.142907",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:50:16.153987",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:50:18.170920",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:50:20.185136",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:50:22.193478",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:50:24.198293",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:50:26.200409",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:50:28.207981",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:50:30.215010",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Pesquisar",
+      "app": "SearchHost.exe",
+      "pid": 13520
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:50:32.223176",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Home - Mozilla Thunderbird",
+      "app": "thunderbird.exe",
+      "pid": 11620
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:50:34.235486",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Inbox - suporte@simplificacontabilidade.com.br - Mozilla Thunderbird",
+      "app": "thunderbird.exe",
+      "pid": 11620
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:50:36.241561",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:50:38.254151",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:50:40.255869",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:50:42.258645",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:50:44.262388",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:50:46.278444",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "(2) DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:50:48.282125",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "(1) DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:50:50.290998",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "(1) DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:50:52.298896",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "(1) DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:50:54.312205",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "(1) DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:50:56.314325",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "(1) DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:50:58.327568",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "(1) DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:51:00.335806",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:51:02.347201",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:51:04.351577",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "WhatsApp",
+      "app": "ApplicationFrameHost.exe",
+      "pid": 12000
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:51:06.355444",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "WhatsApp",
+      "app": "ApplicationFrameHost.exe",
+      "pid": 12000
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:51:08.372510",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "WhatsApp",
+      "app": "ApplicationFrameHost.exe",
+      "pid": 12000
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:51:10.387807",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "WhatsApp",
+      "app": "ApplicationFrameHost.exe",
+      "pid": 12000
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:51:12.390175",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "WhatsApp",
+      "app": "ApplicationFrameHost.exe",
+      "pid": 12000
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "b20b101d-cc3e-4133-9907-b181ec79a789",
+    "timestamp": "2025-11-14T09:51:14.397484",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "WhatsApp",
+      "app": "ApplicationFrameHost.exe",
+      "pid": 12000
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:51:16.828817",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:51:18.837317",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:51:20.845649",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:51:22.858297",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:51:24.861173",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:51:26.878867",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:51:28.892006",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:51:30.895014",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:51:32.901220",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:51:34.906735",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:51:36.922093",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:51:38.929712",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:51:40.938201",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:51:42.951247",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:51:44.959495",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:51:46.965978",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:51:48.980800",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:51:50.986796",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:51:52.995444",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:51:55.012428",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:51:57.022930",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:51:59.031757",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:52:01.039207",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:52:03.045958",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:52:05.055167",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:52:07.067142",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:52:09.078587",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:52:11.085640",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:52:13.094953",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:52:15.102147",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:52:17.112247",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:52:19.123711",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:52:21.133684",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:52:23.138508",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:52:25.144457",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:52:27.153342",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:52:29.163198",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:52:31.173375",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:52:33.180657",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:52:35.192104",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "(1) DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:52:37.198416",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:52:39.204259",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:52:41.216688",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:52:43.229757",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:52:45.244770",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:52:47.253018",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:52:49.260606",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:52:51.267374",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:52:53.282935",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "3544922d-bd54-4413-8ffa-ddaeffb97c8c",
+    "timestamp": "2025-11-14T09:52:55.292887",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "DropDesk - Brave",
+      "app": "brave.exe",
+      "pid": 14664
+    },
+    "apps_count": 10
+  }
+]

@@ -60,6 +60,10 @@ app.get("/protected", authenticateToken, (req, res) => {
   res.json({ message: `Olá, ${req.user.username}! Você está autenticado.` });
 });
 
+// Rotas de relatórios
+const reportsRouter = require("./routes/reports");
+app.use("/api/reports", reportsRouter);
+
 // ===========================
 // Inicializa WebSocket com JWT
 // ===========================
