@@ -63,6 +63,7 @@ def get_browser_history(hours_back=24):
                         break
     
     for browser in browser_paths:
+        temp_file = None
         try:
             if not os.path.exists(browser['path']):
                 continue
@@ -152,10 +153,28 @@ class Broadcaster:
     def __init__(self,
                  signaling_url,
                  broadcaster_name="Broadcast Padrão",
-                 company_id="0"):
+                 company_id="0",
+                 broadcaster_token=None):
+        """
+        Inicializa o Broadcaster.
+        
+        Args:
+            signaling_url: URL do servidor WebSocket (ex: wss://seu-dominio.replit.dev)
+            broadcaster_name: Nome do broadcaster (será exibido no painel)
+            company_id: ID da empresa (legado, pode ser "0")
+            broadcaster_token: Token JWT obtido do sistema (recomendado para segurança)
+        
+        Para obter um token JWT:
+        1. Faça login como owner no sistema
+        2. Use a API POST /api/broadcasters com o nome do broadcaster
+        3. Copie o 'token' retornado e use aqui
+        
+        Se broadcaster_token não for fornecido, o sistema funcionará em modo legado (UUID)
+        """
         self.signaling_url = signaling_url
         self.broadcaster_name = broadcaster_name
         self.company_id = company_id
+        self.broadcaster_token = broadcaster_token
         self.peers = {}
         self.should_reconnect = True
         self.socket = None
@@ -345,13 +364,20 @@ class Broadcaster:
                     print("✅ Conectado ao servidor de sinalização.")
                     retry_delay = 1
 
-                    await socket.send(
-                        json.dumps({
-                            "type": "broadcaster",
-                            "monitor_number": 1,
-                            "broadcaster_name": self.broadcaster_name,
-                            "company_id": self.company_id
-                        }))
+                    registration_data = {
+                        "type": "broadcaster",
+                        "monitor_number": 1,
+                        "broadcaster_name": self.broadcaster_name,
+                        "company_id": self.company_id
+                    }
+                    
+                    if self.broadcaster_token:
+                        registration_data["token"] = self.broadcaster_token
+                        print(f"🔐 Autenticando com token JWT...")
+                    else:
+                        print(f"⚠️ AVISO: Modo legado (sem token). Recomenda-se obter um token JWT para segurança.")
+                    
+                    await socket.send(json.dumps(registration_data))
                     print(f"📡 Registrado como: {self.broadcaster_name}")
 
                     self.monitoring_task = asyncio.create_task(
@@ -478,14 +504,43 @@ class Broadcaster:
 
 
 if __name__ == "__main__":
-    # IMPORTANTE: Atualize esta URL com o domínio atual do seu Replit
-    # Para encontrar seu domínio, execute: echo $REPLIT_DOMAINS
-    # O formato é: wss://[SEU-DOMINIO]?role=broadcaster
+    # CONFIGURAÇÃO DO BROADCASTER
+    # ============================
+    
+    # 1. IMPORTANTE: Atualize esta URL com o domínio atual do seu Replit
+    #    Para encontrar seu domínio, execute: echo $REPLIT_DOMAINS
+    #    O formato é: wss://[SEU-DOMINIO]?role=broadcaster
     signaling_url = "wss://cfdafce5-b982-4750-82b6-dc2185ad7fad-00-1egd469xx08mp.spock.replit.dev?role=broadcaster"
+    
+    # 2. RECOMENDADO: Obtenha um token JWT do sistema para segurança
+    #    Como obter um token:
+    #    a) Faça login no sistema como owner
+    #    b) Execute via API ou Postman:
+    #       POST /api/broadcasters
+    #       Authorization: Bearer SEU_TOKEN_DE_LOGIN
+    #       Body: {"name": "Nome do Broadcaster"}
+    #    c) Copie o 'token' retornado e cole abaixo
+    #    
+    #    Exemplo: broadcaster_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+    broadcaster_token = None  # Deixe None para modo legado (menos seguro)
+    
+    # 3. ID da empresa (legado, pode ser qualquer valor)
     company_id = "1"
-    broadcaster = Broadcaster(signaling_url,
-                              broadcaster_name=nome_computador,
-                              company_id=company_id)
+    
+    # Inicia o broadcaster
+    broadcaster = Broadcaster(
+        signaling_url,
+        broadcaster_name=nome_computador,
+        company_id=company_id,
+        broadcaster_token=broadcaster_token
+    )
+    
+    print("=" * 60)
+    print(f"🚀 SimplificaVideos Broadcaster v2.0")
+    print(f"📡 Nome: {nome_computador}")
+    print(f"🔒 Modo: {'JWT Autenticado (Seguro)' if broadcaster_token else 'Legado UUID (Não Recomendado)'}")
+    print("=" * 60)
+    
     try:
         asyncio.run(broadcaster.connect())
     except KeyboardInterrupt:
