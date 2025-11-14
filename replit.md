@@ -39,10 +39,11 @@ SimplificaVideos is a real-time video streaming application built with WebRTC te
 4. **services/activityStorage.js** - Activity data persistence
    - JSON file-based storage (development)
    - Stores user idle time, URLs accessed, and application data
+   - **Browser history storage** with O(1) deduplication (Set-based)
    - Automatic persistence every 5 activities
    - Maximum 10-second flush interval
    - Graceful shutdown handlers for data safety
-   - **Note**: For production, migrate to PostgreSQL for guaranteed durability
+   - **Note**: For production, migrate to PostgreSQL with encryption
 
 5. **handlers/handlers.js** - Message handlers
    - `registerBroadcaster`: Registers new broadcasters
@@ -82,7 +83,9 @@ SimplificaVideos is a real-time video streaming application built with WebRTC te
    - Idle time detection using system APIs
    - Active URL tracking from browser windows
    - Application monitoring with psutil
+   - **Browser history tracking** (Chrome, Firefox, Edge, Opera, Brave)
    - Sends monitoring data every 2 seconds
+   - Sends browser history every 60 seconds (last 24h)
 
 ### Authentication Flow
 1. User logs in via `/login` endpoint (username: admin, password: 123456)
@@ -150,6 +153,13 @@ SimplificaVideos is a real-time video streaming application built with WebRTC te
   - Detailed activity log with all events
   - Date range filtering
   - JWT-authenticated endpoint
+- ✅ **Browser history tracking** (⚠️ PROOF OF CONCEPT ONLY)
+  - Collects history from Chrome, Firefox, Edge, Opera, Brave
+  - 24-hour rolling window, sent every 60 seconds
+  - Deduplication system (O(1) lookup with Set)
+  - Excel export with dedicated "Histórico de Navegação" sheet
+  - **WARNING**: Stored in plaintext JSON with default credentials
+  - **NOT PRODUCTION READY** - see AVISO_CRITICO_SEGURANCA.md
 
 ## File Structure
 ```
@@ -159,7 +169,8 @@ SimplificaVideos/
 ├── package.json           # Node.js dependencies
 ├── .env                   # Environment variables (JWT_SECRET)
 ├── data/
-│   └── activities.json    # Activity storage (auto-created)
+│   ├── activities.json         # Activity storage (auto-created)
+│   └── browser_history.json    # Browser history (auto-created, SENSITIVE)
 ├── handlers/
 │   └── handlers.js        # WebSocket message handlers
 ├── jwt/
@@ -167,9 +178,11 @@ SimplificaVideos/
 │   └── authMiddleware.js  # JWT authentication middleware
 ├── services/
 │   ├── peers.js           # Peer connection management
-│   └── activityStorage.js # Activity data persistence
+│   └── activityStorage.js # Activity/history persistence with deduplication
 ├── routes/
-│   └── reports.js         # Reporting and export endpoints
+│   └── reports.js         # Reporting endpoints (activities + history)
+├── scripts/
+│   └── cleanup_history_duplicates.js  # Remove duplicate history entries
 └── public/
     ├── login/
     │   ├── login.html     # Login page
@@ -183,14 +196,23 @@ SimplificaVideos/
 ```
 
 ## Recent Changes
-- **2025-11-14**: GitHub Import Setup Complete (Current Session)
+- **2025-11-14**: Browser History Tracking System (Current Session)
+  - **Browser history collection**: Broadcaster.py lê histórico de Chrome, Firefox, Edge, Opera, Brave (últimas 24h)
+  - **Deduplicação eficiente**: Sistema baseado em Set para verificação O(1) de duplicatas
+  - **Excel export**: Nova planilha "Histórico de Navegação" com filtro de data
+  - **Performance**: Otimizado de O(n·m) para O(1) com Set de chaves únicas
+  - **Script de limpeza**: `scripts/cleanup_history_duplicates.js` para remover duplicatas antigas
+  - **⚠️ CRÍTICO**: Funcionalidade em PROOF OF CONCEPT - veja AVISO_CRITICO_SEGURANCA.md
+  - **Vulnerabilidades identificadas**: Dados não criptografados + credenciais default
+  - **Status**: NÃO APROVADO para produção sem correções de segurança
+
+- **2025-11-14**: GitHub Import Setup Complete
   - Fixed broadcaster WebSocket connection (updated URL from .janeway to .spock domain)
   - JWT_SECRET configured via Replit Secrets
   - Workflow running on port 5000 with webview
   - Deployment configured for VM (persistent WebSocket connections)
   - Created BROADCASTER_SETUP.md with complete usage guide
   - Broadcaster successfully connecting and sending monitoring data
-  - 355 activities loaded and being tracked
 
 - **2025-11-14**: Activity Monitoring and Reporting System
   - **Idle detection**: Broadcaster tracks user idle time using system APIs
@@ -248,6 +270,20 @@ The current JSON file-based storage has limitations:
 - Scalability for multiple broadcasters
 
 ### Security
+⚠️ **CRITICAL**: Browser history feature has severe security vulnerabilities:
+- **Plaintext storage**: Browser history stored in unencrypted JSON file
+- **Default credentials**: admin/123456 documented publicly
+- **No access control**: Anyone with file access can read sensitive data
+- **Legal risks**: LGPD/GDPR compliance issues
+
+**MANDATORY before production**:
+- Migrate browser history to encrypted PostgreSQL database
+- Remove default credentials and enforce strong passwords
+- Implement 2FA and role-based access control
+- Consult legal counsel for compliance
+- See `AVISO_CRITICO_SEGURANCA.md` for complete checklist
+
+**Other security recommendations**:
 - Change default admin credentials before deployment
 - Use strong JWT_SECRET (generate with `openssl rand -base64 32`)
 - Enable HTTPS in production
