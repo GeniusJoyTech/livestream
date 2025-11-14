@@ -202,9 +202,10 @@ SimplificaVideos/
 - **2025-11-14**: Replit Environment Setup Complete
   - Configured JWT_SECRET via Replit Secrets (secure environment variable)
   - Workflow configured to run server on port 5000 with webview output
-  - Deployment configured for autoscale (production publishing)
+  - Deployment configured for VM (always-on, required for WebSocket connections)
   - Server successfully running and tested
   - Login page verified and accessible
+  - GitHub import fully configured and operational
   
 - **2025-11-14**: Added real-time application monitoring system
   - Broadcaster collects and sends app/window information (Python)
