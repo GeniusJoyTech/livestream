@@ -18523,5 +18523,455 @@
       "pid": 8652
     },
     "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:03:42.362594",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.2,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:03:44.367015",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 1.4,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:03:46.382707",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:03:48.392116",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:03:50.406588",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "PRIVACIDADE_E_SEGURANCA.md - SimplificaVideos - Visual Studio Code",
+      "app": "Code.exe",
+      "pid": 10492
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:03:52.418833",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "PRIVACIDADE_E_SEGURANCA.md - SimplificaVideos - Visual Studio Code",
+      "app": "Code.exe",
+      "pid": 10492
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:03:54.420710",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "PRIVACIDADE_E_SEGURANCA.md - SimplificaVideos - Visual Studio Code",
+      "app": "Code.exe",
+      "pid": 10492
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:03:56.436495",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "AVISO_CRITICO_SEGURANCA.md - SimplificaVideos - Visual Studio Code",
+      "app": "Code.exe",
+      "pid": 10492
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:03:58.447790",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.2,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "AVISO_CRITICO_SEGURANCA.md - SimplificaVideos - Visual Studio Code",
+      "app": "Code.exe",
+      "pid": 10492
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:04:00.458930",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.2,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "AVISO_CRITICO_SEGURANCA.md - SimplificaVideos - Visual Studio Code",
+      "app": "Code.exe",
+      "pid": 10492
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:04:02.469201",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "AVISO_CRITICO_SEGURANCA.md - SimplificaVideos - Visual Studio Code",
+      "app": "Code.exe",
+      "pid": 10492
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:04:04.481826",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "AVISO_CRITICO_SEGURANCA.md - SimplificaVideos - Visual Studio Code",
+      "app": "Code.exe",
+      "pid": 10492
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:04:06.492552",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "AVISO_CRITICO_SEGURANCA.md - SimplificaVideos - Visual Studio Code",
+      "app": "Code.exe",
+      "pid": 10492
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:04:08.498588",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.2,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "BROADCASTER_SETUP.md - SimplificaVideos - Visual Studio Code",
+      "app": "Code.exe",
+      "pid": 10492
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:04:10.513738",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "BROADCASTER_SETUP.md - SimplificaVideos - Visual Studio Code",
+      "app": "Code.exe",
+      "pid": 10492
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:04:12.518864",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "BROADCASTER_SETUP.md - SimplificaVideos - Visual Studio Code",
+      "app": "Code.exe",
+      "pid": 10492
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:04:14.528844",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "BROADCASTER_SETUP.md - SimplificaVideos - Visual Studio Code",
+      "app": "Code.exe",
+      "pid": 10492
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:04:16.533883",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.2,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:04:18.535880",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:04:20.549090",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.3,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:04:22.562372",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:04:24.573234",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.2,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:04:26.588942",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:04:28.603757",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.2,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "BROADCASTER_SETUP.md - SimplificaVideos - Visual Studio Code",
+      "app": "Code.exe",
+      "pid": 10492
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:04:30.619152",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:04:32.623699",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "BROADCASTER_SETUP.md - SimplificaVideos - Visual Studio Code",
+      "app": "Code.exe",
+      "pid": 10492
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:04:34.631767",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "BROADCASTER_SETUP.md - SimplificaVideos - Visual Studio Code",
+      "app": "Code.exe",
+      "pid": 10492
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:04:36.641819",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.3,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:04:38.649672",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:04:40.662821",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 10
   }
 ]
