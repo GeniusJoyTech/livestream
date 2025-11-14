@@ -1,7 +1,7 @@
 # SimplificaVideos - WebRTC Video Streaming Application
 
 ## Overview
-SimplificaVideos is a real-time video streaming application built with WebRTC technology. It enables users to broadcast their screen/video and allows authenticated viewers to watch these streams. The application features JWT-based authentication, WebSocket communication for signaling, and peer-to-peer video transmission.
+SimplificaVideos is a real-time video streaming application built with WebRTC technology. It enables users to broadcast their screen/video and allows authenticated viewers to watch these streams with comprehensive activity monitoring, idle detection, URL tracking, and Excel reporting capabilities.
 
 ## Project Architecture
 
@@ -11,6 +11,8 @@ SimplificaVideos is a real-time video streaming application built with WebRTC te
 - **Authentication**: JWT (JSON Web Tokens) with bcrypt password hashing
 - **Frontend**: Vanilla JavaScript with WebRTC API
 - **Video Streaming**: WebRTC peer-to-peer connections
+- **Data Storage**: JSON file-based (development), PostgreSQL recommended for production
+- **Excel Export**: ExcelJS library
 
 ### Core Components
 
@@ -20,6 +22,7 @@ SimplificaVideos is a real-time video streaming application built with WebRTC te
    - Serves static files (login and viewer pages)
    - Login endpoint with JWT token generation
    - Protected routes with JWT authentication
+   - RESTful API for reports and statistics
 
 2. **setupWebsocket.js** - WebSocket server setup
    - Handles WebSocket connections with role-based authentication
@@ -33,12 +36,26 @@ SimplificaVideos is a real-time video streaming application built with WebRTC te
    - Handles peer creation/deletion
    - Implements heartbeat mechanism (30s interval)
 
-4. **handlers/handlers.js** - Message handlers
+4. **services/activityStorage.js** - Activity data persistence
+   - JSON file-based storage (development)
+   - Stores user idle time, URLs accessed, and application data
+   - Automatic persistence every 5 activities
+   - Maximum 10-second flush interval
+   - Graceful shutdown handlers for data safety
+   - **Note**: For production, migrate to PostgreSQL for guaranteed durability
+
+5. **handlers/handlers.js** - Message handlers
    - `registerBroadcaster`: Registers new broadcasters
    - `registerViewer`: Registers viewers and sends broadcaster list
    - `handleWatch`: Connects viewer to specific broadcaster
    - `relayMessage`: Forwards WebRTC signaling messages (offer/answer/candidate)
+   - `handleMonitoring`: Stores monitoring data (idle time, URLs, apps)
    - `handleDisconnect`: Cleans up disconnected peers
+
+6. **routes/reports.js** - Reporting endpoints
+   - `/api/reports/export/excel` - Export activity data to Excel
+   - `/api/reports/stats` - Get statistics (idle time, URLs, etc.)
+   - Both endpoints require JWT authentication
 
 #### Frontend Components
 1. **public/login/** - Login interface
@@ -52,6 +69,20 @@ SimplificaVideos is a real-time video streaming application built with WebRTC te
    - WebRTC peer connection management
    - Real-time statistics display
    - Fullscreen support
+   - **Activity monitoring panel**:
+     - Side-by-side layout with video (responsive)
+     - Real-time app/window status
+     - Idle time detection
+     - Active URL display
+     - Date range selector for reports
+     - Excel export button
+
+3. **public/broadcaster/** - Python broadcaster (desktop app)
+   - Screen/camera capture with WebRTC
+   - Idle time detection using system APIs
+   - Active URL tracking from browser windows
+   - Application monitoring with psutil
+   - Sends monitoring data every 2 seconds
 
 ### Authentication Flow
 1. User logs in via `/login` endpoint (username: admin, password: 123456)
@@ -70,8 +101,16 @@ SimplificaVideos is a real-time video streaming application built with WebRTC te
 6. ICE candidates exchanged for NAT traversal
 7. P2P video stream established
 
+### Activity Monitoring Flow
+1. Broadcaster detects idle time using system APIs
+2. Broadcaster extracts active URL from browser window titles
+3. Broadcaster sends monitoring data via WebSocket every 2s
+4. Backend stores activity data in JSON file (persists every 5 entries or 10s max)
+5. Viewer displays real-time monitoring data
+6. User can select date range and download Excel report
+
 ## Environment Variables
-- `JWT_SECRET`: Secret key for JWT token signing (set in .env file)
+- `JWT_SECRET`: Secret key for JWT token signing (set via Replit Secrets)
 - `PORT`: Server port (defaults to 5000 for Replit)
 
 ## Default Credentials
@@ -87,11 +126,30 @@ SimplificaVideos is a real-time video streaming application built with WebRTC te
 - ✅ Heartbeat/ping-pong connection monitoring
 - ✅ Dynamic broadcaster list updates
 - ✅ Fullscreen video support
-- ✅ **Real-time application monitoring** (NEW)
+- ✅ **Real-time application monitoring**
   - Monitor apps/windows open on broadcaster's computer
   - Track foreground/background application status
   - Live updates every 2 seconds
   - Isolated telemetry per broadcaster-viewer connection
+- ✅ **User idle time detection**
+  - Detects when broadcaster is idle (no mouse/keyboard activity)
+  - Tracks idle duration in seconds
+  - Visual indicator in monitoring panel
+- ✅ **Active URL tracking**
+  - Extracts URLs from active browser window titles
+  - Supports Chrome, Firefox, Edge browsers
+  - Real-time URL display in viewer
+- ✅ **Activity data storage**
+  - JSON file-based storage (development)
+  - Stores: timestamp, idle time, active URL, foreground app, app count
+  - Automatic persistence (every 5 entries or 10s max)
+  - Maximum 10,000 entries with automatic rotation
+- ✅ **Excel export**
+  - Download activity reports in Excel format
+  - Includes statistics sheet with idle time, top URLs, app usage
+  - Detailed activity log with all events
+  - Date range filtering
+  - JWT-authenticated endpoint
 
 ## File Structure
 ```
@@ -100,30 +158,45 @@ SimplificaVideos/
 ├── setupWebsocket.js      # WebSocket server configuration
 ├── package.json           # Node.js dependencies
 ├── .env                   # Environment variables (JWT_SECRET)
+├── data/
+│   └── activities.json    # Activity storage (auto-created)
 ├── handlers/
 │   └── handlers.js        # WebSocket message handlers
 ├── jwt/
 │   ├── jwtUtils.js        # JWT token generation
 │   └── authMiddleware.js  # JWT authentication middleware
 ├── services/
-│   └── peers.js           # Peer connection management
+│   ├── peers.js           # Peer connection management
+│   └── activityStorage.js # Activity data persistence
+├── routes/
+│   └── reports.js         # Reporting and export endpoints
 └── public/
     ├── login/
     │   ├── login.html     # Login page
     │   └── login.js       # Login logic
-    └── viewer/
-        ├── viewer.html    # Viewer interface
-        ├── viewer.js      # WebRTC viewer logic
-        └── styles.css     # Styling
-
+    ├── viewer/
+    │   ├── viewer.html    # Viewer interface with monitoring
+    │   ├── viewer.js      # WebRTC viewer logic
+    │   └── styles.css     # Styling
+    └── broadcaster/
+        └── Broadcaster.py # Python broadcaster with monitoring
 ```
 
 ## Recent Changes
+- **2025-11-14**: Activity Monitoring and Reporting System
+  - **Idle detection**: Broadcaster tracks user idle time using system APIs
+  - **URL tracking**: Extracts active URLs from browser window titles (Chrome, Firefox, Edge)
+  - **Activity storage**: JSON file-based storage with automatic persistence (every 5 entries or 10s)
+  - **Excel export**: Generate reports with statistics and detailed activity log
+  - **Date filtering**: Select custom date ranges for reports
+  - **UI enhancements**: Activity monitoring panel in viewer with export button
+  - **Data durability**: Graceful shutdown handlers, but JSON has limitations (see notes)
+
 - **2025-11-14**: UI/UX Improvements and Enhanced Monitoring
   - **Side-by-side layout**: Monitoring table now appears next to video (responsive, stacks on mobile)
   - **Auto-reconnection**: Viewer automatically reconnects with exponential backoff (max 30s) on connection loss
   - **Health check system**: Server verifies peers every 1 minute, removes inactive peers after 2 minutes
-  - **Broadcaster fixes**: Corrected WebSocket handling in Python broadcaster (removed invalid `.open`/`.closed` attributes)
+  - **Broadcaster fixes**: Corrected WebSocket handling in Python broadcaster
   - **Enhanced logging**: Added detailed monitoring logs for debugging
 
 - **2025-11-14**: Replit Environment Setup Complete
@@ -151,7 +224,28 @@ SimplificaVideos/
 ## User Preferences
 None specified yet.
 
+## Production Recommendations
+### Data Durability
+The current JSON file-based storage has limitations:
+- **Risk**: Can lose up to 5 activity entries (~10 seconds) in crash scenarios
+- **Corruption risk**: Mid-write failures can corrupt the entire log
+- **Performance**: O(n) file rewrites under sustained load
+
+**Recommended for production**: Migrate to PostgreSQL for:
+- ACID guarantees and crash safety
+- Better performance under load
+- No data loss on crashes
+- Scalability for multiple broadcasters
+
+### Security
+- Change default admin credentials before deployment
+- Use strong JWT_SECRET (generate with `openssl rand -base64 32`)
+- Enable HTTPS in production
+- Implement rate limiting on API endpoints
+
 ## Notes
 - The broadcaster component (Python-based screen capture) is in `public/broadcaster/` but not part of the web application
 - The application uses STUN server (stun.l.google.com:19302) for NAT traversal
 - Health check runs every 60 seconds (1 minute), removes peers inactive for more than 2 minutes
+- Activity storage uses JSON files for simplicity; migrate to PostgreSQL for production use
+- Excel exports require JWT authentication
