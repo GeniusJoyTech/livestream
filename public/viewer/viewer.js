@@ -17,6 +17,10 @@ document.addEventListener("DOMContentLoaded", () => {
   let selectedMonitorNumber = null;
   let broadcasters = [];
   let statsInterval = null;
+  let shouldReconnect = true;
+  let reconnectAttempts = 0;
+  let reconnectTimer = null;
+  const MAX_RECONNECT_DELAY = 30000;
 
   // ===========================
   // Verificação do token
@@ -31,6 +35,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   logoutButton.addEventListener("click", () => {
+    shouldReconnect = false;
+    if (reconnectTimer) clearTimeout(reconnectTimer);
     localStorage.removeItem("token");
     logoutButton.disabled = true;
     remoteVideo.srcObject = null;
@@ -173,6 +179,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         socket.onopen = () => {
       console.log("✅ WebSocket conectado");
+      reconnectAttempts = 0;
+      shouldReconnect = true;
       setStatus("✅ Conectado ao servidor de sinalização", "#0f0");
       connectButton.style.display = "none";
       disconnectButton.disabled = false;
@@ -231,15 +239,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
     socket.onclose = () => {
       console.warn("⚠️ WebSocket desconectado");
-      setStatus("⚠️ Desconectado do servidor", "#f00");
-      disconnectButton.disabled = true;
-      reconnectButton.disabled = false;
+      
+      if (shouldReconnect) {
+        reconnectAttempts++;
+        const delay = Math.min(1000 * Math.pow(2, reconnectAttempts - 1), MAX_RECONNECT_DELAY);
+        setStatus(`⚠️ Desconectado. Reconectando em ${(delay/1000).toFixed(0)}s... (tentativa ${reconnectAttempts})`, "#ff0");
+        
+        reconnectTimer = setTimeout(() => {
+          console.log(`🔄 Tentando reconectar (tentativa ${reconnectAttempts})...`);
+          connect();
+        }, delay);
+      } else {
+        setStatus("⚠️ Desconectado do servidor", "#f00");
+        disconnectButton.disabled = true;
+        reconnectButton.disabled = false;
+      }
+    };
+    
+    socket.onerror = (error) => {
+      console.error("❌ Erro no WebSocket:", error);
     };
   }
 
   connectButton.onclick = connect;
 
   disconnectButton.onclick = () => {
+    shouldReconnect = false;
+    if (reconnectTimer) clearTimeout(reconnectTimer);
     peers.forEach(pc => pc.close());
     peers.clear();
     if (socket) socket.close();

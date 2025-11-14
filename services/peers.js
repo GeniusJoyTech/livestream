@@ -7,12 +7,25 @@ const broadcasters = new Map();
 
 function createPeer(ws) {
   const id = uuidv4();
-  peers.set(id, { ws, role: null, monitor_number: null, name: null, isAlive: true, watchingBroadcaster: null });
+  peers.set(id, { 
+    ws, 
+    role: null, 
+    monitor_number: null, 
+    name: null, 
+    isAlive: true, 
+    watchingBroadcaster: null,
+    missedPings: 0,
+    lastSeen: Date.now()
+  });
 
   // configurar heartbeat para este peer
   ws.on('pong', () => {
     const peer = peers.get(id);
-    if (peer) peer.isAlive = true;
+    if (peer) {
+      peer.isAlive = true;
+      peer.missedPings = 0;
+      peer.lastSeen = Date.now();
+    }
   });
 
   ws.on('close', () => {
@@ -28,20 +41,41 @@ function deletePeer(id) {
   broadcasters.delete(id);
 }
 
-// Heartbeat global
+// Heartbeat global - verifica a cada 1 minuto
 function setupHeartbeat() {
   setInterval(() => {
+    const now = Date.now();
+    const TWO_MINUTES = 2 * 60 * 1000;
+    
     for (const [id, peer] of peers) {
-      if (!peer.isAlive) {
-        console.log(`❌ Peer inativo: ${id}, removendo...`);
+      const inactiveDuration = now - peer.lastSeen;
+      
+      // Remover peers inativos há mais de 2 minutos
+      if (inactiveDuration > TWO_MINUTES) {
+        console.log(`❌ Peer inativo há ${(inactiveDuration/1000).toFixed(0)}s: ${id} (${peer.role || 'unknown'}), removendo...`);
         peer.ws.terminate();
         deletePeer(id);
         continue;
       }
+      
+      // Incrementar contador de pings perdidos se não respondeu
+      if (!peer.isAlive) {
+        peer.missedPings++;
+        console.log(`⚠️ Peer ${id} (${peer.role || 'unknown'}) não respondeu ao ping (${peer.missedPings} pings perdidos)`);
+      }
+      
+      // Enviar ping
       peer.isAlive = false;
-      peer.ws.ping();
+      try {
+        peer.ws.ping();
+      } catch (err) {
+        console.log(`❌ Erro ao enviar ping para ${id}: ${err.message}`);
+        deletePeer(id);
+      }
     }
-  }, 30000); // a cada 30s
+    
+    console.log(`💓 Health check: ${peers.size} peer(s) ativos, ${broadcasters.size} broadcaster(s)`);
+  }, 60000); // a cada 1 minuto
 }
 
 module.exports = { peers, broadcasters, createPeer, deletePeer, setupHeartbeat };

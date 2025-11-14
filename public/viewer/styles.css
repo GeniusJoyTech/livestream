@@ -8,15 +8,34 @@ body {
   padding: 0;
 }
 
+/* Container principal para vídeo e monitoramento */
+.content-container {
+  display: flex;
+  gap: 20px;
+  max-width: 1600px;
+  margin: 20px auto;
+  padding: 0 20px;
+  align-items: flex-start;
+}
+
+.video-container {
+  flex: 1;
+  min-width: 0;
+}
+
 /* Estilo do vídeo */
 video {
-  width: 90%;
-  max-width: 1280px;
-  margin-top: 15px;
+  width: 100%;
   border-radius: 8px;
   background: #000;
   border: 2px solid #333;
   box-shadow: 0 0 10px rgba(0,0,0,0.6);
+}
+
+@media (max-width: 1024px) {
+  .content-container {
+    flex-direction: column;
+  }
 }
 
 /* Estilo dos controles */
@@ -69,11 +88,13 @@ button:disabled {
 
 /* Estilo da seção de monitoramento */
 .monitoring-section {
-  margin: 30px auto;
-  max-width: 1280px;
+  flex: 1;
+  min-width: 350px;
+  max-width: 500px;
   padding: 20px;
   background: rgba(255,255,255,0.05);
   border-radius: 8px;
+  height: fit-content;
 }
 
 .monitoring-section h3 {
