@@ -10,34 +10,20 @@ O broadcaster agora coleta o **histórico completo de navegação** dos navegado
 - URLs, títulos de páginas e timestamps
 - Incluído automaticamente no relatório Excel
 
+O filtro de data para download da planilha precisa afetar diretamente o dowload das urls, ou seja, se o usuário selecionar de data x até data y o relatório precisa exportar dessas datas. 
+Além disso precisa dividir o botão baixar excel em dois tipos diferentes, o primeiro botão exibe atividades e estatisticas, o segundo exibe histórico de navegação e estatísticas.
+Precisa melhorar a transmissão pois haverá casos em que será streaming de jogos
 ## Como Executar o Broadcaster (Python)
 
 O broadcaster é um aplicativo Python que captura sua tela e envia para o servidor WebRTC.
 
 ### 1. Atualizar a URL de Conexão
 
-Antes de executar o broadcaster, você precisa atualizar a URL de conexão no arquivo `public/broadcaster/Broadcaster.py`.
+Neste ponto preciso atualizar para que o servidor node rode pyinstaller --onefile --noconsole  --name=Broadcaster .\Broadcaster.py
+enviando para o broadcaster a signaling url e um token com expiração de dois meses, sendo que o servidor precisa atualizar automaticamente este token com o broadcaster para um novo enquanto o broadcaster estiver ativo, por exemplo, eu pedi para o servidor criar hoje o executável, preciso que esse executável receba o primeiro token e que seja possível instalar nas máquinas que precisam fazer a transmissão por até um dia, após um dia esse primeiro token é expirado, após instalar o servidor atualiza o token em tempos intercalados para que a transmissão e a conexão se encerre apenas quando o usuário ficar muito tempo ocioso, ou seja o primeiro token é para instalação, após instalar recebe outro token para manter ativa a conexão do broadcaster com o server, ou seja é no servidor que fica a signaling url que o python acessará
 
-**Encontre seu domínio Replit:**
-```bash
-echo $REPLIT_DOMAINS
-```
-
-**Edite o arquivo Broadcaster.py** (linha 372):
-```python
-signaling_url = "wss://[SEU-DOMINIO-AQUI]?role=broadcaster"
-```
-
-**Exemplo:**
-```python
-signaling_url = "wss://cfdafce5-b982-4750-82b6-dc2185ad7fad-00-1egd469xx08mp.spock.replit.dev?role=broadcaster"
-```
 
 ### 2. Instalar Dependências Python
-
-```bash
-pip install asyncio websockets aiortc mss opencv-python numpy psutil pywin32
-```
 
 **⚠️ AVISO: O broadcaster agora acessa os bancos de dados SQLite dos navegadores para ler o histórico.**
 
@@ -57,11 +43,7 @@ python Broadcaster.py
 ## Como Usar a Aplicação Web
 
 ### 1. Fazer Login
-- Acesse a aplicação web (ela abre automaticamente no Replit)
-- Use as credenciais padrão:
-  - **Usuário:** admin
-  - **Senha:** 123456
-
+Precisa permitir criar um usuário, este usuário será uma empresa ou pai de uma criança, logo ele precisa criar outras pessoas para verificar e fazer o monitoramento, e estes usuário poderá ver apenas as transmissões que o seu broadcaster transmite, afinal eles fazem o download de um arquivo  do tipo .exe e instala nas máquinas, esses executáveis serão transmitidos apenas para seus respectivos viewers, logo seria adicionado no broadcaster algo como: permited_id e apenas os viewers com esse id poderiam acessar o broadcaster, o usuário que fez o primeiro acesso fica responsável por criar novos usuários para assistir e remover estes usuários, os usuários adicionados, podem apenas assistir o que seu superior permitir, tudo precisa estar criptografado
 ⚠️ **ALTERE A SENHA PADRÃO EM PRODUÇÃO!**
 
 ### 2. Conectar e Assistir
