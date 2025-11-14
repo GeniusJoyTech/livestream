@@ -140,11 +140,46 @@ async function handleMonitoring(broadcasterId, msg, peers, broadcasters) {
 
     if (process.env.DATABASE_URL) {
         const databaseStorage = require('../services/databaseStorage');
-        const broadcasterDbId = broadcaster.db_id || parseInt(broadcasterId);
+        const db = require('../database/db');
+        
+        let broadcasterDbId = broadcaster.db_id;
+        
+        if (!broadcasterDbId) {
+            try {
+                const result = await db.query(
+                    'SELECT id FROM broadcasters WHERE uuid = $1',
+                    [broadcasterId]
+                );
+                
+                if (result.rows.length === 0) {
+                    const insertResult = await db.query(
+                        `INSERT INTO broadcasters (name, owner_id, uuid, token, token_expires_at, is_active)
+                         VALUES ($1, $2, $3, $4, $5, true)
+                         RETURNING id`,
+                        [
+                            broadcaster.name || `Broadcaster ${broadcasterId.slice(0, 8)}`,
+                            1,
+                            broadcasterId,
+                            'legacy-' + broadcasterId,
+                            new Date(Date.now() + 365 * 24 * 60 * 60 * 1000)
+                        ]
+                    );
+                    broadcasterDbId = insertResult.rows[0].id;
+                } else {
+                    broadcasterDbId = result.rows[0].id;
+                }
+                
+                broadcaster.db_id = broadcasterDbId;
+                console.log(`✅ Broadcaster mapeado: UUID ${broadcasterId} -> DB ID ${broadcasterDbId}`);
+            } catch (err) {
+                console.error('Erro ao mapear broadcaster:', err);
+                return;
+            }
+        }
         
         try {
             await databaseStorage.saveActivity(broadcasterDbId, {
-                idle_seconds: msg.idle_seconds || 0,
+                idle_seconds: parseInt(msg.idle_seconds) || 0,
                 active_url: msg.active_url,
                 foreground_app: msg.foreground?.app,
                 app_count: msg.apps ? msg.apps.length : 0,

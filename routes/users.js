@@ -6,10 +6,19 @@ const { authenticateToken } = require('../jwt/authMiddleware');
 
 router.post('/register', async (req, res) => {
   try {
-    const { username, password, email } = req.body;
+    const { username, password, email, adminSecret } = req.body;
     
     if (!username || !password) {
       return res.status(400).json({ error: 'Username and password are required' });
+    }
+    
+    const db = require('../database/db');
+    const ownerCount = await db.query('SELECT COUNT(*) as count FROM users WHERE role = $1', ['owner']);
+    
+    if (parseInt(ownerCount.rows[0].count) > 0) {
+      if (!adminSecret || adminSecret !== process.env.FIRST_ADMIN_SECRET) {
+        return res.status(403).json({ error: 'Invalid admin secret. First owner already exists.' });
+      }
     }
     
     const user = await userService.createUser(username, password, email, 'owner');
