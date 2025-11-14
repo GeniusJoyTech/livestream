@@ -363,7 +363,10 @@ class Broadcaster:
 
 
 if __name__ == "__main__":
-    signaling_url = "wss://cfdafce5-b982-4750-82b6-dc2185ad7fad-00-1egd469xx08mp.janeway.replit.dev?role=broadcaster"
+    # IMPORTANTE: Atualize esta URL com o domínio atual do seu Replit
+    # Para encontrar seu domínio, execute: echo $REPLIT_DOMAINS
+    # O formato é: wss://[SEU-DOMINIO]?role=broadcaster
+    signaling_url = "wss://cfdafce5-b982-4750-82b6-dc2185ad7fad-00-1egd469xx08mp.spock.replit.dev?role=broadcaster"
     company_id = "1"
     broadcaster = Broadcaster(signaling_url,
                               broadcaster_name=nome_computador,

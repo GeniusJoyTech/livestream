@@ -183,6 +183,15 @@ SimplificaVideos/
 ```
 
 ## Recent Changes
+- **2025-11-14**: GitHub Import Setup Complete (Current Session)
+  - Fixed broadcaster WebSocket connection (updated URL from .janeway to .spock domain)
+  - JWT_SECRET configured via Replit Secrets
+  - Workflow running on port 5000 with webview
+  - Deployment configured for VM (persistent WebSocket connections)
+  - Created BROADCASTER_SETUP.md with complete usage guide
+  - Broadcaster successfully connecting and sending monitoring data
+  - 355 activities loaded and being tracked
+
 - **2025-11-14**: Activity Monitoring and Reporting System
   - **Idle detection**: Broadcaster tracks user idle time using system APIs
   - **URL tracking**: Extracts active URLs from browser window titles (Chrome, Firefox, Edge)

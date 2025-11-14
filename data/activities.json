@@ -4798,5 +4798,980 @@
       "pid": 14664
     },
     "apps_count": 10
+  },
+  {
+    "broadcasterId": "e44a0f5f-7e84-4066-b150-32a4c2c0e4e1",
+    "timestamp": "2025-11-14T10:41:10.762127",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.4,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Broadcaster.py - SimplificaVideos - Visual Studio Code",
+      "app": "Code.exe",
+      "pid": 10492
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "e44a0f5f-7e84-4066-b150-32a4c2c0e4e1",
+    "timestamp": "2025-11-14T10:41:12.778479",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Broadcaster.py - SimplificaVideos - Visual Studio Code",
+      "app": "Code.exe",
+      "pid": 10492
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "e44a0f5f-7e84-4066-b150-32a4c2c0e4e1",
+    "timestamp": "2025-11-14T10:41:14.785917",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "e44a0f5f-7e84-4066-b150-32a4c2c0e4e1",
+    "timestamp": "2025-11-14T10:41:16.800292",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "e44a0f5f-7e84-4066-b150-32a4c2c0e4e1",
+    "timestamp": "2025-11-14T10:41:18.808178",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "e44a0f5f-7e84-4066-b150-32a4c2c0e4e1",
+    "timestamp": "2025-11-14T10:41:20.817380",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "e44a0f5f-7e84-4066-b150-32a4c2c0e4e1",
+    "timestamp": "2025-11-14T10:41:22.827530",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "e44a0f5f-7e84-4066-b150-32a4c2c0e4e1",
+    "timestamp": "2025-11-14T10:41:24.832678",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "e44a0f5f-7e84-4066-b150-32a4c2c0e4e1",
+    "timestamp": "2025-11-14T10:41:26.843758",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "e44a0f5f-7e84-4066-b150-32a4c2c0e4e1",
+    "timestamp": "2025-11-14T10:41:28.858324",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "e44a0f5f-7e84-4066-b150-32a4c2c0e4e1",
+    "timestamp": "2025-11-14T10:41:30.875197",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.2,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "e44a0f5f-7e84-4066-b150-32a4c2c0e4e1",
+    "timestamp": "2025-11-14T10:41:32.879327",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "e44a0f5f-7e84-4066-b150-32a4c2c0e4e1",
+    "timestamp": "2025-11-14T10:41:34.887307",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "e44a0f5f-7e84-4066-b150-32a4c2c0e4e1",
+    "timestamp": "2025-11-14T10:41:36.903173",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "e44a0f5f-7e84-4066-b150-32a4c2c0e4e1",
+    "timestamp": "2025-11-14T10:41:38.909926",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "e44a0f5f-7e84-4066-b150-32a4c2c0e4e1",
+    "timestamp": "2025-11-14T10:41:40.915310",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "e44a0f5f-7e84-4066-b150-32a4c2c0e4e1",
+    "timestamp": "2025-11-14T10:41:42.920898",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "e44a0f5f-7e84-4066-b150-32a4c2c0e4e1",
+    "timestamp": "2025-11-14T10:41:44.927897",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.2,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "e44a0f5f-7e84-4066-b150-32a4c2c0e4e1",
+    "timestamp": "2025-11-14T10:41:46.943041",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "e44a0f5f-7e84-4066-b150-32a4c2c0e4e1",
+    "timestamp": "2025-11-14T10:41:48.950478",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "e44a0f5f-7e84-4066-b150-32a4c2c0e4e1",
+    "timestamp": "2025-11-14T10:41:50.958357",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "e44a0f5f-7e84-4066-b150-32a4c2c0e4e1",
+    "timestamp": "2025-11-14T10:41:52.971530",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "e44a0f5f-7e84-4066-b150-32a4c2c0e4e1",
+    "timestamp": "2025-11-14T10:41:54.984831",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "e44a0f5f-7e84-4066-b150-32a4c2c0e4e1",
+    "timestamp": "2025-11-14T10:41:57.000190",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.3,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "e44a0f5f-7e84-4066-b150-32a4c2c0e4e1",
+    "timestamp": "2025-11-14T10:41:59.007937",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "e44a0f5f-7e84-4066-b150-32a4c2c0e4e1",
+    "timestamp": "2025-11-14T10:42:01.013615",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "e44a0f5f-7e84-4066-b150-32a4c2c0e4e1",
+    "timestamp": "2025-11-14T10:42:03.023361",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "e44a0f5f-7e84-4066-b150-32a4c2c0e4e1",
+    "timestamp": "2025-11-14T10:42:05.034586",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "e44a0f5f-7e84-4066-b150-32a4c2c0e4e1",
+    "timestamp": "2025-11-14T10:42:07.038092",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "e44a0f5f-7e84-4066-b150-32a4c2c0e4e1",
+    "timestamp": "2025-11-14T10:42:09.049115",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.2,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "e44a0f5f-7e84-4066-b150-32a4c2c0e4e1",
+    "timestamp": "2025-11-14T10:42:11.056503",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 2.2,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "e44a0f5f-7e84-4066-b150-32a4c2c0e4e1",
+    "timestamp": "2025-11-14T10:42:13.063710",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "e44a0f5f-7e84-4066-b150-32a4c2c0e4e1",
+    "timestamp": "2025-11-14T10:42:15.070028",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 3,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "e44a0f5f-7e84-4066-b150-32a4c2c0e4e1",
+    "timestamp": "2025-11-14T10:42:17.077752",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 5,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "e44a0f5f-7e84-4066-b150-32a4c2c0e4e1",
+    "timestamp": "2025-11-14T10:42:19.088208",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "",
+      "app": "explorer.exe",
+      "pid": 7260
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "ab514ece-d65b-46f1-a47a-8989582cfc5f",
+    "timestamp": "2025-11-14T10:42:28.835993",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 3.5,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "ab514ece-d65b-46f1-a47a-8989582cfc5f",
+    "timestamp": "2025-11-14T10:42:30.847586",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "ab514ece-d65b-46f1-a47a-8989582cfc5f",
+    "timestamp": "2025-11-14T10:42:32.858413",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.6,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "ab514ece-d65b-46f1-a47a-8989582cfc5f",
+    "timestamp": "2025-11-14T10:42:34.864674",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "ab514ece-d65b-46f1-a47a-8989582cfc5f",
+    "timestamp": "2025-11-14T10:42:36.872042",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "ab514ece-d65b-46f1-a47a-8989582cfc5f",
+    "timestamp": "2025-11-14T10:42:38.887209",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "ab514ece-d65b-46f1-a47a-8989582cfc5f",
+    "timestamp": "2025-11-14T10:42:40.892479",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "ab514ece-d65b-46f1-a47a-8989582cfc5f",
+    "timestamp": "2025-11-14T10:42:42.896741",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "ab514ece-d65b-46f1-a47a-8989582cfc5f",
+    "timestamp": "2025-11-14T10:42:44.906686",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "ab514ece-d65b-46f1-a47a-8989582cfc5f",
+    "timestamp": "2025-11-14T10:42:46.919337",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 1.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "ab514ece-d65b-46f1-a47a-8989582cfc5f",
+    "timestamp": "2025-11-14T10:42:48.934876",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 3.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "ab514ece-d65b-46f1-a47a-8989582cfc5f",
+    "timestamp": "2025-11-14T10:42:50.938304",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "ab514ece-d65b-46f1-a47a-8989582cfc5f",
+    "timestamp": "2025-11-14T10:42:52.949408",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.7,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "ab514ece-d65b-46f1-a47a-8989582cfc5f",
+    "timestamp": "2025-11-14T10:42:54.953455",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.2,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "ab514ece-d65b-46f1-a47a-8989582cfc5f",
+    "timestamp": "2025-11-14T10:42:56.963795",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.3,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "ab514ece-d65b-46f1-a47a-8989582cfc5f",
+    "timestamp": "2025-11-14T10:42:58.970314",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.9,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "ab514ece-d65b-46f1-a47a-8989582cfc5f",
+    "timestamp": "2025-11-14T10:43:00.982664",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "ab514ece-d65b-46f1-a47a-8989582cfc5f",
+    "timestamp": "2025-11-14T10:43:02.997781",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 1.9,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "ab514ece-d65b-46f1-a47a-8989582cfc5f",
+    "timestamp": "2025-11-14T10:43:05.013696",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "ab514ece-d65b-46f1-a47a-8989582cfc5f",
+    "timestamp": "2025-11-14T10:43:07.019614",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "ab514ece-d65b-46f1-a47a-8989582cfc5f",
+    "timestamp": "2025-11-14T10:43:09.027000",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "ab514ece-d65b-46f1-a47a-8989582cfc5f",
+    "timestamp": "2025-11-14T10:43:11.035687",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.2,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Jéssica - Financeiro | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "ab514ece-d65b-46f1-a47a-8989582cfc5f",
+    "timestamp": "2025-11-14T10:43:13.040812",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Jéssica - Financeiro | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "ab514ece-d65b-46f1-a47a-8989582cfc5f",
+    "timestamp": "2025-11-14T10:43:15.045405",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Jéssica - Financeiro | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "ab514ece-d65b-46f1-a47a-8989582cfc5f",
+    "timestamp": "2025-11-14T10:43:17.048391",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Jéssica - Financeiro | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "ab514ece-d65b-46f1-a47a-8989582cfc5f",
+    "timestamp": "2025-11-14T10:43:19.055815",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.2,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Jéssica - Financeiro | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "ab514ece-d65b-46f1-a47a-8989582cfc5f",
+    "timestamp": "2025-11-14T10:43:21.070731",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 1.5,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Jéssica - Financeiro | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "ab514ece-d65b-46f1-a47a-8989582cfc5f",
+    "timestamp": "2025-11-14T10:43:23.079874",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Jéssica - Financeiro | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "ab514ece-d65b-46f1-a47a-8989582cfc5f",
+    "timestamp": "2025-11-14T10:43:25.095034",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.6,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Jéssica - Financeiro | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "ab514ece-d65b-46f1-a47a-8989582cfc5f",
+    "timestamp": "2025-11-14T10:43:27.110682",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 1.3,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Jéssica - Financeiro | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 10
   }
 ]
