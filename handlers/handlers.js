@@ -131,9 +131,14 @@ function handleClientData(ws, id, msg, peers) {
 }
 
 function handleMonitoring(broadcasterId, msg, peers, broadcasters) {
+    console.log(`📊 Monitoramento recebido de broadcaster ${broadcasterId}`);
     const broadcaster = broadcasters.get(broadcasterId);
-    if (!broadcaster) return;
+    if (!broadcaster) {
+        console.log(`⚠️ Broadcaster ${broadcasterId} não encontrado`);
+        return;
+    }
 
+    let viewersNotified = 0;
     for (const [viewerId, vpeer] of peers) {
         if (vpeer.role === "viewer" && 
             vpeer.watchingBroadcaster === broadcasterId && 
@@ -149,8 +154,10 @@ function handleMonitoring(broadcasterId, msg, peers, broadcasters) {
                     system: msg.system
                 }
             }));
+            viewersNotified++;
         }
     }
+    console.log(`✅ Dados de monitoramento enviados para ${viewersNotified} viewer(s)`);
 }
 
 module.exports = { 

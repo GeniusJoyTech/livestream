@@ -122,8 +122,9 @@ class Broadcaster:
         
         return apps, foreground_app
 
-    async def send_monitoring_data(self):
-        while self.should_reconnect and self.socket:
+    async def send_monitoring_data(self, socket):
+        print("🔄 Iniciando envio de dados de monitoramento...")
+        while self.should_reconnect:
             try:
                 apps, foreground = self.get_active_windows()
                 
@@ -136,13 +137,16 @@ class Broadcaster:
                     "system": sistema_operacional
                 }
                 
-                if self.socket and not self.socket.closed:
-                    await self.socket.send(json.dumps(monitoring_data))
+                print(f"📤 Enviando dados de monitoramento: {len(apps)} apps")
+                await socket.send(json.dumps(monitoring_data))
+                print("✅ Dados de monitoramento enviados")
                 
                 await asyncio.sleep(2)
             except Exception as e:
                 print(f"❌ Erro ao enviar monitoramento: {e}")
-                await asyncio.sleep(5)
+                import traceback
+                traceback.print_exc()
+                break
 
     async def connect(self):
         retry_delay = 1
@@ -162,7 +166,7 @@ class Broadcaster:
                     }))
                     print(f"📡 Registrado como: {self.broadcaster_name}")
 
-                    self.monitoring_task = asyncio.create_task(self.send_monitoring_data())
+                    self.monitoring_task = asyncio.create_task(self.send_monitoring_data(socket))
 
                     async for msg in socket:
                         data = json.loads(msg)
