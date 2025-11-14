@@ -22873,5 +22873,530 @@
       "pid": 8652
     },
     "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:13:25.377208",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:13:27.409120",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:13:29.422413",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:13:31.459751",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:13:33.462398",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:13:35.475176",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:13:37.483465",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.2,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:13:39.517558",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:13:41.524312",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.3,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Nova guia - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:13:43.537312",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "New Tab - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:13:45.541837",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "ChatGPT - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:13:47.552079",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "ChatGPT - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:13:49.566665",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "ChatGPT - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:13:51.574620",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "ChatGPT - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:13:53.579526",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.6,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "ChatGPT - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:13:55.589612",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "ChatGPT - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:13:57.599837",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "ChatGPT - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:13:59.601663",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "ChatGPT - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:14:01.619101",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.4,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "ChatGPT - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:14:03.629129",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "ChatGPT - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:14:05.664581",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "ChatGPT - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:14:07.680818",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "ChatGPT - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:14:09.696148",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "ChatGPT - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:14:11.719046",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.3,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "ChatGPT - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:14:13.774038",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "ChatGPT - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:14:15.786542",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.2,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "ChatGPT - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:14:17.800644",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.2,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "ChatGPT - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:14:19.811252",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "ChatGPT - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:14:21.826597",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "ChatGPT - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:14:23.827946",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:14:25.843166",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:14:27.854921",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:14:29.862297",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.2,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:14:31.876199",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.6,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:14:33.913074",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
   }
 ]
