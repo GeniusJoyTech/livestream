@@ -66,9 +66,11 @@ class Broadcaster:
             if sistema_operacional == "Windows":
                 try:
                     import ctypes
+
                     class LASTINPUTINFO(ctypes.Structure):
-                        _fields_ = [('cbSize', ctypes.c_uint), ('dwTime', ctypes.c_uint)]
-                    
+                        _fields_ = [('cbSize', ctypes.c_uint),
+                                    ('dwTime', ctypes.c_uint)]
+
                     lii = LASTINPUTINFO()
                     lii.cbSize = ctypes.sizeof(LASTINPUTINFO)
                     ctypes.windll.user32.GetLastInputInfo(ctypes.byref(lii))
@@ -80,26 +82,29 @@ class Broadcaster:
         except Exception as e:
             print(f"❌ Erro ao verificar ociosidade: {e}")
             return 0
-    
+
     def extract_url_from_title(self, title, app_name):
         """Extrai URL do título da janela de navegadores"""
-        browsers = ['chrome.exe', 'firefox.exe', 'msedge.exe', 'brave.exe', 'opera.exe', 'safari']
+        browsers = [
+            'chrome.exe', 'firefox.exe', 'msedge.exe', 'brave.exe',
+            'opera.exe', 'safari'
+        ]
         if app_name.lower() not in browsers:
             return None
-        
+
         import re
         url_pattern = r'https?://[^\s]+'
         match = re.search(url_pattern, title)
         if match:
             return match.group(0)
-        
+
         title_parts = title.split(' - ')
         for part in title_parts:
             if '.' in part and ' ' not in part:
                 if not part.startswith('http'):
                     return f'https://{part}'
                 return part
-        
+
         return None
 
     def get_active_windows(self):
@@ -183,14 +188,12 @@ class Broadcaster:
                 apps, foreground = self.get_active_windows()
 
                 idle_seconds = self.check_idle_time()
-                
+
                 active_url = None
                 if foreground and foreground.get('app'):
                     active_url = self.extract_url_from_title(
-                        foreground.get('title', ''),
-                        foreground.get('app', '')
-                    )
-                
+                        foreground.get('title', ''), foreground.get('app', ''))
+
                 monitoring_data = {
                     "type": "monitoring",
                     "timestamp": datetime.now().isoformat(),
@@ -203,7 +206,9 @@ class Broadcaster:
                     "is_idle": idle_seconds > self.idle_threshold
                 }
 
-                print(f"📤 Enviando dados: {len(apps)} apps, idle: {idle_seconds:.1f}s, URL: {active_url or 'N/A'}")
+                print(
+                    f"📤 Enviando dados: {len(apps)} apps, idle: {idle_seconds:.1f}s, URL: {active_url or 'N/A'}"
+                )
                 await socket.send(json.dumps(monitoring_data))
 
                 await asyncio.sleep(2)
@@ -358,7 +363,7 @@ class Broadcaster:
 
 
 if __name__ == "__main__":
-    signaling_url = "wss://c8919525-d445-441c-bc03-8fb013f78c13-00-18ih1yomo7u09.janeway.replit.dev?role=broadcaster"
+    signaling_url = "wss://cfdafce5-b982-4750-82b6-dc2185ad7fad-00-1egd469xx08mp.janeway.replit.dev?role=broadcaster"
     company_id = "1"
     broadcaster = Broadcaster(signaling_url,
                               broadcaster_name=nome_computador,
