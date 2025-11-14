@@ -136,7 +136,7 @@ class Broadcaster:
                     "system": sistema_operacional
                 }
                 
-                if self.socket and self.socket.open:
+                if self.socket and not self.socket.closed:
                     await self.socket.send(json.dumps(monitoring_data))
                 
                 await asyncio.sleep(2)
