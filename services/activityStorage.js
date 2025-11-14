@@ -3,10 +3,13 @@ const path = require('path');
 
 const STORAGE_DIR = path.join(__dirname, '../data');
 const ACTIVITY_FILE = path.join(STORAGE_DIR, 'activities.json');
+const BROWSER_HISTORY_FILE = path.join(STORAGE_DIR, 'browser_history.json');
 const MAX_ENTRIES = 100000;
 const RETENTION_DAYS = 90;
 
 let activitiesCache = [];
+let browserHistoryCache = [];
+let browserHistoryKeys = new Set();
 let isReady = false;
 let readyPromise;
 
@@ -31,6 +34,25 @@ async function loadActivities() {
     } else {
       console.error('Erro ao carregar atividades:', err);
     }
+  }
+
+  try {
+    const historyData = await fs.readFile(BROWSER_HISTORY_FILE, 'utf8');
+    browserHistoryCache = JSON.parse(historyData);
+    browserHistoryKeys.clear();
+    browserHistoryCache.forEach(entry => {
+      const key = `${entry.broadcasterId}|${entry.visitTime}|${entry.url}`;
+      browserHistoryKeys.add(key);
+    });
+    console.log(`📚 Carregadas ${browserHistoryCache.length} entradas de histórico do disco`);
+  } catch (err) {
+    if (err.code === 'ENOENT') {
+      browserHistoryCache = [];
+      browserHistoryKeys.clear();
+      console.log('📚 Nenhum arquivo de histórico encontrado, iniciando novo');
+    } else {
+      console.error('Erro ao carregar histórico:', err);
+    }
   } finally {
     isReady = true;
   }
@@ -47,6 +69,15 @@ async function saveActivities() {
     await fs.writeFile(ACTIVITY_FILE, JSON.stringify(activitiesCache, null, 2));
   } catch (err) {
     console.error('Erro ao salvar atividades:', err);
+  }
+}
+
+async function saveBrowserHistory() {
+  try {
+    await ensureDataDir();
+    await fs.writeFile(BROWSER_HISTORY_FILE, JSON.stringify(browserHistoryCache, null, 2));
+  } catch (err) {
+    console.error('Erro ao salvar histórico de navegação:', err);
   }
 }
 
@@ -88,13 +119,15 @@ function scheduleSave() {
 }
 
 process.on('SIGTERM', () => {
-  console.log('💾 Salvando atividades antes de encerrar (SIGTERM)...');
-  saveActivities().then(() => console.log('✅ Atividades salvas'));
+  console.log('💾 Salvando dados antes de encerrar (SIGTERM)...');
+  Promise.all([saveActivities(), saveBrowserHistory()])
+    .then(() => console.log('✅ Dados salvos'));
 });
 
 process.on('SIGINT', () => {
-  console.log('💾 Salvando atividades antes de encerrar (SIGINT)...');
-  saveActivities().then(() => console.log('✅ Atividades salvas'));
+  console.log('💾 Salvando dados antes de encerrar (SIGINT)...');
+  Promise.all([saveActivities(), saveBrowserHistory()])
+    .then(() => console.log('✅ Dados salvos'));
 });
 
 async function addActivity(broadcasterId, data) {
@@ -182,6 +215,74 @@ async function getStats(broadcasterId, fromDate, toDate) {
   };
 }
 
+async function addBrowserHistory(broadcasterId, historyEntries) {
+  await waitForReady();
+  
+  const timestamp = new Date().toISOString();
+  let addedCount = 0;
+  let duplicateCount = 0;
+  
+  for (const entry of historyEntries) {
+    const uniqueKey = `${broadcasterId}|${entry.visit_time}|${entry.url}`;
+    
+    if (!browserHistoryKeys.has(uniqueKey)) {
+      const historyRecord = {
+        broadcasterId,
+        receivedAt: timestamp,
+        browser: entry.browser,
+        url: entry.url,
+        title: entry.title,
+        visitTime: entry.visit_time
+      };
+      
+      browserHistoryCache.push(historyRecord);
+      browserHistoryKeys.add(uniqueKey);
+      addedCount++;
+    } else {
+      duplicateCount++;
+    }
+  }
+  
+  if (browserHistoryCache.length > MAX_ENTRIES) {
+    const removed = browserHistoryCache.length - MAX_ENTRIES;
+    const removedEntries = browserHistoryCache.splice(0, removed);
+    removedEntries.forEach(entry => {
+      const key = `${entry.broadcasterId}|${entry.visitTime}|${entry.url}`;
+      browserHistoryKeys.delete(key);
+    });
+  }
+  
+  if (addedCount > 0) {
+    await saveBrowserHistory();
+    console.log(`💾 Salvos ${addedCount} novos registros de histórico (${duplicateCount} duplicatas ignoradas)`);
+  } else if (duplicateCount > 0) {
+    console.log(`ℹ️ ${duplicateCount} duplicatas ignoradas, nenhum novo registro`);
+  }
+}
+
+async function getBrowserHistory(broadcasterId, fromDate, toDate) {
+  await waitForReady();
+  
+  let filtered = browserHistoryCache;
+  
+  if (broadcasterId) {
+    filtered = filtered.filter(h => h.broadcasterId === broadcasterId);
+  }
+  
+  if (fromDate) {
+    const from = new Date(fromDate);
+    filtered = filtered.filter(h => new Date(h.visitTime) >= from);
+  }
+  
+  if (toDate) {
+    const to = new Date(toDate);
+    to.setHours(23, 59, 59, 999);
+    filtered = filtered.filter(h => new Date(h.visitTime) <= to);
+  }
+  
+  return filtered.sort((a, b) => new Date(b.visitTime) - new Date(a.visitTime));
+}
+
 setInterval(cleanOldEntries, 24 * 60 * 60 * 1000);
 
 readyPromise = loadActivities().catch(console.error);
@@ -191,5 +292,7 @@ module.exports = {
   getActivities,
   getStats,
   saveActivities,
-  waitForReady
+  waitForReady,
+  addBrowserHistory,
+  getBrowserHistory
 };

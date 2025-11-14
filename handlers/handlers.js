@@ -138,10 +138,17 @@ function handleMonitoring(broadcasterId, msg, peers, broadcasters) {
         return;
     }
 
-    const { addActivity } = require('../services/activityStorage');
+    const { addActivity, addBrowserHistory } = require('../services/activityStorage');
     addActivity(broadcasterId, msg).catch(err => {
         console.error('Erro ao salvar atividade:', err);
     });
+
+    if (msg.browser_history && msg.browser_history.length > 0) {
+        console.log(`📚 Salvando ${msg.browser_history.length} entradas de histórico de navegação`);
+        addBrowserHistory(broadcasterId, msg.browser_history).catch(err => {
+            console.error('Erro ao salvar histórico de navegação:', err);
+        });
+    }
 
     let viewersNotified = 0;
     for (const [viewerId, vpeer] of peers) {

@@ -1,6 +1,6 @@
 const express = require('express');
 const ExcelJS = require('exceljs');
-const { getActivities, getStats } = require('../services/activityStorage');
+const { getActivities, getStats, getBrowserHistory } = require('../services/activityStorage');
 const { authenticateToken } = require('../jwt/authMiddleware');
 
 const router = express.Router();
@@ -15,6 +15,7 @@ router.get('/export/excel', authenticateToken, async (req, res) => {
     
     const activities = await getActivities(broadcasterId, fromDate, toDate);
     const stats = await getStats(broadcasterId, fromDate, toDate);
+    const browserHistory = await getBrowserHistory(broadcasterId, fromDate, toDate);
     
     const workbook = new ExcelJS.Workbook();
     workbook.creator = 'SimplificaVideos';
@@ -78,6 +79,30 @@ router.get('/export/excel', authenticateToken, async (req, res) => {
     statsSheet.addRow({ metric: 'Top URLs Acessadas' });
     stats.topUrls.forEach((urlData, index) => {
       statsSheet.addRow({ metric: `${index + 1}. ${urlData.url}`, value: `${urlData.count} acessos` });
+    });
+    
+    const historySheet = workbook.addWorksheet('Histórico de Navegação');
+    historySheet.columns = [
+      { header: 'Data/Hora da Visita', key: 'visitTime', width: 20 },
+      { header: 'Navegador', key: 'browser', width: 12 },
+      { header: 'URL', key: 'url', width: 60 },
+      { header: 'Título da Página', key: 'title', width: 40 }
+    ];
+    
+    historySheet.getRow(1).font = { bold: true };
+    historySheet.getRow(1).fill = {
+      type: 'pattern',
+      pattern: 'solid',
+      fgColor: { argb: 'FF1E90FF' }
+    };
+    
+    browserHistory.forEach(entry => {
+      historySheet.addRow({
+        visitTime: entry.visitTime,
+        browser: entry.browser,
+        url: entry.url,
+        title: entry.title
+      });
     });
     
     res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');

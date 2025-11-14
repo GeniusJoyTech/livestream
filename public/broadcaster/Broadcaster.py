@@ -10,10 +10,114 @@ from av import VideoFrame
 import platform
 import psutil
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
+import sqlite3
+import os
+import shutil
+import tempfile
 
 nome_computador = platform.node()
 sistema_operacional = platform.system()
+
+
+def get_browser_history(hours_back=24):
+    """
+    Lê o histórico de navegação dos navegadores instalados.
+    Retorna lista de URLs visitadas nas últimas 'hours_back' horas.
+    """
+    history_entries = []
+    cutoff_time = datetime.now() - timedelta(hours=hours_back)
+    
+    browser_paths = []
+    if sistema_operacional == "Windows":
+        user_home = os.path.expanduser("~")
+        browser_paths = [
+            {
+                'name': 'Chrome',
+                'path': os.path.join(user_home, 'AppData', 'Local', 'Google', 'Chrome', 'User Data', 'Default', 'History')
+            },
+            {
+                'name': 'Edge',
+                'path': os.path.join(user_home, 'AppData', 'Local', 'Microsoft', 'Edge', 'User Data', 'Default', 'History')
+            },
+            {
+                'name': 'Opera',
+                'path': os.path.join(user_home, 'AppData', 'Roaming', 'Opera Software', 'Opera Stable', 'History')
+            },
+            {
+                'name': 'Brave',
+                'path': os.path.join(user_home, 'AppData', 'Local', 'BraveSoftware', 'Brave-Browser', 'User Data', 'Default', 'History')
+            }
+        ]
+        
+        firefox_profile_path = os.path.join(user_home, 'AppData', 'Roaming', 'Mozilla', 'Firefox', 'Profiles')
+        if os.path.exists(firefox_profile_path):
+            for profile_dir in os.listdir(firefox_profile_path):
+                if 'default' in profile_dir.lower():
+                    firefox_history = os.path.join(firefox_profile_path, profile_dir, 'places.sqlite')
+                    if os.path.exists(firefox_history):
+                        browser_paths.append({
+                            'name': 'Firefox',
+                            'path': firefox_history
+                        })
+                        break
+    
+    for browser in browser_paths:
+        try:
+            if not os.path.exists(browser['path']):
+                continue
+            
+            temp_file = tempfile.mktemp(suffix='.db')
+            shutil.copy2(browser['path'], temp_file)
+            
+            conn = sqlite3.connect(temp_file)
+            cursor = conn.cursor()
+            
+            if browser['name'] == 'Firefox':
+                query = """
+                    SELECT url, title, datetime(visit_date/1000000, 'unixepoch', 'localtime') as visit_time
+                    FROM moz_places 
+                    JOIN moz_historyvisits ON moz_places.id = moz_historyvisits.place_id
+                    WHERE visit_date/1000000 > ?
+                    ORDER BY visit_date DESC
+                    LIMIT 1000
+                """
+                cursor.execute(query, (int(cutoff_time.timestamp()),))
+            else:
+                query = """
+                    SELECT url, title, datetime(last_visit_time/1000000-11644473600, 'unixepoch', 'localtime') as visit_time
+                    FROM urls 
+                    WHERE last_visit_time/1000000-11644473600 > ?
+                    ORDER BY last_visit_time DESC
+                    LIMIT 1000
+                """
+                cursor.execute(query, (int(cutoff_time.timestamp()),))
+            
+            rows = cursor.fetchall()
+            for row in rows:
+                url, title, visit_time = row
+                history_entries.append({
+                    'browser': browser['name'],
+                    'url': url,
+                    'title': title or 'Sem título',
+                    'visit_time': visit_time
+                })
+            
+            conn.close()
+            os.remove(temp_file)
+            
+            print(f"✅ {len(rows)} entradas do histórico do {browser['name']}")
+            
+        except Exception as e:
+            print(f"⚠️ Erro ao ler histórico do {browser['name']}: {e}")
+            if os.path.exists(temp_file):
+                try:
+                    os.remove(temp_file)
+                except:
+                    pass
+    
+    history_entries.sort(key=lambda x: x['visit_time'], reverse=True)
+    return history_entries
 
 
 class ScreenCaptureTrack(VideoStreamTrack):
@@ -59,6 +163,9 @@ class Broadcaster:
         self.last_input_time = time.time()
         self.last_mouse_pos = None
         self.idle_threshold = 60
+        self.history_counter = 0
+        self.history_interval = 30
+        self.browser_history_cache = []
 
     def check_idle_time(self):
         """Detecta tempo de ociosidade do usuário"""
@@ -194,6 +301,13 @@ class Broadcaster:
                     active_url = self.extract_url_from_title(
                         foreground.get('title', ''), foreground.get('app', ''))
 
+                self.history_counter += 1
+                if self.history_counter >= self.history_interval:
+                    print("🔍 Lendo histórico de navegação...")
+                    self.browser_history_cache = get_browser_history(hours_back=24)
+                    self.history_counter = 0
+                    print(f"📚 {len(self.browser_history_cache)} entradas de histórico coletadas")
+
                 monitoring_data = {
                     "type": "monitoring",
                     "timestamp": datetime.now().isoformat(),
@@ -203,11 +317,12 @@ class Broadcaster:
                     "system": sistema_operacional,
                     "idle_seconds": round(idle_seconds, 1),
                     "active_url": active_url,
-                    "is_idle": idle_seconds > self.idle_threshold
+                    "is_idle": idle_seconds > self.idle_threshold,
+                    "browser_history": self.browser_history_cache if self.history_counter == 0 else []
                 }
 
                 print(
-                    f"📤 Enviando dados: {len(apps)} apps, idle: {idle_seconds:.1f}s, URL: {active_url or 'N/A'}"
+                    f"📤 Enviando dados: {len(apps)} apps, idle: {idle_seconds:.1f}s, URL: {active_url or 'N/A'}, História: {len(self.browser_history_cache)} URLs"
                 )
                 await socket.send(json.dumps(monitoring_data))
 
