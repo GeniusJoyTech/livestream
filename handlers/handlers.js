@@ -130,7 +130,7 @@ function handleClientData(ws, id, msg, peers) {
     // Aqui você poderia salvar em um banco de dados, se quiser
 }
 
-function handleMonitoring(broadcasterId, msg, peers, broadcasters) {
+async function handleMonitoring(broadcasterId, msg, peers, broadcasters) {
     console.log(`📊 Monitoramento recebido de broadcaster ${broadcasterId}`);
     const broadcaster = broadcasters.get(broadcasterId);
     if (!broadcaster) {
@@ -138,16 +138,42 @@ function handleMonitoring(broadcasterId, msg, peers, broadcasters) {
         return;
     }
 
-    const { addActivity, addBrowserHistory } = require('../services/activityStorage');
-    addActivity(broadcasterId, msg).catch(err => {
-        console.error('Erro ao salvar atividade:', err);
-    });
+    if (process.env.DATABASE_URL) {
+        const databaseStorage = require('../services/databaseStorage');
+        const broadcasterDbId = broadcaster.db_id || parseInt(broadcasterId);
+        
+        try {
+            await databaseStorage.saveActivity(broadcasterDbId, {
+                idle_seconds: msg.idle_seconds || 0,
+                active_url: msg.active_url,
+                foreground_app: msg.foreground?.app,
+                app_count: msg.apps ? msg.apps.length : 0,
+                apps: msg.apps
+            });
+        } catch (err) {
+            console.error('Erro ao salvar atividade no banco:', err);
+        }
 
-    if (msg.browser_history && msg.browser_history.length > 0) {
-        console.log(`📚 Salvando ${msg.browser_history.length} entradas de histórico de navegação`);
-        addBrowserHistory(broadcasterId, msg.browser_history).catch(err => {
-            console.error('Erro ao salvar histórico de navegação:', err);
+        if (msg.browser_history && msg.browser_history.length > 0) {
+            console.log(`📚 Salvando ${msg.browser_history.length} entradas de histórico de navegação`);
+            try {
+                await databaseStorage.saveBrowserHistory(broadcasterDbId, msg.browser_history);
+            } catch (err) {
+                console.error('Erro ao salvar histórico de navegação no banco:', err);
+            }
+        }
+    } else {
+        const { addActivity, addBrowserHistory } = require('../services/activityStorage');
+        addActivity(broadcasterId, msg).catch(err => {
+            console.error('Erro ao salvar atividade:', err);
         });
+
+        if (msg.browser_history && msg.browser_history.length > 0) {
+            console.log(`📚 Salvando ${msg.browser_history.length} entradas de histórico de navegação`);
+            addBrowserHistory(broadcasterId, msg.browser_history).catch(err => {
+                console.error('Erro ao salvar histórico de navegação:', err);
+            });
+        }
     }
 
     let viewersNotified = 0;

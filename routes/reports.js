@@ -1,6 +1,8 @@
 const express = require('express');
 const ExcelJS = require('exceljs');
-const { getActivities, getStats, getBrowserHistory } = require('../services/activityStorage');
+const databaseStorage = require('../services/databaseStorage');
+const broadcasterService = require('../services/broadcasterService');
+const userService = require('../services/userService');
 const { authenticateToken } = require('../jwt/authMiddleware');
 
 const router = express.Router();
@@ -13,9 +15,30 @@ router.get('/export/excel', authenticateToken, async (req, res) => {
       return res.status(400).json({ error: 'broadcasterId é obrigatório' });
     }
     
-    const activities = await getActivities(broadcasterId, fromDate, toDate);
-    const stats = await getStats(broadcasterId, fromDate, toDate);
-    const browserHistory = await getBrowserHistory(broadcasterId, fromDate, toDate);
+    const broadcaster = await broadcasterService.getBroadcasterById(parseInt(broadcasterId));
+    if (!broadcaster) {
+      return res.status(404).json({ error: 'Broadcaster não encontrado' });
+    }
+    
+    if (req.user.role === 'owner' && broadcaster.owner_id !== req.user.id) {
+      return res.status(403).json({ error: 'Você não tem permissão para acessar este broadcaster' });
+    }
+    
+    if (req.user.role === 'viewer') {
+      const hasPermission = await broadcasterService.hasViewerPermission(parseInt(broadcasterId), req.user.id);
+      if (!hasPermission) {
+        return res.status(403).json({ error: 'Você não tem permissão para acessar este broadcaster' });
+      }
+    }
+    
+    const startDate = fromDate ? new Date(fromDate) : new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+    const endDate = toDate ? new Date(toDate) : new Date();
+    
+    const activities = await databaseStorage.getActivities(parseInt(broadcasterId), startDate, endDate);
+    const stats = await databaseStorage.getStatistics(parseInt(broadcasterId), startDate, endDate);
+    const browserHistory = await databaseStorage.getBrowserHistory(parseInt(broadcasterId), startDate, endDate);
+    
+    await userService.logAuditAction(req.user.id, 'EXCEL_EXPORTED', 'broadcaster', parseInt(broadcasterId), req.ip, req.get('user-agent'));
     
     const workbook = new ExcelJS.Workbook();
     workbook.creator = 'SimplificaVideos';
@@ -44,13 +67,13 @@ router.get('/export/excel', authenticateToken, async (req, res) => {
     activities.forEach(activity => {
       worksheet.addRow({
         timestamp: new Date(activity.timestamp).toLocaleString('pt-BR'),
-        host: activity.host,
-        system: activity.system,
-        status: activity.is_idle ? 'Ocioso' : 'Ativo',
+        host: '-',
+        system: '-',
+        status: activity.idle_seconds > 0 ? 'Ocioso' : 'Ativo',
         idle_seconds: activity.idle_seconds,
         active_url: activity.active_url || '-',
-        app: activity.foreground?.app || '-',
-        title: activity.foreground?.title || '-'
+        app: activity.foreground_app || '-',
+        title: '-'
       });
     });
     
@@ -67,18 +90,21 @@ router.get('/export/excel', authenticateToken, async (req, res) => {
       fgColor: { argb: 'FF1E90FF' }
     };
     
-    statsSheet.addRow({ metric: 'Total de Registros', value: stats.totalRecords });
-    statsSheet.addRow({ metric: 'Tempo Ativo (segundos)', value: stats.activeTime });
-    statsSheet.addRow({ metric: 'Tempo Ocioso (segundos)', value: stats.totalIdleTime });
-    
-    const totalTime = stats.activeTime + stats.totalIdleTime;
-    const idlePercentage = totalTime > 0 ? Math.round((stats.totalIdleTime / totalTime) * 100) : 0;
-    statsSheet.addRow({ metric: 'Taxa de Ociosidade (%)', value: idlePercentage });
+    statsSheet.addRow({ metric: 'Total de Registros', value: stats.totalActivities });
+    statsSheet.addRow({ metric: 'Tempo Ocioso (segundos)', value: stats.totalIdleSeconds });
+    statsSheet.addRow({ metric: 'Média de Apps Abertos', value: stats.avgAppCount.toFixed(2) });
+    statsSheet.addRow({ metric: 'URLs Únicas no Histórico', value: stats.uniqueBrowserUrls });
     
     statsSheet.addRow({});
     statsSheet.addRow({ metric: 'Top URLs Acessadas' });
     stats.topUrls.forEach((urlData, index) => {
-      statsSheet.addRow({ metric: `${index + 1}. ${urlData.url}`, value: `${urlData.count} acessos` });
+      statsSheet.addRow({ metric: `${index + 1}. ${urlData.active_url}`, value: `${urlData.count} acessos` });
+    });
+    
+    statsSheet.addRow({});
+    statsSheet.addRow({ metric: 'Top Aplicativos' });
+    stats.topApps.forEach((appData, index) => {
+      statsSheet.addRow({ metric: `${index + 1}. ${appData.foreground_app}`, value: `${appData.count} vezes` });
     });
     
     const historySheet = workbook.addWorksheet('Histórico de Navegação');
@@ -98,10 +124,10 @@ router.get('/export/excel', authenticateToken, async (req, res) => {
     
     browserHistory.forEach(entry => {
       historySheet.addRow({
-        visitTime: entry.visitTime,
+        visitTime: new Date(entry.timestamp).toLocaleString('pt-BR'),
         browser: entry.browser,
         url: entry.url,
-        title: entry.title
+        title: entry.title || '-'
       });
     });
     
@@ -120,7 +146,31 @@ router.get('/export/excel', authenticateToken, async (req, res) => {
 router.get('/stats', authenticateToken, async (req, res) => {
   try {
     const { broadcasterId, fromDate, toDate } = req.query;
-    const stats = await getStats(broadcasterId, fromDate, toDate);
+    
+    if (!broadcasterId) {
+      return res.status(400).json({ error: 'broadcasterId é obrigatório' });
+    }
+    
+    const broadcaster = await broadcasterService.getBroadcasterById(parseInt(broadcasterId));
+    if (!broadcaster) {
+      return res.status(404).json({ error: 'Broadcaster não encontrado' });
+    }
+    
+    if (req.user.role === 'owner' && broadcaster.owner_id !== req.user.id) {
+      return res.status(403).json({ error: 'Você não tem permissão para acessar este broadcaster' });
+    }
+    
+    if (req.user.role === 'viewer') {
+      const hasPermission = await broadcasterService.hasViewerPermission(parseInt(broadcasterId), req.user.id);
+      if (!hasPermission) {
+        return res.status(403).json({ error: 'Você não tem permissão para acessar este broadcaster' });
+      }
+    }
+    
+    const startDate = fromDate ? new Date(fromDate) : new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+    const endDate = toDate ? new Date(toDate) : new Date();
+    
+    const stats = await databaseStorage.getStatistics(parseInt(broadcasterId), startDate, endDate);
     res.json(stats);
   } catch (error) {
     console.error('Erro ao obter estatísticas:', error);

@@ -18973,5 +18973,3905 @@
       "pid": 8652
     },
     "apps_count": 10
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:04:42.673895",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.8,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:04:44.681582",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:04:46.690740",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 1.6,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:04:48.699409",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 1.5,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:04:50.707711",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:04:52.719333",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:04:54.728562",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.2,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:04:56.740197",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:04:58.753073",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:05:00.767352",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:05:02.769797",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:05:04.771596",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 2,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:05:06.777566",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:05:08.784794",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:05:10.805562",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:05:12.814425",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:05:14.823060",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:05:16.836733",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:05:18.846652",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:05:20.857669",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:05:22.866281",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:05:24.872763",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.3,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:05:26.877626",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.4,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:05:28.884392",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 2.5,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:05:30.896698",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.5,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:05:32.903121",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:05:34.914594",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:05:36.931318",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:05:38.935331",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.5,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:05:40.941879",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Escritório Simplifica Contabilidade | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:05:42.950641",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.6,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:05:44.968180",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:05:46.980815",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:05:48.986460",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:05:50.990811",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 2,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:05:52.997666",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 4,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:05:55.009868",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 6.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:05:57.014465",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 8.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:05:59.029659",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 10.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:06:01.039402",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 12.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:06:03.050719",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 14.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:06:05.055779",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 16.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:06:07.063803",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 18.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:06:09.070541",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 20.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:06:11.093694",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 22.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:06:13.103310",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 24.2,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:06:15.111707",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 26.2,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:06:17.116115",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 28.2,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:06:19.128151",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 30.2,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:06:21.132512",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 32.2,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:06:23.147839",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 34.2,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:06:25.157307",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 36.2,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:06:27.166745",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 38.2,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:06:29.171366",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 40.2,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:06:31.181842",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 42.2,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:06:33.190609",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 44.2,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:06:35.202961",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 46.2,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:06:37.208858",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 48.2,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:06:39.221567",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 50.3,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:06:41.231810",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 52.3,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:06:43.245610",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 54.3,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:06:45.254591",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 56.3,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:06:47.264965",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 58.3,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:06:49.273184",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 60.3,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:06:51.289936",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 62.3,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:06:53.296023",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 64.3,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:06:55.309212",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 66.4,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:06:57.310477",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 68.4,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:06:59.318622",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 70.4,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:07:01.320223",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 72.4,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:07:03.331533",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 74.4,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:07:05.345716",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 76.4,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:07:07.351780",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 78.4,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:07:09.361799",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 80.4,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:07:11.384680",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 82.4,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:07:13.394812",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 84.4,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:07:15.403523",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 86.5,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:07:17.417769",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 88.5,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:07:19.421433",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 90.5,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:07:21.430114",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 92.5,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:07:23.442251",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 94.5,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:07:25.458642",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 96.5,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:07:27.464210",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 98.5,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:07:29.476022",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 100.5,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:07:31.488738",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 102.5,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:07:33.501445",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 104.5,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:07:35.518497",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 106.6,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:07:37.528949",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 108.6,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:07:39.536612",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 110.6,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:07:41.548569",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 112.6,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:07:43.557360",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 114.6,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:07:45.565646",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 116.6,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:07:47.577147",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 118.6,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:07:49.582370",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 120.6,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:07:51.587139",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 122.6,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:07:53.597607",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 124.6,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:07:55.602977",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 126.6,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:07:57.609341",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 128.7,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:07:59.612816",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 130.7,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:08:01.625306",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 132.7,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:08:03.633555",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 134.7,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:08:05.639512",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 136.7,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:08:07.643006",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 138.7,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:08:09.653282",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 140.7,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:08:11.681348",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 142.7,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:08:13.696732",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 144.7,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:08:15.704424",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 146.8,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:08:17.715778",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 148.8,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:08:19.721555",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 150.8,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:08:21.729841",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 152.8,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:08:23.734383",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 154.8,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:08:25.740973",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 156.8,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:08:27.745383",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 158.8,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:08:29.747104",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 160.8,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:08:31.752553",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 162.8,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:08:33.759478",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 164.8,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:08:35.772270",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 166.8,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:08:37.787384",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 168.8,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:08:39.792220",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 170.8,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:08:41.796716",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 172.8,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:08:43.803640",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 174.8,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:08:45.815778",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 176.9,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:08:47.820891",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 178.9,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:08:49.823413",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 180.9,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:08:51.831810",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 182.9,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:08:53.845883",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 184.9,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:08:55.859791",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 186.9,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:08:57.875428",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 188.9,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:08:59.885550",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 190.9,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:09:01.890093",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 192.9,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:09:03.907190",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 195,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:09:05.923983",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 197,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:09:07.925713",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 199,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:09:09.935063",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 201,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:09:11.952627",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 203,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:09:13.959480",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 205,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:09:15.966874",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 207,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:09:17.972938",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 209,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:09:19.978836",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 211,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:09:21.984015",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 213,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:09:23.994971",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 215,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:09:26.005599",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 217,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:09:28.014010",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 219.1,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:09:30.018363",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 221.1,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:09:32.028494",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 223.1,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:09:34.034035",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 225.1,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:09:36.043167",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 227.1,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:09:38.048641",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 229.1,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:09:40.059612",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 231.1,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:09:42.070867",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 233.1,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:09:44.074568",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 235.1,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:09:46.077787",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 237.1,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:09:48.086309",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 239.1,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:09:50.098998",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 241.1,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:09:52.108244",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 243.2,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:09:54.119710",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 245.2,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:09:56.129046",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 247.2,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:09:58.137455",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 249.2,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:10:00.145427",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 251.2,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:10:02.153740",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 253.2,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:10:04.167377",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 255.2,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:10:06.173038",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 257.2,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:10:08.181331",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 259.2,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:10:10.186164",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 261.2,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:10:12.208660",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 263.2,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:10:14.217232",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 265.3,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:10:16.223752",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 267.3,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:10:18.232678",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 269.3,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:10:20.241702",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 271.3,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:10:22.252768",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 273.3,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:10:24.267702",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 275.3,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:10:26.273808",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 277.3,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:10:28.278983",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 279.3,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:10:30.295345",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 281.3,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:10:32.312685",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 283.4,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:10:34.329695",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 285.4,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:10:36.340726",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 287.4,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:10:38.352173",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 289.4,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:10:40.359684",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 291.4,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:10:42.372920",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 293.4,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:10:44.379012",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 295.4,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:10:46.386561",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 297.4,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:10:48.393073",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 299.4,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:10:50.404521",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 301.5,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:10:52.418159",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 303.5,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:10:54.422564",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 305.5,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:10:56.426774",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 307.5,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:10:58.443014",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 309.5,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:11:00.449844",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 311.5,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:11:02.459508",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 313.5,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:11:04.462137",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 315.5,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:11:06.468230",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 317.5,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:11:08.483000",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 319.5,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:11:10.493769",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 321.5,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:11:12.517383",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 323.5,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:11:14.526463",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 325.6,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:11:16.541059",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 327.6,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:11:18.552008",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 329.6,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:11:20.564365",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 331.6,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:11:22.572355",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 333.6,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:11:24.578217",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 335.6,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:11:26.583700",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 337.6,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:11:28.592198",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 339.6,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:11:30.597950",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 341.6,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:11:32.612910",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 343.7,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:11:34.622907",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 345.7,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:11:36.634184",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 347.7,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:11:38.642643",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 349.7,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:11:40.647348",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 351.7,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:11:42.663665",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 353.7,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:11:44.665967",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 355.7,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:11:46.673489",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 357.7,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:11:48.685451",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 359.7,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:11:50.698287",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 361.8,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "",
+      "app": "explorer.exe",
+      "pid": 7260
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:11:52.714563",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 363.8,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Fotos",
+      "app": "Photos.exe",
+      "pid": 20140
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:11:54.718625",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 365.8,
+    "is_idle": true,
+    "active_url": null,
+    "foreground": {
+      "title": "Fotos",
+      "app": "Photos.exe",
+      "pid": 20140
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:11:56.724199",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Ana Carolina Rodrigues | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:11:58.729241",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.5,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Samantha Chaves | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:12:00.745986",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Samantha Chaves | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:12:02.749167",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Chat | Samantha Chaves | Microsoft Teams",
+      "app": "ms-teams.exe",
+      "pid": 11312
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:12:04.761542",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "BROADCASTER_SETUP.md - SimplificaVideos - Visual Studio Code",
+      "app": "Code.exe",
+      "pid": 10492
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:12:06.785096",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:12:08.791840",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:12:10.797043",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.9,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:12:12.822869",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 2.9,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:12:14.834487",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 5,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:12:16.843445",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.2,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:12:18.849162",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Uma página incorporada no e79f8eea-7fb9-48a3-b8b9-b4debc2079b3-00-2wpjju54z50fp.spock.replit.dev deseja salvar",
+      "app": "brave.exe",
+      "pid": 22324
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:12:20.857674",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:12:22.872116",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Histórico de downloads recentes",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:12:24.917042",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Excel",
+      "app": "EXCEL.EXE",
+      "pid": 22684
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:12:26.933034",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.2,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "relatorio_2a00b018-1e65-427d-b166-8622546c8d61_1763140337615.xlsx - Excel",
+      "app": "EXCEL.EXE",
+      "pid": 22684
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:12:28.950513",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "relatorio_2a00b018-1e65-427d-b166-8622546c8d61_1763140337615.xlsx - Excel",
+      "app": "EXCEL.EXE",
+      "pid": 22684
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:12:30.958512",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "relatorio_2a00b018-1e65-427d-b166-8622546c8d61_1763140337615.xlsx - Excel",
+      "app": "EXCEL.EXE",
+      "pid": 22684
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:12:32.965371",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:12:34.978696",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Viewer Dinâmico - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:12:36.983722",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Viewer Dinâmico - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:12:38.993027",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.2,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Viewer Dinâmico - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:12:41.008248",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "e79f8eea-7fb9-48a3-b8b9-b4debc2079b3-00-2wpjju54z50fp.spock.replit.dev quer salvar",
+      "app": "brave.exe",
+      "pid": 14824
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:12:43.023886",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Viewer Dinâmico - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:12:45.066458",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.8,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "relatorio_2a00b018-1e65-427d-b166-8622546c8d61_1763140359864.xlsx - Excel",
+      "app": "EXCEL.EXE",
+      "pid": 23096
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:12:47.079635",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "relatorio_2a00b018-1e65-427d-b166-8622546c8d61_1763140359864.xlsx - Excel",
+      "app": "EXCEL.EXE",
+      "pid": 23096
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:12:49.082526",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "relatorio_2a00b018-1e65-427d-b166-8622546c8d61_1763140359864.xlsx - Excel",
+      "app": "EXCEL.EXE",
+      "pid": 23096
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:12:51.096046",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Viewer Dinâmico - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:12:53.103445",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.4,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Viewer Dinâmico - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:12:55.114648",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Viewer Dinâmico - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:12:57.122072",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "GeniusJoyTech/livestream: Repositório para criar uma stream ao vivo sobre a tela do usuário, feito com python, node e javascript - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:12:59.129573",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:13:01.137934",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:13:03.149499",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:13:05.171245",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.2,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:13:07.187666",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.8,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:13:09.196900",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:13:11.230885",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:13:13.254527",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.3,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:13:15.271149",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 1.4,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:13:17.275571",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:13:19.318518",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:13:21.330600",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:13:23.356917",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
   }
 ]

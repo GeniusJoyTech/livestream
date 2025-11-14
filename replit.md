@@ -196,15 +196,28 @@ SimplificaVideos/
 ```
 
 ## Recent Changes
+- **2025-11-14**: Production Security Implementation 🔐
+  - **PostgreSQL Migration**: Migrated from JSON to PostgreSQL for all data storage
+  - **User Management System**: Implemented role-based access (owner/viewer)
+  - **Strong Password Requirements**: Minimum 8 characters, uppercase, lowercase, numbers, special characters
+  - **Broadcaster Token System**: JWT tokens with 60-day expiration + 24h installation tokens
+  - **Permission-Based Access**: Viewers only see broadcasters they're authorized to view
+  - **Audit Logging**: Complete audit trail of all user actions
+  - **Data Retention Policy**: Automatic cleanup of data older than 90 days
+  - **Registration System**: New user registration with password validation
+  - **API Endpoints**: Complete REST API for user and broadcaster management
+  - **Backward Compatibility**: Still works with JSON files if DATABASE_URL not set
+  - **Documentation**: Created DATABASE_SETUP.md with complete setup instructions
+  - **⚠️ CRITICAL**: Default credentials removed - must create admin account via /register
+
 - **2025-11-14**: Replit Environment Setup (Fresh GitHub Import)
-  - Dependencies installed successfully via npm install
+  - Dependencies installed successfully via npm install (pg, crypto-js added)
   - JWT_SECRET configured via Replit Secrets (secure environment variable)
   - Workflow configured to run `node server.js` on port 5000 with webview output
   - Deployment configured for VM (always-on, required for WebSocket connections)
   - Server successfully running on 0.0.0.0:5000
-  - Login page verified and accessible
+  - Login and registration pages verified and accessible
   - GitHub import fully configured and operational
-  - Loaded 1190 existing activities and 22 browser history entries from data files
 
 - **2025-11-14**: Browser History Tracking System
   - **Browser history collection**: Broadcaster.py lê histórico de Chrome, Firefox, Edge, Opera, Brave (últimas 24h)

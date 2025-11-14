@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - SimplificaVideos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .register-container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 450px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .password-requirements {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+            padding-left: 5px;
+        }
+
+        .password-requirements li {
+            margin: 3px 0;
+        }
+
+        .requirement-met {
+            color: #28a745;
+        }
+
+        .requirement-not-met {
+            color: #dc3545;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+            font-size: 14px;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+            font-size: 14px;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .login-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        .privacy-warning {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            color: #856404;
+        }
+
+        .privacy-warning strong {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .checkbox-group {
+            margin: 15px 0;
+        }
+
+        .checkbox-group label {
+            display: flex;
+            align-items: start;
+            font-weight: normal;
+            font-size: 13px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin-right: 10px;
+            margin-top: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <h1>🔐 Criar Conta</h1>
+        <p class="subtitle">SimplificaVideos - Monitoramento Seguro</p>
+
+        <div class="privacy-warning">
+            <strong>⚠️ Aviso Importante</strong>
+            Esta aplicação coleta dados de navegação e atividades. Ao criar uma conta, você reconhece que leu e compreendeu as políticas de privacidade e segurança.
+        </div>
+
+        <div class="error-message" id="error-message"></div>
+        <div class="success-message" id="success-message"></div>
+
+        <form id="register-form">
+            <div class="form-group">
+                <label for="username">Usuário *</label>
+                <input type="text" id="username" name="username" required minlength="3">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Senha *</label>
+                <input type="password" id="password" name="password" required>
+                <ul class="password-requirements" id="password-requirements">
+                    <li id="req-length">Mínimo 8 caracteres</li>
+                    <li id="req-uppercase">Pelo menos uma letra maiúscula</li>
+                    <li id="req-lowercase">Pelo menos uma letra minúscula</li>
+                    <li id="req-number">Pelo menos um número</li>
+                    <li id="req-special">Pelo menos um caractere especial (!@#$%^&*)</li>
+                </ul>
+            </div>
+
+            <div class="form-group">
+                <label for="confirm-password">Confirmar Senha *</label>
+                <input type="password" id="confirm-password" name="confirm-password" required>
+            </div>
+
+            <div class="checkbox-group">
+                <label>
+                    <input type="checkbox" id="privacy-agreement" required>
+                    <span>Eu li e concordo com as <a href="/PRIVACIDADE_E_SEGURANCA.md" target="_blank">Políticas de Privacidade</a> e estou ciente da coleta de dados</span>
+                </label>
+            </div>
+
+            <button type="submit" id="submit-button">Criar Conta</button>
+        </form>
+
+        <div class="login-link">
+            Já tem uma conta? <a href="/login/login.html">Fazer Login</a>
+        </div>
+    </div>
+
+    <script src="register.js"></script>
+</body>
+</html>

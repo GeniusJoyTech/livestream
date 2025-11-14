@@ -4,6 +4,21 @@
   <meta charset="UTF-8" />
   <title>Login</title>
   <link rel="stylesheet" href="../viewer/styles.css" />
+  <style>
+    .register-link {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+    .register-link a {
+      color: #1E90FF;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .register-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
   <h2>🔐 Login</h2>
@@ -15,6 +30,10 @@
   </div>
 
   <div class="status" id="status"></div>
+
+  <div class="register-link">
+    Não tem uma conta? <a href="/register/register.html">Criar Conta</a>
+  </div>
 
   <script src="login.js"></script>
 </body>
