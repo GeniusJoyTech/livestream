@@ -7,20 +7,39 @@ const INSTALLATION_TOKEN_DURATION = '1d';
 class BroadcasterService {
   
   async createBroadcaster(name, ownerId) {
-    const token = generateToken({ type: 'broadcaster', ownerId }, BROADCASTER_TOKEN_DURATION);
-    const installationToken = generateToken({ type: 'installation', ownerId }, INSTALLATION_TOKEN_DURATION);
-    
     const tokenExpiresAt = new Date(Date.now() + 60 * 24 * 60 * 60 * 1000);
     const installationExpiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
     
     const result = await db.query(
-      `INSERT INTO broadcasters (name, owner_id, token, token_expires_at, installation_token, installation_token_expires_at)
-       VALUES ($1, $2, $3, $4, $5, $6)
-       RETURNING id, name, owner_id, token, installation_token, created_at`,
-      [name, ownerId, token, tokenExpiresAt, installationToken, installationExpiresAt]
+      `INSERT INTO broadcasters (name, owner_id, token_expires_at, installation_token_expires_at, is_active)
+       VALUES ($1, $2, $3, $4, true)
+       RETURNING id, name, owner_id, created_at`,
+      [name, ownerId, tokenExpiresAt, installationExpiresAt]
     );
     
-    return result.rows[0];
+    const broadcaster = result.rows[0];
+    
+    const token = generateToken({ 
+      type: 'broadcaster', 
+      ownerId, 
+      broadcasterId: broadcaster.id 
+    }, BROADCASTER_TOKEN_DURATION);
+    
+    const installationToken = generateToken({ 
+      type: 'installation', 
+      ownerId, 
+      broadcasterId: broadcaster.id 
+    }, INSTALLATION_TOKEN_DURATION);
+    
+    await db.query(
+      `UPDATE broadcasters SET token = $1, installation_token = $2 WHERE id = $3`,
+      [token, installationToken, broadcaster.id]
+    );
+    
+    broadcaster.token = token;
+    broadcaster.installation_token = installationToken;
+    
+    return broadcaster;
   }
   
   async getBroadcasterById(broadcasterId) {
@@ -51,7 +70,17 @@ class BroadcasterService {
   }
   
   async refreshBroadcasterToken(broadcasterId) {
-    const newToken = generateToken({ type: 'broadcaster', broadcasterId }, BROADCASTER_TOKEN_DURATION);
+    const broadcaster = await this.getBroadcasterById(broadcasterId);
+    if (!broadcaster) {
+      throw new Error('Broadcaster not found');
+    }
+    
+    const newToken = generateToken({ 
+      type: 'broadcaster', 
+      ownerId: broadcaster.owner_id, 
+      broadcasterId 
+    }, BROADCASTER_TOKEN_DURATION);
+    
     const tokenExpiresAt = new Date(Date.now() + 60 * 24 * 60 * 60 * 1000);
     
     const result = await db.query(

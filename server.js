@@ -49,7 +49,12 @@ app.post("/login", async (req, res) => {
       return res.status(401).json({ error: "Invalid credentials" });
     }
     
-    const token = generateToken({ id: user.id, username: user.username, role: user.role });
+    const token = generateToken({ 
+      type: 'user',
+      id: user.id, 
+      username: user.username, 
+      role: user.role 
+    });
     
     await userService.logAuditAction(user.id, 'USER_LOGIN', 'user', user.id, req.ip, req.get('user-agent'));
     

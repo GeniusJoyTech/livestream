@@ -5,11 +5,18 @@ const jwt = require("jsonwebtoken");
  * @param {Object} user - Objeto de usuário contendo id e username.
  * @returns {string} Token JWT.
  */
-function generateToken(user) {
+function generateToken(payload, expiresIn = "2h") {
+  const tokenPayload = {
+    ...payload,
+    aud: 'simplificavideos-api',
+    iss: 'simplificavideos-auth',
+    iat: Math.floor(Date.now() / 1000)
+  };
+  
   return jwt.sign(
-    { id: user.id, username: user.username },
+    tokenPayload,
     process.env.JWT_SECRET,
-    { expiresIn: "2h" }
+    { expiresIn }
   );
 }
 
@@ -18,10 +25,21 @@ function generateToken(user) {
  * @param {string} token - Token JWT a ser verificado.
  * @returns {Object|null} Retorna o payload se válido ou null se inválido.
  */
-function verifyToken(token) {
+function verifyToken(token, expectedType = null) {
   try {
-    return jwt.verify(token, process.env.JWT_SECRET);
+    const payload = jwt.verify(token, process.env.JWT_SECRET, {
+      audience: 'simplificavideos-api',
+      issuer: 'simplificavideos-auth'
+    });
+    
+    if (expectedType && payload.type !== expectedType) {
+      console.warn(`Token type mismatch: expected ${expectedType}, got ${payload.type}`);
+      return null;
+    }
+    
+    return payload;
   } catch (err) {
+    console.error('Token verification failed:', err.message);
     return null;
   }
 }

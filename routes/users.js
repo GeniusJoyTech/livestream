@@ -17,6 +17,8 @@ router.post('/register', async (req, res) => {
     
     if (parseInt(ownerCount.rows[0].count) > 0) {
       if (!adminSecret || adminSecret !== process.env.FIRST_ADMIN_SECRET) {
+        await userService.logAuditAction(null, 'REGISTRATION_BLOCKED', 'registration', null, req.ip, req.get('user-agent'));
+        console.warn(`⚠️ Failed registration attempt from IP ${req.ip}`);
         return res.status(403).json({ error: 'Invalid admin secret. First owner already exists.' });
       }
     }
