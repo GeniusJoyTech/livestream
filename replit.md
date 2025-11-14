@@ -119,6 +119,13 @@ SimplificaVideos/
 ```
 
 ## Recent Changes
+- **2025-11-14**: UI/UX Improvements and Enhanced Monitoring
+  - **Side-by-side layout**: Monitoring table now appears next to video (responsive, stacks on mobile)
+  - **Auto-reconnection**: Viewer automatically reconnects with exponential backoff (max 30s) on connection loss
+  - **Health check system**: Server verifies peers every 1 minute, removes inactive peers after 2 minutes
+  - **Broadcaster fixes**: Corrected WebSocket handling in Python broadcaster (removed invalid `.open`/`.closed` attributes)
+  - **Enhanced logging**: Added detailed monitoring logs for debugging
+
 - **2025-11-14**: Replit Environment Setup Complete
   - Configured JWT_SECRET via Replit Secrets (secure environment variable)
   - Workflow configured to run server on port 5000 with webview output
@@ -147,4 +154,4 @@ None specified yet.
 ## Notes
 - The broadcaster component (Python-based screen capture) is in `public/broadcaster/` but not part of the web application
 - The application uses STUN server (stun.l.google.com:19302) for NAT traversal
-- Heartbeat interval is set to 30 seconds for connection health monitoring
+- Health check runs every 60 seconds (1 minute), removes peers inactive for more than 2 minutes
