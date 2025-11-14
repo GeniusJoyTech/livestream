@@ -17323,5 +17323,530 @@
       "pid": 8652
     },
     "apps_count": 9
+  },
+  {
+    "broadcasterId": "3f15915c-e459-465b-a917-3570c7718931",
+    "timestamp": "2025-11-14T11:09:35.602117",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 20.6,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Nova guia - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "3f15915c-e459-465b-a917-3570c7718931",
+    "timestamp": "2025-11-14T11:09:37.613009",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 22.6,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Nova guia - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "3f15915c-e459-465b-a917-3570c7718931",
+    "timestamp": "2025-11-14T11:09:39.622223",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 24.6,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Nova guia - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "3f15915c-e459-465b-a917-3570c7718931",
+    "timestamp": "2025-11-14T11:09:41.655080",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 26.7,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Nova guia - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "3f15915c-e459-465b-a917-3570c7718931",
+    "timestamp": "2025-11-14T11:09:43.670531",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 28.7,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Nova guia - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "3f15915c-e459-465b-a917-3570c7718931",
+    "timestamp": "2025-11-14T11:09:45.683063",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 30.7,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Nova guia - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "3f15915c-e459-465b-a917-3570c7718931",
+    "timestamp": "2025-11-14T11:09:47.731789",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 32.8,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Nova guia - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "3f15915c-e459-465b-a917-3570c7718931",
+    "timestamp": "2025-11-14T11:09:49.742866",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 34.8,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Nova guia - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "3f15915c-e459-465b-a917-3570c7718931",
+    "timestamp": "2025-11-14T11:09:51.747366",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 36.8,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Nova guia - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "3f15915c-e459-465b-a917-3570c7718931",
+    "timestamp": "2025-11-14T11:09:53.760188",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 38.8,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Nova guia - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "3f15915c-e459-465b-a917-3570c7718931",
+    "timestamp": "2025-11-14T11:09:55.817214",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 40.8,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Nova guia - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "3f15915c-e459-465b-a917-3570c7718931",
+    "timestamp": "2025-11-14T11:09:57.847324",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 42.9,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Nova guia - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "3f15915c-e459-465b-a917-3570c7718931",
+    "timestamp": "2025-11-14T11:09:59.858970",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 44.9,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Nova guia - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "3f15915c-e459-465b-a917-3570c7718931",
+    "timestamp": "2025-11-14T11:10:01.866078",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 46.9,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Nova guia - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "8f59f4ef-3c06-4347-bfed-8250a8ed5cb4",
+    "timestamp": "2025-11-14T11:10:13.013642",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "",
+      "app": "explorer.exe",
+      "pid": 7260
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "8f59f4ef-3c06-4347-bfed-8250a8ed5cb4",
+    "timestamp": "2025-11-14T11:10:15.047435",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "8f59f4ef-3c06-4347-bfed-8250a8ed5cb4",
+    "timestamp": "2025-11-14T11:10:17.055860",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "8f59f4ef-3c06-4347-bfed-8250a8ed5cb4",
+    "timestamp": "2025-11-14T11:10:19.059627",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.2,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "8f59f4ef-3c06-4347-bfed-8250a8ed5cb4",
+    "timestamp": "2025-11-14T11:10:21.069126",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "8f59f4ef-3c06-4347-bfed-8250a8ed5cb4",
+    "timestamp": "2025-11-14T11:10:23.106473",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.6,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "8f59f4ef-3c06-4347-bfed-8250a8ed5cb4",
+    "timestamp": "2025-11-14T11:10:25.119479",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "8f59f4ef-3c06-4347-bfed-8250a8ed5cb4",
+    "timestamp": "2025-11-14T11:10:27.143298",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "8f59f4ef-3c06-4347-bfed-8250a8ed5cb4",
+    "timestamp": "2025-11-14T11:10:29.163374",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "8f59f4ef-3c06-4347-bfed-8250a8ed5cb4",
+    "timestamp": "2025-11-14T11:10:31.169781",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.2,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "8f59f4ef-3c06-4347-bfed-8250a8ed5cb4",
+    "timestamp": "2025-11-14T11:10:33.172392",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "8f59f4ef-3c06-4347-bfed-8250a8ed5cb4",
+    "timestamp": "2025-11-14T11:10:35.215235",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "8f59f4ef-3c06-4347-bfed-8250a8ed5cb4",
+    "timestamp": "2025-11-14T11:10:37.228945",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "8f59f4ef-3c06-4347-bfed-8250a8ed5cb4",
+    "timestamp": "2025-11-14T11:10:39.243113",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 1.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "8f59f4ef-3c06-4347-bfed-8250a8ed5cb4",
+    "timestamp": "2025-11-14T11:10:41.295889",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "8f59f4ef-3c06-4347-bfed-8250a8ed5cb4",
+    "timestamp": "2025-11-14T11:10:43.306527",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 2.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "8f59f4ef-3c06-4347-bfed-8250a8ed5cb4",
+    "timestamp": "2025-11-14T11:10:45.318417",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 4.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "8f59f4ef-3c06-4347-bfed-8250a8ed5cb4",
+    "timestamp": "2025-11-14T11:10:47.339043",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 6.2,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "8f59f4ef-3c06-4347-bfed-8250a8ed5cb4",
+    "timestamp": "2025-11-14T11:10:49.355201",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 8.2,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "8f59f4ef-3c06-4347-bfed-8250a8ed5cb4",
+    "timestamp": "2025-11-14T11:10:51.358644",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 10.2,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "8f59f4ef-3c06-4347-bfed-8250a8ed5cb4",
+    "timestamp": "2025-11-14T11:10:53.360800",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 12.2,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "1 027 939 212 - AnyDesk",
+      "app": "AnyDesk.exe",
+      "pid": 8868
+    },
+    "apps_count": 9
   }
 ]
