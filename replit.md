@@ -196,7 +196,17 @@ SimplificaVideos/
 ```
 
 ## Recent Changes
-- **2025-11-14**: Browser History Tracking System (Current Session)
+- **2025-11-14**: Replit Environment Setup (Fresh GitHub Import)
+  - Dependencies installed successfully via npm install
+  - JWT_SECRET configured via Replit Secrets (secure environment variable)
+  - Workflow configured to run `node server.js` on port 5000 with webview output
+  - Deployment configured for VM (always-on, required for WebSocket connections)
+  - Server successfully running on 0.0.0.0:5000
+  - Login page verified and accessible
+  - GitHub import fully configured and operational
+  - Loaded 1190 existing activities and 22 browser history entries from data files
+
+- **2025-11-14**: Browser History Tracking System
   - **Browser history collection**: Broadcaster.py lê histórico de Chrome, Firefox, Edge, Opera, Brave (últimas 24h)
   - **Deduplicação eficiente**: Sistema baseado em Set para verificação O(1) de duplicatas
   - **Excel export**: Nova planilha "Histórico de Navegação" com filtro de data
@@ -205,14 +215,6 @@ SimplificaVideos/
   - **⚠️ CRÍTICO**: Funcionalidade em PROOF OF CONCEPT - veja AVISO_CRITICO_SEGURANCA.md
   - **Vulnerabilidades identificadas**: Dados não criptografados + credenciais default
   - **Status**: NÃO APROVADO para produção sem correções de segurança
-
-- **2025-11-14**: GitHub Import Setup Complete
-  - Fixed broadcaster WebSocket connection (updated URL from .janeway to .spock domain)
-  - JWT_SECRET configured via Replit Secrets
-  - Workflow running on port 5000 with webview
-  - Deployment configured for VM (persistent WebSocket connections)
-  - Created BROADCASTER_SETUP.md with complete usage guide
-  - Broadcaster successfully connecting and sending monitoring data
 
 - **2025-11-14**: Activity Monitoring and Reporting System
   - **Idle detection**: Broadcaster tracks user idle time using system APIs
