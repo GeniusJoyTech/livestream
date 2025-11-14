@@ -1,0 +1,124 @@
+# ⚠️ AVISO IMPORTANTE DE PRIVACIDADE E SEGURANÇA
+
+## Sobre a Coleta de Dados
+
+Esta aplicação agora coleta **histórico completo de navegação** dos navegadores instalados no computador onde o broadcaster está sendo executado.
+
+### O que é coletado:
+- ✅ Histórico de URLs visitadas (últimas 24 horas por padrão)
+- ✅ Títulos das páginas visitadas
+- ✅ Timestamps de quando cada URL foi acessada
+- ✅ Navegador utilizado (Chrome, Firefox, Edge, Opera, Brave)
+
+### Navegadores suportados:
+- Google Chrome
+- Microsoft Edge
+- Mozilla Firefox
+- Opera
+- Brave
+
+## 🔐 Requisitos Legais e Éticos
+
+### ⚠️ ATENÇÃO - OBRIGATÓRIO:
+
+1. **CONSENTIMENTO EXPLÍCITO**
+   - O usuário que está sendo monitorado DEVE estar ciente e concordar com a coleta de dados
+   - Não instale o broadcaster em computadores de outras pessoas sem consentimento
+   - O consentimento deve ser documentado por escrito
+
+2. **CONFORMIDADE LEGAL**
+   - Esta ferramenta pode estar sujeita a leis de privacidade (LGPD no Brasil, GDPR na Europa)
+   - Consulte um advogado antes de implementar em ambiente corporativo
+   - Certifique-se de cumprir todas as leis trabalhistas aplicáveis
+
+3. **TRANSPARÊNCIA**
+   - Informe claramente aos usuários monitorados:
+     * Quais dados estão sendo coletados
+     * Como serão armazenados
+     * Quem terá acesso aos dados
+     * Por quanto tempo serão mantidos
+
+4. **USO APROPRIADO**
+   - ✅ Monitoramento corporativo com consentimento dos funcionários
+   - ✅ Controle parental com conhecimento dos menores
+   - ✅ Auto-monitoramento para produtividade pessoal
+   - ❌ Espionagem sem consentimento
+   - ❌ Invasão de privacidade
+   - ❌ Violação de leis trabalhistas
+
+## 🛡️ Segurança dos Dados
+
+### Dados Sensíveis
+O histórico de navegação pode conter:
+- Credenciais em URLs (evite!)
+- Informações pessoais
+- Dados médicos ou financeiros
+- Informações confidenciais da empresa
+
+### Recomendações de Segurança:
+
+1. **Armazenamento**
+   - Atualmente: Arquivos JSON locais (não criptografados)
+   - Recomendado para produção: Banco de dados PostgreSQL com criptografia
+   - Proteja o servidor com firewall adequado
+   - Use HTTPS em produção
+
+2. **Acesso aos Dados**
+   - Limite o acesso aos relatórios apenas a pessoas autorizadas
+   - Use senhas fortes (altere a senha padrão admin/123456!)
+   - Implemente autenticação de dois fatores se possível
+   - Registre logs de quem acessa os relatórios
+
+3. **Retenção de Dados**
+   - Atualmente: 90 dias
+   - Defina política clara de retenção
+   - Delete dados após período necessário
+   - Implemente rotinas de limpeza automática
+
+4. **Backup e Recuperação**
+   - Faça backup dos dados regularmente
+   - Criptografe os backups
+   - Armazene backups em local seguro
+   - Teste a recuperação periodicamente
+
+## 📋 Checklist de Implementação Responsável
+
+Antes de usar esta funcionalidade em produção:
+
+- [ ] Obtive consentimento por escrito de todos os usuários monitorados
+- [ ] Consultei departamento jurídico / advogado sobre conformidade legal
+- [ ] Criei política de privacidade clara e compartilhei com usuários
+- [ ] Configurei armazenamento seguro dos dados (criptografia)
+- [ ] Alterei credenciais padrão (admin/123456)
+- [ ] Configurei HTTPS em produção
+- [ ] Implementei controles de acesso adequados
+- [ ] Defini e documentei política de retenção de dados
+- [ ] Configurei backups seguros
+- [ ] Treinei administradores sobre uso ético e legal da ferramenta
+
+## 🚨 Avisos Importantes
+
+### Para Empregadores:
+- Monitoramento excessivo pode prejudicar a confiança e moral dos funcionários
+- Alguns países/estados têm leis específicas sobre monitoramento no trabalho
+- Considere o equilíbrio entre produtividade e privacidade
+- Use os dados de forma construtiva, não punitiva
+
+### Para Usuários do Broadcaster:
+- Ao executar o broadcaster, você está **consentindo** com a coleta de dados
+- O histórico completo de navegação será enviado ao servidor
+- Isso inclui TODAS as páginas visitadas nas últimas 24 horas
+- Se você não concorda, **NÃO execute o broadcaster**
+
+## 📞 Suporte e Dúvidas
+
+Se você tiver dúvidas sobre:
+- Legalidade do uso desta ferramenta
+- Conformidade com leis de privacidade
+- Implementação segura
+
+Consulte um advogado especializado em privacidade de dados e direito digital.
+
+---
+
+**Este software é fornecido "como está", sem garantias de qualquer tipo. O desenvolvedor não se responsabiliza pelo uso inadequado, ilegal ou antiético desta ferramenta.**
