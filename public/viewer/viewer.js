@@ -48,6 +48,48 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ===========================
+  // Função para atualizar tabela de monitoramento
+  // ===========================
+  function updateMonitoringTable(data) {
+    const monitoringInfo = document.getElementById('monitoring-info');
+    const tbody = document.getElementById('monitoring-tbody');
+    
+    if (!data || !data.apps || data.apps.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="4" style="text-align: center;">Nenhum dado disponível</td></tr>';
+      monitoringInfo.innerHTML = '<p>Aguardando dados de monitoramento...</p>';
+      return;
+    }
+
+    const timestamp = new Date(data.timestamp).toLocaleTimeString('pt-BR');
+    monitoringInfo.innerHTML = `
+      <p><strong>Host:</strong> ${data.host} | <strong>Sistema:</strong> ${data.system} | <strong>Última atualização:</strong> ${timestamp}</p>
+    `;
+
+    tbody.innerHTML = '';
+    
+    data.apps.forEach(app => {
+      const row = tbody.insertRow();
+      const isForeground = data.foreground && data.foreground.pid === app.pid;
+      
+      const statusCell = row.insertCell(0);
+      statusCell.innerHTML = isForeground ? '🟢 Foco' : '⚪ Background';
+      if (isForeground) {
+        row.style.backgroundColor = 'rgba(0, 255, 0, 0.1)';
+        row.style.fontWeight = 'bold';
+      }
+      
+      const appCell = row.insertCell(1);
+      appCell.textContent = app.app || '-';
+      
+      const titleCell = row.insertCell(2);
+      titleCell.textContent = app.title || '-';
+      
+      const pidCell = row.insertCell(3);
+      pidCell.textContent = app.pid || '-';
+    });
+  }
+
+  // ===========================
   // Atualizar lista de broadcasters
   // ===========================
   function updateSelect() {
@@ -178,6 +220,11 @@ document.addEventListener("DOMContentLoaded", () => {
         case "candidate":
           const candidatePc = peers.get(message.senderId);
           if (candidatePc) await candidatePc.addIceCandidate(new RTCIceCandidate(message.candidate));
+          break;
+        case "monitoring":
+          if (message.broadcasterId === selectedBroadcasterId) {
+            updateMonitoringTable(message.data);
+          }
           break;
       }
     };

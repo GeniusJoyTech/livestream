@@ -8,7 +8,12 @@ from aiortc import RTCPeerConnection, RTCSessionDescription, VideoStreamTrack
 from aiortc.sdp import candidate_from_sdp
 from av import VideoFrame
 import platform
+import psutil
+import time
+from datetime import datetime
+
 nome_computador = platform.node()
+sistema_operacional = platform.system()
 
 class ScreenCaptureTrack(VideoStreamTrack):
     def __init__(self, monitor_number=1, fps=30):
@@ -40,8 +45,104 @@ class Broadcaster:
         self.signaling_url = signaling_url
         self.broadcaster_name = broadcaster_name
         self.company_id = company_id
-        self.peers = {}  # viewer_id -> RTCPeerConnection
+        self.peers = {}
         self.should_reconnect = True
+        self.socket = None
+        self.monitoring_task = None
+
+    def get_active_windows(self):
+        apps = []
+        foreground_app = None
+        
+        try:
+            if sistema_operacional == "Windows":
+                try:
+                    import win32gui
+                    import win32process
+                    
+                    def callback(hwnd, windows):
+                        if win32gui.IsWindowVisible(hwnd):
+                            title = win32gui.GetWindowText(hwnd)
+                            if title:
+                                _, pid = win32process.GetWindowThreadProcessId(hwnd)
+                                try:
+                                    process = psutil.Process(pid)
+                                    windows.append({
+                                        "title": title,
+                                        "app": process.name(),
+                                        "pid": pid
+                                    })
+                                except:
+                                    pass
+                    
+                    windows = []
+                    win32gui.EnumWindows(callback, windows)
+                    apps = windows[:10]
+                    
+                    fg_hwnd = win32gui.GetForegroundWindow()
+                    if fg_hwnd:
+                        fg_title = win32gui.GetWindowText(fg_hwnd)
+                        _, fg_pid = win32process.GetWindowThreadProcessId(fg_hwnd)
+                        try:
+                            fg_process = psutil.Process(fg_pid)
+                            foreground_app = {
+                                "title": fg_title,
+                                "app": fg_process.name(),
+                                "pid": fg_pid
+                            }
+                        except:
+                            pass
+                except ImportError:
+                    print("⚠️ win32gui não disponível, usando apenas psutil")
+                    for proc in psutil.process_iter(['name', 'pid']):
+                        try:
+                            apps.append({
+                                "title": proc.info['name'],
+                                "app": proc.info['name'],
+                                "pid": proc.info['pid']
+                            })
+                            if len(apps) >= 10:
+                                break
+                        except:
+                            pass
+            else:
+                for proc in psutil.process_iter(['name', 'pid']):
+                    try:
+                        apps.append({
+                            "title": proc.info['name'],
+                            "app": proc.info['name'],
+                            "pid": proc.info['pid']
+                        })
+                        if len(apps) >= 10:
+                            break
+                    except:
+                        pass
+        except Exception as e:
+            print(f"❌ Erro ao coletar apps: {e}")
+        
+        return apps, foreground_app
+
+    async def send_monitoring_data(self):
+        while self.should_reconnect and self.socket:
+            try:
+                apps, foreground = self.get_active_windows()
+                
+                monitoring_data = {
+                    "type": "monitoring",
+                    "timestamp": datetime.now().isoformat(),
+                    "host": nome_computador,
+                    "apps": apps,
+                    "foreground": foreground,
+                    "system": sistema_operacional
+                }
+                
+                if self.socket and self.socket.open:
+                    await self.socket.send(json.dumps(monitoring_data))
+                
+                await asyncio.sleep(2)
+            except Exception as e:
+                print(f"❌ Erro ao enviar monitoramento: {e}")
+                await asyncio.sleep(5)
 
     async def connect(self):
         retry_delay = 1
@@ -49,10 +150,10 @@ class Broadcaster:
             try:
                 print(f"🔌 Tentando conectar ao servidor de sinalização: {self.signaling_url}")
                 async with websockets.connect(self.signaling_url) as socket:
+                    self.socket = socket
                     print("✅ Conectado ao servidor de sinalização.")
                     retry_delay = 1
 
-                    # Registro do broadcaster
                     await socket.send(json.dumps({
                         "type": "broadcaster",
                         "monitor_number": 1,
@@ -60,6 +161,8 @@ class Broadcaster:
                         "company_id": self.company_id
                     }))
                     print(f"📡 Registrado como: {self.broadcaster_name}")
+
+                    self.monitoring_task = asyncio.create_task(self.send_monitoring_data())
 
                     async for msg in socket:
                         data = json.loads(msg)
@@ -166,9 +269,12 @@ class Broadcaster:
 
     async def stop(self):
         self.should_reconnect = False
+        if self.monitoring_task:
+            self.monitoring_task.cancel()
         for pc in self.peers.values():
             await pc.close()
         self.peers.clear()
+        self.socket = None
         print("🧹 Broadcaster encerrado e conexões limpas.")
 
 if __name__ == "__main__":

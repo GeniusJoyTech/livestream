@@ -2,7 +2,7 @@ const WebSocket = require("ws");
 const url = require("url");
 const jwt = require("jsonwebtoken");
 const { peers, broadcasters, createPeer, deletePeer, setupHeartbeat } = require("./services/peers");
-const { registerBroadcaster, registerViewer, handleWatch, relayMessage, handleDisconnect } = require("./handlers/handlers");
+const { registerBroadcaster, registerViewer, handleWatch, relayMessage, handleDisconnect, handleMonitoring } = require("./handlers/handlers");
 
 // inicia o heartbeat global para todos os peers
 setupHeartbeat();
@@ -69,8 +69,8 @@ function setupWebSocket(server) {
         case "candidate":
           relayMessage(id, msg, peers);
           break;
-        case "client_data":
-          handleClientData(ws, id, msg, peers);
+        case "monitoring":
+          handleMonitoring(id, msg, peers, broadcasters);
           break;
       }
     });

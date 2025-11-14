@@ -7,7 +7,7 @@ const broadcasters = new Map();
 
 function createPeer(ws) {
   const id = uuidv4();
-  peers.set(id, { ws, role: null, monitor_number: null, name: null, isAlive: true });
+  peers.set(id, { ws, role: null, monitor_number: null, name: null, isAlive: true, watchingBroadcaster: null });
 
   // configurar heartbeat para este peer
   ws.on('pong', () => {

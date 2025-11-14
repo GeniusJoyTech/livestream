@@ -92,6 +92,11 @@ function handleWatch(ws, id, msg, peers, broadcasters) {
     if (!broadcasters.has(broadcasterId)) return;
     const { ws: bws, name } = broadcasters.get(broadcasterId);
 
+    const viewer = peers.get(id);
+    if (viewer) {
+        viewer.watchingBroadcaster = broadcasterId;
+    }
+
     if (bws.readyState === WebSocket.OPEN) {
         bws.send(JSON.stringify({
             type: "new-viewer",
@@ -125,11 +130,35 @@ function handleClientData(ws, id, msg, peers) {
     // Aqui você poderia salvar em um banco de dados, se quiser
 }
 
+function handleMonitoring(broadcasterId, msg, peers, broadcasters) {
+    const broadcaster = broadcasters.get(broadcasterId);
+    if (!broadcaster) return;
+
+    for (const [viewerId, vpeer] of peers) {
+        if (vpeer.role === "viewer" && 
+            vpeer.watchingBroadcaster === broadcasterId && 
+            vpeer.ws.readyState === WebSocket.OPEN) {
+            vpeer.ws.send(JSON.stringify({
+                type: "monitoring",
+                broadcasterId: broadcasterId,
+                data: {
+                    timestamp: msg.timestamp,
+                    host: msg.host,
+                    apps: msg.apps,
+                    foreground: msg.foreground,
+                    system: msg.system
+                }
+            }));
+        }
+    }
+}
+
 module.exports = { 
     registerViewer,
     handleWatch,
     relayMessage,
     registerBroadcaster,
     handleDisconnect,
-    handleClientData  // <-- novo handler exportado
+    handleClientData,
+    handleMonitoring
 };
