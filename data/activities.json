@@ -17848,5 +17848,305 @@
       "pid": 8868
     },
     "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:02:11.928930",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Broadcaster.py - SimplificaVideos - Visual Studio Code",
+      "app": "Code.exe",
+      "pid": 10492
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:02:13.946282",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:02:15.953953",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.3,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:02:17.965732",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:02:19.970589",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:02:21.974520",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Uma página incorporada no e79f8eea-7fb9-48a3-b8b9-b4debc2079b3-00-2wpjju54z50fp.spock.replit.dev deseja salvar",
+      "app": "brave.exe",
+      "pid": 2648
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:02:23.986610",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Histórico de downloads recentes",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:02:25.995772",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "Histórico de downloads recentes",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:02:28.013878",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "relatorio_2a00b018-1e65-427d-b166-8622546c8d61_1763139740017.xlsx - Excel",
+      "app": "EXCEL.EXE",
+      "pid": 23752
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:02:30.017419",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "relatorio_2a00b018-1e65-427d-b166-8622546c8d61_1763139740017.xlsx - Excel",
+      "app": "EXCEL.EXE",
+      "pid": 23752
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:02:32.027419",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:02:34.029824",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.5,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:02:36.041721",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:02:38.049661",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "PRIVACIDADE_E_SEGURANCA.md - SimplificaVideos - Visual Studio Code",
+      "app": "Code.exe",
+      "pid": 10492
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:02:40.058602",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "PRIVACIDADE_E_SEGURANCA.md - SimplificaVideos - Visual Studio Code",
+      "app": "Code.exe",
+      "pid": 10492
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:02:42.066435",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "PRIVACIDADE_E_SEGURANCA.md - SimplificaVideos - Visual Studio Code",
+      "app": "Code.exe",
+      "pid": 10492
+    },
+    "apps_count": 9
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:02:44.078315",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:02:46.080985",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:02:48.094303",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 10
+  },
+  {
+    "broadcasterId": "2a00b018-1e65-427d-b166-8622546c8d61",
+    "timestamp": "2025-11-14T14:02:50.103624",
+    "host": "Gabriel",
+    "system": "Windows",
+    "idle_seconds": 0.1,
+    "is_idle": false,
+    "active_url": null,
+    "foreground": {
+      "title": "livestream - Replit - Brave",
+      "app": "brave.exe",
+      "pid": 8652
+    },
+    "apps_count": 9
   }
 ]
