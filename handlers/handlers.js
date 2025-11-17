@@ -16,42 +16,90 @@ async function registerBroadcaster(ws, id, msg, peers, broadcasters) {
     let db_id = null;
     let isInstallationToken = false;
     
-    if (process.env.DATABASE_URL && msg.broadcaster_token) {
+    if (process.env.DATABASE_URL) {
         try {
             const db = require('../database/db');
+            const { generateToken } = require('../jwt/jwtUtils');
             
-            const result = await db.query(
-                'SELECT id, token, token_expires_at, installation_token FROM broadcasters WHERE token = $1 OR installation_token = $1',
-                [msg.broadcaster_token]
-            );
-            
-            if (result.rows.length > 0) {
-                const broadcaster = result.rows[0];
-                db_id = broadcaster.id;
-                isInstallationToken = (broadcaster.installation_token === msg.broadcaster_token);
-                
-                await db.query(
-                    'UPDATE broadcasters SET last_connected_at = CURRENT_TIMESTAMP, name = $2 WHERE id = $1',
-                    [db_id, peer.name]
+            if (msg.broadcaster_token) {
+                const result = await db.query(
+                    'SELECT id, token, token_expires_at, installation_token FROM broadcasters WHERE token = $1 OR installation_token = $1',
+                    [msg.broadcaster_token]
                 );
                 
-                console.log(`✅ Broadcaster ${db_id} autenticado (${isInstallationToken ? 'installation_token' : 'permanent_token'})`);
-                
-                if (isInstallationToken) {
-                    ws.send(JSON.stringify({
-                        type: "auth-success",
-                        broadcaster_id: db_id,
-                        token: broadcaster.token,
-                        token_expires_at: broadcaster.token_expires_at,
-                        message: "Broadcaster instalado com sucesso! Configuração salva localmente."
-                    }));
-                    console.log(`🔑 Token permanente enviado ao broadcaster ${db_id}`);
+                if (result.rows.length > 0) {
+                    const broadcaster = result.rows[0];
+                    db_id = broadcaster.id;
+                    isInstallationToken = (broadcaster.installation_token === msg.broadcaster_token);
+                    
+                    await db.query(
+                        'UPDATE broadcasters SET last_connected_at = CURRENT_TIMESTAMP, name = $2 WHERE id = $1',
+                        [db_id, peer.name]
+                    );
+                    
+                    console.log(`✅ Broadcaster ${db_id} autenticado (${isInstallationToken ? 'installation_token' : 'permanent_token'})`);
+                    
+                    if (isInstallationToken) {
+                        ws.send(JSON.stringify({
+                            type: "auth-success",
+                            broadcaster_id: db_id,
+                            token: broadcaster.token,
+                            token_expires_at: broadcaster.token_expires_at,
+                            message: "Broadcaster instalado com sucesso! Configuração salva localmente."
+                        }));
+                        console.log(`🔑 Token permanente enviado ao broadcaster ${db_id}`);
+                    }
+                } else {
+                    console.warn(`⚠️ Broadcaster com token não encontrado no banco - criando automaticamente...`);
+                    db_id = null;
                 }
-            } else {
-                console.warn(`⚠️ Broadcaster com token não encontrado no banco`);
+            }
+            
+            if (!db_id) {
+                const ownerResult = await db.query('SELECT id FROM users WHERE role = $1 ORDER BY id LIMIT 1', ['owner']);
+                const defaultOwnerId = ownerResult.rows.length > 0 ? ownerResult.rows[0].id : 1;
+                
+                const tokenExpiresAt = new Date(Date.now() + 60 * 24 * 60 * 60 * 1000);
+                const installationExpiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
+                
+                const insertResult = await db.query(
+                    `INSERT INTO broadcasters (name, owner_id, token_expires_at, installation_token_expires_at, is_active, last_connected_at)
+                     VALUES ($1, $2, $3, $4, true, CURRENT_TIMESTAMP)
+                     RETURNING id`,
+                    [peer.name, defaultOwnerId, tokenExpiresAt, installationExpiresAt]
+                );
+                
+                db_id = insertResult.rows[0].id;
+                
+                const permanentToken = generateToken({ 
+                    type: 'broadcaster', 
+                    ownerId: defaultOwnerId, 
+                    broadcasterId: db_id 
+                }, '60d');
+                
+                const installationToken = generateToken({ 
+                    type: 'installation', 
+                    ownerId: defaultOwnerId, 
+                    broadcasterId: db_id 
+                }, '1d');
+                
+                await db.query(
+                    `UPDATE broadcasters SET token = $1, installation_token = $2 WHERE id = $3`,
+                    [permanentToken, installationToken, db_id]
+                );
+                
+                ws.send(JSON.stringify({
+                    type: "auth-success",
+                    broadcaster_id: db_id,
+                    token: permanentToken,
+                    token_expires_at: tokenExpiresAt,
+                    message: "Broadcaster registrado automaticamente! Configuração salva localmente."
+                }));
+                
+                console.log(`🆕 Novo broadcaster criado automaticamente: ID ${db_id}, Nome: ${peer.name}`);
             }
         } catch (err) {
-            console.error('Erro ao buscar broadcaster no banco:', err);
+            console.error('Erro ao processar broadcaster no banco:', err);
         }
     }
 
