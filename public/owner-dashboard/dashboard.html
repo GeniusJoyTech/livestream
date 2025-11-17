@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - SimplificaVideos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span class="icon">🎥</span>
+            <h1>SimplificaVideos</h1>
+        </div>
+        <div class="nav-user">
+            <span id="username-display"></span>
+            <button onclick="logout()" class="btn-secondary">Sair</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="tabs">
+            <button class="tab-btn active" onclick="showTab('broadcasters')">📡 Broadcasters</button>
+            <button class="tab-btn" onclick="showTab('viewers')">👥 Viewers</button>
+            <button class="tab-btn" onclick="showTab('permissions')">🔐 Permissões</button>
+        </div>
+
+        <!-- Tab: Broadcasters -->
+        <div id="tab-broadcasters" class="tab-content active">
+            <div class="section-header">
+                <h2>Meus Broadcasters</h2>
+                <button onclick="showCreateBroadcasterModal()" class="btn-primary">+ Novo Broadcaster</button>
+            </div>
+            
+            <div id="broadcasters-list" class="cards-grid">
+                <div class="loading">Carregando...</div>
+            </div>
+        </div>
+
+        <!-- Tab: Viewers -->
+        <div id="tab-viewers" class="tab-content">
+            <div class="section-header">
+                <h2>Meus Viewers</h2>
+                <button onclick="showCreateViewerModal()" class="btn-primary">+ Novo Viewer</button>
+            </div>
+            
+            <div id="viewers-list" class="cards-grid">
+                <div class="loading">Carregando...</div>
+            </div>
+        </div>
+
+        <!-- Tab: Permissions -->
+        <div id="tab-permissions" class="tab-content">
+            <div class="section-header">
+                <h2>Gerenciar Permissões</h2>
+                <p class="help-text">Conceda ou revogue acesso dos viewers aos broadcasters</p>
+            </div>
+            
+            <div id="permissions-list" class="permissions-grid">
+                <div class="loading">Carregando...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Criar Broadcaster -->
+    <div id="modal-create-broadcaster" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Criar Novo Broadcaster</h3>
+                <span class="close" onclick="closeModal('modal-create-broadcaster')">&times;</span>
+            </div>
+            <form id="form-create-broadcaster" onsubmit="createBroadcaster(event)">
+                <div class="form-group">
+                    <label for="broadcaster-name">Nome do Broadcaster</label>
+                    <input type="text" id="broadcaster-name" placeholder="Ex: Notebook Escritório" required>
+                    <small>Este nome identifica o computador/dispositivo a ser monitorado</small>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="closeModal('modal-create-broadcaster')" class="btn-secondary">Cancelar</button>
+                    <button type="submit" class="btn-primary">Criar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Token do Broadcaster -->
+    <div id="modal-broadcaster-token" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Token do Broadcaster</h3>
+                <span class="close" onclick="closeModal('modal-broadcaster-token')">&times;</span>
+            </div>
+            <div class="token-display">
+                <p><strong>Broadcaster:</strong> <span id="token-broadcaster-name"></span></p>
+                <div class="token-box">
+                    <code id="token-value"></code>
+                    <button onclick="copyToken()" class="btn-copy" title="Copiar token">📋</button>
+                </div>
+                <div class="alert alert-info">
+                    <strong>⚠️ Importante:</strong> Copie este token e use-o na aplicação broadcaster (Python) para conectar este dispositivo.
+                </div>
+                <button onclick="refreshToken()" class="btn-secondary btn-block">🔄 Gerar Novo Token</button>
+            </div>
+            <div class="modal-footer">
+                <button onclick="closeModal('modal-broadcaster-token')" class="btn-primary">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Criar Viewer -->
+    <div id="modal-create-viewer" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Criar Novo Viewer</h3>
+                <span class="close" onclick="closeModal('modal-create-viewer')">&times;</span>
+            </div>
+            <form id="form-create-viewer" onsubmit="createViewer(event)">
+                <div class="form-group">
+                    <label for="viewer-username">Nome de Usuário</label>
+                    <input type="text" id="viewer-username" placeholder="Ex: joao.silva" required>
+                </div>
+                <div class="form-group">
+                    <label for="viewer-email">Email</label>
+                    <input type="email" id="viewer-email" placeholder="joao@empresa.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="viewer-password">Senha Temporária</label>
+                    <input type="password" id="viewer-password" placeholder="Mínimo 8 caracteres" required minlength="8">
+                    <small>O viewer poderá alterar a senha após o primeiro login</small>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="closeModal('modal-create-viewer')" class="btn-secondary">Cancelar</button>
+                    <button type="submit" class="btn-primary">Criar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>

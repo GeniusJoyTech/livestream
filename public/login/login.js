@@ -27,10 +27,27 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("token", data.token);
         statusDiv.textContent = "✅ Login bem-sucedido! Redirecionando...";
         
-        // Redirecionar para viewer
-        setTimeout(() => {
-          window.location.href = "/viewer/viewer.html";
-        }, 1000);
+        // Verificar role do usuário e redirecionar
+        const userRes = await fetch("/api/users/me", {
+          headers: { "Authorization": `Bearer ${data.token}` }
+        });
+        
+        if (userRes.ok) {
+          const userData = await userRes.json();
+          
+          setTimeout(() => {
+            if (userData.role === 'owner') {
+              window.location.href = "/owner-dashboard/dashboard.html";
+            } else {
+              window.location.href = "/viewer/viewer.html";
+            }
+          }, 1000);
+        } else {
+          // Fallback para viewer se não conseguir verificar role
+          setTimeout(() => {
+            window.location.href = "/viewer/viewer.html";
+          }, 1000);
+        }
       } else {
         statusDiv.textContent = `❌ ${data.error}`;
       }
