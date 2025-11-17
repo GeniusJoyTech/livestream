@@ -45,7 +45,7 @@ function setupWebSocket(server) {
     console.log(`🔗 Novo peer conectado: ${id}`);
 
     // Recebe mensagens dos peers e chama os handlers adequados
-    ws.on("message", (message) => {
+    ws.on("message", async (message) => {
       let msg;
       try {
         msg = JSON.parse(message);
@@ -56,7 +56,7 @@ function setupWebSocket(server) {
 
       switch (msg.type) {
         case "broadcaster":
-          registerBroadcaster(ws, id, msg, peers, broadcasters);
+          await registerBroadcaster(ws, id, msg, peers, broadcasters);
           break;
         case "viewer":
           registerViewer(ws, id, peers, broadcasters);
@@ -70,7 +70,7 @@ function setupWebSocket(server) {
           relayMessage(id, msg, peers);
           break;
         case "monitoring":
-          handleMonitoring(id, msg, peers, broadcasters);
+          await handleMonitoring(id, msg, peers, broadcasters);
           break;
       }
     });

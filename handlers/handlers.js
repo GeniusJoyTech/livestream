@@ -6,44 +6,75 @@ const WebSocket = require("ws");
     relayMessage: envia mensagens P2P entre peers.
     handleWatch: conecta um viewer a um broadcaster específico.
 */
-function registerBroadcaster(ws, id, msg, peers, broadcasters) {//egistra um usuário como broadcaster (quem transmite vídeo ou monitor)
+async function registerBroadcaster(ws, id, msg, peers, broadcasters) {
     const peer = peers.get(id);
     peer.role = "broadcaster";
     peer.monitor_number = msg.monitor_number;
     peer.name = msg.broadcaster_name || `Broadcaster ${id.slice(0, 6)}`;
     peer.company_id = msg.company_id || "-1";
 
+    let db_id = null;
+    
+    if (process.env.DATABASE_URL) {
+        try {
+            const db = require('../database/db');
+            const result = await db.query(
+                'SELECT id FROM broadcasters WHERE token = $1 OR installation_token = $1',
+                [msg.broadcaster_token]
+            );
+            
+            if (result.rows.length > 0) {
+                db_id = result.rows[0].id;
+                await db.query(
+                    'UPDATE broadcasters SET last_connected_at = CURRENT_TIMESTAMP WHERE id = $1',
+                    [db_id]
+                );
+                console.log(`✅ Broadcaster ${db_id} autenticado e last_connected_at atualizado`);
+            } else {
+                console.warn(`⚠️ Broadcaster com token não encontrado no banco`);
+            }
+        } catch (err) {
+            console.error('Erro ao buscar broadcaster no banco:', err);
+        }
+    }
+
     broadcasters.set(id, {
         ws,
         monitor_number: msg.monitor_number,
         name: peer.name,
         company_id: peer.company_id,
+        db_id: db_id,
     });
 
-    console.log(`✅ Broadcaster conectado: ${peer.name} (Monitor ${msg.monitor_number}, company_id: ${peer.company_id})`);
+    console.log(`✅ Broadcaster conectado: ${peer.name} (Monitor ${msg.monitor_number}, DB ID: ${db_id})`);
 
     for (const [, vpeer] of peers) {
-        if (vpeer.role === "viewer" && vpeer.ws.readyState === ws.OPEN) {
+        if (vpeer.role === "viewer" && vpeer.ws.readyState === WebSocket.OPEN) {
             vpeer.ws.send(JSON.stringify({
                 type: "new-broadcaster",
                 broadcasterId: id,
                 broadcaster_name: peer.name,
+                db_id: db_id,
             }));
         }
     }
 }
-function registerViewer(ws, id, peers, broadcasters) {//Registra um usuário como viewer (quem assiste à transmissão).
+function registerViewer(ws, id, peers, broadcasters) {
     console.log("📡 registerViewer chamado para:", id);
     const peer = peers.get(id);
     peer.role = "viewer";
     const activeBroadcasters = [...broadcasters.entries()]
-        // .filter(([bid, bdata]) => bdata.company_id === "1")
         .map(([bid, bdata]) => {
-            const obj = { id: bid, name: bdata.name, company_id: bdata.company_id };
-            console.log("Itens filtrados: ", obj); // loga cada um encontrado
+            const obj = { 
+                id: bid, 
+                name: bdata.name, 
+                company_id: bdata.company_id,
+                db_id: bdata.db_id
+            };
+            console.log("Itens filtrados: ", obj);
             return obj;
         })
-        .sort((a, b) => a.name.localeCompare(b.name)); // ordena alfabeticamente pelo name
+        .sort((a, b) => a.name.localeCompare(b.name));
 
     ws.send(JSON.stringify({
         type: "broadcaster-list",

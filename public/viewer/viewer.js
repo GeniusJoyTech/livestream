@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let socket;
   let peers = new Map();
   let selectedBroadcasterId = null;
+  let selectedBroadcasterDbId = null;
   let selectedMonitorNumber = null;
   let broadcasters = [];
   let statsInterval = null;
@@ -110,6 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
     broadcasters.forEach(b => {
       const opt = document.createElement('option');
       opt.value = b.id;
+      opt.setAttribute('data-db-id', b.db_id || '');
       opt.textContent = b.name;
       broadcasterSelect.appendChild(opt);
     });
@@ -199,7 +201,8 @@ document.addEventListener("DOMContentLoaded", () => {
         case "new-broadcaster":
           broadcasters.push({
             id: message.broadcasterId,
-            name: message.broadcaster_name || `Broadcaster ${message.broadcasterId.slice(0,6)}`
+            name: message.broadcaster_name || `Broadcaster ${message.broadcasterId.slice(0,6)}`,
+            db_id: message.db_id
           });
           updateSelect();
           break;
@@ -281,6 +284,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   watchButton.onclick = () => {
     selectedBroadcasterId = broadcasterSelect.value;
+    const selectedOption = broadcasterSelect.options[broadcasterSelect.selectedIndex];
+    selectedBroadcasterDbId = selectedOption ? selectedOption.getAttribute('data-db-id') : null;
     selectedMonitorNumber = monitorSelect.value;
     if (!selectedBroadcasterId || !socket || socket.readyState !== WebSocket.OPEN) return;
 
@@ -317,7 +322,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   exportButton.onclick = async () => {
-    if (!selectedBroadcasterId) {
+    if (!selectedBroadcasterDbId) {
       exportStatus.textContent = '⚠️ Selecione um broadcaster primeiro';
       exportStatus.style.color = '#ff0';
       return;
@@ -337,7 +342,7 @@ document.addEventListener("DOMContentLoaded", () => {
     exportStatus.style.color = '#ff0';
 
     try {
-      const url = `/api/reports/export/excel?broadcasterId=${selectedBroadcasterId}&fromDate=${from}&toDate=${to}`;
+      const url = `/api/reports/export/excel?broadcasterId=${selectedBroadcasterDbId}&fromDate=${from}&toDate=${to}`;
       const response = await fetch(url, {
         headers: {
           'Authorization': `Bearer ${token}`
@@ -345,14 +350,15 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       if (!response.ok) {
-        throw new Error('Erro ao gerar relatório');
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Erro ao gerar relatório');
       }
 
       const blob = await response.blob();
       const downloadUrl = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = downloadUrl;
-      a.download = `relatorio_${selectedBroadcasterId}_${Date.now()}.xlsx`;
+      a.download = `relatorio_${selectedBroadcasterDbId}_${Date.now()}.xlsx`;
       document.body.appendChild(a);
       a.click();
       a.remove();
@@ -362,7 +368,7 @@ document.addEventListener("DOMContentLoaded", () => {
       exportStatus.style.color = '#0f0';
     } catch (error) {
       console.error('Erro ao exportar:', error);
-      exportStatus.textContent = '❌ Erro ao gerar relatório';
+      exportStatus.textContent = `❌ ${error.message}`;
       exportStatus.style.color = '#f00';
     } finally {
       exportButton.disabled = false;

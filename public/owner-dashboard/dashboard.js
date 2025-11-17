@@ -15,6 +15,10 @@ document.addEventListener('DOMContentLoaded', () => {
     loadUserInfo();
     loadBroadcasters();
     loadViewers();
+    
+    setInterval(() => {
+        loadBroadcasters();
+    }, 10000);
 });
 
 // Tab Management
@@ -91,24 +95,30 @@ function renderBroadcasters() {
         return;
     }
 
-    container.innerHTML = broadcasters.map(b => `
+    container.innerHTML = broadcasters.map(b => {
+        const isOnline = b.last_connected_at && isRecentlyConnected(b.last_connected_at);
+        const statusBadge = isOnline ? '🟢 Online' : (b.last_connected_at ? '🟡 Offline' : '⚪ Nunca conectado');
+        const statusClass = isOnline ? 'badge-active' : 'badge-inactive';
+        
+        return `
         <div class="card">
             <div class="card-header">
                 <div class="card-title">${escapeHtml(b.name)}</div>
-                <span class="card-badge ${b.is_active ? 'badge-active' : 'badge-inactive'}">
-                    ${b.is_active ? '🟢 Ativo' : '🔴 Inativo'}
+                <span class="card-badge ${statusClass}">
+                    ${statusBadge}
                 </span>
             </div>
             <div class="card-info">
                 <div>📅 Criado: ${new Date(b.created_at).toLocaleDateString('pt-BR')}</div>
-                ${b.last_seen ? `<div>👁️ Visto: ${formatLastSeen(b.last_seen)}</div>` : ''}
+                ${b.last_connected_at ? `<div>👁️ Última conexão: ${formatLastSeen(b.last_connected_at)}</div>` : '<div>⚠️ Aguardando primeira conexão</div>'}
             </div>
             <div class="card-actions">
                 <button onclick="showToken(${b.id})" class="btn-primary btn-small">🔑 Ver Token</button>
                 <button onclick="deactivateBroadcaster(${b.id})" class="btn-danger btn-small">❌ Desativar</button>
             </div>
         </div>
-    `).join('');
+        `;
+    }).join('');
 }
 
 // Load Viewers
@@ -499,6 +509,14 @@ function escapeHtml(text) {
         "'": '&#039;'
     };
     return text.replace(/[&<>"']/g, m => map[m]);
+}
+
+function isRecentlyConnected(dateString) {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffMs = now - date;
+    const diffMins = Math.floor(diffMs / 60000);
+    return diffMins < 5;
 }
 
 function formatLastSeen(dateString) {

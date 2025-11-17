@@ -25,6 +25,13 @@ None specified yet.
 ✅ Deployment configuration set to VM mode
 ✅ Environment secrets properly configured (JWT_SECRET, FIRST_ADMIN_SECRET, DATABASE_URL)
 
+### Recent Improvements (November 17, 2025)
+✅ Fixed owner dashboard to show real-time broadcaster status (online/offline)
+✅ Implemented automatic status polling every 10 seconds in owner dashboard
+✅ Fixed viewer report export functionality by properly mapping WebSocket IDs to database IDs
+✅ Broadcaster connections now update last_connected_at timestamp in database
+✅ Added db_id propagation to all broadcaster list messages for viewers
+
 ### Getting Started
 1. The application is now running and accessible via the Replit webview
 2. Access the login page at `/login/login.html` (automatically redirected from root)
