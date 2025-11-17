@@ -140,11 +140,17 @@ def get_browser_history(hours_back=24):
             rows = cursor.fetchall()
             for row in rows:
                 url, title, visit_time = row
+                try:
+                    parsed_time = datetime.strptime(visit_time, '%Y-%m-%d %H:%M:%S')
+                    iso_timestamp = parsed_time.isoformat()
+                except Exception as e:
+                    iso_timestamp = datetime.now().isoformat()
+                
                 history_entries.append({
                     'browser': browser['name'],
                     'url': url,
                     'title': title or 'Sem título',
-                    'visit_time': visit_time
+                    'timestamp': iso_timestamp
                 })
             
             conn.close()
@@ -160,7 +166,7 @@ def get_browser_history(hours_back=24):
                 except:
                     pass
     
-    history_entries.sort(key=lambda x: x['visit_time'], reverse=True)
+    history_entries.sort(key=lambda x: x['timestamp'], reverse=True)
     return history_entries
 
 

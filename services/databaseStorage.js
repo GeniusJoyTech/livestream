@@ -27,16 +27,43 @@ class DatabaseStorage {
     try {
       await client.query('BEGIN');
       
+      let savedCount = 0;
+      let skippedCount = 0;
+      
       for (const entry of historyEntries) {
-        await client.query(
-          `INSERT INTO browser_history (broadcaster_id, browser, url, title, visit_timestamp)
-           VALUES ($1, $2, $3, $4, $5)
-           ON CONFLICT (broadcaster_id, browser, url, visit_timestamp) DO NOTHING`,
-          [broadcasterId, entry.browser, entry.url, entry.title, new Date(entry.timestamp)]
-        );
+        const rawTimestamp = entry.timestamp || entry.visit_time;
+        
+        if (!rawTimestamp) {
+          skippedCount++;
+          continue;
+        }
+        
+        const parsedDate = new Date(rawTimestamp);
+        if (isNaN(parsedDate.getTime())) {
+          console.warn(`⚠️ Timestamp inválido ignorado: "${rawTimestamp}" para URL ${entry.url}`);
+          skippedCount++;
+          continue;
+        }
+        
+        try {
+          await client.query(
+            `INSERT INTO browser_history (broadcaster_id, browser, url, title, visit_timestamp)
+             VALUES ($1, $2, $3, $4, $5)
+             ON CONFLICT (broadcaster_id, browser, url, visit_timestamp) DO NOTHING`,
+            [broadcasterId, entry.browser, entry.url, entry.title, parsedDate]
+          );
+          savedCount++;
+        } catch (insertError) {
+          console.warn(`⚠️ Erro ao inserir entrada de histórico: ${insertError.message}`);
+          skippedCount++;
+        }
       }
       
       await client.query('COMMIT');
+      
+      if (savedCount > 0 || skippedCount > 0) {
+        console.log(`✅ Histórico salvo: ${savedCount} entradas, ${skippedCount} ignoradas`);
+      }
     } catch (error) {
       await client.query('ROLLBACK');
       console.error('Error saving browser history:', error);
