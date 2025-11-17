@@ -18,9 +18,16 @@ None specified yet.
 ### Getting Started
 1. The application is now running and accessible via the Replit webview
 2. Access the login page at `/login/login.html` (automatically redirected from root)
-3. To create the first admin user, visit `/register/register.html` and use the FIRST_ADMIN_SECRET
-4. Database schema is automatically initialized on startup
-5. All dependencies are installed via npm
+3. **Anyone can register as owner** at `/register/register.html` - no admin code needed
+4. Each owner manages their own broadcasters and viewers (multi-tenant isolation)
+5. Database schema is automatically initialized on startup
+6. All dependencies are installed via npm
+
+### User Registration Model (Updated November 17, 2025)
+- **Open registration**: Anyone can create an owner account
+- **Multi-tenant architecture**: Each owner is isolated and manages only their resources
+- **Owner capabilities**: Create broadcasters, add viewers, grant permissions
+- **Security**: SQL-level filtering prevents cross-tenant data access
 
 ### Environment Variables
 - `JWT_SECRET`: Stored in Replit Secrets (for JWT token generation)
