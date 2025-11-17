@@ -6,6 +6,28 @@ SimplificaVideos is a real-time video streaming application leveraging WebRTC. I
 ## User Preferences
 None specified yet.
 
+## Replit Environment Setup (November 17, 2025)
+
+### Current Configuration
+- **Server**: Running on port 5000 (0.0.0.0) with WebSocket support
+- **Database**: PostgreSQL (Replit-managed) - DATABASE_URL configured
+- **Environment Secrets**: JWT_SECRET and FIRST_ADMIN_SECRET configured in Replit Secrets
+- **Workflow**: "SimplificaVideos Server" runs `node server.js`
+- **Deployment**: Configured for VM deployment (maintains WebSocket state)
+
+### Getting Started
+1. The application is now running and accessible via the Replit webview
+2. Access the login page at `/login/login.html` (automatically redirected from root)
+3. To create the first admin user, visit `/register/register.html` and use the FIRST_ADMIN_SECRET
+4. Database schema is automatically initialized on startup
+5. All dependencies are installed via npm
+
+### Environment Variables
+- `JWT_SECRET`: Stored in Replit Secrets (for JWT token generation)
+- `FIRST_ADMIN_SECRET`: Stored in Replit Secrets (for first admin registration)
+- `DATABASE_URL`: Automatically provided by Replit PostgreSQL database
+- `PORT`: Defaults to 5000
+
 ## System Architecture
 
 ### UI/UX Decisions
