@@ -66,7 +66,6 @@ form.addEventListener('submit', async (e) => {
     const email = document.getElementById('email').value;
     const password = passwordInput.value;
     const confirmPassword = confirmPasswordInput.value;
-    const adminSecret = document.getElementById('admin-secret').value;
     const privacyAgreement = document.getElementById('privacy-agreement').checked;
 
     if (!privacyAgreement) {
@@ -96,8 +95,7 @@ form.addEventListener('submit', async (e) => {
             body: JSON.stringify({
                 username,
                 email: email || null,
-                password,
-                adminSecret: adminSecret || null
+                password
             })
         });
 

@@ -42,12 +42,20 @@ class BroadcasterService {
     return broadcaster;
   }
   
-  async getBroadcasterById(broadcasterId) {
-    const result = await db.query(
-      `SELECT id, name, owner_id, is_active, created_at, last_connected_at
-       FROM broadcasters WHERE id = $1`,
-      [broadcasterId]
-    );
+  async getBroadcasterById(broadcasterId, ownerId = null) {
+    let query, params;
+    
+    if (ownerId) {
+      query = `SELECT id, name, owner_id, is_active, created_at, last_connected_at
+               FROM broadcasters WHERE id = $1 AND owner_id = $2`;
+      params = [broadcasterId, ownerId];
+    } else {
+      query = `SELECT id, name, owner_id, is_active, created_at, last_connected_at
+               FROM broadcasters WHERE id = $1`;
+      params = [broadcasterId];
+    }
+    
+    const result = await db.query(query, params);
     return result.rows[0];
   }
   
@@ -69,10 +77,10 @@ class BroadcasterService {
     return broadcaster;
   }
   
-  async refreshBroadcasterToken(broadcasterId) {
-    const broadcaster = await this.getBroadcasterById(broadcasterId);
+  async refreshBroadcasterToken(broadcasterId, ownerId) {
+    const broadcaster = await this.getBroadcasterById(broadcasterId, ownerId);
     if (!broadcaster) {
-      throw new Error('Broadcaster not found');
+      throw new Error('Broadcaster not found or access denied');
     }
     
     const newToken = generateToken({ 
@@ -125,9 +133,9 @@ class BroadcasterService {
   }
   
   async grantPermission(broadcasterId, viewerId, grantedBy) {
-    const broadcaster = await this.getBroadcasterById(broadcasterId);
-    if (!broadcaster || broadcaster.owner_id !== grantedBy) {
-      throw new Error('Only broadcaster owner can grant permissions');
+    const broadcaster = await this.getBroadcasterById(broadcasterId, grantedBy);
+    if (!broadcaster) {
+      throw new Error('Broadcaster not found or access denied');
     }
     
     const result = await db.query(
@@ -142,9 +150,9 @@ class BroadcasterService {
   }
   
   async revokePermission(broadcasterId, viewerId, revokedBy) {
-    const broadcaster = await this.getBroadcasterById(broadcasterId);
-    if (!broadcaster || broadcaster.owner_id !== revokedBy) {
-      throw new Error('Only broadcaster owner can revoke permissions');
+    const broadcaster = await this.getBroadcasterById(broadcasterId, revokedBy);
+    if (!broadcaster) {
+      throw new Error('Broadcaster not found or access denied');
     }
     
     await db.query(
@@ -162,9 +170,9 @@ class BroadcasterService {
   }
   
   async deactivateBroadcaster(broadcasterId, ownerId) {
-    const broadcaster = await this.getBroadcasterById(broadcasterId);
-    if (!broadcaster || broadcaster.owner_id !== ownerId) {
-      throw new Error('Only broadcaster owner can deactivate');
+    const broadcaster = await this.getBroadcasterById(broadcasterId, ownerId);
+    if (!broadcaster) {
+      throw new Error('Broadcaster not found or access denied');
     }
     
     await db.query(

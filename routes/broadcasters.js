@@ -103,13 +103,7 @@ router.post('/:broadcasterId/refresh-token', authenticateToken, async (req, res)
     }
     
     const { broadcasterId } = req.params;
-    const broadcaster = await broadcasterService.getBroadcasterById(parseInt(broadcasterId));
-    
-    if (!broadcaster || broadcaster.owner_id !== req.user.id) {
-      return res.status(404).json({ error: 'Broadcaster not found' });
-    }
-    
-    const updated = await broadcasterService.refreshBroadcasterToken(parseInt(broadcasterId));
+    const updated = await broadcasterService.refreshBroadcasterToken(parseInt(broadcasterId), req.user.id);
     
     await userService.logAuditAction(req.user.id, 'TOKEN_REFRESHED', 'broadcaster', parseInt(broadcasterId), req.ip, req.get('user-agent'));
     
