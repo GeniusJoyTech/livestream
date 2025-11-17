@@ -59,6 +59,54 @@ class BroadcasterService {
     return result.rows[0];
   }
   
+  async getBroadcasterWithTokens(broadcasterId, userId, userRole) {
+    let query, params;
+    
+    if (userRole === 'owner') {
+      query = `SELECT id, name, owner_id, token, installation_token, 
+                      token_expires_at, installation_token_expires_at,
+                      is_active, created_at, last_connected_at
+               FROM broadcasters 
+               WHERE id = $1 AND owner_id = $2 AND is_active = true`;
+      params = [broadcasterId, userId];
+    } else {
+      query = `SELECT b.id, b.name, b.owner_id, b.token,
+                      b.is_active, b.created_at, b.last_connected_at
+               FROM broadcasters b
+               INNER JOIN broadcaster_permissions bp ON b.id = bp.broadcaster_id
+               WHERE b.id = $1 AND bp.viewer_id = $2 AND b.is_active = true`;
+      params = [broadcasterId, userId];
+    }
+    
+    const result = await db.query(query, params);
+    const broadcaster = result.rows[0];
+    
+    if (!broadcaster) return null;
+    
+    if (userRole === 'owner') {
+      return {
+        id: broadcaster.id,
+        name: broadcaster.name,
+        token: broadcaster.token,
+        installationToken: broadcaster.installation_token,
+        tokenExpiresAt: broadcaster.token_expires_at,
+        installationTokenExpiresAt: broadcaster.installation_token_expires_at,
+        isActive: broadcaster.is_active,
+        createdAt: broadcaster.created_at,
+        lastConnectedAt: broadcaster.last_connected_at
+      };
+    } else {
+      return {
+        id: broadcaster.id,
+        name: broadcaster.name,
+        token: broadcaster.token,
+        isActive: broadcaster.is_active,
+        createdAt: broadcaster.created_at,
+        lastConnectedAt: broadcaster.last_connected_at
+      };
+    }
+  }
+  
   async getBroadcasterByToken(token) {
     const result = await db.query(
       `SELECT id, name, owner_id, token, token_expires_at, is_active

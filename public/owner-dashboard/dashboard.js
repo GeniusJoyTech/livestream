@@ -65,7 +65,8 @@ async function loadBroadcasters() {
         });
 
         if (response.ok) {
-            broadcasters = await response.json();
+            const data = await response.json();
+            broadcasters = data.broadcasters || [];
             renderBroadcasters();
         } else {
             showError('Erro ao carregar broadcasters');
@@ -258,10 +259,7 @@ async function showToken(broadcasterId) {
 
         if (response.ok) {
             const broadcaster = await response.json();
-            currentBroadcaster = broadcaster;
-            document.getElementById('token-broadcaster-name').textContent = broadcaster.name;
-            document.getElementById('token-value').textContent = broadcaster.token;
-            document.getElementById('modal-broadcaster-token').classList.add('show');
+            showNewBroadcasterToken(broadcaster);
         } else {
             showError('Erro ao carregar token');
         }
@@ -271,11 +269,36 @@ async function showToken(broadcasterId) {
     }
 }
 
+function showNewBroadcasterToken(broadcaster) {
+    currentBroadcaster = broadcaster;
+    
+    const serverUrl = window.location.protocol === 'https:' 
+        ? `wss://${window.location.host}` 
+        : `ws://${window.location.host}`;
+    
+    document.getElementById('token-broadcaster-id').textContent = broadcaster.id;
+    
+    if (broadcaster.installationToken) {
+        document.getElementById('token-value').textContent = broadcaster.token;
+        const command = `python Broadcaster.py --token ${broadcaster.installationToken} --url ${serverUrl}`;
+        document.getElementById('install-command').textContent = command;
+        document.getElementById('server-url').textContent = serverUrl;
+        document.getElementById('broadcaster-token-short').textContent = 
+            broadcaster.token.substring(0, 30) + '...';
+        document.querySelector('.installation-section').style.display = 'block';
+        document.querySelector('.token-only-section').style.display = 'none';
+    } else {
+        document.getElementById('token-value-viewer').textContent = broadcaster.token;
+        document.querySelector('.installation-section').style.display = 'none';
+        document.querySelector('.token-only-section').style.display = 'block';
+    }
+    
+    document.getElementById('modal-broadcaster-token').classList.add('show');
+}
+
 // Create Broadcaster
 async function createBroadcaster(event) {
     event.preventDefault();
-    
-    const name = document.getElementById('broadcaster-name').value;
     
     try {
         const response = await fetch('/api/broadcasters', {
@@ -284,15 +307,15 @@ async function createBroadcaster(event) {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify({ name })
+            body: JSON.stringify({})
         });
 
         if (response.ok) {
-            const broadcaster = await response.json();
+            const data = await response.json();
             closeModal('modal-create-broadcaster');
             showSuccess('Broadcaster criado com sucesso!');
             await loadBroadcasters();
-            showToken(broadcaster.id);
+            showNewBroadcasterToken(data.broadcaster);
         } else {
             const error = await response.json();
             showError(error.error || 'Erro ao criar broadcaster');
@@ -411,12 +434,28 @@ async function refreshToken() {
 }
 
 function copyToken() {
-    const tokenValue = document.getElementById('token-value').textContent;
+    const installationSection = document.querySelector('.installation-section');
+    const isOwner = installationSection.style.display !== 'none';
+    
+    const tokenValue = isOwner 
+        ? document.getElementById('token-value').textContent
+        : document.getElementById('token-value-viewer').textContent;
+    
     navigator.clipboard.writeText(tokenValue).then(() => {
         showSuccess('Token copiado!');
     }).catch(err => {
         console.error('Error copying token:', err);
         showError('Erro ao copiar token');
+    });
+}
+
+function copyCommand() {
+    const commandValue = document.getElementById('install-command').textContent;
+    navigator.clipboard.writeText(commandValue).then(() => {
+        showSuccess('Comando copiado! Cole no terminal do computador.');
+    }).catch(err => {
+        console.error('Error copying command:', err);
+        showError('Erro ao copiar comando');
     });
 }
 

@@ -11,12 +11,9 @@ router.post('/', authenticateToken, async (req, res) => {
     }
     
     const { name } = req.body;
+    const broadcasterName = name || 'Aguardando Conexão';
     
-    if (!name) {
-      return res.status(400).json({ error: 'Broadcaster name is required' });
-    }
-    
-    const broadcaster = await broadcasterService.createBroadcaster(name, req.user.id);
+    const broadcaster = await broadcasterService.createBroadcaster(broadcasterName, req.user.id);
     
     await userService.logAuditAction(req.user.id, 'BROADCASTER_CREATED', 'broadcaster', broadcaster.id, req.ip, req.get('user-agent'));
     
@@ -49,6 +46,22 @@ router.get('/', authenticateToken, async (req, res) => {
     res.json({ broadcasters });
   } catch (error) {
     console.error('Get broadcasters error:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+router.get('/:broadcasterId', authenticateToken, async (req, res) => {
+  try {
+    const { broadcasterId } = req.params;
+    const broadcaster = await broadcasterService.getBroadcasterWithTokens(parseInt(broadcasterId), req.user.id, req.user.role);
+    
+    if (!broadcaster) {
+      return res.status(404).json({ error: 'Broadcaster not found' });
+    }
+    
+    res.json(broadcaster);
+  } catch (error) {
+    console.error('Get broadcaster error:', error);
     res.status(500).json({ error: error.message });
   }
 });

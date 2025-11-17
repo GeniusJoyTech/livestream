@@ -504,30 +504,48 @@ class Broadcaster:
 
 
 if __name__ == "__main__":
-    # CONFIGURAÇÃO DO BROADCASTER
-    # ============================
+    import argparse
     
-    # 1. IMPORTANTE: Atualize esta URL com o domínio atual do seu Replit
-    #    Para encontrar seu domínio, execute: echo $REPLIT_DOMAINS
-    #    O formato é: wss://[SEU-DOMINIO]?role=broadcaster
-    signaling_url = "wss://cfdafce5-b982-4750-82b6-dc2185ad7fad-00-1egd469xx08mp.spock.replit.dev?role=broadcaster"
+    parser = argparse.ArgumentParser(
+        description='SimplificaVideos Broadcaster - Transmita sua tela com segurança',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Exemplos de uso:
+  python Broadcaster.py --token inst_abc123xyz --url wss://seu-dominio.replit.dev
+  python Broadcaster.py -t inst_abc123xyz -u wss://seu-dominio.replit.dev
+  
+Obtenha o token de instalação no painel do SimplificaVideos ao criar um novo broadcaster.
+        """
+    )
     
-    # 2. RECOMENDADO: Obtenha um token JWT do sistema para segurança
-    #    Como obter um token:
-    #    a) Faça login no sistema como owner
-    #    b) Execute via API ou Postman:
-    #       POST /api/broadcasters
-    #       Authorization: Bearer SEU_TOKEN_DE_LOGIN
-    #       Body: {"name": "Nome do Broadcaster"}
-    #    c) Copie o 'token' retornado e cole abaixo
-    #    
-    #    Exemplo: broadcaster_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-    broadcaster_token = None  # Deixe None para modo legado (menos seguro)
+    parser.add_argument(
+        '--token', '-t',
+        required=True,
+        help='Token de instalação obtido no painel SimplificaVideos (obrigatório)'
+    )
     
-    # 3. ID da empresa (legado, pode ser qualquer valor)
+    parser.add_argument(
+        '--url', '-u',
+        required=True,
+        help='URL do servidor WebSocket (formato: wss://seu-dominio.replit.dev)'
+    )
+    
+    args = parser.parse_args()
+    
+    broadcaster_token = args.token
+    signaling_url = args.url
+    
+    if not signaling_url.startswith('wss://') and not signaling_url.startswith('ws://'):
+        print("❌ Erro: URL deve começar com wss:// ou ws://")
+        exit(1)
+    
+    if '?' not in signaling_url:
+        signaling_url = f"{signaling_url}?role=broadcaster"
+    elif 'role=' not in signaling_url:
+        signaling_url = f"{signaling_url}&role=broadcaster"
+    
     company_id = "1"
     
-    # Inicia o broadcaster
     broadcaster = Broadcaster(
         signaling_url,
         broadcaster_name=nome_computador,
@@ -536,9 +554,10 @@ if __name__ == "__main__":
     )
     
     print("=" * 60)
-    print(f"🚀 SimplificaVideos Broadcaster v2.0")
+    print(f"🚀 SimplificaVideos Broadcaster v3.0")
     print(f"📡 Nome: {nome_computador}")
-    print(f"🔒 Modo: {'JWT Autenticado (Seguro)' if broadcaster_token else 'Legado UUID (Não Recomendado)'}")
+    print(f"🔒 Modo: JWT Autenticado (Seguro)")
+    print(f"🌐 Servidor: {signaling_url.split('?')[0]}")
     print("=" * 60)
     
     try:
