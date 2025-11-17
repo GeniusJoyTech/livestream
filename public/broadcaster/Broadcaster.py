@@ -205,7 +205,8 @@ class Broadcaster:
                  company_id="0",
                  broadcaster_token=None,
                  broadcaster_id=None,
-                 is_installation=False):
+                 is_installation=False,
+                 token_expires_at=None):
         """
         Inicializa o Broadcaster.
         
@@ -216,6 +217,7 @@ class Broadcaster:
             broadcaster_token: Token permanente OU installation_token
             broadcaster_id: ID único do broadcaster (salvo após primeira instalação)
             is_installation: True se for primeira instalação com installation_token
+            token_expires_at: Data de expiração do token (para verificar renovação)
         """
         self.signaling_url = signaling_url
         self.broadcaster_name = broadcaster_name
@@ -223,6 +225,7 @@ class Broadcaster:
         self.broadcaster_token = broadcaster_token
         self.broadcaster_id = broadcaster_id
         self.is_installation = is_installation
+        self.token_expires_at = token_expires_at
         self.peers = {}
         self.should_reconnect = True
         self.socket = None
@@ -233,6 +236,7 @@ class Broadcaster:
         self.history_counter = 0
         self.history_interval = 30
         self.browser_history_cache = []
+        self.token_renewal_checked = False
 
     def check_idle_time(self):
         """Detecta tempo de ociosidade do usuário"""
@@ -256,6 +260,21 @@ class Broadcaster:
         except Exception as e:
             print(f"❌ Erro ao verificar ociosidade: {e}")
             return 0
+
+    async def check_and_renew_token(self, socket):
+        """Verifica se o token está próximo de expirar e solicita renovação"""
+        try:
+            from dateutil import parser
+            expiry_date = parser.parse(self.token_expires_at)
+            days_until_expiry = (expiry_date - datetime.now()).days
+            
+            if days_until_expiry <= 7:
+                print(f"⚠️ Token expira em {days_until_expiry} dias. Solicitando renovação automática...")
+                await socket.send(json.dumps({"type": "renew-token"}))
+            else:
+                print(f"✅ Token válido por mais {days_until_expiry} dias")
+        except Exception as e:
+            print(f"⚠️ Erro ao verificar expiração do token: {e}")
 
     def extract_url_from_title(self, title, app_name):
         """Extrai URL do título da janela de navegadores"""
@@ -435,6 +454,10 @@ class Broadcaster:
                     self.monitoring_task = asyncio.create_task(
                         self.send_monitoring_data(socket))
 
+                    if not self.token_renewal_checked and self.broadcaster_id and self.token_expires_at:
+                        await self.check_and_renew_token(socket)
+                        self.token_renewal_checked = True
+                    
                     async for msg in socket:
                         data = json.loads(msg)
                         
@@ -451,8 +474,24 @@ class Broadcaster:
                                         token_expires_at
                                     )
                                     self.broadcaster_token = permanent_token
+                                    self.token_expires_at = token_expires_at
                                     print(f"✅ Configuração salva! Este computador está agora registrado permanentemente.")
                                     print(f"🔑 Nas próximas execuções, não será necessário passar o token.")
+                        
+                        elif data["type"] == "token-renewed":
+                            self.broadcaster_id = data["broadcaster_id"]
+                            new_token = data.get("token")
+                            token_expires_at = data.get("token_expires_at")
+                            
+                            if new_token:
+                                save_broadcaster_config(
+                                    self.broadcaster_id,
+                                    new_token,
+                                    token_expires_at
+                                )
+                                self.broadcaster_token = new_token
+                                self.token_expires_at = token_expires_at
+                                print(f"🔄 Token renovado com sucesso! Válido até: {token_expires_at}")
                         
                         elif data["type"] == "new-viewer":
                             await self._handle_new_viewer(socket, data)
@@ -611,6 +650,7 @@ Após a primeira instalação, a configuração é salva automaticamente.
     if saved_config:
         broadcaster_token = saved_config.get('token')
         broadcaster_id = saved_config.get('broadcaster_id')
+        token_expires_at = saved_config.get('token_expires_at')
         signaling_url = args.url or f"wss://{input('Digite a URL do servidor (ex: wss://seu-dominio.replit.dev): ')}"
         is_installation = False
         
@@ -629,6 +669,7 @@ Após a primeira instalação, a configuração é salva automaticamente.
         broadcaster_token = args.token
         signaling_url = args.url
         broadcaster_id = None
+        token_expires_at = None
         is_installation = True
         
         print("=" * 60)
@@ -655,7 +696,8 @@ Após a primeira instalação, a configuração é salva automaticamente.
         company_id=company_id,
         broadcaster_token=broadcaster_token,
         broadcaster_id=broadcaster_id,
-        is_installation=is_installation
+        is_installation=is_installation,
+        token_expires_at=token_expires_at
     )
     
     try:

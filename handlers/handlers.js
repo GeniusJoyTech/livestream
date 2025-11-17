@@ -302,6 +302,56 @@ async function handleMonitoring(broadcasterId, msg, peers, broadcasters) {
     console.log(`✅ Dados enviados para ${viewersNotified} viewer(s)`);
 }
 
+async function handleTokenRenewal(ws, broadcasterId, broadcasters) {
+    const broadcaster = broadcasters.get(broadcasterId);
+    if (!broadcaster || !broadcaster.db_id) {
+        console.warn(`⚠️ Tentativa de renovação de token para broadcaster inválido: ${broadcasterId}`);
+        return;
+    }
+
+    try {
+        const db = require('../database/db');
+        const { generateToken } = require('../jwt/jwtUtils');
+        
+        const result = await db.query('SELECT owner_id FROM broadcasters WHERE id = $1', [broadcaster.db_id]);
+        if (result.rows.length === 0) {
+            console.warn(`⚠️ Broadcaster ${broadcaster.db_id} não encontrado no banco para renovação`);
+            return;
+        }
+        
+        const ownerId = result.rows[0].owner_id;
+        const tokenExpiresAt = new Date(Date.now() + 60 * 24 * 60 * 60 * 1000);
+        
+        const newToken = generateToken({ 
+            type: 'broadcaster', 
+            ownerId: ownerId, 
+            broadcasterId: broadcaster.db_id 
+        }, '60d');
+        
+        await db.query(
+            'UPDATE broadcasters SET token = $1, token_expires_at = $2 WHERE id = $3',
+            [newToken, tokenExpiresAt, broadcaster.db_id]
+        );
+        
+        ws.send(JSON.stringify({
+            type: "token-renewed",
+            broadcaster_id: broadcaster.db_id,
+            token: newToken,
+            token_expires_at: tokenExpiresAt.toISOString(),
+            message: "Token renovado com sucesso! Configuração atualizada."
+        }));
+        
+        console.log(`🔄 Token renovado para broadcaster ${broadcaster.db_id} (${broadcaster.name})`);
+        
+    } catch (err) {
+        console.error('Erro ao renovar token:', err);
+        ws.send(JSON.stringify({
+            type: "error",
+            message: "Erro ao renovar token. Tente novamente mais tarde."
+        }));
+    }
+}
+
 module.exports = { 
     registerViewer,
     handleWatch,
@@ -309,5 +359,6 @@ module.exports = {
     registerBroadcaster,
     handleDisconnect,
     handleClientData,
-    handleMonitoring
+    handleMonitoring,
+    handleTokenRenewal
 };
