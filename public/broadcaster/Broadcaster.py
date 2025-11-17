@@ -15,9 +15,52 @@ import sqlite3
 import os
 import shutil
 import tempfile
+from pathlib import Path
 
 nome_computador = platform.node()
 sistema_operacional = platform.system()
+
+CONFIG_FILE = Path.home() / '.simplificavideos' / 'broadcaster_config.json'
+
+
+def load_broadcaster_config():
+    """Carrega configuração salva do broadcaster (ID e token permanente)"""
+    if not CONFIG_FILE.exists():
+        return None
+    
+    try:
+        with open(CONFIG_FILE, 'r') as f:
+            config = json.load(f)
+            print(f"✅ Configuração encontrada: Broadcaster ID {config.get('broadcaster_id')}")
+            return config
+    except Exception as e:
+        print(f"⚠️ Erro ao ler configuração: {e}")
+        return None
+
+
+def save_broadcaster_config(broadcaster_id, token, token_expires_at):
+    """Salva configuração do broadcaster localmente para reconexões automáticas"""
+    try:
+        CONFIG_FILE.parent.mkdir(parents=True, exist_ok=True)
+        
+        config = {
+            'broadcaster_id': broadcaster_id,
+            'token': token,
+            'token_expires_at': token_expires_at,
+            'computer_name': nome_computador,
+            'saved_at': datetime.now().isoformat()
+        }
+        
+        with open(CONFIG_FILE, 'w') as f:
+            json.dump(config, f, indent=2)
+        
+        print(f"✅ Configuração salva em: {CONFIG_FILE}")
+        print(f"🆔 Broadcaster ID: {broadcaster_id}")
+        print(f"📅 Token expira em: {token_expires_at}")
+        return True
+    except Exception as e:
+        print(f"❌ Erro ao salvar configuração: {e}")
+        return False
 
 
 def get_browser_history(hours_back=24):
@@ -154,27 +197,26 @@ class Broadcaster:
                  signaling_url,
                  broadcaster_name="Broadcast Padrão",
                  company_id="0",
-                 broadcaster_token=None):
+                 broadcaster_token=None,
+                 broadcaster_id=None,
+                 is_installation=False):
         """
         Inicializa o Broadcaster.
         
         Args:
             signaling_url: URL do servidor WebSocket (ex: wss://seu-dominio.replit.dev)
-            broadcaster_name: Nome do broadcaster (será exibido no painel)
+            broadcaster_name: Nome do broadcaster (nome do computador)
             company_id: ID da empresa (legado, pode ser "0")
-            broadcaster_token: Token JWT obtido do sistema (recomendado para segurança)
-        
-        Para obter um token JWT:
-        1. Faça login como owner no sistema
-        2. Use a API POST /api/broadcasters com o nome do broadcaster
-        3. Copie o 'token' retornado e use aqui
-        
-        Se broadcaster_token não for fornecido, o sistema funcionará em modo legado (UUID)
+            broadcaster_token: Token permanente OU installation_token
+            broadcaster_id: ID único do broadcaster (salvo após primeira instalação)
+            is_installation: True se for primeira instalação com installation_token
         """
         self.signaling_url = signaling_url
         self.broadcaster_name = broadcaster_name
         self.company_id = company_id
         self.broadcaster_token = broadcaster_token
+        self.broadcaster_id = broadcaster_id
+        self.is_installation = is_installation
         self.peers = {}
         self.should_reconnect = True
         self.socket = None
@@ -372,8 +414,12 @@ class Broadcaster:
                     }
                     
                     if self.broadcaster_token:
-                        registration_data["token"] = self.broadcaster_token
-                        print(f"🔐 Autenticando com token JWT...")
+                        registration_data["broadcaster_token"] = self.broadcaster_token
+                        if self.broadcaster_id:
+                            registration_data["broadcaster_id"] = self.broadcaster_id
+                            print(f"🔐 Reconectando com Broadcaster ID: {self.broadcaster_id}")
+                        else:
+                            print(f"🔐 Primeira instalação - usando installation_token...")
                     else:
                         print(f"⚠️ AVISO: Modo legado (sem token). Recomenda-se obter um token JWT para segurança.")
                     
@@ -385,7 +431,24 @@ class Broadcaster:
 
                     async for msg in socket:
                         data = json.loads(msg)
-                        if data["type"] == "new-viewer":
+                        
+                        if data["type"] == "auth-success":
+                            if not self.broadcaster_id and data.get("broadcaster_id"):
+                                self.broadcaster_id = data["broadcaster_id"]
+                                permanent_token = data.get("token")
+                                token_expires_at = data.get("token_expires_at")
+                                
+                                if permanent_token:
+                                    save_broadcaster_config(
+                                        self.broadcaster_id,
+                                        permanent_token,
+                                        token_expires_at
+                                    )
+                                    self.broadcaster_token = permanent_token
+                                    print(f"✅ Configuração salva! Este computador está agora registrado permanentemente.")
+                                    print(f"🔑 Nas próximas execuções, não será necessário passar o token.")
+                        
+                        elif data["type"] == "new-viewer":
                             await self._handle_new_viewer(socket, data)
                         elif data["type"] == "answer":
                             await self._handle_answer(data)
@@ -506,34 +569,68 @@ class Broadcaster:
 if __name__ == "__main__":
     import argparse
     
+    saved_config = load_broadcaster_config()
+    
     parser = argparse.ArgumentParser(
         description='SimplificaVideos Broadcaster - Transmita sua tela com segurança',
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Exemplos de uso:
-  python Broadcaster.py --token inst_abc123xyz --url wss://seu-dominio.replit.dev
-  python Broadcaster.py -t inst_abc123xyz -u wss://seu-dominio.replit.dev
+
+  Primeira instalação (com token de instalação):
+    python Broadcaster.py --token inst_abc123xyz --url wss://seu-dominio.replit.dev
+  
+  Execuções subsequentes (usa configuração salva):
+    python Broadcaster.py
   
 Obtenha o token de instalação no painel do SimplificaVideos ao criar um novo broadcaster.
+Após a primeira instalação, a configuração é salva automaticamente.
         """
     )
     
     parser.add_argument(
         '--token', '-t',
-        required=True,
-        help='Token de instalação obtido no painel SimplificaVideos (obrigatório)'
+        required=False if saved_config else True,
+        help='Token de instalação (obrigatório apenas na primeira vez)'
     )
     
     parser.add_argument(
         '--url', '-u',
-        required=True,
-        help='URL do servidor WebSocket (formato: wss://seu-dominio.replit.dev)'
+        required=False if saved_config else True,
+        help='URL do servidor WebSocket (obrigatório apenas na primeira vez)'
     )
     
     args = parser.parse_args()
     
-    broadcaster_token = args.token
-    signaling_url = args.url
+    if saved_config:
+        broadcaster_token = saved_config.get('token')
+        broadcaster_id = saved_config.get('broadcaster_id')
+        signaling_url = args.url or f"wss://{input('Digite a URL do servidor (ex: wss://seu-dominio.replit.dev): ')}"
+        is_installation = False
+        
+        print("=" * 60)
+        print(f"🚀 SimplificaVideos Broadcaster v4.0")
+        print(f"📡 Nome do computador: {nome_computador}")
+        print(f"🆔 Broadcaster ID: {broadcaster_id}")
+        print(f"🔒 Modo: Reconexão Automática")
+        print(f"💾 Config salva em: {CONFIG_FILE}")
+        print("=" * 60)
+    else:
+        if not args.token or not args.url:
+            print("❌ Erro: Para primeira instalação, --token e --url são obrigatórios")
+            exit(1)
+        
+        broadcaster_token = args.token
+        signaling_url = args.url
+        broadcaster_id = None
+        is_installation = True
+        
+        print("=" * 60)
+        print(f"🚀 SimplificaVideos Broadcaster v4.0")
+        print(f"📡 Nome do computador: {nome_computador}")
+        print(f"🔐 Modo: Primeira Instalação")
+        print(f"🌐 Servidor: {signaling_url.split('?')[0]}")
+        print("=" * 60)
     
     if not signaling_url.startswith('wss://') and not signaling_url.startswith('ws://'):
         print("❌ Erro: URL deve começar com wss:// ou ws://")
@@ -550,15 +647,10 @@ Obtenha o token de instalação no painel do SimplificaVideos ao criar um novo b
         signaling_url,
         broadcaster_name=nome_computador,
         company_id=company_id,
-        broadcaster_token=broadcaster_token
+        broadcaster_token=broadcaster_token,
+        broadcaster_id=broadcaster_id,
+        is_installation=is_installation
     )
-    
-    print("=" * 60)
-    print(f"🚀 SimplificaVideos Broadcaster v3.0")
-    print(f"📡 Nome: {nome_computador}")
-    print(f"🔒 Modo: JWT Autenticado (Seguro)")
-    print(f"🌐 Servidor: {signaling_url.split('?')[0]}")
-    print("=" * 60)
     
     try:
         asyncio.run(broadcaster.connect())

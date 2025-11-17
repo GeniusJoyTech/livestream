@@ -14,22 +14,39 @@ async function registerBroadcaster(ws, id, msg, peers, broadcasters) {
     peer.company_id = msg.company_id || "-1";
 
     let db_id = null;
+    let isInstallationToken = false;
     
-    if (process.env.DATABASE_URL) {
+    if (process.env.DATABASE_URL && msg.broadcaster_token) {
         try {
             const db = require('../database/db');
+            
             const result = await db.query(
-                'SELECT id FROM broadcasters WHERE token = $1 OR installation_token = $1',
+                'SELECT id, token, token_expires_at, installation_token FROM broadcasters WHERE token = $1 OR installation_token = $1',
                 [msg.broadcaster_token]
             );
             
             if (result.rows.length > 0) {
-                db_id = result.rows[0].id;
+                const broadcaster = result.rows[0];
+                db_id = broadcaster.id;
+                isInstallationToken = (broadcaster.installation_token === msg.broadcaster_token);
+                
                 await db.query(
-                    'UPDATE broadcasters SET last_connected_at = CURRENT_TIMESTAMP WHERE id = $1',
-                    [db_id]
+                    'UPDATE broadcasters SET last_connected_at = CURRENT_TIMESTAMP, name = $2 WHERE id = $1',
+                    [db_id, peer.name]
                 );
-                console.log(`✅ Broadcaster ${db_id} autenticado e last_connected_at atualizado`);
+                
+                console.log(`✅ Broadcaster ${db_id} autenticado (${isInstallationToken ? 'installation_token' : 'permanent_token'})`);
+                
+                if (isInstallationToken) {
+                    ws.send(JSON.stringify({
+                        type: "auth-success",
+                        broadcaster_id: db_id,
+                        token: broadcaster.token,
+                        token_expires_at: broadcaster.token_expires_at,
+                        message: "Broadcaster instalado com sucesso! Configuração salva localmente."
+                    }));
+                    console.log(`🔑 Token permanente enviado ao broadcaster ${db_id}`);
+                }
             } else {
                 console.warn(`⚠️ Broadcaster com token não encontrado no banco`);
             }
