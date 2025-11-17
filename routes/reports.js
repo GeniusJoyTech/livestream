@@ -48,13 +48,10 @@ router.get('/export/excel', authenticateToken, async (req, res) => {
     
     worksheet.columns = [
       { header: 'Data/Hora', key: 'timestamp', width: 20 },
-      { header: 'Host', key: 'host', width: 15 },
-      { header: 'Sistema', key: 'system', width: 12 },
+      { header: 'Nome do App', key: 'app', width: 30 },
       { header: 'Status', key: 'status', width: 12 },
       { header: 'Tempo Ocioso (s)', key: 'idle_seconds', width: 18 },
-      { header: 'URL Ativa', key: 'active_url', width: 50 },
-      { header: 'Aplicativo', key: 'app', width: 25 },
-      { header: 'Título Janela', key: 'title', width: 40 }
+      { header: 'Tempo de Uso (s)', key: 'active_seconds', width: 18 }
     ];
     
     worksheet.getRow(1).font = { bold: true };
@@ -64,16 +61,26 @@ router.get('/export/excel', authenticateToken, async (req, res) => {
       fgColor: { argb: 'FF1E90FF' }
     };
     
-    activities.forEach(activity => {
+    const activitiesReversed = [...activities].reverse();
+    
+    activitiesReversed.forEach((activity, index) => {
+      let activeSeconds = 0;
+      
+      if (index > 0) {
+        const prevActivity = activitiesReversed[index - 1];
+        const timeDiff = (new Date(activity.timestamp) - new Date(prevActivity.timestamp)) / 1000;
+        
+        if (timeDiff > 0) {
+          activeSeconds = Math.max(0, Math.round(timeDiff - (activity.idle_seconds || 0)));
+        }
+      }
+      
       worksheet.addRow({
         timestamp: new Date(activity.timestamp).toLocaleString('pt-BR'),
-        host: '-',
-        system: '-',
-        status: activity.idle_seconds > 0 ? 'Ocioso' : 'Ativo',
-        idle_seconds: activity.idle_seconds,
-        active_url: activity.active_url || '-',
-        app: activity.foreground_app || '-',
-        title: '-'
+        app: activity.foreground_app || 'Nenhum aplicativo detectado',
+        status: activity.idle_seconds > 60 ? 'Ocioso' : 'Ativo',
+        idle_seconds: activity.idle_seconds || 0,
+        active_seconds: activeSeconds
       });
     });
     

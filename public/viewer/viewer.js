@@ -310,10 +310,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const toDateInput = document.getElementById('toDate');
   const exportStatus = document.getElementById('export-status');
 
-  const today = new Date().toISOString().split('T')[0];
-  const oneWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
-  fromDateInput.value = oneWeekAgo;
-  toDateInput.value = today;
+  function setDefaultDates() {
+    const today = new Date();
+    const oneWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+    
+    toDateInput.value = today.toISOString().split('T')[0];
+    fromDateInput.value = oneWeekAgo.toISOString().split('T')[0];
+    
+    toDateInput.max = today.toISOString().split('T')[0];
+  }
+  
+  setDefaultDates();
 
   watchButton.addEventListener('click', () => {
     if (selectedBroadcasterId) {
