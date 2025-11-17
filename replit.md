@@ -31,6 +31,17 @@ None specified yet.
 ✅ Fixed viewer report export functionality by properly mapping WebSocket IDs to database IDs
 ✅ Broadcaster connections now update last_connected_at timestamp in database
 ✅ Added db_id propagation to all broadcaster list messages for viewers
+✅ Removed legacy UUID fallback code to prevent database errors
+✅ Improved error messages for viewers when broadcaster is not properly configured
+
+### ⚠️ Important: Broadcaster Token Configuration
+For report exports to work correctly, broadcasters **must** be configured with valid tokens:
+
+1. **Create broadcaster via API**: Use `/api/broadcasters` endpoint to create broadcaster and get token
+2. **Configure token in Broadcaster.py**: Set `broadcaster_token` variable with the obtained token
+3. **Without token**: Broadcasters connect in legacy mode but cannot save data or export reports
+
+See `public/broadcaster/README.md` for detailed setup instructions.
 
 ### Getting Started
 1. The application is now running and accessible via the Replit webview

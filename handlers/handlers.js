@@ -171,41 +171,11 @@ async function handleMonitoring(broadcasterId, msg, peers, broadcasters) {
 
     if (process.env.DATABASE_URL) {
         const databaseStorage = require('../services/databaseStorage');
-        const db = require('../database/db');
-        
-        let broadcasterDbId = broadcaster.db_id;
+        const broadcasterDbId = broadcaster.db_id;
         
         if (!broadcasterDbId) {
-            try {
-                const result = await db.query(
-                    'SELECT id FROM broadcasters WHERE uuid = $1',
-                    [broadcasterId]
-                );
-                
-                if (result.rows.length === 0) {
-                    const insertResult = await db.query(
-                        `INSERT INTO broadcasters (name, owner_id, uuid, token, token_expires_at, is_active)
-                         VALUES ($1, $2, $3, $4, $5, true)
-                         RETURNING id`,
-                        [
-                            broadcaster.name || `Broadcaster ${broadcasterId.slice(0, 8)}`,
-                            1,
-                            broadcasterId,
-                            'legacy-' + broadcasterId,
-                            new Date(Date.now() + 365 * 24 * 60 * 60 * 1000)
-                        ]
-                    );
-                    broadcasterDbId = insertResult.rows[0].id;
-                } else {
-                    broadcasterDbId = result.rows[0].id;
-                }
-                
-                broadcaster.db_id = broadcasterDbId;
-                console.log(`✅ Broadcaster mapeado: UUID ${broadcasterId} -> DB ID ${broadcasterDbId}`);
-            } catch (err) {
-                console.error('Erro ao mapear broadcaster:', err);
-                return;
-            }
+            console.warn(`⚠️ Broadcaster ${broadcasterId} sem db_id - dados de monitoramento não serão salvos. Certifique-se de que o broadcaster enviou o token correto.`);
+            return;
         }
         
         try {

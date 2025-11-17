@@ -322,9 +322,16 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   exportButton.onclick = async () => {
-    if (!selectedBroadcasterDbId) {
-      exportStatus.textContent = '⚠️ Selecione um broadcaster primeiro';
+    if (!selectedBroadcasterId) {
+      exportStatus.textContent = '⚠️ Selecione um broadcaster e clique em "Assistir" primeiro';
       exportStatus.style.color = '#ff0';
+      return;
+    }
+    
+    if (!selectedBroadcasterDbId) {
+      exportStatus.textContent = '⚠️ Este broadcaster não está configurado corretamente. Entre em contato com o administrador.';
+      exportStatus.style.color = '#ff0';
+      console.error('Broadcaster sem db_id - verifique se o broadcaster está usando token válido');
       return;
     }
 
