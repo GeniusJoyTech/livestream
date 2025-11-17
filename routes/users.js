@@ -79,9 +79,37 @@ router.get('/viewers', authenticateToken, async (req, res) => {
     }
     
     const viewers = await userService.getUsersByOwner(req.user.id);
-    res.json({ viewers });
+    res.json(viewers);
   } catch (error) {
     console.error('Get viewers error:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+router.post('/viewers', authenticateToken, async (req, res) => {
+  try {
+    if (req.user.role !== 'owner') {
+      return res.status(403).json({ error: 'Only owners can create viewers' });
+    }
+    
+    const { username, password, email } = req.body;
+    
+    if (!username || !password) {
+      return res.status(400).json({ error: 'Username and password are required' });
+    }
+    
+    const viewer = await userService.createUser(username, password, email, 'viewer', req.user.id);
+    
+    await userService.logAuditAction(req.user.id, 'VIEWER_CREATED', 'user', viewer.id, req.ip, req.get('user-agent'));
+    
+    res.status(201).json(viewer);
+  } catch (error) {
+    console.error('Create viewer error:', error);
+    
+    if (error.code === '23505') {
+      return res.status(409).json({ error: 'Username or email already exists' });
+    }
+    
     res.status(500).json({ error: error.message });
   }
 });
@@ -167,6 +195,37 @@ router.get('/profile', authenticateToken, async (req, res) => {
     res.json({ user });
   } catch (error) {
     console.error('Get profile error:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+router.get('/me', authenticateToken, async (req, res) => {
+  try {
+    const user = await userService.getUserById(req.user.id);
+    res.json(user);
+  } catch (error) {
+    console.error('Get user info error:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+router.get('/:userId/permissions', authenticateToken, async (req, res) => {
+  try {
+    if (req.user.role !== 'owner') {
+      return res.status(403).json({ error: 'Only owners can view permissions' });
+    }
+    
+    const { userId } = req.params;
+    const viewer = await userService.getUserById(userId);
+    
+    if (!viewer || viewer.created_by !== req.user.id) {
+      return res.status(404).json({ error: 'Viewer not found' });
+    }
+    
+    const permissions = await broadcasterService.getViewerPermissions(userId);
+    res.json(permissions);
+  } catch (error) {
+    console.error('Get permissions error:', error);
     res.status(500).json({ error: error.message });
   }
 });

@@ -169,6 +169,17 @@ class BroadcasterService {
     return result.rows.length > 0;
   }
   
+  async getViewerPermissions(viewerId) {
+    const result = await db.query(
+      `SELECT bp.broadcaster_id, b.name as broadcaster_name
+       FROM broadcaster_permissions bp
+       INNER JOIN broadcasters b ON bp.broadcaster_id = b.id
+       WHERE bp.viewer_id = $1`,
+      [viewerId]
+    );
+    return result.rows;
+  }
+  
   async deactivateBroadcaster(broadcasterId, ownerId) {
     const broadcaster = await this.getBroadcasterById(broadcasterId, ownerId);
     if (!broadcaster) {

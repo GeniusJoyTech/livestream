@@ -24,6 +24,7 @@ app.use(express.json());
 app.use("/viewer", express.static(path.join(__dirname, "./public/viewer")));
 app.use("/login", express.static(path.join(__dirname, "./public/login")));
 app.use("/register", express.static(path.join(__dirname, "./public/register")));
+app.use("/owner-dashboard", express.static(path.join(__dirname, "./public/owner-dashboard")));
 
 // ===========================
 // Rotas HTTP
