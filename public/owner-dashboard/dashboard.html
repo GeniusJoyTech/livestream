@@ -28,14 +28,14 @@
         <!-- Tab: Broadcasters -->
         <div id="tab-broadcasters" class="tab-content active">
             <div class="section-header">
-                <h2>Meus Broadcasters</h2>
+                <h2>Grupos de Broadcasters</h2>
                 <div class="header-actions">
                     <select id="broadcaster-filter" onchange="filterBroadcasters()" class="filter-select">
                         <option value="all">Todos</option>
                         <option value="active">Ativos</option>
                         <option value="inactive">Inativos</option>
                     </select>
-                    <button onclick="showCreateBroadcasterModal()" class="btn-primary">+ Novo Broadcaster</button>
+                    <button onclick="showCreateBroadcasterModal()" class="btn-primary">+ Novo Grupo</button>
                 </div>
             </div>
             
@@ -73,23 +73,24 @@
     <div id="modal-create-broadcaster" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Criar Novo Broadcaster</h3>
+                <h3>Criar Novo Grupo de Broadcasters</h3>
                 <span class="close" onclick="closeModal('modal-create-broadcaster')">&times;</span>
             </div>
             <form id="form-create-broadcaster" onsubmit="createBroadcaster(event)">
                 <div class="alert alert-info">
                     <strong>ℹ️ Como funciona:</strong>
-                    <p>Ao criar um broadcaster, você receberá um token de instalação que será usado no computador que deseja monitorar.</p>
-                    <p>Escolha um nome único para identificar este broadcaster.</p>
+                    <p>Ao criar um grupo, você receberá um <strong>token de instalação (24h)</strong> que pode ser usado em <strong>múltiplas máquinas</strong>.</p>
+                    <p>Todas as máquinas que usarem este token farão parte do mesmo grupo.</p>
+                    <p>As permissões são configuradas por grupo, não por máquina individual.</p>
                 </div>
                 <div class="form-group">
-                    <label for="broadcaster-name">Nome do Broadcaster *</label>
-                    <input type="text" id="broadcaster-name" placeholder="Ex: Computador Escritório, Notebook João" required minlength="3" maxlength="100">
-                    <small>Este nome será usado para identificar o broadcaster no sistema</small>
+                    <label for="broadcaster-name">Nome do Grupo *</label>
+                    <input type="text" id="broadcaster-name" placeholder="Ex: Equipe Vendas, Setor Financeiro, TI" required minlength="3" maxlength="100">
+                    <small>Este nome identifica o grupo de máquinas no sistema</small>
                 </div>
                 <div class="modal-footer">
                     <button type="button" onclick="closeModal('modal-create-broadcaster')" class="btn-secondary">Cancelar</button>
-                    <button type="submit" class="btn-primary">Criar Broadcaster</button>
+                    <button type="submit" class="btn-primary">Criar Grupo</button>
                 </div>
             </form>
         </div>
@@ -99,21 +100,21 @@
     <div id="modal-broadcaster-token" class="modal">
         <div class="modal-content large">
             <div class="modal-header">
-                <h3>🎉 Broadcaster Criado com Sucesso!</h3>
+                <h3>🎉 Grupo Criado com Sucesso!</h3>
                 <span class="close" onclick="closeModal('modal-broadcaster-token')">&times;</span>
             </div>
             <div class="token-display">
                 <div class="alert alert-success">
-                    <strong>✅ Broadcaster ID:</strong> <span id="token-broadcaster-id"></span><br>
-                    <small>O nome será definido automaticamente quando conectar o computador</small>
+                    <strong>✅ Grupo:</strong> <span id="token-broadcaster-name"></span> (ID: <span id="token-broadcaster-id"></span>)<br>
+                    <small>Use o token abaixo em todas as máquinas deste grupo</small>
                 </div>
                 
                 <!-- Seção de instalação (apenas para owners) -->
                 <div class="installation-section" style="display: none;">
-                    <h4>📋 Instruções de Instalação</h4>
+                    <h4>📋 Instruções de Instalação (Use em cada máquina)</h4>
                     <ol class="instructions-list">
-                        <li>Baixe o arquivo <code>Broadcaster.py</code> no computador que deseja monitorar</li>
-                        <li>Copie o comando abaixo e execute no terminal/prompt:</li>
+                        <li>Baixe o arquivo <code>Broadcaster.py</code> em cada computador</li>
+                        <li>Execute o comando abaixo (o mesmo token funciona em todas as máquinas):</li>
                     </ol>
                     
                     <div class="command-box">
@@ -121,12 +122,13 @@
                         <button onclick="copyCommand()" class="btn-copy" title="Copiar comando">📋</button>
                     </div>
                     
-                    <div class="alert alert-info">
-                        <strong>ℹ️ Detalhes:</strong>
+                    <div class="alert alert-warning">
+                        <strong>⚠️ Importante:</strong>
                         <ul style="margin: 10px 0 0 20px; padding: 0;">
-                            <li><strong>Token de Instalação:</strong> Válido por 24 horas</li>
-                            <li><strong>URL do Servidor:</strong> <span id="server-url"></span></li>
-                            <li><strong>Token do Broadcaster:</strong> <small id="broadcaster-token-short" style="font-family: monospace;"></small></li>
+                            <li><strong>Token de Instalação:</strong> Válido por <strong>24 horas</strong></li>
+                            <li><strong>Uso:</strong> Pode ser usado em <strong>múltiplas máquinas</strong></li>
+                            <li><strong>Após a primeira conexão:</strong> Cada máquina recebe um token permanente (60 dias)</li>
+                            <li><strong>Servidor:</strong> <span id="server-url"></span></li>
                         </ul>
                     </div>
                     

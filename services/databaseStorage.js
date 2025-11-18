@@ -3,13 +3,13 @@ const db = require('../database/db');
 class DatabaseStorage {
   
   async saveActivity(broadcasterId, activityData) {
-    const { idle_seconds, active_url, foreground_app, app_count, apps } = activityData;
+    const { installation_id, idle_seconds, active_url, foreground_app, app_count, apps } = activityData;
     
     try {
       await db.query(
-        `INSERT INTO activities (broadcaster_id, idle_seconds, active_url, foreground_app, app_count, apps_data)
-         VALUES ($1, $2, $3, $4, $5, $6)`,
-        [broadcasterId, idle_seconds || 0, active_url, foreground_app, app_count || 0, JSON.stringify(apps || [])]
+        `INSERT INTO activities (broadcaster_id, installation_id, idle_seconds, active_url, foreground_app, app_count, apps_data)
+         VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+        [broadcasterId, installation_id || null, idle_seconds || 0, active_url, foreground_app, app_count || 0, JSON.stringify(apps || [])]
       );
     } catch (error) {
       console.error('Error saving activity:', error);
@@ -17,7 +17,7 @@ class DatabaseStorage {
     }
   }
   
-  async saveBrowserHistory(broadcasterId, historyEntries) {
+  async saveBrowserHistory(broadcasterId, installationId, historyEntries) {
     if (!historyEntries || historyEntries.length === 0) {
       return;
     }
@@ -47,10 +47,10 @@ class DatabaseStorage {
         
         try {
           await client.query(
-            `INSERT INTO browser_history (broadcaster_id, browser, url, title, visit_timestamp)
-             VALUES ($1, $2, $3, $4, $5)
-             ON CONFLICT (broadcaster_id, browser, url, visit_timestamp) DO NOTHING`,
-            [broadcasterId, entry.browser, entry.url, entry.title, parsedDate]
+            `INSERT INTO browser_history (broadcaster_id, installation_id, browser, url, title, visit_timestamp)
+             VALUES ($1, $2, $3, $4, $5, $6)
+             ON CONFLICT (broadcaster_id, installation_id, browser, url, visit_timestamp) DO NOTHING`,
+            [broadcasterId, installationId || null, entry.browser, entry.url, entry.title, parsedDate]
           );
           savedCount++;
         } catch (insertError) {

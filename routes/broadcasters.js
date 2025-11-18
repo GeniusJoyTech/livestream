@@ -25,7 +25,6 @@ router.post('/', authenticateToken, async (req, res) => {
       broadcaster: {
         id: broadcaster.id,
         name: broadcaster.name,
-        token: broadcaster.token,
         installationToken: broadcaster.installation_token,
         installationExpiresIn: '24 hours'
       }
@@ -154,6 +153,40 @@ router.delete('/:broadcasterId', authenticateToken, async (req, res) => {
     res.json({ message: 'Broadcaster deactivated successfully' });
   } catch (error) {
     console.error('Deactivate broadcaster error:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+router.get('/:broadcasterId/installations', authenticateToken, async (req, res) => {
+  try {
+    const { broadcasterId } = req.params;
+    
+    if (req.user.role !== 'owner') {
+      return res.status(403).json({ error: 'Only owners can view installations' });
+    }
+    
+    const installations = await broadcasterService.getInstallations(parseInt(broadcasterId), req.user.id);
+    
+    res.json({ installations });
+  } catch (error) {
+    console.error('Get installations error:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+router.delete('/:broadcasterId/installations/:installationId', authenticateToken, async (req, res) => {
+  try {
+    if (req.user.role !== 'owner') {
+      return res.status(403).json({ error: 'Only owners can deactivate installations' });
+    }
+    
+    const { installationId } = req.params;
+    
+    await broadcasterService.deactivateInstallation(parseInt(installationId), req.user.id);
+    
+    res.json({ message: 'Installation deactivated successfully' });
+  } catch (error) {
+    console.error('Deactivate installation error:', error);
     res.status(500).json({ error: error.message });
   }
 });

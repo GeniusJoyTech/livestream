@@ -112,25 +112,33 @@ function renderBroadcasters() {
 
     container.innerHTML = filteredBroadcasters.map(b => {
         const isActive = Boolean(b.is_active);
-        const isOnline = isActive && b.last_connected_at && isRecentlyConnected(b.last_connected_at);
+        const installationCount = parseInt(b.installation_count) || 0;
+        const activeInstallations = parseInt(b.active_installations) || 0;
         
         let statusBadge, statusClass;
         if (!isActive) {
             statusBadge = '🔴 Desativado';
             statusClass = 'badge-deactivated';
+        } else if (activeInstallations > 0) {
+            statusBadge = `🟢 ${activeInstallations} Online`;
+            statusClass = 'badge-active';
+        } else if (installationCount > 0) {
+            statusBadge = `🟡 ${installationCount} Offline`;
+            statusClass = 'badge-inactive';
         } else {
-            statusBadge = isOnline ? '🟢 Online' : (b.last_connected_at ? '🟡 Offline' : '⚪ Nunca conectado');
-            statusClass = isOnline ? 'badge-active' : 'badge-inactive';
+            statusBadge = '⚪ Nenhuma máquina';
+            statusClass = 'badge-inactive';
         }
         
         const actionsHtml = isActive ? `
             <div class="card-actions">
+                <button onclick="showInstallations(${b.id}, '${escapeHtml(b.name).replace(/'/g, "&#39;")}')" class="btn-secondary btn-small">📱 Máquinas (${installationCount})</button>
                 <button onclick="showToken(${b.id})" class="btn-primary btn-small">🔑 Ver Token</button>
                 <button onclick="deactivateBroadcaster(${b.id})" class="btn-danger btn-small">❌ Desativar</button>
             </div>
         ` : `
             <div class="card-actions">
-                <div class="deactivated-message">Este broadcaster foi desativado e não pode mais ser usado</div>
+                <div class="deactivated-message">Este grupo foi desativado e não pode mais ser usado</div>
             </div>
         `;
         
@@ -144,7 +152,7 @@ function renderBroadcasters() {
             </div>
             <div class="card-info">
                 <div>📅 Criado: ${new Date(b.created_at).toLocaleDateString('pt-BR')}</div>
-                ${b.last_connected_at ? `<div>👁️ Última conexão: ${formatLastSeen(b.last_connected_at)}</div>` : '<div>⚠️ Aguardando primeira conexão</div>'}
+                <div>💻 Máquinas instaladas: ${installationCount} ${activeInstallations > 0 ? `(${activeInstallations} online)` : ''}</div>
             </div>
             ${actionsHtml}
         </div>
@@ -332,6 +340,102 @@ async function showToken(broadcasterId) {
     }
 }
 
+async function showInstallations(broadcasterId, broadcasterName) {
+    try {
+        const response = await fetch(`/api/broadcasters/${broadcasterId}/installations`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            const installations = data.installations || [];
+            
+            const modal = document.createElement('div');
+            modal.className = 'modal show';
+            modal.innerHTML = `
+                <div class="modal-content large">
+                    <div class="modal-header">
+                        <h3>💻 Máquinas do Grupo: ${escapeHtml(broadcasterName)}</h3>
+                        <span class="close" onclick="this.parentElement.parentElement.parentElement.remove()">&times;</span>
+                    </div>
+                    <div class="installations-list">
+                        ${installations.length === 0 ? `
+                            <div class="empty-state">
+                                <div class="empty-state-icon">💻</div>
+                                <h3>Nenhuma máquina instalada</h3>
+                                <p>Use o token de instalação para conectar máquinas a este grupo</p>
+                            </div>
+                        ` : installations.map(inst => {
+                            const isOnline = inst.is_active && inst.last_connected_at && isRecentlyConnected(inst.last_connected_at);
+                            const statusBadge = isOnline ? '🟢 Online' : '🔴 Offline';
+                            const statusClass = isOnline ? 'badge-active' : 'badge-inactive';
+                            
+                            return `
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="card-title">🖥️ ${escapeHtml(inst.computer_name)}</div>
+                                        <span class="card-badge ${statusClass}">
+                                            ${statusBadge}
+                                        </span>
+                                    </div>
+                                    <div class="card-info">
+                                        <div>📅 Primeiro acesso: ${new Date(inst.created_at).toLocaleDateString('pt-BR')} às ${new Date(inst.created_at).toLocaleTimeString('pt-BR')}</div>
+                                        ${inst.last_connected_at ? `<div>🕒 Última conexão: ${formatLastSeen(inst.last_connected_at)}</div>` : '<div>⚠️ Nunca conectou</div>'}
+                                        <div>🔐 Status: ${inst.is_active ? 'Ativa' : 'Desativada'}</div>
+                                    </div>
+                                    ${inst.is_active ? `
+                                        <div class="card-actions">
+                                            <button onclick="deactivateInstallation(${broadcasterId}, ${inst.id})" class="btn-danger btn-small">❌ Desativar</button>
+                                        </div>
+                                    ` : ''}
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                    <div class="modal-footer">
+                        <button onclick="this.parentElement.parentElement.parentElement.remove()" class="btn-primary">Fechar</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        } else {
+            showError('Erro ao carregar installations');
+        }
+    } catch (error) {
+        console.error('Error loading installations:', error);
+        showError('Erro ao carregar installations');
+    }
+}
+
+async function deactivateInstallation(broadcasterId, installationId) {
+    if (!confirm('Tem certeza que deseja desativar esta instalação? A máquina não poderá mais se conectar.')) {
+        return;
+    }
+    
+    try {
+        const response = await fetch(`/api/broadcasters/${broadcasterId}/installations/${installationId}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if (response.ok) {
+            showSuccess('Installation desativada com sucesso!');
+            document.querySelectorAll('.modal').forEach(m => m.remove());
+            await loadBroadcasters();
+        } else {
+            const error = await response.json();
+            showError(error.error || 'Erro ao desativar installation');
+        }
+    } catch (error) {
+        console.error('Error deactivating installation:', error);
+        showError('Erro ao desativar installation');
+    }
+}
+
 function showNewBroadcasterToken(broadcaster) {
     currentBroadcaster = broadcaster;
     
@@ -340,14 +444,13 @@ function showNewBroadcasterToken(broadcaster) {
         : `ws://${window.location.host}`;
     
     document.getElementById('token-broadcaster-id').textContent = broadcaster.id;
+    document.getElementById('token-broadcaster-name').textContent = broadcaster.name || `Grupo ${broadcaster.id}`;
     
     if (broadcaster.installationToken) {
-        document.getElementById('token-value').textContent = broadcaster.token;
+        document.getElementById('token-value').textContent = broadcaster.installationToken;
         const command = `python Broadcaster.py --token ${broadcaster.installationToken} --url ${serverUrl}`;
         document.getElementById('install-command').textContent = command;
         document.getElementById('server-url').textContent = serverUrl;
-        document.getElementById('broadcaster-token-short').textContent = 
-            broadcaster.token.substring(0, 30) + '...';
         document.querySelector('.installation-section').style.display = 'block';
         document.querySelector('.token-only-section').style.display = 'none';
     } else {

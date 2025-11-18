@@ -10,96 +10,86 @@ async function registerBroadcaster(ws, id, msg, peers, broadcasters) {
     const peer = peers.get(id);
     peer.role = "broadcaster";
     peer.monitor_number = msg.monitor_number;
-    peer.name = msg.broadcaster_name || `Broadcaster ${id.slice(0, 6)}`;
+    peer.name = msg.broadcaster_name || msg.computer_name || `Broadcaster ${id.slice(0, 6)}`;
     peer.company_id = msg.company_id || "-1";
 
     let db_id = null;
-    let isInstallationToken = false;
+    let installation_id = null;
+    let broadcaster_group_name = null;
     
     if (process.env.DATABASE_URL) {
         try {
             const db = require('../database/db');
-            const { generateToken } = require('../jwt/jwtUtils');
+            const broadcasterService = require('../services/broadcasterService');
             
             if (msg.broadcaster_token) {
-                const result = await db.query(
-                    'SELECT id, token, token_expires_at, installation_token FROM broadcasters WHERE token = $1 OR installation_token = $1',
-                    [msg.broadcaster_token]
-                );
+                const installationJwt = await broadcasterService.getInstallationByJwt(msg.broadcaster_token);
                 
-                if (result.rows.length > 0) {
-                    const broadcaster = result.rows[0];
-                    db_id = broadcaster.id;
-                    isInstallationToken = (broadcaster.installation_token === msg.broadcaster_token);
+                if (installationJwt) {
+                    db_id = installationJwt.broadcaster_id;
+                    installation_id = installationJwt.id;
+                    broadcaster_group_name = installationJwt.broadcaster_name;
+                    peer.name = installationJwt.computer_name;
                     
-                    await db.query(
-                        'UPDATE broadcasters SET last_connected_at = CURRENT_TIMESTAMP, name = $2 WHERE id = $1',
-                        [db_id, peer.name]
-                    );
+                    await broadcasterService.updateInstallationConnection(installation_id);
                     
-                    console.log(`✅ Broadcaster ${db_id} autenticado (${isInstallationToken ? 'installation_token' : 'permanent_token'})`);
+                    ws.send(JSON.stringify({
+                        type: "auth-success",
+                        broadcaster_id: db_id,
+                        installation_id: installation_id,
+                        broadcaster_group_name: broadcaster_group_name,
+                        computer_name: peer.name,
+                        message: `Reconexão bem-sucedida! Grupo: ${broadcaster_group_name}, Computer: ${peer.name}`
+                    }));
                     
-                    if (isInstallationToken) {
+                    console.log(`✅ Installation ${installation_id} reconectada ao broadcaster group ${db_id} (${broadcaster_group_name}) - Computer: ${peer.name}`);
+                    
+                } else {
+                    const broadcasterGroup = await broadcasterService.getBroadcasterByInstallationToken(msg.broadcaster_token);
+                    
+                    if (broadcasterGroup) {
+                        db_id = broadcasterGroup.id;
+                        broadcaster_group_name = broadcasterGroup.name;
+                        
+                        const computerName = msg.computer_name || peer.name;
+                        
+                        const installation = await broadcasterService.createInstallation(
+                            db_id,
+                            computerName,
+                            msg.broadcaster_token
+                        );
+                        
+                        installation_id = installation.id;
+                        peer.name = computerName;
+                        
                         ws.send(JSON.stringify({
                             type: "auth-success",
                             broadcaster_id: db_id,
-                            token: broadcaster.token,
-                            token_expires_at: broadcaster.token_expires_at,
-                            message: "Broadcaster instalado com sucesso! Configuração salva localmente."
+                            installation_id: installation_id,
+                            broadcaster_group_name: broadcaster_group_name,
+                            computer_name: computerName,
+                            token: installation.jwt_token,
+                            token_expires_at: installation.jwt_expires_at,
+                            message: `Installation registrada com sucesso! Grupo: ${broadcaster_group_name}, Computer: ${computerName}`
                         }));
-                        console.log(`🔑 Token permanente enviado ao broadcaster ${db_id}`);
+                        
+                        console.log(`🆕 Nova installation ${installation_id} criada para broadcaster group ${db_id} (${broadcaster_group_name}) - Computer: ${computerName}`);
+                        
+                    } else {
+                        console.warn(`⚠️ Token de instalação inválido ou expirado`);
+                        ws.close(4004, "Token de instalação inválido ou expirado");
+                        return;
                     }
-                } else {
-                    console.warn(`⚠️ Broadcaster com token não encontrado no banco - criando automaticamente...`);
-                    db_id = null;
                 }
-            }
-            
-            if (!db_id) {
-                const ownerResult = await db.query('SELECT id FROM users WHERE role = $1 ORDER BY id LIMIT 1', ['owner']);
-                const defaultOwnerId = ownerResult.rows.length > 0 ? ownerResult.rows[0].id : 1;
-                
-                const tokenExpiresAt = new Date(Date.now() + 60 * 24 * 60 * 60 * 1000);
-                const installationExpiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
-                
-                const insertResult = await db.query(
-                    `INSERT INTO broadcasters (name, owner_id, token_expires_at, installation_token_expires_at, is_active, last_connected_at)
-                     VALUES ($1, $2, $3, $4, true, CURRENT_TIMESTAMP)
-                     RETURNING id`,
-                    [peer.name, defaultOwnerId, tokenExpiresAt, installationExpiresAt]
-                );
-                
-                db_id = insertResult.rows[0].id;
-                
-                const permanentToken = generateToken({ 
-                    type: 'broadcaster', 
-                    ownerId: defaultOwnerId, 
-                    broadcasterId: db_id 
-                }, '60d');
-                
-                const installationToken = generateToken({ 
-                    type: 'installation', 
-                    ownerId: defaultOwnerId, 
-                    broadcasterId: db_id 
-                }, '1d');
-                
-                await db.query(
-                    `UPDATE broadcasters SET token = $1, installation_token = $2 WHERE id = $3`,
-                    [permanentToken, installationToken, db_id]
-                );
-                
-                ws.send(JSON.stringify({
-                    type: "auth-success",
-                    broadcaster_id: db_id,
-                    token: permanentToken,
-                    token_expires_at: tokenExpiresAt,
-                    message: "Broadcaster registrado automaticamente! Configuração salva localmente."
-                }));
-                
-                console.log(`🆕 Novo broadcaster criado automaticamente: ID ${db_id}, Nome: ${peer.name}`);
+            } else {
+                console.warn(`⚠️ Broadcaster conectou sem token - conexão recusada`);
+                ws.close(4003, "Token de autenticação é obrigatório");
+                return;
             }
         } catch (err) {
             console.error('Erro ao processar broadcaster no banco:', err);
+            ws.close(4005, "Erro ao processar autenticação");
+            return;
         }
     }
 
@@ -109,17 +99,21 @@ async function registerBroadcaster(ws, id, msg, peers, broadcasters) {
         name: peer.name,
         company_id: peer.company_id,
         db_id: db_id,
+        installation_id: installation_id,
+        broadcaster_group_name: broadcaster_group_name
     });
 
-    console.log(`✅ Broadcaster conectado: ${peer.name} (Monitor ${msg.monitor_number}, DB ID: ${db_id})`);
+    console.log(`✅ Broadcaster conectado: ${peer.name} do grupo "${broadcaster_group_name}" (Monitor ${msg.monitor_number}, Group ID: ${db_id}, Installation ID: ${installation_id})`);
 
     for (const [, vpeer] of peers) {
         if (vpeer.role === "viewer" && vpeer.ws.readyState === WebSocket.OPEN) {
             vpeer.ws.send(JSON.stringify({
                 type: "new-broadcaster",
                 broadcasterId: id,
-                broadcaster_name: peer.name,
+                broadcaster_name: broadcaster_group_name || peer.name,
+                computer_name: peer.name,
                 db_id: db_id,
+                installation_id: installation_id
             }));
         }
     }
@@ -237,6 +231,7 @@ async function handleMonitoring(broadcasterId, msg, peers, broadcasters) {
     if (process.env.DATABASE_URL) {
         const databaseStorage = require('../services/databaseStorage');
         const broadcasterDbId = broadcaster.db_id;
+        const installationId = broadcaster.installation_id;
         
         if (!broadcasterDbId) {
             console.warn(`⚠️ Broadcaster ${broadcasterId} sem db_id - dados de monitoramento não serão salvos. Certifique-se de que o broadcaster enviou o token correto.`);
@@ -245,6 +240,7 @@ async function handleMonitoring(broadcasterId, msg, peers, broadcasters) {
         
         try {
             await databaseStorage.saveActivity(broadcasterDbId, {
+                installation_id: installationId,
                 idle_seconds: parseInt(msg.idle_seconds) || 0,
                 active_url: msg.active_url,
                 foreground_app: msg.foreground?.app,
@@ -258,7 +254,7 @@ async function handleMonitoring(broadcasterId, msg, peers, broadcasters) {
         if (msg.browser_history && msg.browser_history.length > 0) {
             console.log(`📚 Salvando ${msg.browser_history.length} entradas de histórico de navegação`);
             try {
-                await databaseStorage.saveBrowserHistory(broadcasterDbId, msg.browser_history);
+                await databaseStorage.saveBrowserHistory(broadcasterDbId, installationId, msg.browser_history);
             } catch (err) {
                 console.error('Erro ao salvar histórico de navegação no banco:', err);
             }
@@ -288,6 +284,8 @@ async function handleMonitoring(broadcasterId, msg, peers, broadcasters) {
                 data: {
                     timestamp: msg.timestamp,
                     host: msg.host,
+                    computer_name: broadcaster.name,
+                    broadcaster_group: broadcaster.broadcaster_group_name,
                     apps: msg.apps,
                     foreground: msg.foreground,
                     system: msg.system,
