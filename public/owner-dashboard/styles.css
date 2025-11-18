@@ -106,6 +106,34 @@ body {
     font-size: 1.8rem;
 }
 
+.header-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.filter-select {
+    padding: 0.6rem 1.2rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    background: white;
+    cursor: pointer;
+    color: #333;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+.filter-select:hover {
+    border-color: #667eea;
+}
+
+.filter-select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
 .help-text {
     color: #666;
     font-size: 0.9rem;
@@ -261,6 +289,13 @@ body {
     padding: 3rem;
     color: #666;
     font-size: 1.1rem;
+}
+
+.loading-small {
+    text-align: center;
+    padding: 1rem;
+    color: #999;
+    font-size: 0.9rem;
 }
 
 .empty-state {
@@ -479,6 +514,12 @@ body {
     color: #721c24;
 }
 
+.alert-warning {
+    background: #fff3cd;
+    border: 1px solid #ffeeba;
+    color: #856404;
+}
+
 /* Permissions Grid */
 .permissions-grid {
     display: flex;
@@ -539,6 +580,41 @@ body {
 .permission-name {
     font-weight: 500;
     color: #333;
+}
+
+.checkbox-list {
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 0.5rem;
+}
+
+.checkbox-item {
+    padding: 0.5rem;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.checkbox-item:last-child {
+    border-bottom: none;
+}
+
+.checkbox-item label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-weight: normal !important;
+}
+
+.checkbox-item input[type="checkbox"] {
+    cursor: pointer;
+    width: auto;
+    margin: 0;
+}
+
+.checkbox-item label:hover {
+    color: #667eea;
 }
 
 @media (max-width: 768px) {

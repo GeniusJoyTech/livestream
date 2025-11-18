@@ -3,6 +3,7 @@ let currentUser = null;
 let broadcasters = [];
 let viewers = [];
 let currentBroadcaster = null;
+let currentFilter = 'all';
 
 // Initialization
 document.addEventListener('DOMContentLoaded', () => {
@@ -81,21 +82,35 @@ async function loadBroadcasters() {
     }
 }
 
+function filterBroadcasters() {
+    currentFilter = document.getElementById('broadcaster-filter').value;
+    renderBroadcasters();
+}
+
 function renderBroadcasters() {
     const container = document.getElementById('broadcasters-list');
     
-    if (broadcasters.length === 0) {
+    let filteredBroadcasters = broadcasters;
+    
+    if (currentFilter === 'active') {
+        filteredBroadcasters = broadcasters.filter(b => b.is_active);
+    } else if (currentFilter === 'inactive') {
+        filteredBroadcasters = broadcasters.filter(b => !b.is_active);
+    }
+    
+    if (filteredBroadcasters.length === 0) {
+        const filterText = currentFilter === 'active' ? 'ativos' : currentFilter === 'inactive' ? 'inativos' : '';
         container.innerHTML = `
             <div class="empty-state">
                 <div class="empty-state-icon">📡</div>
-                <h3>Nenhum broadcaster ainda</h3>
-                <p>Crie seu primeiro broadcaster para começar a monitorar dispositivos</p>
+                <h3>Nenhum broadcaster ${filterText}</h3>
+                <p>${broadcasters.length === 0 ? 'Crie seu primeiro broadcaster para começar a monitorar dispositivos' : `Não há broadcasters ${filterText} no momento`}</p>
             </div>
         `;
         return;
     }
 
-    container.innerHTML = broadcasters.map(b => {
+    container.innerHTML = filteredBroadcasters.map(b => {
         const isActive = Boolean(b.is_active);
         const isOnline = isActive && b.last_connected_at && isRecentlyConnected(b.last_connected_at);
         
@@ -267,6 +282,28 @@ function showCreateBroadcasterModal() {
 }
 
 function showCreateViewerModal() {
+    const broadcastersListEl = document.getElementById('viewer-broadcasters-list');
+    
+    const activeBroadcasters = broadcasters.filter(b => b.is_active);
+    
+    if (activeBroadcasters.length === 0) {
+        broadcastersListEl.innerHTML = `
+            <div class="alert alert-warning">
+                <strong>⚠️ Nenhum broadcaster ativo</strong>
+                <p>Crie pelo menos um broadcaster ativo antes de criar um viewer</p>
+            </div>
+        `;
+    } else {
+        broadcastersListEl.innerHTML = activeBroadcasters.map(b => `
+            <div class="checkbox-item">
+                <label>
+                    <input type="checkbox" name="broadcaster-permission" value="${b.id}">
+                    <span>${escapeHtml(b.name)}</span>
+                </label>
+            </div>
+        `).join('');
+    }
+    
     document.getElementById('modal-create-viewer').classList.add('show');
 }
 
@@ -326,6 +363,13 @@ function showNewBroadcasterToken(broadcaster) {
 async function createBroadcaster(event) {
     event.preventDefault();
     
+    const name = document.getElementById('broadcaster-name').value.trim();
+    
+    if (!name || name.length < 3) {
+        showError('O nome do broadcaster deve ter pelo menos 3 caracteres');
+        return;
+    }
+    
     try {
         const response = await fetch('/api/broadcasters', {
             method: 'POST',
@@ -333,7 +377,7 @@ async function createBroadcaster(event) {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify({})
+            body: JSON.stringify({ name })
         });
 
         if (response.ok) {
@@ -360,6 +404,10 @@ async function createViewer(event) {
     const email = document.getElementById('viewer-email').value;
     const password = document.getElementById('viewer-password').value;
     
+    const selectedBroadcasters = Array.from(
+        document.querySelectorAll('input[name="broadcaster-permission"]:checked')
+    ).map(checkbox => parseInt(checkbox.value));
+    
     try {
         const response = await fetch('/api/users/viewers', {
             method: 'POST',
@@ -367,7 +415,12 @@ async function createViewer(event) {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify({ username, email, password })
+            body: JSON.stringify({ 
+                username, 
+                email, 
+                password,
+                broadcasterIds: selectedBroadcasters
+            })
         });
 
         if (response.ok) {

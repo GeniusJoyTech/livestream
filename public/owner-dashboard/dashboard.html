@@ -29,7 +29,14 @@
         <div id="tab-broadcasters" class="tab-content active">
             <div class="section-header">
                 <h2>Meus Broadcasters</h2>
-                <button onclick="showCreateBroadcasterModal()" class="btn-primary">+ Novo Broadcaster</button>
+                <div class="header-actions">
+                    <select id="broadcaster-filter" onchange="filterBroadcasters()" class="filter-select">
+                        <option value="all">Todos</option>
+                        <option value="active">Ativos</option>
+                        <option value="inactive">Inativos</option>
+                    </select>
+                    <button onclick="showCreateBroadcasterModal()" class="btn-primary">+ Novo Broadcaster</button>
+                </div>
             </div>
             
             <div id="broadcasters-list" class="cards-grid">
@@ -73,11 +80,16 @@
                 <div class="alert alert-info">
                     <strong>ℹ️ Como funciona:</strong>
                     <p>Ao criar um broadcaster, você receberá um token de instalação que será usado no computador que deseja monitorar.</p>
-                    <p>O nome do broadcaster será automaticamente definido como o nome do computador onde o aplicativo for executado.</p>
+                    <p>Escolha um nome único para identificar este broadcaster.</p>
+                </div>
+                <div class="form-group">
+                    <label for="broadcaster-name">Nome do Broadcaster *</label>
+                    <input type="text" id="broadcaster-name" placeholder="Ex: Computador Escritório, Notebook João" required minlength="3" maxlength="100">
+                    <small>Este nome será usado para identificar o broadcaster no sistema</small>
                 </div>
                 <div class="modal-footer">
                     <button type="button" onclick="closeModal('modal-create-broadcaster')" class="btn-secondary">Cancelar</button>
-                    <button type="submit" class="btn-primary">Gerar Token</button>
+                    <button type="submit" class="btn-primary">Criar Broadcaster</button>
                 </div>
             </form>
         </div>
@@ -155,21 +167,28 @@
             </div>
             <form id="form-create-viewer" onsubmit="createViewer(event)">
                 <div class="form-group">
-                    <label for="viewer-username">Nome de Usuário</label>
+                    <label for="viewer-username">Nome de Usuário *</label>
                     <input type="text" id="viewer-username" placeholder="Ex: joao.silva" required>
                 </div>
                 <div class="form-group">
-                    <label for="viewer-email">Email</label>
+                    <label for="viewer-email">Email *</label>
                     <input type="email" id="viewer-email" placeholder="joao@empresa.com" required>
                 </div>
                 <div class="form-group">
-                    <label for="viewer-password">Senha Temporária</label>
+                    <label for="viewer-password">Senha Temporária *</label>
                     <input type="password" id="viewer-password" placeholder="Mínimo 8 caracteres" required minlength="8">
                     <small>O viewer poderá alterar a senha após o primeiro login</small>
                 </div>
+                <div class="form-group">
+                    <label>Broadcasters que este viewer pode acessar:</label>
+                    <div id="viewer-broadcasters-list" class="checkbox-list">
+                        <div class="loading-small">Carregando broadcasters...</div>
+                    </div>
+                    <small>Você pode editar estas permissões depois na aba Permissões</small>
+                </div>
                 <div class="modal-footer">
                     <button type="button" onclick="closeModal('modal-create-viewer')" class="btn-secondary">Cancelar</button>
-                    <button type="submit" class="btn-primary">Criar</button>
+                    <button type="submit" class="btn-primary">Criar Viewer</button>
                 </div>
             </form>
         </div>
