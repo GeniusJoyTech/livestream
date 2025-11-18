@@ -11,9 +11,12 @@ router.post('/', authenticateToken, async (req, res) => {
     }
     
     const { name } = req.body;
-    const broadcasterName = name || 'Aguardando Conexão';
     
-    const broadcaster = await broadcasterService.createBroadcaster(broadcasterName, req.user.id);
+    if (!name || name.trim().length < 3) {
+      return res.status(400).json({ error: 'O nome do broadcaster deve ter pelo menos 3 caracteres' });
+    }
+    
+    const broadcaster = await broadcasterService.createBroadcaster(name.trim(), req.user.id);
     
     await userService.logAuditAction(req.user.id, 'BROADCASTER_CREATED', 'broadcaster', broadcaster.id, req.ip, req.get('user-agent'));
     

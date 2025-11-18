@@ -92,13 +92,23 @@ router.post('/viewers', authenticateToken, async (req, res) => {
       return res.status(403).json({ error: 'Only owners can create viewers' });
     }
     
-    const { username, password, email } = req.body;
+    const { username, password, email, broadcasterIds } = req.body;
     
     if (!username || !password) {
       return res.status(400).json({ error: 'Username and password are required' });
     }
     
     const viewer = await userService.createUser(username, password, email, 'viewer', req.user.id);
+    
+    if (broadcasterIds && Array.isArray(broadcasterIds) && broadcasterIds.length > 0) {
+      for (const broadcasterId of broadcasterIds) {
+        try {
+          await broadcasterService.grantPermission(broadcasterId, viewer.id, req.user.id);
+        } catch (permError) {
+          console.error(`Error granting permission for broadcaster ${broadcasterId}:`, permError);
+        }
+      }
+    }
     
     await userService.logAuditAction(req.user.id, 'VIEWER_CREATED', 'user', viewer.id, req.ip, req.get('user-agent'));
     

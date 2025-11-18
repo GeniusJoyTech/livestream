@@ -6,7 +6,20 @@ const INSTALLATION_TOKEN_DURATION = '1d';
 
 class BroadcasterService {
   
+  async checkBroadcasterNameExists(name, ownerId) {
+    const result = await db.query(
+      'SELECT id FROM broadcasters WHERE LOWER(name) = LOWER($1) AND owner_id = $2',
+      [name, ownerId]
+    );
+    return result.rows.length > 0;
+  }
+
   async createBroadcaster(name, ownerId) {
+    const nameExists = await this.checkBroadcasterNameExists(name, ownerId);
+    if (nameExists) {
+      throw new Error('Já existe um broadcaster com este nome');
+    }
+    
     const tokenExpiresAt = new Date(Date.now() + 60 * 24 * 60 * 60 * 1000);
     const installationExpiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
     
