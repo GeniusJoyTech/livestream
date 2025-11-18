@@ -96,12 +96,31 @@ function renderBroadcasters() {
     }
 
     container.innerHTML = broadcasters.map(b => {
-        const isOnline = b.last_connected_at && isRecentlyConnected(b.last_connected_at);
-        const statusBadge = isOnline ? '🟢 Online' : (b.last_connected_at ? '🟡 Offline' : '⚪ Nunca conectado');
-        const statusClass = isOnline ? 'badge-active' : 'badge-inactive';
+        const isActive = Boolean(b.is_active);
+        const isOnline = isActive && b.last_connected_at && isRecentlyConnected(b.last_connected_at);
+        
+        let statusBadge, statusClass;
+        if (!isActive) {
+            statusBadge = '🔴 Desativado';
+            statusClass = 'badge-deactivated';
+        } else {
+            statusBadge = isOnline ? '🟢 Online' : (b.last_connected_at ? '🟡 Offline' : '⚪ Nunca conectado');
+            statusClass = isOnline ? 'badge-active' : 'badge-inactive';
+        }
+        
+        const actionsHtml = isActive ? `
+            <div class="card-actions">
+                <button onclick="showToken(${b.id})" class="btn-primary btn-small">🔑 Ver Token</button>
+                <button onclick="deactivateBroadcaster(${b.id})" class="btn-danger btn-small">❌ Desativar</button>
+            </div>
+        ` : `
+            <div class="card-actions">
+                <div class="deactivated-message">Este broadcaster foi desativado e não pode mais ser usado</div>
+            </div>
+        `;
         
         return `
-        <div class="card">
+        <div class="card ${!isActive ? 'card-deactivated' : ''}">
             <div class="card-header">
                 <div class="card-title">${escapeHtml(b.name)}</div>
                 <span class="card-badge ${statusClass}">
@@ -112,10 +131,7 @@ function renderBroadcasters() {
                 <div>📅 Criado: ${new Date(b.created_at).toLocaleDateString('pt-BR')}</div>
                 ${b.last_connected_at ? `<div>👁️ Última conexão: ${formatLastSeen(b.last_connected_at)}</div>` : '<div>⚠️ Aguardando primeira conexão</div>'}
             </div>
-            <div class="card-actions">
-                <button onclick="showToken(${b.id})" class="btn-primary btn-small">🔑 Ver Token</button>
-                <button onclick="deactivateBroadcaster(${b.id})" class="btn-danger btn-small">❌ Desativar</button>
-            </div>
+            ${actionsHtml}
         </div>
         `;
     }).join('');
