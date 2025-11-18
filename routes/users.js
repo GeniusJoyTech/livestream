@@ -102,10 +102,24 @@ router.post('/viewers', authenticateToken, async (req, res) => {
     
     if (broadcasterIds && Array.isArray(broadcasterIds) && broadcasterIds.length > 0) {
       for (const broadcasterId of broadcasterIds) {
+        const broadcaster = await broadcasterService.getBroadcasterById(broadcasterId, req.user.id);
+        if (!broadcaster) {
+          await userService.deleteUser(viewer.id);
+          return res.status(400).json({ 
+            error: `Broadcaster com ID ${broadcasterId} não encontrado ou não pertence a você` 
+          });
+        }
+      }
+      
+      for (const broadcasterId of broadcasterIds) {
         try {
           await broadcasterService.grantPermission(broadcasterId, viewer.id, req.user.id);
         } catch (permError) {
           console.error(`Error granting permission for broadcaster ${broadcasterId}:`, permError);
+          await userService.deleteUser(viewer.id);
+          return res.status(500).json({ 
+            error: `Erro ao conceder permissão para broadcaster ${broadcasterId}` 
+          });
         }
       }
     }

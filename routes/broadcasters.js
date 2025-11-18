@@ -32,6 +32,11 @@ router.post('/', authenticateToken, async (req, res) => {
     });
   } catch (error) {
     console.error('Create broadcaster error:', error);
+    
+    if (error.message === 'Já existe um broadcaster com este nome') {
+      return res.status(400).json({ error: error.message });
+    }
+    
     res.status(500).json({ error: error.message });
   }
 });
