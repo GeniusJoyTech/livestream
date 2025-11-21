@@ -6,21 +6,21 @@ SimplificaVideos is a real-time video streaming application leveraging WebRTC. I
 ## User Preferences
 None specified yet.
 
-## Replit Environment Setup (November 18, 2025)
+## Replit Environment Setup (November 21, 2025)
 
 ### Current Configuration - Fresh Import Complete ✅
 - **Server**: Running on port 5000 (0.0.0.0) with WebSocket support
-- **Database**: External PostgreSQL database (Supabase) configured via DATABASE_URL secret
-- **Environment Secrets**: JWT_SECRET, FIRST_ADMIN_SECRET, and DATABASE_URL configured in Replit Secrets
+- **Database**: Replit PostgreSQL database (heliumdb) configured via DATABASE_URL
+- **Environment Secrets**: JWT_SECRET and FIRST_ADMIN_SECRET configured in shared environment
 - **Workflow**: "SimplificaVideos Server" runs `node server.js` with webview output on port 5000
 - **Deployment**: Configured for VM deployment (maintains WebSocket state)
 - **Dependencies**: All npm packages installed successfully (228 packages, 0 vulnerabilities)
 
-### Fresh GitHub Import Status - Completed (November 18, 2025)
+### Fresh GitHub Import Status - Completed (November 21, 2025)
 ✅ GitHub project successfully imported from fresh clone
 ✅ Environment secrets generated and configured (JWT_SECRET, FIRST_ADMIN_SECRET)
-✅ External PostgreSQL database (Supabase) connected via DATABASE_URL
-✅ Dependencies verified (228 packages, 0 vulnerabilities)
+✅ Replit PostgreSQL database connected via DATABASE_URL (heliumdb)
+✅ Dependencies installed (228 packages, 0 vulnerabilities)
 ✅ Database schema initialized successfully on first server startup
 ✅ Server running and accessible via webview on port 5000
 ✅ Login page tested and functional at /login/login.html
@@ -30,10 +30,11 @@ None specified yet.
 
 ### Import Notes
 - The project was successfully imported with all existing code intact
-- Database connection uses external Supabase PostgreSQL (not Replit's built-in database)
+- Database connection uses Replit's built-in PostgreSQL (heliumdb)
 - All authentication and WebSocket features are working as expected
 - The server automatically initializes the database schema on startup
 - No code changes were required - project was ready for Replit environment
+- Server already configured to listen on 0.0.0.0:5000, perfect for Replit's proxy
 
 ### Recent Improvements (November 17, 2025)
 ✅ Fixed owner dashboard to show real-time broadcaster status (online/offline)
