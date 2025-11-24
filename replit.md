@@ -50,22 +50,32 @@ None specified yet.
 ✅ **NEW**: Automatic computer name updates in database on each connection
 ✅ **NEW**: Broadcasters can now run without arguments after first installation
 
-### ✨ Broadcaster Installation & Configuration (Simplified - November 17, 2025)
-The broadcaster installation process is now fully automated:
+### ✨ Broadcaster Installation & Configuration (Fully Automated - November 24, 2025)
+The broadcaster installation is now completely hands-free with configuration file download:
 
-**First Installation:**
+**✨ NEW: Método Simplificado (Recomendado):**
+1. Create broadcaster in owner dashboard
+2. Click "📥 Baixar broadcaster_config.json" to download pre-configured file
+3. Place the file in `~/.simplificavideos/` folder on the target computer
+4. Run: `python Broadcaster.py` (no arguments needed!)
+5. On first connection, installation token is automatically exchanged for permanent token (60 days)
+6. Configuration is updated with permanent credentials and broadcaster ID
+
+**Método Alternativo (via comando):**
 1. Create broadcaster in owner dashboard to get installation token (24h validity)
 2. Run: `python Broadcaster.py --token inst_xyz123 --url wss://your-domain.replit.dev`
 3. Broadcaster connects, receives permanent token (60 days), and saves configuration locally
 
-**Subsequent Executions:**
+**Subsequent Executions (Both Methods):**
 1. Simply run: `python Broadcaster.py` (no arguments needed!)
 2. Configuration is loaded from saved `broadcaster_config.json`
-3. URL can be passed optionally: `python Broadcaster.py --url wss://your-domain.replit.dev`
+3. Server URL is automatically loaded from config file
 
 **Technical Details:**
+- Downloaded config file includes: installation token, server URL, and metadata
 - Installation token (24h) is exchanged for permanent token (60 days) on first connection
 - Broadcaster ID is generated server-side and remains constant for the computer
+- Server URL is preserved across token renewals
 - Computer name is updated in database on each connection (allows renaming)
 - Legacy mode still supported for broadcasters without tokens (no data persistence)
 
