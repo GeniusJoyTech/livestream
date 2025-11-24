@@ -38,10 +38,24 @@ def load_broadcaster_config():
         return None
 
 
-def save_broadcaster_config(broadcaster_id, token, token_expires_at):
+def save_broadcaster_config(broadcaster_id, token, token_expires_at, server_url=None):
     """Salva configuração do broadcaster localmente para reconexões automáticas"""
     try:
+        # Validação: não salva se broadcaster_id ou token forem None
+        if not broadcaster_id or not token:
+            print(f"⚠️ Aviso: broadcaster_id ou token inválidos. Configuração não será salva.")
+            return False
+        
         CONFIG_FILE.parent.mkdir(parents=True, exist_ok=True)
+        
+        # Se já existe configuração, preserva a server_url anterior se não for fornecida uma nova
+        existing_config = {}
+        if CONFIG_FILE.exists():
+            try:
+                with open(CONFIG_FILE, 'r') as f:
+                    existing_config = json.load(f)
+            except:
+                pass
         
         config = {
             'broadcaster_id': broadcaster_id,
@@ -50,6 +64,12 @@ def save_broadcaster_config(broadcaster_id, token, token_expires_at):
             'computer_name': nome_computador,
             'saved_at': datetime.now().isoformat()
         }
+        
+        # Adiciona server_url se fornecida, ou preserva a anterior
+        if server_url:
+            config['server_url'] = server_url
+        elif existing_config.get('server_url'):
+            config['server_url'] = existing_config['server_url']
         
         with open(CONFIG_FILE, 'w') as f:
             json.dump(config, f, indent=2)
@@ -471,12 +491,13 @@ class Broadcaster:
                                     save_broadcaster_config(
                                         self.broadcaster_id,
                                         permanent_token,
-                                        token_expires_at
+                                        token_expires_at,
+                                        self.signaling_url
                                     )
                                     self.broadcaster_token = permanent_token
                                     self.token_expires_at = token_expires_at
                                     print(f"✅ Configuração salva! Este computador está agora registrado permanentemente.")
-                                    print(f"🔑 Nas próximas execuções, não será necessário passar o token.")
+                                    print(f"🔑 Nas próximas execuções, não será necessário passar nenhum argumento.")
                         
                         elif data["type"] == "token-renewed":
                             self.broadcaster_id = data["broadcaster_id"]
@@ -487,7 +508,8 @@ class Broadcaster:
                                 save_broadcaster_config(
                                     self.broadcaster_id,
                                     new_token,
-                                    token_expires_at
+                                    token_expires_at,
+                                    self.signaling_url
                                 )
                                 self.broadcaster_token = new_token
                                 self.token_expires_at = token_expires_at
@@ -651,14 +673,38 @@ Após a primeira instalação, a configuração é salva automaticamente.
         broadcaster_token = saved_config.get('token')
         broadcaster_id = saved_config.get('broadcaster_id')
         token_expires_at = saved_config.get('token_expires_at')
-        signaling_url = args.url or f"wss://{input('Digite a URL do servidor (ex: wss://seu-dominio.replit.dev): ')}"
-        is_installation = False
+        
+        # Tenta ler a URL do arquivo de configuração primeiro
+        saved_url = saved_config.get('server_url')
+        if args.url:
+            signaling_url = args.url
+        elif saved_url:
+            signaling_url = saved_url
+        else:
+            signaling_url = f"wss://{input('Digite a URL do servidor (ex: wss://seu-dominio.replit.dev): ')}"
+        
+        # Detecta se é installation token (começa com inst_) - trata como primeira instalação
+        is_installation_token = broadcaster_token and broadcaster_token.startswith('inst_')
+        if is_installation_token:
+            # Força modo de instalação para fazer o exchange do token
+            is_installation = True
+            broadcaster_id = None  # Limpa o ID para forçar geração de novo ID permanente
+            token_expires_at = None
+        else:
+            is_installation = False
         
         print("=" * 60)
         print(f"🚀 SimplificaVideos Broadcaster v4.0")
         print(f"📡 Nome do computador: {nome_computador}")
-        print(f"🆔 Broadcaster ID: {broadcaster_id}")
-        print(f"🔒 Modo: Reconexão Automática")
+        
+        if is_installation_token:
+            print(f"🔐 Modo: Primeira Instalação (via arquivo de configuração)")
+            print(f"🆔 Broadcaster ID será gerado pelo servidor")
+        else:
+            print(f"🆔 Broadcaster ID: {broadcaster_id}")
+            print(f"🔒 Modo: Reconexão Automática")
+        
+        print(f"🌐 Servidor: {signaling_url.split('?')[0]}")
         print(f"💾 Config salva em: {CONFIG_FILE}")
         print("=" * 60)
     else:

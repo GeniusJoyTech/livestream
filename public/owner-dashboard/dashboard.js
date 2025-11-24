@@ -462,6 +462,40 @@ function showNewBroadcasterToken(broadcaster) {
     document.getElementById('modal-broadcaster-token').classList.add('show');
 }
 
+// Download broadcaster configuration file
+function downloadConfig() {
+    if (!currentBroadcaster || !currentBroadcaster.installationToken) {
+        showError('Token de instalação não disponível');
+        return;
+    }
+    
+    const serverUrl = window.location.protocol === 'https:' 
+        ? `wss://${window.location.host}` 
+        : `ws://${window.location.host}`;
+    
+    const config = {
+        token: currentBroadcaster.installationToken,
+        token_expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
+        server_url: serverUrl,
+        computer_name: "COMPUTER-NAME",
+        saved_at: new Date().toISOString(),
+        comment: "Este arquivo foi gerado automaticamente pelo SimplificaVideos. Coloque-o na pasta ~/.simplificavideos/ e execute 'python Broadcaster.py' sem argumentos. Na primeira conexão, o token de instalação será trocado por um token permanente (60 dias) e o broadcaster_id será gerado e salvo automaticamente."
+    };
+    
+    const jsonString = JSON.stringify(config, null, 2);
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'broadcaster_config.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    
+    showSuccess('Arquivo broadcaster_config.json baixado! Coloque-o na pasta ~/.simplificavideos/');
+}
+
 // Create Broadcaster
 async function createBroadcaster(event) {
     event.preventDefault();

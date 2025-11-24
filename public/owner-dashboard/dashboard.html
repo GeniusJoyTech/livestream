@@ -112,15 +112,30 @@
                 <!-- Seção de instalação (apenas para owners) -->
                 <div class="installation-section" style="display: none;">
                     <h4>📋 Instruções de Instalação (Use em cada máquina)</h4>
-                    <ol class="instructions-list">
-                        <li>Baixe o arquivo <code>Broadcaster.py</code> em cada computador</li>
-                        <li>Execute o comando abaixo (o mesmo token funciona em todas as máquinas):</li>
-                    </ol>
                     
-                    <div class="command-box">
-                        <code id="install-command"></code>
-                        <button onclick="copyCommand()" class="btn-copy" title="Copiar comando">📋</button>
+                    <div class="alert alert-info">
+                        <strong>✨ Método Simplificado (Recomendado):</strong>
+                        <ol style="margin: 10px 0 0 20px; padding: 0;">
+                            <li>Baixe o arquivo <code>Broadcaster.py</code></li>
+                            <li>Baixe o arquivo de configuração clicando no botão abaixo</li>
+                            <li>Coloque o arquivo <code>broadcaster_config.json</code> na pasta <code>~/.simplificavideos/</code></li>
+                            <li>Execute: <code>python Broadcaster.py</code> (sem argumentos!)</li>
+                        </ol>
+                        <button onclick="downloadConfig()" class="btn-primary" style="margin-top: 10px;">
+                            📥 Baixar broadcaster_config.json
+                        </button>
                     </div>
+                    
+                    <details style="margin-top: 15px;">
+                        <summary style="cursor: pointer; font-weight: bold;">🔧 Método Alternativo (via comando)</summary>
+                        <div style="margin-top: 10px;">
+                            <p>Ou execute o comando abaixo na primeira vez:</p>
+                            <div class="command-box">
+                                <code id="install-command"></code>
+                                <button onclick="copyCommand()" class="btn-copy" title="Copiar comando">📋</button>
+                            </div>
+                        </div>
+                    </details>
                     
                     <div class="alert alert-warning">
                         <strong>⚠️ Importante:</strong>
