@@ -2,30 +2,39 @@ const { Pool } = require('pg');
 const fs = require('fs');
 const path = require('path');
 
-function getDatabaseUrl() {
-  if (fs.existsSync('/tmp/replitdb')) {
-    const url = fs.readFileSync('/tmp/replitdb', 'utf8').trim();
+function createPool() {
+  if (process.env.DATABASE_URL && process.env.DATABASE_URL.includes('neon.tech')) {
+    const url = process.env.DATABASE_URL;
     const hostMatch = url.match(/@([^:\/]+)/);
-    console.log('📦 Using PRODUCTION database from /tmp/replitdb');
+    console.log('📦 Using Replit PostgreSQL (Neon)');
     console.log('📦 Database host:', hostMatch ? hostMatch[1] : 'unknown');
-    return url;
+    
+    return new Pool({
+      connectionString: url,
+      ssl: { rejectUnauthorized: false },
+      connectionTimeoutMillis: 10000,
+      idleTimeoutMillis: 30000
+    });
   }
   
   if (process.env.DATABASE_URL) {
     const url = process.env.DATABASE_URL;
     const hostMatch = url.match(/@([^:\/]+)/);
-    console.log('📦 Using database from DATABASE_URL env var');
+    console.log('📦 Using database from DATABASE_URL');
     console.log('📦 Database host:', hostMatch ? hostMatch[1] : 'unknown');
-    return url;
+    
+    return new Pool({
+      connectionString: url,
+      ssl: { rejectUnauthorized: false },
+      connectionTimeoutMillis: 10000,
+      idleTimeoutMillis: 30000
+    });
   }
   
-  throw new Error('No database configuration found');
+  throw new Error('No database configuration found. Set DATABASE_URL.');
 }
 
-const pool = new Pool({
-  connectionString: getDatabaseUrl(),
-  ssl: { rejectUnauthorized: false }
-});
+const pool = createPool();
 
 pool.on('error', (err) => {
   console.error('Unexpected error on idle client', err);
