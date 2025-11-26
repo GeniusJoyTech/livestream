@@ -59,10 +59,10 @@ function setupWebSocket(server) {
           await registerBroadcaster(ws, id, msg, peers, broadcasters);
           break;
         case "viewer":
-          registerViewer(ws, id, peers, broadcasters);
+          await registerViewer(ws, id, peers, broadcasters);
           break;
         case "watch":
-          handleWatch(ws, id, msg, peers, broadcasters);
+          await handleWatch(ws, id, msg, peers, broadcasters);
           break;
         case "offer":
         case "answer":
@@ -79,7 +79,7 @@ function setupWebSocket(server) {
     });
 
     // Tratamento de fechamento de conexão
-    ws.on("close", () => handleDisconnect(ws, id, peers, broadcasters, deletePeer));
+    ws.on("close", async () => await handleDisconnect(ws, id, peers, broadcasters, deletePeer));
   });
 
   console.log("🛰️ WebSocket server rodando com autenticação seletiva (só viewers)");

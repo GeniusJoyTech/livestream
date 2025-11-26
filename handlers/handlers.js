@@ -105,24 +105,64 @@ async function registerBroadcaster(ws, id, msg, peers, broadcasters) {
 
     console.log(`✅ Broadcaster conectado: ${peer.name} do grupo "${broadcaster_group_name}" (Monitor ${msg.monitor_number}, Group ID: ${db_id}, Installation ID: ${installation_id})`);
 
-    for (const [, vpeer] of peers) {
-        if (vpeer.role === "viewer" && vpeer.ws.readyState === WebSocket.OPEN) {
-            vpeer.ws.send(JSON.stringify({
-                type: "new-broadcaster",
-                broadcasterId: id,
-                broadcaster_name: broadcaster_group_name || peer.name,
-                computer_name: peer.name,
-                db_id: db_id,
-                installation_id: installation_id
-            }));
+    if (db_id && process.env.DATABASE_URL) {
+        const broadcasterService = require('../services/broadcasterService');
+        
+        for (const [, vpeer] of peers) {
+            if (vpeer.role === "viewer" && vpeer.ws.readyState === WebSocket.OPEN) {
+                const viewerId = vpeer.ws.user?.id;
+                if (viewerId) {
+                    try {
+                        const hasPermission = await broadcasterService.hasViewerPermission(db_id, viewerId);
+                        if (hasPermission) {
+                            vpeer.ws.send(JSON.stringify({
+                                type: "new-broadcaster",
+                                broadcasterId: id,
+                                broadcaster_name: broadcaster_group_name || peer.name,
+                                computer_name: peer.name,
+                                db_id: db_id,
+                                installation_id: installation_id
+                            }));
+                            console.log(`📡 Notificado viewer ${viewerId} sobre novo broadcaster ${db_id}`);
+                        }
+                    } catch (err) {
+                        console.error(`Erro ao verificar permissão do viewer ${viewerId}:`, err);
+                    }
+                }
+            }
         }
     }
 }
-function registerViewer(ws, id, peers, broadcasters) {
+async function registerViewer(ws, id, peers, broadcasters) {
     console.log("📡 registerViewer chamado para:", id);
     const peer = peers.get(id);
     peer.role = "viewer";
+    
+    const viewerId = ws.user?.id;
+    if (!viewerId) {
+        console.log("⚠️ Viewer sem ID autenticado");
+        ws.send(JSON.stringify({
+            type: "broadcaster-list",
+            broadcasters: [],
+        }));
+        return;
+    }
+    
+    let permittedBroadcasterIds = [];
+    
+    if (process.env.DATABASE_URL) {
+        try {
+            const broadcasterService = require('../services/broadcasterService');
+            const permissions = await broadcasterService.getViewerPermissions(viewerId);
+            permittedBroadcasterIds = permissions.map(p => p.broadcaster_id);
+            console.log(`🔐 Viewer ${viewerId} tem permissão para ${permittedBroadcasterIds.length} broadcasters: [${permittedBroadcasterIds.join(', ')}]`);
+        } catch (err) {
+            console.error('Erro ao buscar permissões do viewer:', err);
+        }
+    }
+    
     const activeBroadcasters = [...broadcasters.entries()]
+        .filter(([, bdata]) => permittedBroadcasterIds.includes(bdata.db_id))
         .map(([bid, bdata]) => {
             const obj = { 
                 id: bid, 
@@ -130,7 +170,7 @@ function registerViewer(ws, id, peers, broadcasters) {
                 company_id: bdata.company_id,
                 db_id: bdata.db_id
             };
-            console.log("Itens filtrados: ", obj);
+            console.log("Broadcaster permitido para viewer: ", obj);
             return obj;
         })
         .sort((a, b) => a.name.localeCompare(b.name));
@@ -140,21 +180,47 @@ function registerViewer(ws, id, peers, broadcasters) {
         broadcasters: activeBroadcasters,
     }));
 }
-function handleDisconnect(ws, id, peers, broadcasters, deletePeer) {//Trata quando um peer (broadcaster ou viewer) desconecta.
+async function handleDisconnect(ws, id, peers, broadcasters, deletePeer) {
     const peer = peers.get(id);
     if (!peer) return;
 
     console.log(`❌ Peer desconectado: ${id} (${peer.role})`);
 
     if (peer.role === "broadcaster") {
+        const broadcasterData = broadcasters.get(id);
+        const db_id = broadcasterData?.db_id;
+        
         broadcasters.delete(id);
 
-        for (const [, vpeer] of peers) {
-            if (vpeer.role === "viewer" && vpeer.ws.readyState === ws.OPEN) {
-                vpeer.ws.send(JSON.stringify({
-                    type: "broadcaster-left",
-                    broadcasterId: id,
-                }));
+        if (db_id && process.env.DATABASE_URL) {
+            const broadcasterService = require('../services/broadcasterService');
+            
+            for (const [, vpeer] of peers) {
+                if (vpeer.role === "viewer" && vpeer.ws.readyState === ws.OPEN) {
+                    const viewerId = vpeer.ws.user?.id;
+                    if (viewerId) {
+                        try {
+                            const hasPermission = await broadcasterService.hasViewerPermission(db_id, viewerId);
+                            if (hasPermission) {
+                                vpeer.ws.send(JSON.stringify({
+                                    type: "broadcaster-left",
+                                    broadcasterId: id,
+                                }));
+                            }
+                        } catch (err) {
+                            console.error(`Erro ao verificar permissão do viewer ${viewerId}:`, err);
+                        }
+                    }
+                }
+            }
+        } else {
+            for (const [, vpeer] of peers) {
+                if (vpeer.role === "viewer" && vpeer.ws.readyState === ws.OPEN) {
+                    vpeer.ws.send(JSON.stringify({
+                        type: "broadcaster-left",
+                        broadcasterId: id,
+                    }));
+                }
             }
         }
     }
@@ -175,12 +241,31 @@ function relayMessage(id, msg, peers) {//relayMessage(id, msg, peers)
         }));
     }
 }
-function handleWatch(ws, id, msg, peers, broadcasters) {
+async function handleWatch(ws, id, msg, peers, broadcasters) {
     const broadcasterId = msg.targetId;
     const monitor = msg.monitor_number || 1;
 
     if (!broadcasters.has(broadcasterId)) return;
-    const { ws: bws, name } = broadcasters.get(broadcasterId);
+    const broadcasterData = broadcasters.get(broadcasterId);
+    const { ws: bws, name, db_id } = broadcasterData;
+    
+    const viewerId = ws.user?.id;
+    if (viewerId && db_id && process.env.DATABASE_URL) {
+        try {
+            const broadcasterService = require('../services/broadcasterService');
+            const hasPermission = await broadcasterService.hasViewerPermission(db_id, viewerId);
+            if (!hasPermission) {
+                console.log(`🚫 Viewer ${viewerId} tentou assistir broadcaster ${db_id} sem permissão`);
+                ws.send(JSON.stringify({
+                    type: "error",
+                    message: "Você não tem permissão para assistir este broadcaster"
+                }));
+                return;
+            }
+        } catch (err) {
+            console.error('Erro ao verificar permissão:', err);
+        }
+    }
 
     const viewer = peers.get(id);
     if (viewer) {
