@@ -195,6 +195,17 @@ body {
     color: #555;
 }
 
+.badge-expired {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.card-badges {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
 .card-deactivated {
     opacity: 0.7;
     background: #f5f5f5;

@@ -122,13 +122,13 @@ class BroadcasterService {
   
   async getBroadcastersByOwner(ownerId) {
     const result = await db.query(
-      `SELECT b.id, b.name, b.is_active, b.created_at,
+      `SELECT b.id, b.name, b.is_active, b.created_at, b.installation_token_expires_at,
               COUNT(bi.id) as installation_count,
               COUNT(CASE WHEN bi.is_active = true AND bi.last_connected_at > CURRENT_TIMESTAMP - INTERVAL '5 minutes' THEN 1 END) as active_installations
        FROM broadcasters b
        LEFT JOIN broadcaster_installations bi ON b.id = bi.broadcaster_id
        WHERE b.owner_id = $1 
-       GROUP BY b.id, b.name, b.is_active, b.created_at
+       GROUP BY b.id, b.name, b.is_active, b.created_at, b.installation_token_expires_at
        ORDER BY b.created_at DESC`,
       [ownerId]
     );

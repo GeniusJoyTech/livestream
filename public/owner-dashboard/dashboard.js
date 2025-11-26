@@ -87,6 +87,11 @@ function filterBroadcasters() {
     renderBroadcasters();
 }
 
+function isTokenExpired(expiresAt) {
+    if (!expiresAt) return true;
+    return new Date() > new Date(expiresAt);
+}
+
 function renderBroadcasters() {
     const container = document.getElementById('broadcasters-list');
     
@@ -96,10 +101,19 @@ function renderBroadcasters() {
         filteredBroadcasters = broadcasters.filter(b => b.is_active);
     } else if (currentFilter === 'inactive') {
         filteredBroadcasters = broadcasters.filter(b => !b.is_active);
+    } else if (currentFilter === 'expired') {
+        filteredBroadcasters = broadcasters.filter(b => b.is_active && isTokenExpired(b.installation_token_expires_at));
     }
     
+    const filterTexts = {
+        'active': 'ativos',
+        'inactive': 'inativos',
+        'expired': 'com token expirado',
+        'all': ''
+    };
+    
     if (filteredBroadcasters.length === 0) {
-        const filterText = currentFilter === 'active' ? 'ativos' : currentFilter === 'inactive' ? 'inativos' : '';
+        const filterText = filterTexts[currentFilter] || '';
         container.innerHTML = `
             <div class="empty-state">
                 <div class="empty-state-icon">📡</div>
@@ -114,6 +128,7 @@ function renderBroadcasters() {
         const isActive = Boolean(b.is_active);
         const installationCount = parseInt(b.installation_count) || 0;
         const activeInstallations = parseInt(b.active_installations) || 0;
+        const tokenExpired = isTokenExpired(b.installation_token_expires_at);
         
         let statusBadge, statusClass;
         if (!isActive) {
@@ -129,6 +144,8 @@ function renderBroadcasters() {
             statusBadge = '⚪ Nenhuma máquina';
             statusClass = 'badge-inactive';
         }
+        
+        const tokenBadge = isActive && tokenExpired ? '<span class="card-badge badge-expired">⏰ Token Expirado</span>' : '';
         
         const actionsHtml = isActive ? `
             <div class="card-actions">
@@ -146,9 +163,10 @@ function renderBroadcasters() {
         <div class="card ${!isActive ? 'card-deactivated' : ''}">
             <div class="card-header">
                 <div class="card-title">${escapeHtml(b.name)}</div>
-                <span class="card-badge ${statusClass}">
-                    ${statusBadge}
-                </span>
+                <div class="card-badges">
+                    <span class="card-badge ${statusClass}">${statusBadge}</span>
+                    ${tokenBadge}
+                </div>
             </div>
             <div class="card-info">
                 <div>📅 Criado: ${new Date(b.created_at).toLocaleDateString('pt-BR')}</div>
