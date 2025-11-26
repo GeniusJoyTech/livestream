@@ -2,20 +2,31 @@ const { Pool } = require('pg');
 const fs = require('fs');
 const path = require('path');
 
-function getDatabaseUrl() {
-  if (fs.existsSync('/tmp/replitdb')) {
-    const url = fs.readFileSync('/tmp/replitdb', 'utf8').trim();
-    console.log('📦 Using production database from /tmp/replitdb');
-    return url;
-  }
-  console.log('📦 Using development database from DATABASE_URL');
-  return process.env.DATABASE_URL;
+function isProduction() {
+  return fs.existsSync('/tmp/replitdb') || process.env.REPL_DEPLOYMENT === '1';
 }
 
-const pool = new Pool({
-  connectionString: getDatabaseUrl(),
-  ssl: { rejectUnauthorized: false }
-});
+function createPool() {
+  if (isProduction()) {
+    console.log('📦 Using PRODUCTION database (Supabase)');
+    return new Pool({
+      host: 'db.gglqmmgbvnbvkfguhqyj.supabase.co',
+      port: 5432,
+      database: 'postgres',
+      user: 'postgres',
+      password: process.env.SUPABASE_DB_PASSWORD,
+      ssl: { rejectUnauthorized: false }
+    });
+  }
+  
+  console.log('📦 Using DEVELOPMENT database (Replit)');
+  return new Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: { rejectUnauthorized: false }
+  });
+}
+
+const pool = createPool();
 
 pool.on('error', (err) => {
   console.error('Unexpected error on idle client', err);
