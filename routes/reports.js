@@ -34,9 +34,13 @@ router.get('/export/excel', authenticateToken, async (req, res) => {
     const startDate = fromDate ? new Date(fromDate) : new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
     const endDate = toDate ? new Date(toDate) : new Date();
     
+    console.log(`📊 Buscando dados para broadcaster ${broadcasterId}, período: ${startDate.toISOString()} - ${endDate.toISOString()}`);
+    
     const activities = await databaseStorage.getActivities(parseInt(broadcasterId), startDate, endDate);
     const stats = await databaseStorage.getStatistics(parseInt(broadcasterId), startDate, endDate);
     const browserHistory = await databaseStorage.getBrowserHistory(parseInt(broadcasterId), startDate, endDate);
+    
+    console.log(`📊 Dados encontrados: ${activities.length} atividades, ${browserHistory.length} histórico, stats: ${JSON.stringify(stats)}`);
     
     await userService.logAuditAction(req.user.id, 'EXCEL_EXPORTED', 'broadcaster', parseInt(broadcasterId), req.ip, req.get('user-agent'));
     
