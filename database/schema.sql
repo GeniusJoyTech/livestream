@@ -73,10 +73,10 @@ CREATE TABLE IF NOT EXISTS browser_history (
     installation_id INTEGER REFERENCES broadcaster_installations(id) ON DELETE SET NULL,
     browser VARCHAR(100) NOT NULL,
     url TEXT NOT NULL,
+    url_hash VARCHAR(64),
     title TEXT,
     visit_timestamp TIMESTAMP NOT NULL,
-    collected_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    UNIQUE(broadcaster_id, installation_id, browser, url, visit_timestamp)
+    collected_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Audit log table - tracks who accessed what data
@@ -99,6 +99,7 @@ CREATE INDEX IF NOT EXISTS idx_browser_history_installation_timestamp ON browser
 CREATE INDEX IF NOT EXISTS idx_broadcaster_permissions_viewer ON broadcaster_permissions(viewer_id);
 CREATE INDEX IF NOT EXISTS idx_broadcaster_installations_broadcaster ON broadcaster_installations(broadcaster_id);
 CREATE INDEX IF NOT EXISTS idx_audit_log_user_created ON audit_log(user_id, created_at DESC);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_browser_history_unique ON browser_history(broadcaster_id, installation_id, browser, url_hash, visit_timestamp);
 
 -- Function to update updated_at timestamp
 CREATE OR REPLACE FUNCTION update_updated_at_column()

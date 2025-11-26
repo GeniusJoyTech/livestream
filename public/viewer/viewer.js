@@ -305,7 +305,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // ===========================
   // Exportação Excel
   // ===========================
-  const exportButton = document.getElementById('exportButton');
+  const exportActivitiesButton = document.getElementById('exportActivitiesButton');
+  const exportUrlsButton = document.getElementById('exportUrlsButton');
   const fromDateInput = document.getElementById('fromDate');
   const toDateInput = document.getElementById('toDate');
   const exportStatus = document.getElementById('export-status');
@@ -324,11 +325,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   watchButton.addEventListener('click', () => {
     if (selectedBroadcasterId) {
-      exportButton.disabled = false;
+      exportActivitiesButton.disabled = false;
+      exportUrlsButton.disabled = false;
     }
   });
 
-  exportButton.onclick = async () => {
+  async function exportReport(endpoint, filename) {
     if (!selectedBroadcasterId) {
       exportStatus.textContent = '⚠️ Selecione um broadcaster e clique em "Assistir" primeiro';
       exportStatus.style.color = '#ff0';
@@ -351,12 +353,13 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    exportButton.disabled = true;
+    exportActivitiesButton.disabled = true;
+    exportUrlsButton.disabled = true;
     exportStatus.textContent = '⏳ Gerando relatório...';
     exportStatus.style.color = '#ff0';
 
     try {
-      const url = `/api/reports/export/excel?broadcasterId=${selectedBroadcasterDbId}&fromDate=${from}&toDate=${to}`;
+      const url = `/api/reports/export/${endpoint}?broadcasterId=${selectedBroadcasterDbId}&fromDate=${from}&toDate=${to}`;
       const response = await fetch(url, {
         headers: {
           'Authorization': `Bearer ${token}`
@@ -372,7 +375,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const downloadUrl = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = downloadUrl;
-      a.download = `relatorio_${selectedBroadcasterDbId}_${Date.now()}.xlsx`;
+      a.download = `${filename}_${selectedBroadcasterDbId}_${Date.now()}.xlsx`;
       document.body.appendChild(a);
       a.click();
       a.remove();
@@ -385,7 +388,11 @@ document.addEventListener("DOMContentLoaded", () => {
       exportStatus.textContent = `❌ ${error.message}`;
       exportStatus.style.color = '#f00';
     } finally {
-      exportButton.disabled = false;
+      exportActivitiesButton.disabled = false;
+      exportUrlsButton.disabled = false;
     }
-  };
+  }
+
+  exportActivitiesButton.onclick = () => exportReport('excel', 'atividades');
+  exportUrlsButton.onclick = () => exportReport('excel-urls', 'urls');
 });

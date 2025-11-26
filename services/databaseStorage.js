@@ -22,6 +22,7 @@ class DatabaseStorage {
       return;
     }
     
+    const crypto = require('crypto');
     const client = await db.getClient();
     
     try {
@@ -45,12 +46,14 @@ class DatabaseStorage {
           continue;
         }
         
+        const urlHash = crypto.createHash('md5').update(entry.url).digest('hex');
+        
         try {
           await client.query(
-            `INSERT INTO browser_history (broadcaster_id, installation_id, browser, url, title, visit_timestamp)
-             VALUES ($1, $2, $3, $4, $5, $6)
-             ON CONFLICT (broadcaster_id, installation_id, browser, url, visit_timestamp) DO NOTHING`,
-            [broadcasterId, installationId || null, entry.browser, entry.url, entry.title, parsedDate]
+            `INSERT INTO browser_history (broadcaster_id, installation_id, browser, url, url_hash, title, visit_timestamp)
+             VALUES ($1, $2, $3, $4, $5, $6, $7)
+             ON CONFLICT (broadcaster_id, installation_id, browser, url_hash, visit_timestamp) DO NOTHING`,
+            [broadcasterId, installationId || null, entry.browser, entry.url, urlHash, entry.title, parsedDate]
           );
           savedCount++;
         } catch (insertError) {
