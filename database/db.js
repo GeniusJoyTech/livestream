@@ -1,8 +1,20 @@
 const { Pool } = require('pg');
+const fs = require('fs');
+const path = require('path');
+
+function getDatabaseUrl() {
+  if (fs.existsSync('/tmp/replitdb')) {
+    const url = fs.readFileSync('/tmp/replitdb', 'utf8').trim();
+    console.log('📦 Using production database from /tmp/replitdb');
+    return url;
+  }
+  console.log('📦 Using development database from DATABASE_URL');
+  return process.env.DATABASE_URL;
+}
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
+  connectionString: getDatabaseUrl(),
+  ssl: { rejectUnauthorized: false }
 });
 
 pool.on('error', (err) => {
@@ -28,9 +40,6 @@ async function getClient() {
 }
 
 async function initializeDatabase() {
-  const fs = require('fs');
-  const path = require('path');
-  
   try {
     const schemaPath = path.join(__dirname, 'schema.sql');
     const schema = fs.readFileSync(schemaPath, 'utf8');
