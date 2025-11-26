@@ -634,100 +634,63 @@ class Broadcaster:
 
 
 if __name__ == "__main__":
-    import argparse
-    
     saved_config = load_broadcaster_config()
     
-    parser = argparse.ArgumentParser(
-        description='SimplificaVideos Broadcaster - Transmita sua tela com segurança',
-        formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog="""
-Exemplos de uso:
-
-  Primeira instalação (com token de instalação):
-    python Broadcaster.py --token inst_abc123xyz --url wss://seu-dominio.replit.dev
-  
-  Execuções subsequentes (usa configuração salva):
-    python Broadcaster.py
-  
-Obtenha o token de instalação no painel do SimplificaVideos ao criar um novo broadcaster.
-Após a primeira instalação, a configuração é salva automaticamente.
-        """
-    )
-    
-    parser.add_argument(
-        '--token', '-t',
-        required=False if saved_config else True,
-        help='Token de instalação (obrigatório apenas na primeira vez)'
-    )
-    
-    parser.add_argument(
-        '--url', '-u',
-        required=False if saved_config else True,
-        help='URL do servidor WebSocket (obrigatório apenas na primeira vez)'
-    )
-    
-    args = parser.parse_args()
-    
-    if saved_config:
-        broadcaster_token = saved_config.get('token')
-        broadcaster_id = saved_config.get('broadcaster_id')
-        token_expires_at = saved_config.get('token_expires_at')
-        
-        # Tenta ler a URL do arquivo de configuração primeiro
-        saved_url = saved_config.get('server_url')
-        if args.url:
-            signaling_url = args.url
-        elif saved_url:
-            signaling_url = saved_url
-        else:
-            signaling_url = f"wss://{input('Digite a URL do servidor (ex: wss://seu-dominio.replit.dev): ')}"
-        
-        # Detecta se é installation token (começa com inst_) - trata como primeira instalação
-        is_installation_token = broadcaster_token and broadcaster_token.startswith('inst_')
-        if is_installation_token:
-            # Força modo de instalação para fazer o exchange do token
-            is_installation = True
-            broadcaster_id = None  # Limpa o ID para forçar geração de novo ID permanente
-            token_expires_at = None
-        else:
-            is_installation = False
-        
+    if not saved_config:
         print("=" * 60)
-        print(f"🚀 SimplificaVideos Broadcaster v4.0")
-        print(f"📡 Nome do computador: {nome_computador}")
-        
-        if is_installation_token:
-            print(f"🔐 Modo: Primeira Instalação (via arquivo de configuração)")
-            print(f"🆔 Broadcaster ID será gerado pelo servidor")
-        else:
-            print(f"🆔 Broadcaster ID: {broadcaster_id}")
-            print(f"🔒 Modo: Reconexão Automática")
-        
-        print(f"🌐 Servidor: {signaling_url.split('?')[0]}")
-        print(f"💾 Config salva em: {CONFIG_FILE}")
+        print("❌ ERRO: Arquivo de configuração não encontrado!")
+        print("")
+        print("📋 Como configurar:")
+        print("   1. Acesse o painel do SimplificaVideos")
+        print("   2. Crie um novo broadcaster")
+        print("   3. Clique em '📥 Baixar broadcaster_config.json'")
+        print(f"   4. Coloque o arquivo em: {CONFIG_FILE}")
+        print("   5. Execute novamente: python Broadcaster.py")
         print("=" * 60)
-    else:
-        if not args.token or not args.url:
-            print("❌ Erro: Para primeira instalação, --token e --url são obrigatórios")
-            exit(1)
-        
-        broadcaster_token = args.token
-        signaling_url = args.url
-        broadcaster_id = None
-        token_expires_at = None
-        is_installation = True
-        
-        print("=" * 60)
-        print(f"🚀 SimplificaVideos Broadcaster v4.0")
-        print(f"📡 Nome do computador: {nome_computador}")
-        print(f"🔐 Modo: Primeira Instalação")
-        print(f"🌐 Servidor: {signaling_url.split('?')[0]}")
-        print("=" * 60)
+        exit(1)
+    
+    broadcaster_token = saved_config.get('token')
+    broadcaster_id = saved_config.get('broadcaster_id')
+    token_expires_at = saved_config.get('token_expires_at')
+    signaling_url = saved_config.get('server_url')
+    
+    if not broadcaster_token:
+        print("❌ Erro: Token não encontrado no arquivo de configuração")
+        print("   Baixe um novo arquivo broadcaster_config.json do painel")
+        exit(1)
+    
+    if not signaling_url:
+        print("❌ Erro: URL do servidor não encontrada no arquivo de configuração")
+        print("   Baixe um novo arquivo broadcaster_config.json do painel")
+        exit(1)
     
     if not signaling_url.startswith('wss://') and not signaling_url.startswith('ws://'):
-        print("❌ Erro: URL deve começar com wss:// ou ws://")
+        print("❌ Erro: URL inválida no arquivo de configuração")
+        print(f"   URL deve começar com wss:// ou ws://, encontrado: {signaling_url}")
         exit(1)
+    
+    is_installation_token = broadcaster_token.startswith('inst_')
+    if is_installation_token:
+        is_installation = True
+        broadcaster_id = None
+        token_expires_at = None
+    else:
+        is_installation = False
+    
+    print("=" * 60)
+    print(f"🚀 SimplificaVideos Broadcaster v4.0")
+    print(f"📡 Nome do computador: {nome_computador}")
+    
+    if is_installation_token:
+        print(f"🔐 Modo: Primeira Instalação")
+        print(f"🆔 Broadcaster ID será gerado pelo servidor")
+    else:
+        print(f"🆔 Broadcaster ID: {broadcaster_id}")
+        print(f"🔒 Modo: Reconexão Automática")
+    
+    print(f"🌐 Servidor: {signaling_url.split('?')[0]}")
+    print(f"💾 Config: {CONFIG_FILE}")
+    print("=" * 60)
     
     if '?' not in signaling_url:
         signaling_url = f"{signaling_url}?role=broadcaster"

@@ -58,34 +58,30 @@ None specified yet.
 ✅ Automatic computer name updates in database on each connection
 ✅ Broadcasters can now run without arguments after first installation
 
-### ✨ Broadcaster Installation & Configuration (Fully Automated - November 24, 2025)
-The broadcaster installation is now completely hands-free with configuration file download:
+### ✨ Broadcaster Installation & Configuration (100% Automático - November 26, 2025)
+A instalação do broadcaster é completamente automática - **sem nenhuma entrada interativa**:
 
-**✨ NEW: Método Simplificado (Recomendado):**
-1. Create broadcaster in owner dashboard
-2. Click "📥 Baixar broadcaster_config.json" to download pre-configured file
-3. Place the file in `~/.simplificavideos/` folder on the target computer
-4. Run: `python Broadcaster.py` (no arguments needed!)
-5. On first connection, installation token is automatically exchanged for permanent token (60 days)
-6. Configuration is updated with permanent credentials and broadcaster ID
+**Único Método de Instalação:**
+1. Acesse o painel do dono (owner dashboard)
+2. Crie um novo broadcaster
+3. Clique em "📥 Baixar broadcaster_config.json" para baixar o arquivo pré-configurado
+4. Coloque o arquivo na pasta `~/.simplificavideos/` no computador de destino
+5. Execute: `python Broadcaster.py` (sem argumentos!)
+6. Na primeira conexão, o token de instalação é automaticamente trocado por token permanente (60 dias)
+7. A configuração é atualizada com as credenciais permanentes e o broadcaster_id
 
-**Método Alternativo (via comando):**
-1. Create broadcaster in owner dashboard to get installation token (24h validity)
-2. Run: `python Broadcaster.py --token inst_xyz123 --url wss://your-domain.replit.dev`
-3. Broadcaster connects, receives permanent token (60 days), and saves configuration locally
+**Execuções Subsequentes:**
+1. Simplesmente execute: `python Broadcaster.py`
+2. Toda a configuração é lida automaticamente do arquivo JSON
+3. Nenhuma entrada interativa é necessária - nunca!
 
-**Subsequent Executions (Both Methods):**
-1. Simply run: `python Broadcaster.py` (no arguments needed!)
-2. Configuration is loaded from saved `broadcaster_config.json`
-3. Server URL is automatically loaded from config file
-
-**Technical Details:**
-- Downloaded config file includes: installation token, server URL, and metadata
-- Installation token (24h) is exchanged for permanent token (60 days) on first connection
-- Broadcaster ID is generated server-side and remains constant for the computer
-- Server URL is preserved across token renewals
-- Computer name is updated in database on each connection (allows renaming)
-- Legacy mode still supported for broadcasters without tokens (no data persistence)
+**Detalhes Técnicos:**
+- O arquivo de configuração baixado inclui: token de instalação, URL do servidor, metadados
+- Token de instalação (24h) é trocado por token permanente (60 dias) na primeira conexão
+- Broadcaster ID é gerado pelo servidor e permanece constante para o computador
+- URL do servidor é preservada entre renovações de token
+- Nome do computador é atualizado no banco em cada conexão (permite renomear)
+- Se o arquivo de configuração não existir, o Broadcaster.py mostra instruções claras de como configurar
 
 ### Getting Started
 1. The application is now running and accessible via the Replit webview
