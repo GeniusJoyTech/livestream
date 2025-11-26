@@ -268,6 +268,18 @@ async function loadPermissions() {
 
 function renderPermissions(viewerPermissions) {
     const container = document.getElementById('permissions-list');
+    const activeBroadcasters = broadcasters.filter(b => b.is_active);
+    
+    if (activeBroadcasters.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-state-icon">📡</div>
+                <h3>Nenhum grupo ativo</h3>
+                <p>Crie pelo menos um broadcaster ativo para gerenciar permissões</p>
+            </div>
+        `;
+        return;
+    }
     
     container.innerHTML = viewerPermissions.map(({ viewer, permissions }) => {
         const permissionIds = permissions.map(p => p.broadcaster_id);
@@ -282,16 +294,16 @@ function renderPermissions(viewerPermissions) {
                     </div>
                 </div>
                 <div class="permission-broadcasters">
-                    ${broadcasters.map(b => {
+                    ${activeBroadcasters.map(b => {
                         const hasPermission = permissionIds.includes(b.id);
                         return `
                             <div class="permission-item ${hasPermission ? 'granted' : ''}">
                                 <span class="permission-name">${escapeHtml(b.name)}</span>
                                 <button 
                                     onclick="${hasPermission ? `revokePermission(${b.id}, ${viewer.id})` : `grantPermission(${b.id}, ${viewer.id})`}"
-                                    class="btn-small ${hasPermission ? 'btn-danger' : 'btn-success'}"
+                                    class="btn-small ${hasPermission ? 'btn-success' : 'btn-danger'}"
                                 >
-                                    ${hasPermission ? '✖' : '✓'}
+                                    ${hasPermission ? '✓' : '✖'}
                                 </button>
                             </div>
                         `;
