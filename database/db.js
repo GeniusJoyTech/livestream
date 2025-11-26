@@ -8,14 +8,15 @@ function isProduction() {
 
 function createPool() {
   if (isProduction()) {
-    console.log('📦 Using PRODUCTION database (Supabase)');
+    console.log('📦 Using PRODUCTION database (Supabase IPv6)');
     return new Pool({
       host: 'db.gglqmmgbvnbvkfguhqyj.supabase.co',
       port: 5432,
       database: 'postgres',
       user: 'postgres',
       password: process.env.SUPABASE_DB_PASSWORD,
-      ssl: { rejectUnauthorized: false }
+      ssl: { rejectUnauthorized: false },
+      family: 6
     });
   }
   
