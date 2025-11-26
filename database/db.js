@@ -2,32 +2,25 @@ const { Pool } = require('pg');
 const fs = require('fs');
 const path = require('path');
 
-function isProduction() {
-  return fs.existsSync('/tmp/replitdb') || process.env.REPL_DEPLOYMENT === '1';
-}
-
-function createPool() {
-  if (isProduction()) {
-    console.log('📦 Using PRODUCTION database (Supabase IPv6)');
-    return new Pool({
-      host: 'db.gglqmmgbvnbvkfguhqyj.supabase.co',
-      port: 5432,
-      database: 'postgres',
-      user: 'postgres',
-      password: process.env.SUPABASE_DB_PASSWORD,
-      ssl: { rejectUnauthorized: false },
-      family: 6
-    });
+function getDatabaseUrl() {
+  if (fs.existsSync('/tmp/replitdb')) {
+    const url = fs.readFileSync('/tmp/replitdb', 'utf8').trim();
+    console.log('📦 Using PRODUCTION database (Replit PostgreSQL)');
+    return url;
   }
   
-  console.log('📦 Using DEVELOPMENT database (Replit)');
-  return new Pool({
-    connectionString: process.env.DATABASE_URL,
-    ssl: { rejectUnauthorized: false }
-  });
+  if (process.env.DATABASE_URL) {
+    console.log('📦 Using DEVELOPMENT database (Replit PostgreSQL)');
+    return process.env.DATABASE_URL;
+  }
+  
+  throw new Error('No database configuration found');
 }
 
-const pool = createPool();
+const pool = new Pool({
+  connectionString: getDatabaseUrl(),
+  ssl: { rejectUnauthorized: false }
+});
 
 pool.on('error', (err) => {
   console.error('Unexpected error on idle client', err);
