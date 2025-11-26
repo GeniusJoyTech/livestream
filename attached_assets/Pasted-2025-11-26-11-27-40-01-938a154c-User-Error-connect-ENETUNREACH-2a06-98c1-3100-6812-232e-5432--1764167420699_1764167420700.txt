@@ -1,0 +1,133 @@
+2025-11-26 11:27:40.01
+938a154c
+User
+Error: connect ENETUNREACH 2a06:98c1:3100::6812:232e:5432 - Local (:::0)
+2025-11-26 11:27:40.01
+938a154c
+User
+at Timeout.internalConnectMultipleTimeout (node:net:1716:5)
+2025-11-26 11:27:40.01
+938a154c
+User
+at listOnTimeout (node:internal/timers:583:11)
+2025-11-26 11:27:40.01
+938a154c
+User
+Error: connect ETIMEDOUT 104.18.35.46:5432
+2025-11-26 11:27:40.01
+938a154c
+User
+syscall: 'connect',
+2025-11-26 11:27:40.01
+938a154c
+User
+at process.processTimers (node:internal/timers:519:7) {
+2025-11-26 11:27:40.01
+938a154c
+User
+},
+2025-11-26 11:27:40.01
+938a154c
+User
+port: 5432
+2025-11-26 11:27:40.01
+938a154c
+User
+Error: connect ETIMEDOUT 172.64.152.210:5432
+2025-11-26 11:27:40.01
+938a154c
+User
+code: 'ENETUNREACH',
+2025-11-26 11:27:40.01
+938a154c
+User
+port: 5432
+2025-11-26 11:27:40.01
+938a154c
+User
+at async UserService.createUser (/home/runner/workspace/services/userService.js:15:20)
+2025-11-26 11:27:40.01
+938a154c
+User
+at listOnTimeout (node:internal/timers:583:11)
+2025-11-26 11:27:40.01
+938a154c
+User
+at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-11-26 11:27:40.01
+938a154c
+User
+at process.processTimers (node:internal/timers:519:7) {
+2025-11-26 11:27:40.01
+938a154c
+User
+syscall: 'connect',
+2025-11-26 11:27:40.01
+938a154c
+User
+address: '172.64.152.210',
+2025-11-26 11:27:40.01
+938a154c
+User
+at /home/runner/workspace/node_modules/pg-pool/index.js:45:11
+2025-11-26 11:27:40.01
+938a154c
+User
+address: '172.64.152.210',
+2025-11-26 11:27:40.01
+938a154c
+User
+Error: connect ETIMEDOUT 172.64.152.210:5432
+2025-11-26 11:27:40.01
+938a154c
+User
+syscall: 'connect',
+2025-11-26 11:27:40.01
+938a154c
+User
+port: 5432
+2025-11-26 11:27:40.01
+938a154c
+User
+[errors]: [
+2025-11-26 11:27:40.01
+938a154c
+User
+at Timeout.internalConnectMultipleTimeout (node:net:1711:38)
+2025-11-26 11:27:40.01
+938a154c
+User
+at async Object.query (/home/runner/workspace/database/db.js:33:17)
+2025-11-26 11:27:40.01
+938a154c
+User
+at async Object.query (/home/runner/workspace/database/db.js:33:17)
+
+2025-11-26 11:27:40.01
+938a154c
+User
+at Timeout.internalConnectMultipleTimeout (node:net:1711:38)
+2025-11-26 11:27:40.01
+938a154c
+User
+[errors]: [
+2025-11-26 11:27:40.01
+938a154c
+User
+port: 5432
+2025-11-26 11:27:40.01
+938a154c
+User
+syscall: 'connect',
+2025-11-26 11:27:40.01
+938a154c
+User
+Error: connect ETIMEDOUT 172.64.152.210:5432
+2025-11-26 11:27:40.01
+938a154c
+User
+address: '172.64.152.210',
+2025-11-26 11:27:40.01
+938a154c
+User
+at /home/runner/workspace/node_modules/pg-pool/index.js:45:11

@@ -5,13 +5,18 @@ const path = require('path');
 function getDatabaseUrl() {
   if (fs.existsSync('/tmp/replitdb')) {
     const url = fs.readFileSync('/tmp/replitdb', 'utf8').trim();
-    console.log('📦 Using PRODUCTION database (Replit PostgreSQL)');
+    const hostMatch = url.match(/@([^:\/]+)/);
+    console.log('📦 Using PRODUCTION database from /tmp/replitdb');
+    console.log('📦 Database host:', hostMatch ? hostMatch[1] : 'unknown');
     return url;
   }
   
   if (process.env.DATABASE_URL) {
-    console.log('📦 Using DEVELOPMENT database (Replit PostgreSQL)');
-    return process.env.DATABASE_URL;
+    const url = process.env.DATABASE_URL;
+    const hostMatch = url.match(/@([^:\/]+)/);
+    console.log('📦 Using database from DATABASE_URL env var');
+    console.log('📦 Database host:', hostMatch ? hostMatch[1] : 'unknown');
+    return url;
   }
   
   throw new Error('No database configuration found');
