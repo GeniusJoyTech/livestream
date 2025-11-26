@@ -36,7 +36,15 @@ None specified yet.
 - No code changes were required - project was ready for Replit environment
 - Server already configured to listen on 0.0.0.0:5000, perfect for Replit's proxy
 
-### Recent Improvements (November 17, 2025)
+### Recent Improvements (November 26, 2025)
+✅ Fixed database index error for long URLs (btree maximum exceeded)
+✅ Added url_hash column using MD5 for URL deduplication without size limits
+✅ Created separate Excel export endpoints for Activities and URLs
+✅ Viewer interface now has two download buttons: "Baixar Atividades" and "Baixar URLs"
+✅ Each export includes relevant statistics sheet
+✅ Server URL is automatically saved and loaded from broadcaster_config.json
+
+### Previous Improvements (November 17, 2025)
 ✅ Fixed owner dashboard to show real-time broadcaster status (online/offline)
 ✅ Implemented automatic status polling every 10 seconds in owner dashboard
 ✅ Fixed viewer report export functionality by properly mapping WebSocket IDs to database IDs
@@ -44,11 +52,11 @@ None specified yet.
 ✅ Added db_id propagation to all broadcaster list messages for viewers
 ✅ Removed legacy UUID fallback code to prevent database errors
 ✅ Improved error messages for viewers when broadcaster is not properly configured
-✅ **NEW**: Implemented broadcaster ID persistence system with automatic configuration saving
-✅ **NEW**: Installation token exchange system - first connection gets permanent token (60 days)
-✅ **NEW**: Broadcaster.py now saves configuration locally (broadcaster_config.json) after installation
-✅ **NEW**: Automatic computer name updates in database on each connection
-✅ **NEW**: Broadcasters can now run without arguments after first installation
+✅ Implemented broadcaster ID persistence system with automatic configuration saving
+✅ Installation token exchange system - first connection gets permanent token (60 days)
+✅ Broadcaster.py now saves configuration locally (broadcaster_config.json) after installation
+✅ Automatic computer name updates in database on each connection
+✅ Broadcasters can now run without arguments after first installation
 
 ### ✨ Broadcaster Installation & Configuration (Fully Automated - November 24, 2025)
 The broadcaster installation is now completely hands-free with configuration file download:
