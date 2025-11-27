@@ -348,7 +348,7 @@ class Broadcaster:
 
                     windows = []
                     win32gui.EnumWindows(callback, windows)
-                    apps = windows[:10]
+                    apps = windows[:20]
 
                     fg_hwnd = win32gui.GetForegroundWindow()
                     if fg_hwnd:
@@ -373,7 +373,7 @@ class Broadcaster:
                                 "app": proc.info['name'],
                                 "pid": proc.info['pid']
                             })
-                            if len(apps) >= 10:
+                            if len(apps) >= 20:
                                 break
                         except:
                             pass
@@ -385,7 +385,7 @@ class Broadcaster:
                             "app": proc.info['name'],
                             "pid": proc.info['pid']
                         })
-                        if len(apps) >= 10:
+                        if len(apps) >= 20:
                             break
                     except:
                         pass
