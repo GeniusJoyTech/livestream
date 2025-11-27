@@ -44,6 +44,8 @@ None specified yet.
 ✅ Updated viewer interface with dark theme and improved layout
 ✅ Unified navbar and component styles across all pages
 ✅ Added real-time broadcaster filtering as user types
+✅ **Fixed timezone issue**: All date/time displays now use America/Sao_Paulo timezone
+✅ **Increased app collection limit**: Broadcaster now collects up to 20 active windows (was 10)
 
 ### Previous Improvements (November 26, 2025)
 ✅ Fixed database index error for long URLs (btree maximum exceeded)
