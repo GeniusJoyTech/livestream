@@ -21,6 +21,7 @@ app.use(express.json());
 // ===========================
 // Servir arquivos estáticos
 // ===========================
+app.use(express.static(path.join(__dirname, "./public")));
 app.use("/viewer", express.static(path.join(__dirname, "./public/viewer")));
 app.use("/login", express.static(path.join(__dirname, "./public/login")));
 app.use("/register", express.static(path.join(__dirname, "./public/register")));

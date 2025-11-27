@@ -5,11 +5,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const watchButton = document.getElementById('watchButton');
   const fullscreenButton = document.getElementById('fullscreenButton');
   const broadcasterSelect = document.getElementById('broadcasterSelect');
+  const broadcasterSearch = document.getElementById('broadcasterSearch');
   const monitorSelect = document.getElementById('monitorSelect');
   const remoteVideo = document.getElementById('remoteVideo');
   const statusDiv = document.getElementById('status');
+  const statusDot = document.getElementById('statusDot');
   const statsDiv = document.getElementById('stats');
   const logoutButton = document.getElementById('logoutButton');
+  const userInfo = document.getElementById('userInfo');
+  const videoOverlay = document.getElementById('videoOverlay');
 
   let socket;
   let peers = new Map();
@@ -17,59 +21,66 @@ document.addEventListener("DOMContentLoaded", () => {
   let selectedBroadcasterDbId = null;
   let selectedMonitorNumber = null;
   let broadcasters = [];
+  let allBroadcasters = [];
   let statsInterval = null;
   let shouldReconnect = true;
   let reconnectAttempts = 0;
   let reconnectTimer = null;
   const MAX_RECONNECT_DELAY = 30000;
 
-  // ===========================
-  // Verificação do token
-  // ===========================
   const token = localStorage.getItem("token");
   if (!token) {
-    alert("⚠️ Você precisa estar logado!");
+    alert("Voce precisa estar logado!");
     window.location.href = "/login/login.html";
     return;
-  } else {
-    logoutButton.disabled = false;
+  }
+
+  fetchUserInfo();
+
+  async function fetchUserInfo() {
+    try {
+      const res = await fetch("/api/users/me", {
+        headers: { "Authorization": `Bearer ${token}` }
+      });
+      if (res.ok) {
+        const data = await res.json();
+        userInfo.textContent = data.username || data.email || "Usuario";
+      }
+    } catch (err) {
+      console.error("Erro ao buscar info do usuario:", err);
+    }
   }
 
   logoutButton.addEventListener("click", () => {
     shouldReconnect = false;
     if (reconnectTimer) clearTimeout(reconnectTimer);
     localStorage.removeItem("token");
-    logoutButton.disabled = true;
     remoteVideo.srcObject = null;
-    setStatus("🔴 Desconectado", "#f00");
+    setStatus("Desconectado", false);
     if (socket) socket.close();
     window.location.href = "/login/login.html";
   });
 
-  // ===========================
-  // Função para atualizar status
-  // ===========================
-  function setStatus(msg, color = "#0f0") {
-    statusDiv.style.color = color;
+  function setStatus(msg, online = false) {
     statusDiv.textContent = msg;
+    if (statusDot) {
+      statusDot.className = online ? "status-dot online" : "status-dot offline";
+    }
   }
 
-  // ===========================
-  // Função para atualizar tabela de monitoramento
-  // ===========================
   function updateMonitoringTable(data) {
     const monitoringInfo = document.getElementById('monitoring-info');
     const tbody = document.getElementById('monitoring-tbody');
     
     if (!data || !data.apps || data.apps.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="4" style="text-align: center;">Nenhum dado disponível</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="4" class="empty-row">Nenhum dado disponivel</td></tr>';
       monitoringInfo.innerHTML = '<p>Aguardando dados de monitoramento...</p>';
       return;
     }
 
     const timestamp = new Date(data.timestamp).toLocaleTimeString('pt-BR');
     monitoringInfo.innerHTML = `
-      <p><strong>Host:</strong> ${data.host} | <strong>Sistema:</strong> ${data.system} | <strong>Última atualização:</strong> ${timestamp}</p>
+      <p><strong>Host:</strong> ${data.host} | <strong>Sistema:</strong> ${data.system} | <strong>Ultima atualizacao:</strong> ${timestamp}</p>
     `;
 
     tbody.innerHTML = '';
@@ -79,10 +90,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const isForeground = data.foreground && data.foreground.pid === app.pid;
       
       const statusCell = row.insertCell(0);
-      statusCell.innerHTML = isForeground ? '🟢 Foco' : '⚪ Background';
+      statusCell.innerHTML = isForeground ? '<span style="color: #28a745;">● Foco</span>' : '<span style="color: #666;">○ Background</span>';
       if (isForeground) {
-        row.style.backgroundColor = 'rgba(0, 255, 0, 0.1)';
-        row.style.fontWeight = 'bold';
+        row.style.backgroundColor = 'rgba(40, 167, 69, 0.1)';
       }
       
       const appCell = row.insertCell(1);
@@ -90,36 +100,122 @@ document.addEventListener("DOMContentLoaded", () => {
       
       const titleCell = row.insertCell(2);
       titleCell.textContent = app.title || '-';
+      titleCell.style.maxWidth = '200px';
+      titleCell.style.overflow = 'hidden';
+      titleCell.style.textOverflow = 'ellipsis';
+      titleCell.style.whiteSpace = 'nowrap';
       
       const pidCell = row.insertCell(3);
       pidCell.textContent = app.pid || '-';
     });
   }
 
-  // ===========================
-  // Atualizar lista de broadcasters
-  // ===========================
+  function filterBroadcasters(searchTerm) {
+    const term = searchTerm.toLowerCase().trim();
+    if (!term) {
+      broadcasters = [...allBroadcasters];
+    } else {
+      broadcasters = allBroadcasters.filter(b => 
+        b.name.toLowerCase().includes(term)
+      );
+    }
+    updateSelect();
+  }
+
   function updateSelect() {
     broadcasterSelect.innerHTML = '';
+    const hasActiveStream = remoteVideo.srcObject !== null;
+    const activeInFullList = hasActiveStream && allBroadcasters.some(b => b.id === selectedBroadcasterId);
+    
     if (broadcasters.length === 0) {
       const opt = document.createElement('option');
-      opt.textContent = 'Nenhum broadcaster disponível';
+      
+      if (allBroadcasters.length === 0) {
+        opt.textContent = 'Nenhum broadcaster disponivel';
+        opt.value = '';
+        selectedBroadcasterId = null;
+        selectedBroadcasterDbId = null;
+        exportActivitiesButton.disabled = true;
+        exportUrlsButton.disabled = true;
+        watchButton.disabled = true;
+      } else if (activeInFullList) {
+        const activeBroadcaster = allBroadcasters.find(b => b.id === selectedBroadcasterId);
+        opt.textContent = `Assistindo: ${activeBroadcaster?.name || 'Broadcaster'} (limpe a busca para ver opcoes)`;
+        opt.value = selectedBroadcasterId;
+        opt.setAttribute('data-db-id', selectedBroadcasterDbId || '');
+        watchButton.disabled = true;
+      } else {
+        opt.textContent = 'Nenhum resultado encontrado';
+        opt.value = '';
+        selectedBroadcasterId = null;
+        selectedBroadcasterDbId = null;
+        exportActivitiesButton.disabled = true;
+        exportUrlsButton.disabled = true;
+        watchButton.disabled = true;
+      }
+      
       opt.disabled = true;
+      opt.selected = true;
       broadcasterSelect.appendChild(opt);
       return;
     }
+    
+    let foundCurrent = false;
     broadcasters.forEach(b => {
       const opt = document.createElement('option');
       opt.value = b.id;
       opt.setAttribute('data-db-id', b.db_id || '');
       opt.textContent = b.name;
+      if (selectedBroadcasterId === b.id) {
+        opt.selected = true;
+        foundCurrent = true;
+      }
       broadcasterSelect.appendChild(opt);
     });
+    
+    if (!foundCurrent && broadcasters.length > 0) {
+      if (!hasActiveStream) {
+        broadcasterSelect.selectedIndex = 0;
+        const firstOption = broadcasterSelect.options[0];
+        if (firstOption && firstOption.value) {
+          selectedBroadcasterId = firstOption.value;
+          selectedBroadcasterDbId = firstOption.getAttribute('data-db-id') || null;
+        }
+      } else {
+        const placeholder = document.createElement('option');
+        const activeBroadcaster = allBroadcasters.find(b => b.id === selectedBroadcasterId);
+        placeholder.textContent = `Assistindo: ${activeBroadcaster?.name || 'Broadcaster'} (oculto)`;
+        placeholder.value = selectedBroadcasterId;
+        placeholder.setAttribute('data-db-id', selectedBroadcasterDbId || '');
+        placeholder.selected = true;
+        broadcasterSelect.insertBefore(placeholder, broadcasterSelect.firstChild);
+      }
+    }
+    
+    watchButton.disabled = false;
   }
 
-  // ===========================
-  // Criar conexão WebRTC
-  // ===========================
+  broadcasterSelect.addEventListener('change', () => {
+    const selectedOption = broadcasterSelect.options[broadcasterSelect.selectedIndex];
+    if (selectedOption && selectedOption.value) {
+      selectedBroadcasterId = selectedOption.value;
+      selectedBroadcasterDbId = selectedOption.getAttribute('data-db-id') || null;
+    }
+  });
+
+  broadcasterSearch.addEventListener('input', (e) => {
+    filterBroadcasters(e.target.value);
+  });
+
+  broadcasterSearch.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      if (broadcasters.length > 0) {
+        watchButton.click();
+      }
+    }
+  });
+
   function createPeerConnection(id, monitor_number) {
     const pc = new RTCPeerConnection({ iceServers: [{ urls: "stun:stun.l.google.com:19302" }] });
 
@@ -132,8 +228,9 @@ document.addEventListener("DOMContentLoaded", () => {
     pc.ontrack = (event) => {
       if (remoteVideo.srcObject !== event.streams[0]) {
         remoteVideo.srcObject = event.streams[0];
-        remoteVideo.play().catch(err => console.warn("Erro ao iniciar vídeo:", err));
-        setStatus("🎥 Recebendo vídeo...", "#0f0");
+        remoteVideo.play().catch(err => console.warn("Erro ao iniciar video:", err));
+        setStatus("Recebendo video...", true);
+        if (videoOverlay) videoOverlay.classList.add('hidden');
         startStats(pc);
       }
     };
@@ -141,9 +238,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return pc;
   }
 
-  // ===========================
-  // Estatísticas
-  // ===========================
   function startStats(pc) {
     clearInterval(statsInterval);
     statsInterval = setInterval(async () => {
@@ -151,39 +245,27 @@ document.addEventListener("DOMContentLoaded", () => {
       let info = "";
       stats.forEach(report => {
         if (report.type === "inbound-rtp" && report.kind === "video") {
-          info += `🧩 <b>Codec:</b> ${report.codecId || "?"}<br>`;
-          info += `📦 <b>Pacotes:</b> ${report.packetsReceived}<br>`;
-          info += `📊 <b>Bitrate:</b> ${(report.bytesReceived/1024).toFixed(1)} KB<br>`;
-          info += `🎞️ <b>Frames:</b> ${report.framesDecoded || "?"}<br>`;
-          info += `⚡ <b>FPS:</b> ${report.framesPerSecond || "?"}<br>`;
-        }
-        if (report.type === "track" && report.frameWidth) {
-          info += `🖥️ <b>Resolução:</b> ${report.frameWidth}x${report.frameHeight}<br>`;
-        }
-        if (report.type === "codec" && report.mimeType) {
-          info += `🎬 <b>Formato:</b> ${report.mimeType}<br>`;
+          info += `Pacotes: ${report.packetsReceived} | `;
+          info += `Bitrate: ${(report.bytesReceived/1024).toFixed(1)} KB | `;
+          info += `FPS: ${report.framesPerSecond || "?"}`;
         }
       });
-      statsDiv.innerHTML = info || "📊 Nenhuma estatística disponível.";
+      statsDiv.textContent = info || "";
     }, 1500);
   }
 
-  // ===========================
-  // Conectar WebSocket
-  // ===========================
   async function connect() {
-    setStatus("🔌 Conectando ao servidor...", "#ff0");
+    setStatus("Conectando ao servidor...", false);
     connectButton.disabled = true;
-    connectButton.textContent = "Conectando...";
 
     const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
     socket = new WebSocket(`${wsProtocol}//${location.host}?role=viewer&token=${token}`);
 
-        socket.onopen = () => {
-      console.log("✅ WebSocket conectado");
+    socket.onopen = () => {
+      console.log("WebSocket conectado");
       reconnectAttempts = 0;
       shouldReconnect = true;
-      setStatus("✅ Conectado ao servidor de sinalização", "#0f0");
+      setStatus("Conectado ao servidor", true);
       connectButton.style.display = "none";
       disconnectButton.disabled = false;
       reconnectButton.disabled = true;
@@ -195,25 +277,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
       switch (message.type) {
         case "broadcaster-list":
-          broadcasters = message.broadcasters || [];
+          allBroadcasters = message.broadcasters || [];
+          broadcasters = [...allBroadcasters];
           updateSelect();
           break;
         case "new-broadcaster":
-          broadcasters.push({
+          const newB = {
             id: message.broadcasterId,
             name: message.broadcaster_name || `Broadcaster ${message.broadcasterId.slice(0,6)}`,
             db_id: message.db_id
-          });
-          updateSelect();
+          };
+          allBroadcasters.push(newB);
+          filterBroadcasters(broadcasterSearch.value);
           break;
         case "broadcaster-left":
-          broadcasters = broadcasters.filter(b => b.id !== message.broadcasterId);
-          updateSelect();
-          if (selectedBroadcasterId === message.broadcasterId) {
+          const departingId = message.broadcasterId;
+          const wasActiveStream = selectedBroadcasterId === departingId && remoteVideo.srcObject;
+          
+          allBroadcasters = allBroadcasters.filter(b => b.id !== departingId);
+          
+          if (wasActiveStream || selectedBroadcasterId === departingId) {
             remoteVideo.srcObject = null;
-            setStatus("❌ Broadcaster saiu", "#f00");
+            if (videoOverlay) videoOverlay.classList.remove('hidden');
+            setStatus("Broadcaster saiu", false);
             selectedBroadcasterId = null;
+            selectedBroadcasterDbId = null;
+            exportActivitiesButton.disabled = true;
+            exportUrlsButton.disabled = true;
+            clearInterval(statsInterval);
+            statsDiv.textContent = "";
           }
+          
+          filterBroadcasters(broadcasterSearch.value);
           break;
         case "offer":
           const pc = createPeerConnection(message.senderId, message.monitor_number);
@@ -226,7 +321,7 @@ document.addEventListener("DOMContentLoaded", () => {
             sdp: pc.localDescription,
             targetId: message.senderId
           }));
-          setStatus("📡 Conectado ao broadcaster", "#0f0");
+          setStatus("Conectado ao broadcaster", true);
           break;
         case "candidate":
           const candidatePc = peers.get(message.senderId);
@@ -241,26 +336,28 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     socket.onclose = () => {
-      console.warn("⚠️ WebSocket desconectado");
+      console.warn("WebSocket desconectado");
       
       if (shouldReconnect) {
         reconnectAttempts++;
         const delay = Math.min(1000 * Math.pow(2, reconnectAttempts - 1), MAX_RECONNECT_DELAY);
-        setStatus(`⚠️ Desconectado. Reconectando em ${(delay/1000).toFixed(0)}s... (tentativa ${reconnectAttempts})`, "#ff0");
+        setStatus(`Reconectando em ${(delay/1000).toFixed(0)}s... (tentativa ${reconnectAttempts})`, false);
         
         reconnectTimer = setTimeout(() => {
-          console.log(`🔄 Tentando reconectar (tentativa ${reconnectAttempts})...`);
+          console.log(`Tentando reconectar (tentativa ${reconnectAttempts})...`);
           connect();
         }, delay);
       } else {
-        setStatus("⚠️ Desconectado do servidor", "#f00");
+        setStatus("Desconectado do servidor", false);
         disconnectButton.disabled = true;
         reconnectButton.disabled = false;
+        connectButton.style.display = "inline-flex";
+        connectButton.disabled = false;
       }
     };
     
     socket.onerror = (error) => {
-      console.error("❌ Erro no WebSocket:", error);
+      console.error("Erro no WebSocket:", error);
     };
   }
 
@@ -273,11 +370,14 @@ document.addEventListener("DOMContentLoaded", () => {
     peers.clear();
     if (socket) socket.close();
     remoteVideo.srcObject = null;
+    if (videoOverlay) videoOverlay.classList.remove('hidden');
     clearInterval(statsInterval);
-    statsDiv.textContent = "📊 Nenhuma estatística disponível.";
-    setStatus("🔴 Desconectado", "#f00");
+    statsDiv.textContent = "";
+    setStatus("Desconectado", false);
     disconnectButton.disabled = true;
     reconnectButton.disabled = false;
+    connectButton.style.display = "inline-flex";
+    connectButton.disabled = false;
   };
 
   reconnectButton.onclick = connect;
@@ -287,24 +387,27 @@ document.addEventListener("DOMContentLoaded", () => {
     const selectedOption = broadcasterSelect.options[broadcasterSelect.selectedIndex];
     selectedBroadcasterDbId = selectedOption ? selectedOption.getAttribute('data-db-id') : null;
     selectedMonitorNumber = monitorSelect.value;
-    if (!selectedBroadcasterId || !socket || socket.readyState !== WebSocket.OPEN) return;
+    
+    if (!selectedBroadcasterId || !socket || socket.readyState !== WebSocket.OPEN) {
+      return;
+    }
 
-    setStatus("🎬 Solicitando transmissão...", "#ff0");
+    setStatus("Solicitando transmissao...", false);
 
     socket.send(JSON.stringify({
       type: "watch",
       targetId: selectedBroadcasterId,
       monitor_number: selectedMonitorNumber
     }));
+
+    exportActivitiesButton.disabled = false;
+    exportUrlsButton.disabled = false;
   };
 
   fullscreenButton.onclick = () => {
     if (remoteVideo.requestFullscreen) remoteVideo.requestFullscreen();
   };
 
-  // ===========================
-  // Exportação Excel
-  // ===========================
   const exportActivitiesButton = document.getElementById('exportActivitiesButton');
   const exportUrlsButton = document.getElementById('exportUrlsButton');
   const fromDateInput = document.getElementById('fromDate');
@@ -317,30 +420,21 @@ document.addEventListener("DOMContentLoaded", () => {
     
     toDateInput.value = today.toISOString().split('T')[0];
     fromDateInput.value = oneWeekAgo.toISOString().split('T')[0];
-    
     toDateInput.max = today.toISOString().split('T')[0];
   }
   
   setDefaultDates();
 
-  watchButton.addEventListener('click', () => {
-    if (selectedBroadcasterId) {
-      exportActivitiesButton.disabled = false;
-      exportUrlsButton.disabled = false;
-    }
-  });
-
   async function exportReport(endpoint, filename) {
     if (!selectedBroadcasterId) {
-      exportStatus.textContent = '⚠️ Selecione um broadcaster e clique em "Assistir" primeiro';
-      exportStatus.style.color = '#ff0';
+      exportStatus.textContent = 'Selecione um broadcaster e clique em "Assistir" primeiro';
+      exportStatus.className = 'export-status error';
       return;
     }
     
     if (!selectedBroadcasterDbId) {
-      exportStatus.textContent = '⚠️ Este broadcaster não está configurado corretamente. Entre em contato com o administrador.';
-      exportStatus.style.color = '#ff0';
-      console.error('Broadcaster sem db_id - verifique se o broadcaster está usando token válido');
+      exportStatus.textContent = 'Este broadcaster nao esta configurado corretamente.';
+      exportStatus.className = 'export-status error';
       return;
     }
 
@@ -348,15 +442,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const to = toDateInput.value;
 
     if (!from || !to) {
-      exportStatus.textContent = '⚠️ Selecione as datas';
-      exportStatus.style.color = '#ff0';
+      exportStatus.textContent = 'Selecione as datas';
+      exportStatus.className = 'export-status error';
       return;
     }
 
     exportActivitiesButton.disabled = true;
     exportUrlsButton.disabled = true;
-    exportStatus.textContent = '⏳ Gerando relatório...';
-    exportStatus.style.color = '#ff0';
+    exportStatus.textContent = 'Gerando relatorio...';
+    exportStatus.className = 'export-status';
 
     try {
       const url = `/api/reports/export/${endpoint}?broadcasterId=${selectedBroadcasterDbId}&fromDate=${from}&toDate=${to}`;
@@ -368,7 +462,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error || 'Erro ao gerar relatório');
+        throw new Error(errorData.error || 'Erro ao gerar relatorio');
       }
 
       const blob = await response.blob();
@@ -381,12 +475,12 @@ document.addEventListener("DOMContentLoaded", () => {
       a.remove();
       window.URL.revokeObjectURL(downloadUrl);
 
-      exportStatus.textContent = '✅ Relatório baixado com sucesso!';
-      exportStatus.style.color = '#0f0';
+      exportStatus.textContent = 'Relatorio baixado com sucesso!';
+      exportStatus.className = 'export-status success';
     } catch (error) {
       console.error('Erro ao exportar:', error);
-      exportStatus.textContent = `❌ ${error.message}`;
-      exportStatus.style.color = '#f00';
+      exportStatus.textContent = error.message;
+      exportStatus.className = 'export-status error';
     } finally {
       exportActivitiesButton.disabled = false;
       exportUrlsButton.disabled = false;
@@ -395,4 +489,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   exportActivitiesButton.onclick = () => exportReport('excel', 'atividades');
   exportUrlsButton.onclick = () => exportReport('excel-urls', 'urls');
+
+  connect();
 });

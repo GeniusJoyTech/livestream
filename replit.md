@@ -36,7 +36,16 @@ None specified yet.
 - No code changes were required - project was ready for Replit environment
 - Server already configured to listen on 0.0.0.0:5000, perfect for Replit's proxy
 
-### Recent Improvements (November 26, 2025)
+### Recent Improvements (November 27, 2025)
+✅ Created unified CSS design system (public/global.css) with modern gradient theme
+✅ Redesigned login page with centered card layout and gradient background
+✅ Redesigned registration page with consistent styling
+✅ Added broadcaster search functionality in viewer interface (search by name)
+✅ Updated viewer interface with dark theme and improved layout
+✅ Unified navbar and component styles across all pages
+✅ Added real-time broadcaster filtering as user types
+
+### Previous Improvements (November 26, 2025)
 ✅ Fixed database index error for long URLs (btree maximum exceeded)
 ✅ Added url_hash column using MD5 for URL deduplication without size limits
 ✅ Created separate Excel export endpoints for Activities and URLs
