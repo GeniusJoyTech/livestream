@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const timestamp = new Date(data.timestamp).toLocaleTimeString('pt-BR');
+    const timestamp = new Date(data.timestamp).toLocaleTimeString('pt-BR', { timeZone: 'America/Sao_Paulo' });
     monitoringInfo.innerHTML = `
       <p><strong>Host:</strong> ${data.host} | <strong>Sistema:</strong> ${data.system} | <strong>Ultima atualizacao:</strong> ${timestamp}</p>
     `;

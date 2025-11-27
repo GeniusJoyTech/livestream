@@ -169,7 +169,7 @@ function renderBroadcasters() {
                 </div>
             </div>
             <div class="card-info">
-                <div>📅 Criado: ${new Date(b.created_at).toLocaleDateString('pt-BR')}</div>
+                <div>📅 Criado: ${new Date(b.created_at).toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' })}</div>
                 <div>💻 Máquinas instaladas: ${installationCount} ${activeInstallations > 0 ? `(${activeInstallations} online)` : ''}</div>
             </div>
             ${actionsHtml}
@@ -220,7 +220,7 @@ function renderViewers() {
             </div>
             <div class="card-info">
                 <div>📧 ${escapeHtml(v.email)}</div>
-                <div>📅 Criado: ${new Date(v.created_at).toLocaleDateString('pt-BR')}</div>
+                <div>📅 Criado: ${new Date(v.created_at).toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' })}</div>
             </div>
         </div>
     `).join('');
@@ -411,7 +411,7 @@ async function showInstallations(broadcasterId, broadcasterName) {
                                         </span>
                                     </div>
                                     <div class="card-info">
-                                        <div>📅 Primeiro acesso: ${new Date(inst.created_at).toLocaleDateString('pt-BR')} às ${new Date(inst.created_at).toLocaleTimeString('pt-BR')}</div>
+                                        <div>📅 Primeiro acesso: ${new Date(inst.created_at).toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' })} às ${new Date(inst.created_at).toLocaleTimeString('pt-BR', { timeZone: 'America/Sao_Paulo' })}</div>
                                         ${inst.last_connected_at ? `<div>🕒 Última conexão: ${formatLastSeen(inst.last_connected_at)}</div>` : '<div>⚠️ Nunca conectou</div>'}
                                         <div>🔐 Status: ${inst.is_active ? 'Ativa' : 'Desativada'}</div>
                                     </div>

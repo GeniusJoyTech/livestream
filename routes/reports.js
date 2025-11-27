@@ -80,7 +80,7 @@ router.get('/export/excel', authenticateToken, async (req, res) => {
       }
       
       worksheet.addRow({
-        timestamp: new Date(activity.timestamp).toLocaleString('pt-BR'),
+        timestamp: new Date(activity.timestamp).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' }),
         app: activity.foreground_app || 'Nenhum aplicativo detectado',
         status: activity.idle_seconds > 60 ? 'Ocioso' : 'Ativo',
         idle_seconds: activity.idle_seconds || 0,
@@ -135,7 +135,7 @@ router.get('/export/excel', authenticateToken, async (req, res) => {
     
     browserHistory.forEach(entry => {
       historySheet.addRow({
-        visitTime: new Date(entry.timestamp).toLocaleString('pt-BR'),
+        visitTime: new Date(entry.timestamp).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' }),
         browser: entry.browser,
         url: entry.url,
         title: entry.title || '-'
@@ -207,7 +207,7 @@ router.get('/export/excel-urls', authenticateToken, async (req, res) => {
     
     browserHistory.forEach(entry => {
       historySheet.addRow({
-        visitTime: new Date(entry.timestamp).toLocaleString('pt-BR'),
+        visitTime: new Date(entry.timestamp).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' }),
         browser: entry.browser,
         url: entry.url,
         title: entry.title || '-'
