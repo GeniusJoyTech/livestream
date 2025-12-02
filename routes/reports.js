@@ -39,7 +39,8 @@ router.get('/export/excel', authenticateToken, async (req, res) => {
     }
     
     const startDate = fromDate ? new Date(fromDate) : new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
-    const endDate = toDate ? new Date(toDate) : new Date();
+    let endDate = toDate ? new Date(toDate) : new Date();
+    endDate.setHours(23, 59, 59, 999);
     
     console.log(`📊 [EXPORT] Buscando dados para broadcaster ${broadcasterIdInt} (${broadcaster.name}), período: ${startDate.toISOString()} - ${endDate.toISOString()}`);
     
@@ -223,7 +224,8 @@ router.get('/export/excel-urls', authenticateToken, async (req, res) => {
     }
     
     const startDate = fromDate ? new Date(fromDate) : new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
-    const endDate = toDate ? new Date(toDate) : new Date();
+    let endDate = toDate ? new Date(toDate) : new Date();
+    endDate.setHours(23, 59, 59, 999);
     
     const browserHistory = await databaseStorage.getBrowserHistory(broadcasterIdInt, startDate, endDate);
     const stats = await databaseStorage.getStatistics(broadcasterIdInt, startDate, endDate);
@@ -319,7 +321,8 @@ router.get('/stats', authenticateToken, async (req, res) => {
     }
     
     const startDate = fromDate ? new Date(fromDate) : new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
-    const endDate = toDate ? new Date(toDate) : new Date();
+    let endDate = toDate ? new Date(toDate) : new Date();
+    endDate.setHours(23, 59, 59, 999);
     
     const stats = await databaseStorage.getStatistics(parseInt(broadcasterId), startDate, endDate);
     res.json(stats);
