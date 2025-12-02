@@ -57,44 +57,58 @@ router.get('/export/excel', authenticateToken, async (req, res) => {
     workbook.creator = 'SimplificaVideos';
     workbook.created = new Date();
     
-    const worksheet = workbook.addWorksheet('Atividades');
+    const worksheet = workbook.addWorksheet('Monitoramento');
     
     worksheet.columns = [
       { header: 'Data/Hora', key: 'timestamp', width: 20 },
-      { header: 'Nome do App', key: 'app', width: 30 },
-      { header: 'Status', key: 'status', width: 12 },
-      { header: 'Tempo Ocioso (s)', key: 'idle_seconds', width: 18 },
-      { header: 'Tempo de Uso (s)', key: 'active_seconds', width: 18 }
+      { header: 'Status', key: 'status', width: 10 },
+      { header: 'Aplicativo', key: 'app', width: 25 },
+      { header: 'Titulo da Janela', key: 'title', width: 50 },
+      { header: 'Em Foco', key: 'is_foreground', width: 10 },
+      { header: 'Tempo Ocioso (s)', key: 'idle_seconds', width: 15 },
+      { header: 'PID', key: 'pid', width: 10 }
     ];
     
     worksheet.getRow(1).font = { bold: true };
     worksheet.getRow(1).fill = {
       type: 'pattern',
       pattern: 'solid',
-      fgColor: { argb: 'FF1E90FF' }
+      fgColor: { argb: 'FF667eea' }
     };
+    worksheet.getRow(1).font = { bold: true, color: { argb: 'FFFFFFFF' } };
     
     const activitiesReversed = [...activities].reverse();
     
-    activitiesReversed.forEach((activity, index) => {
-      let activeSeconds = 0;
+    activitiesReversed.forEach((activity) => {
+      const apps = activity.apps || [];
+      const foregroundApp = activity.foreground_app;
+      const timestamp = new Date(activity.timestamp).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' });
+      const status = activity.idle_seconds > 60 ? 'Ocioso' : 'Ativo';
       
-      if (index > 0) {
-        const prevActivity = activitiesReversed[index - 1];
-        const timeDiff = (new Date(activity.timestamp) - new Date(prevActivity.timestamp)) / 1000;
-        
-        if (timeDiff > 0) {
-          activeSeconds = Math.max(0, Math.round(timeDiff - (activity.idle_seconds || 0)));
-        }
+      if (apps.length > 0) {
+        apps.forEach(app => {
+          const isForeground = app.app === foregroundApp;
+          worksheet.addRow({
+            timestamp: timestamp,
+            status: status,
+            app: app.app || '-',
+            title: app.title || '-',
+            is_foreground: isForeground ? 'Sim' : 'Nao',
+            idle_seconds: activity.idle_seconds || 0,
+            pid: app.pid || '-'
+          });
+        });
+      } else {
+        worksheet.addRow({
+          timestamp: timestamp,
+          status: status,
+          app: foregroundApp || 'Nenhum aplicativo detectado',
+          title: '-',
+          is_foreground: 'Sim',
+          idle_seconds: activity.idle_seconds || 0,
+          pid: '-'
+        });
       }
-      
-      worksheet.addRow({
-        timestamp: new Date(activity.timestamp).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' }),
-        app: activity.foreground_app || 'Nenhum aplicativo detectado',
-        status: activity.idle_seconds > 60 ? 'Ocioso' : 'Ativo',
-        idle_seconds: activity.idle_seconds || 0,
-        active_seconds: activeSeconds
-      });
     });
     
     const statsSheet = workbook.addWorksheet('Estatísticas');

@@ -27,6 +27,9 @@ document.addEventListener("DOMContentLoaded", () => {
   let reconnectAttempts = 0;
   let reconnectTimer = null;
   const MAX_RECONNECT_DELAY = 30000;
+  
+  let appFocusTime = new Map();
+  let lastUpdateTime = null;
 
   const token = localStorage.getItem("token");
   if (!token) {
@@ -68,19 +71,43 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  function formatDuration(seconds) {
+    if (seconds < 60) {
+      return `${Math.floor(seconds)}s`;
+    } else if (seconds < 3600) {
+      const mins = Math.floor(seconds / 60);
+      const secs = Math.floor(seconds % 60);
+      return `${mins}m ${secs}s`;
+    } else {
+      const hours = Math.floor(seconds / 3600);
+      const mins = Math.floor((seconds % 3600) / 60);
+      return `${hours}h ${mins}m`;
+    }
+  }
+
   function updateMonitoringTable(data) {
     const monitoringInfo = document.getElementById('monitoring-info');
     const tbody = document.getElementById('monitoring-tbody');
     
     if (!data || !data.apps || data.apps.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="4" class="empty-row">Nenhum dado disponivel</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="5" class="empty-row">Nenhum dado disponivel</td></tr>';
       monitoringInfo.innerHTML = '<p>Aguardando dados de monitoramento...</p>';
       return;
     }
 
+    const now = Date.now();
+    if (lastUpdateTime && data.foreground) {
+      const elapsed = (now - lastUpdateTime) / 1000;
+      const appKey = data.foreground.app || 'unknown';
+      const currentTime = appFocusTime.get(appKey) || 0;
+      appFocusTime.set(appKey, currentTime + elapsed);
+    }
+    lastUpdateTime = now;
+
     const timestamp = new Date(data.timestamp).toLocaleTimeString('pt-BR', { timeZone: 'America/Sao_Paulo' });
+    const idleInfo = data.idle_seconds !== undefined ? ` | <strong>Tempo ocioso:</strong> ${formatDuration(data.idle_seconds)}` : '';
     monitoringInfo.innerHTML = `
-      <p><strong>Host:</strong> ${data.host} | <strong>Sistema:</strong> ${data.system} | <strong>Ultima atualizacao:</strong> ${timestamp}</p>
+      <p><strong>Host:</strong> ${data.host} | <strong>Sistema:</strong> ${data.system} | <strong>Ultima atualizacao:</strong> ${timestamp}${idleInfo}</p>
     `;
 
     tbody.innerHTML = '';
@@ -105,7 +132,13 @@ document.addEventListener("DOMContentLoaded", () => {
       titleCell.style.textOverflow = 'ellipsis';
       titleCell.style.whiteSpace = 'nowrap';
       
-      const pidCell = row.insertCell(3);
+      const focusTimeCell = row.insertCell(3);
+      const appKey = app.app || 'unknown';
+      const focusSeconds = appFocusTime.get(appKey) || 0;
+      focusTimeCell.textContent = focusSeconds > 0 ? formatDuration(focusSeconds) : '-';
+      focusTimeCell.style.textAlign = 'center';
+      
+      const pidCell = row.insertCell(4);
       pidCell.textContent = app.pid || '-';
     });
   }
@@ -306,6 +339,8 @@ document.addEventListener("DOMContentLoaded", () => {
             exportUrlsButton.disabled = true;
             clearInterval(statsInterval);
             statsDiv.textContent = "";
+            appFocusTime.clear();
+            lastUpdateTime = null;
           }
           
           filterBroadcasters(broadcasterSearch.value);
@@ -373,6 +408,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (videoOverlay) videoOverlay.classList.remove('hidden');
     clearInterval(statsInterval);
     statsDiv.textContent = "";
+    appFocusTime.clear();
+    lastUpdateTime = null;
     setStatus("Desconectado", false);
     disconnectButton.disabled = true;
     reconnectButton.disabled = false;
@@ -391,6 +428,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!selectedBroadcasterId || !socket || socket.readyState !== WebSocket.OPEN) {
       return;
     }
+
+    appFocusTime.clear();
+    lastUpdateTime = null;
 
     setStatus("Solicitando transmissao...", false);
 
