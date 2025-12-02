@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const tbody = document.getElementById('monitoring-tbody');
     
     if (!data || !data.apps || data.apps.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="5" class="empty-row">Nenhum dado disponivel</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="6" class="empty-row">Nenhum dado disponivel</td></tr>';
       monitoringInfo.innerHTML = '<p>Aguardando dados de monitoramento...</p>';
       return;
     }
@@ -105,10 +105,11 @@ document.addEventListener("DOMContentLoaded", () => {
     lastUpdateTime = now;
 
     const timestamp = new Date(data.timestamp).toLocaleTimeString('pt-BR', { timeZone: 'America/Sao_Paulo' });
-    const idleInfo = data.idle_seconds !== undefined ? ` | <strong>Tempo ocioso:</strong> ${formatDuration(data.idle_seconds)}` : '';
     monitoringInfo.innerHTML = `
-      <p><strong>Host:</strong> ${data.host} | <strong>Sistema:</strong> ${data.system} | <strong>Ultima atualizacao:</strong> ${timestamp}${idleInfo}</p>
+      <p><strong>Host:</strong> ${data.host} | <strong>Sistema:</strong> ${data.system} | <strong>Ultima atualizacao:</strong> ${timestamp}</p>
     `;
+
+    const idleSeconds = data.idle_seconds || 0;
 
     tbody.innerHTML = '';
     
@@ -138,7 +139,11 @@ document.addEventListener("DOMContentLoaded", () => {
       focusTimeCell.textContent = focusSeconds > 0 ? formatDuration(focusSeconds) : '-';
       focusTimeCell.style.textAlign = 'center';
       
-      const pidCell = row.insertCell(4);
+      const idleCell = row.insertCell(4);
+      idleCell.textContent = formatDuration(idleSeconds);
+      idleCell.style.textAlign = 'center';
+      
+      const pidCell = row.insertCell(5);
       pidCell.textContent = app.pid || '-';
     });
   }

@@ -61,11 +61,10 @@ router.get('/export/excel', authenticateToken, async (req, res) => {
     
     worksheet.columns = [
       { header: 'Data/Hora', key: 'timestamp', width: 20 },
-      { header: 'Status', key: 'status', width: 10 },
+      { header: 'Status', key: 'status', width: 15 },
       { header: 'Aplicativo', key: 'app', width: 25 },
       { header: 'Titulo da Janela', key: 'title', width: 50 },
-      { header: 'Em Foco', key: 'is_foreground', width: 10 },
-      { header: 'Tempo Ocioso (s)', key: 'idle_seconds', width: 15 },
+      { header: 'Tempo Inativo', key: 'idle_time', width: 15 },
       { header: 'PID', key: 'pid', width: 10 }
     ];
     
@@ -77,35 +76,45 @@ router.get('/export/excel', authenticateToken, async (req, res) => {
     };
     worksheet.getRow(1).font = { bold: true, color: { argb: 'FFFFFFFF' } };
     
+    function formatIdleTime(seconds) {
+      if (seconds < 60) return `${seconds}s`;
+      const mins = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      if (mins < 60) return `${mins}m ${secs}s`;
+      const hours = Math.floor(mins / 60);
+      const remainMins = mins % 60;
+      return `${hours}h ${remainMins}m`;
+    }
+    
     const activitiesReversed = [...activities].reverse();
     
     activitiesReversed.forEach((activity) => {
       const apps = activity.apps || [];
       const foregroundApp = activity.foreground_app;
       const timestamp = new Date(activity.timestamp).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' });
-      const status = activity.idle_seconds > 60 ? 'Ocioso' : 'Ativo';
+      const idleSeconds = activity.idle_seconds || 0;
+      const idleTime = formatIdleTime(idleSeconds);
       
       if (apps.length > 0) {
         apps.forEach(app => {
           const isForeground = app.app === foregroundApp;
+          const statusText = isForeground ? 'Foco' : 'Background';
           worksheet.addRow({
             timestamp: timestamp,
-            status: status,
+            status: statusText,
             app: app.app || '-',
             title: app.title || '-',
-            is_foreground: isForeground ? 'Sim' : 'Nao',
-            idle_seconds: activity.idle_seconds || 0,
+            idle_time: idleTime,
             pid: app.pid || '-'
           });
         });
       } else {
         worksheet.addRow({
           timestamp: timestamp,
-          status: status,
+          status: 'Foco',
           app: foregroundApp || 'Nenhum aplicativo detectado',
           title: '-',
-          is_foreground: 'Sim',
-          idle_seconds: activity.idle_seconds || 0,
+          idle_time: idleTime,
           pid: '-'
         });
       }
