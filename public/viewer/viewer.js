@@ -447,6 +447,8 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    console.log(`[EXPORT] Iniciando exportação - WebSocket ID: ${selectedBroadcasterId}, DB ID: ${selectedBroadcasterDbId}`);
+
     exportActivitiesButton.disabled = true;
     exportUrlsButton.disabled = true;
     exportStatus.textContent = 'Gerando relatorio...';
@@ -454,6 +456,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       const url = `/api/reports/export/${endpoint}?broadcasterId=${selectedBroadcasterDbId}&fromDate=${from}&toDate=${to}`;
+      console.log(`[EXPORT] URL da requisição: ${url}`);
       const response = await fetch(url, {
         headers: {
           'Authorization': `Bearer ${token}`

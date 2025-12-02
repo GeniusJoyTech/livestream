@@ -223,15 +223,15 @@ video {
 
 .table-container {
   border-radius: 8px;
-  overflow: hidden;
+  overflow: auto;
   border: 1px solid rgba(255, 255, 255, 0.1);
   margin-bottom: 1.5rem;
   max-height: 300px;
-  overflow-y: auto;
 }
 
 #monitoring-table {
   width: 100%;
+  min-width: 600px;
   border-collapse: collapse;
   font-size: 0.9rem;
 }

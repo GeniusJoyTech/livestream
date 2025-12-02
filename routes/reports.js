@@ -11,21 +11,28 @@ router.get('/export/excel', authenticateToken, async (req, res) => {
   try {
     const { broadcasterId, fromDate, toDate } = req.query;
     
+    console.log(`📊 [EXPORT] Requisição recebida - broadcasterId: "${broadcasterId}", fromDate: "${fromDate}", toDate: "${toDate}"`);
+    
     if (!broadcasterId) {
       return res.status(400).json({ error: 'broadcasterId é obrigatório' });
     }
     
-    const broadcaster = await broadcasterService.getBroadcasterById(parseInt(broadcasterId));
+    const broadcasterIdInt = parseInt(broadcasterId);
+    console.log(`📊 [EXPORT] Broadcaster ID parseado: ${broadcasterIdInt}`);
+    
+    const broadcaster = await broadcasterService.getBroadcasterById(broadcasterIdInt);
     if (!broadcaster) {
       return res.status(404).json({ error: 'Broadcaster não encontrado' });
     }
+    
+    console.log(`📊 [EXPORT] Broadcaster encontrado: "${broadcaster.name}" (ID: ${broadcaster.id})`);
     
     if (req.user.role === 'owner' && broadcaster.owner_id !== req.user.id) {
       return res.status(403).json({ error: 'Você não tem permissão para acessar este broadcaster' });
     }
     
     if (req.user.role === 'viewer') {
-      const hasPermission = await broadcasterService.hasViewerPermission(parseInt(broadcasterId), req.user.id);
+      const hasPermission = await broadcasterService.hasViewerPermission(broadcasterIdInt, req.user.id);
       if (!hasPermission) {
         return res.status(403).json({ error: 'Você não tem permissão para acessar este broadcaster' });
       }
@@ -34,15 +41,17 @@ router.get('/export/excel', authenticateToken, async (req, res) => {
     const startDate = fromDate ? new Date(fromDate) : new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
     const endDate = toDate ? new Date(toDate) : new Date();
     
-    console.log(`📊 Buscando dados para broadcaster ${broadcasterId}, período: ${startDate.toISOString()} - ${endDate.toISOString()}`);
+    console.log(`📊 [EXPORT] Buscando dados para broadcaster ${broadcasterIdInt} (${broadcaster.name}), período: ${startDate.toISOString()} - ${endDate.toISOString()}`);
     
-    const activities = await databaseStorage.getActivities(parseInt(broadcasterId), startDate, endDate);
-    const stats = await databaseStorage.getStatistics(parseInt(broadcasterId), startDate, endDate);
-    const browserHistory = await databaseStorage.getBrowserHistory(parseInt(broadcasterId), startDate, endDate);
+    const activities = await databaseStorage.getActivities(broadcasterIdInt, startDate, endDate);
+    const stats = await databaseStorage.getStatistics(broadcasterIdInt, startDate, endDate);
+    const browserHistory = await databaseStorage.getBrowserHistory(broadcasterIdInt, startDate, endDate);
+    
+    console.log(`📊 [EXPORT] Resultado: ${activities.length} atividades, ${browserHistory.length} histórico para broadcaster ${broadcasterIdInt}`);
     
     console.log(`📊 Dados encontrados: ${activities.length} atividades, ${browserHistory.length} histórico, stats: ${JSON.stringify(stats)}`);
     
-    await userService.logAuditAction(req.user.id, 'EXCEL_EXPORTED', 'broadcaster', parseInt(broadcasterId), req.ip, req.get('user-agent'));
+    await userService.logAuditAction(req.user.id, 'EXCEL_EXPORTED', 'broadcaster', broadcasterIdInt, req.ip, req.get('user-agent'));
     
     const workbook = new ExcelJS.Workbook();
     workbook.creator = 'SimplificaVideos';
@@ -158,21 +167,27 @@ router.get('/export/excel-urls', authenticateToken, async (req, res) => {
   try {
     const { broadcasterId, fromDate, toDate } = req.query;
     
+    console.log(`📊 [EXPORT-URLS] Requisição recebida - broadcasterId: "${broadcasterId}", fromDate: "${fromDate}", toDate: "${toDate}"`);
+    
     if (!broadcasterId) {
       return res.status(400).json({ error: 'broadcasterId é obrigatório' });
     }
     
-    const broadcaster = await broadcasterService.getBroadcasterById(parseInt(broadcasterId));
+    const broadcasterIdInt = parseInt(broadcasterId);
+    
+    const broadcaster = await broadcasterService.getBroadcasterById(broadcasterIdInt);
     if (!broadcaster) {
       return res.status(404).json({ error: 'Broadcaster não encontrado' });
     }
+    
+    console.log(`📊 [EXPORT-URLS] Broadcaster encontrado: "${broadcaster.name}" (ID: ${broadcaster.id})`);
     
     if (req.user.role === 'owner' && broadcaster.owner_id !== req.user.id) {
       return res.status(403).json({ error: 'Você não tem permissão para acessar este broadcaster' });
     }
     
     if (req.user.role === 'viewer') {
-      const hasPermission = await broadcasterService.hasViewerPermission(parseInt(broadcasterId), req.user.id);
+      const hasPermission = await broadcasterService.hasViewerPermission(broadcasterIdInt, req.user.id);
       if (!hasPermission) {
         return res.status(403).json({ error: 'Você não tem permissão para acessar este broadcaster' });
       }
@@ -181,10 +196,12 @@ router.get('/export/excel-urls', authenticateToken, async (req, res) => {
     const startDate = fromDate ? new Date(fromDate) : new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
     const endDate = toDate ? new Date(toDate) : new Date();
     
-    const browserHistory = await databaseStorage.getBrowserHistory(parseInt(broadcasterId), startDate, endDate);
-    const stats = await databaseStorage.getStatistics(parseInt(broadcasterId), startDate, endDate);
+    const browserHistory = await databaseStorage.getBrowserHistory(broadcasterIdInt, startDate, endDate);
+    const stats = await databaseStorage.getStatistics(broadcasterIdInt, startDate, endDate);
     
-    await userService.logAuditAction(req.user.id, 'EXCEL_URLS_EXPORTED', 'broadcaster', parseInt(broadcasterId), req.ip, req.get('user-agent'));
+    console.log(`📊 [EXPORT-URLS] Resultado: ${browserHistory.length} URLs para broadcaster ${broadcasterIdInt} (${broadcaster.name})`);
+    
+    await userService.logAuditAction(req.user.id, 'EXCEL_URLS_EXPORTED', 'broadcaster', broadcasterIdInt, req.ip, req.get('user-agent'));
     
     const workbook = new ExcelJS.Workbook();
     workbook.creator = 'SimplificaVideos';
