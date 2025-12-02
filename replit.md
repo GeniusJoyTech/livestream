@@ -36,7 +36,12 @@ None specified yet.
 - No code changes were required - project was ready for Replit environment
 - Server already configured to listen on 0.0.0.0:5000, perfect for Replit's proxy
 
-### Recent Improvements (November 27, 2025)
+### Recent Improvements (December 02, 2025)
+✅ **Focus-time tracking**: Added "Tempo em Foco" column showing accumulated time per app in viewer monitoring table
+✅ **Excel export redesigned**: Now exports all apps per activity (not just foreground app) with columns matching the monitoring screen
+✅ **Fixed memory leak**: Focus-time Map is now properly reset when switching broadcasters, disconnecting, or when broadcaster leaves
+
+### Previous Improvements (November 27, 2025)
 ✅ Created unified CSS design system (public/global.css) with modern gradient theme
 ✅ Redesigned login page with centered card layout and gradient background
 ✅ Redesigned registration page with consistent styling
