@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const MAX_RECONNECT_DELAY = 30000;
   
   let appFocusTime = new Map();
+  let appBackgroundTime = new Map();
   let lastUpdateTime = null;
 
   const token = localStorage.getItem("token");
@@ -96,11 +97,24 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const now = Date.now();
-    if (lastUpdateTime && data.foreground) {
+    if (lastUpdateTime) {
       const elapsed = (now - lastUpdateTime) / 1000;
-      const appKey = data.foreground.app || 'unknown';
-      const currentTime = appFocusTime.get(appKey) || 0;
-      appFocusTime.set(appKey, currentTime + elapsed);
+      
+      if (data.foreground) {
+        const focusAppKey = data.foreground.app || 'unknown';
+        const currentFocusTime = appFocusTime.get(focusAppKey) || 0;
+        appFocusTime.set(focusAppKey, currentFocusTime + elapsed);
+      }
+      
+      data.apps.forEach(app => {
+        const appKey = app.app || 'unknown';
+        const isForeground = data.foreground && data.foreground.pid === app.pid;
+        
+        if (!isForeground) {
+          const currentBgTime = appBackgroundTime.get(appKey) || 0;
+          appBackgroundTime.set(appKey, currentBgTime + elapsed);
+        }
+      });
     }
     lastUpdateTime = now;
 
@@ -109,13 +123,12 @@ document.addEventListener("DOMContentLoaded", () => {
       <p><strong>Host:</strong> ${data.host} | <strong>Sistema:</strong> ${data.system} | <strong>Ultima atualizacao:</strong> ${timestamp}</p>
     `;
 
-    const idleSeconds = data.idle_seconds || 0;
-
     tbody.innerHTML = '';
     
     data.apps.forEach(app => {
       const row = tbody.insertRow();
       const isForeground = data.foreground && data.foreground.pid === app.pid;
+      const appKey = app.app || 'unknown';
       
       const statusCell = row.insertCell(0);
       statusCell.innerHTML = isForeground ? '<span style="color: #28a745;">● Foco</span>' : '<span style="color: #666;">○ Background</span>';
@@ -134,14 +147,14 @@ document.addEventListener("DOMContentLoaded", () => {
       titleCell.style.whiteSpace = 'nowrap';
       
       const focusTimeCell = row.insertCell(3);
-      const appKey = app.app || 'unknown';
       const focusSeconds = appFocusTime.get(appKey) || 0;
       focusTimeCell.textContent = focusSeconds > 0 ? formatDuration(focusSeconds) : '-';
       focusTimeCell.style.textAlign = 'center';
       
-      const idleCell = row.insertCell(4);
-      idleCell.textContent = formatDuration(idleSeconds);
-      idleCell.style.textAlign = 'center';
+      const bgTimeCell = row.insertCell(4);
+      const bgSeconds = appBackgroundTime.get(appKey) || 0;
+      bgTimeCell.textContent = bgSeconds > 0 ? formatDuration(bgSeconds) : '-';
+      bgTimeCell.style.textAlign = 'center';
       
       const pidCell = row.insertCell(5);
       pidCell.textContent = app.pid || '-';
@@ -345,6 +358,7 @@ document.addEventListener("DOMContentLoaded", () => {
             clearInterval(statsInterval);
             statsDiv.textContent = "";
             appFocusTime.clear();
+            appBackgroundTime.clear();
             lastUpdateTime = null;
           }
           
@@ -414,6 +428,7 @@ document.addEventListener("DOMContentLoaded", () => {
     clearInterval(statsInterval);
     statsDiv.textContent = "";
     appFocusTime.clear();
+    appBackgroundTime.clear();
     lastUpdateTime = null;
     setStatus("Desconectado", false);
     disconnectButton.disabled = true;
@@ -435,6 +450,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     appFocusTime.clear();
+    appBackgroundTime.clear();
     lastUpdateTime = null;
 
     setStatus("Solicitando transmissao...", false);

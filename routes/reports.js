@@ -64,7 +64,6 @@ router.get('/export/excel', authenticateToken, async (req, res) => {
       { header: 'Status', key: 'status', width: 15 },
       { header: 'Aplicativo', key: 'app', width: 25 },
       { header: 'Titulo da Janela', key: 'title', width: 50 },
-      { header: 'Tempo Inativo', key: 'idle_time', width: 15 },
       { header: 'PID', key: 'pid', width: 10 }
     ];
     
@@ -76,47 +75,54 @@ router.get('/export/excel', authenticateToken, async (req, res) => {
     };
     worksheet.getRow(1).font = { bold: true, color: { argb: 'FFFFFFFF' } };
     
-    function formatIdleTime(seconds) {
-      if (seconds < 60) return `${seconds}s`;
-      const mins = Math.floor(seconds / 60);
-      const secs = seconds % 60;
-      if (mins < 60) return `${mins}m ${secs}s`;
-      const hours = Math.floor(mins / 60);
-      const remainMins = mins % 60;
-      return `${hours}h ${remainMins}m`;
-    }
-    
     const activitiesReversed = [...activities].reverse();
     
     activitiesReversed.forEach((activity) => {
       const apps = activity.apps || [];
       const foregroundApp = activity.foreground_app;
       const timestamp = new Date(activity.timestamp).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' });
-      const idleSeconds = activity.idle_seconds || 0;
-      const idleTime = formatIdleTime(idleSeconds);
       
       if (apps.length > 0) {
-        apps.forEach(app => {
-          const isForeground = app.app === foregroundApp;
-          const statusText = isForeground ? 'Foco' : 'Background';
-          worksheet.addRow({
+        const focusApps = apps.filter(app => app.app === foregroundApp);
+        const backgroundApps = apps.filter(app => app.app !== foregroundApp);
+        
+        focusApps.forEach(app => {
+          const row = worksheet.addRow({
             timestamp: timestamp,
-            status: statusText,
+            status: 'Foco',
             app: app.app || '-',
             title: app.title || '-',
-            idle_time: idleTime,
+            pid: app.pid || '-'
+          });
+          row.getCell('status').fill = {
+            type: 'pattern',
+            pattern: 'solid',
+            fgColor: { argb: 'FFd4edda' }
+          };
+        });
+        
+        backgroundApps.forEach(app => {
+          worksheet.addRow({
+            timestamp: timestamp,
+            status: 'Background',
+            app: app.app || '-',
+            title: app.title || '-',
             pid: app.pid || '-'
           });
         });
       } else {
-        worksheet.addRow({
+        const row = worksheet.addRow({
           timestamp: timestamp,
           status: 'Foco',
           app: foregroundApp || 'Nenhum aplicativo detectado',
           title: '-',
-          idle_time: idleTime,
           pid: '-'
         });
+        row.getCell('status').fill = {
+          type: 'pattern',
+          pattern: 'solid',
+          fgColor: { argb: 'FFd4edda' }
+        };
       }
     });
     
