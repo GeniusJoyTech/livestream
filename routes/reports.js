@@ -60,6 +60,21 @@ router.get('/export/excel', authenticateToken, async (req, res) => {
       return `${hours}h ${remainMins}m`;
     }
     
+    function toBrazilTime(date) {
+      const d = new Date(date);
+      const formatter = new Intl.DateTimeFormat('pt-BR', {
+        timeZone: 'America/Sao_Paulo',
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+      });
+      return formatter.format(d);
+    }
+    
     const sortedActivities = [...activities].sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
     
     const sessions = [];
@@ -167,7 +182,7 @@ router.get('/export/excel', authenticateToken, async (req, res) => {
     
     sessions.forEach(session => {
       const row = worksheet.addRow({
-        start_time: session.startTime.toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' }),
+        start_time: toBrazilTime(session.startTime),
         title: session.title || '-',
         app: session.app || '-',
         status: session.isForeground ? 'Ativo' : 'Inativo',
