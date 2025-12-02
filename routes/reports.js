@@ -60,36 +60,89 @@ router.get('/export/excel', authenticateToken, async (req, res) => {
       return `${hours}h ${remainMins}m`;
     }
     
-    const appFocusTime = new Map();
-    const appBackgroundTime = new Map();
-    
     const sortedActivities = [...activities].sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+    
+    const sessions = [];
+    const activeWindows = new Map();
     
     for (let i = 0; i < sortedActivities.length; i++) {
       const activity = sortedActivities[i];
       const apps = activity.apps || [];
       const foregroundApp = activity.foreground_app;
+      const timestamp = new Date(activity.timestamp);
       
       let elapsed = 2;
       if (i < sortedActivities.length - 1) {
         const nextActivity = sortedActivities[i + 1];
-        elapsed = (new Date(nextActivity.timestamp) - new Date(activity.timestamp)) / 1000;
-        if (elapsed > 60) elapsed = 2;
-      }
-      
-      if (foregroundApp) {
-        const currentFocus = appFocusTime.get(foregroundApp) || 0;
-        appFocusTime.set(foregroundApp, currentFocus + elapsed);
+        elapsed = (new Date(nextActivity.timestamp) - timestamp) / 1000;
+        if (elapsed > 120) elapsed = 2;
       }
       
       apps.forEach(app => {
-        const appName = app.app;
-        if (appName && appName !== foregroundApp) {
-          const currentBg = appBackgroundTime.get(appName) || 0;
-          appBackgroundTime.set(appName, currentBg + elapsed);
+        const windowKey = `${app.app}|${app.title}`;
+        const isForeground = app.app === foregroundApp;
+        
+        if (!activeWindows.has(windowKey)) {
+          activeWindows.set(windowKey, {
+            app: app.app,
+            title: app.title,
+            startTime: timestamp,
+            isForeground: isForeground,
+            duration: 0
+          });
+        }
+        
+        const window = activeWindows.get(windowKey);
+        
+        if (window.isForeground !== isForeground) {
+          if (window.duration > 0) {
+            sessions.push({
+              app: window.app,
+              title: window.title,
+              startTime: window.startTime,
+              duration: window.duration,
+              isForeground: window.isForeground
+            });
+          }
+          
+          window.startTime = timestamp;
+          window.isForeground = isForeground;
+          window.duration = elapsed;
+        } else {
+          window.duration += elapsed;
         }
       });
+      
+      const currentWindowKeys = new Set(apps.map(app => `${app.app}|${app.title}`));
+      for (const [key, window] of activeWindows) {
+        if (!currentWindowKeys.has(key)) {
+          if (window.duration > 0) {
+            sessions.push({
+              app: window.app,
+              title: window.title,
+              startTime: window.startTime,
+              duration: window.duration,
+              isForeground: window.isForeground
+            });
+          }
+          activeWindows.delete(key);
+        }
+      }
     }
+    
+    for (const [key, window] of activeWindows) {
+      if (window.duration > 0) {
+        sessions.push({
+          app: window.app,
+          title: window.title,
+          startTime: window.startTime,
+          duration: window.duration,
+          isForeground: window.isForeground
+        });
+      }
+    }
+    
+    sessions.sort((a, b) => a.startTime - b.startTime);
     
     const workbook = new ExcelJS.Workbook();
     workbook.creator = 'SimplificaVideos';
@@ -98,9 +151,11 @@ router.get('/export/excel', authenticateToken, async (req, res) => {
     const worksheet = workbook.addWorksheet('Atividades');
     
     worksheet.columns = [
-      { header: 'Aplicativo', key: 'app', width: 30 },
-      { header: 'Tempo Ativo', key: 'focus_time', width: 15 },
-      { header: 'Tempo Inativo', key: 'background_time', width: 15 }
+      { header: 'Inicio', key: 'start_time', width: 20 },
+      { header: 'Titulo da Janela', key: 'title', width: 50 },
+      { header: 'Aplicativo', key: 'app', width: 25 },
+      { header: 'Status', key: 'status', width: 12 },
+      { header: 'Duracao', key: 'duration', width: 12 }
     ];
     
     worksheet.getRow(1).font = { bold: true, color: { argb: 'FFFFFFFF' } };
@@ -110,27 +165,26 @@ router.get('/export/excel', authenticateToken, async (req, res) => {
       fgColor: { argb: 'FF667eea' }
     };
     
-    const allApps = new Set([...appFocusTime.keys(), ...appBackgroundTime.keys()]);
-    const appList = Array.from(allApps).map(appName => ({
-      app: appName,
-      focusSeconds: appFocusTime.get(appName) || 0,
-      bgSeconds: appBackgroundTime.get(appName) || 0
-    }));
-    
-    appList.sort((a, b) => b.focusSeconds - a.focusSeconds);
-    
-    appList.forEach(app => {
+    sessions.forEach(session => {
       const row = worksheet.addRow({
-        app: app.app,
-        focus_time: app.focusSeconds > 0 ? formatDuration(app.focusSeconds) : '-',
-        background_time: app.bgSeconds > 0 ? formatDuration(app.bgSeconds) : '-'
+        start_time: session.startTime.toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' }),
+        title: session.title || '-',
+        app: session.app || '-',
+        status: session.isForeground ? 'Ativo' : 'Inativo',
+        duration: formatDuration(session.duration)
       });
       
-      if (app.focusSeconds > 0) {
-        row.getCell('focus_time').fill = {
+      if (session.isForeground) {
+        row.getCell('status').fill = {
           type: 'pattern',
           pattern: 'solid',
           fgColor: { argb: 'FFd4edda' }
+        };
+      } else {
+        row.getCell('status').fill = {
+          type: 'pattern',
+          pattern: 'solid',
+          fgColor: { argb: 'FFf8d7da' }
         };
       }
     });
