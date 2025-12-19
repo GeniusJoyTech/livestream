@@ -214,13 +214,10 @@ document.addEventListener("DOMContentLoaded", () => {
     let foundCurrent = false;
     broadcasters.forEach(b => {
       const opt = document.createElement('option');
-      opt.value = b.online ? b.id : `offline_${b.db_id}`;
+      opt.value = b.id;
       opt.setAttribute('data-db-id', b.db_id || '');
-      opt.setAttribute('data-online', b.online ? 'true' : 'false');
-      const statusIcon = b.online ? '🟢' : '🔴';
-      const statusText = b.online ? '' : ' (Inativo)';
-      opt.textContent = `${statusIcon} ${b.name}${statusText}`;
-      if (selectedBroadcasterId === b.id || selectedBroadcasterDbId == b.db_id) {
+      opt.textContent = b.name;
+      if (selectedBroadcasterId === b.id) {
         opt.selected = true;
         foundCurrent = true;
       }
@@ -234,10 +231,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (firstOption && firstOption.value) {
           selectedBroadcasterId = firstOption.value;
           selectedBroadcasterDbId = firstOption.getAttribute('data-db-id') || null;
-          const isOnline = firstOption.getAttribute('data-online') === 'true';
-          watchButton.disabled = !isOnline;
-          exportActivitiesButton.disabled = !selectedBroadcasterDbId;
-          exportUrlsButton.disabled = !selectedBroadcasterDbId;
         }
       } else {
         const placeholder = document.createElement('option');
@@ -249,6 +242,8 @@ document.addEventListener("DOMContentLoaded", () => {
         broadcasterSelect.insertBefore(placeholder, broadcasterSelect.firstChild);
       }
     }
+    
+    watchButton.disabled = false;
   }
 
   broadcasterSelect.addEventListener('change', () => {
@@ -256,11 +251,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (selectedOption && selectedOption.value) {
       selectedBroadcasterId = selectedOption.value;
       selectedBroadcasterDbId = selectedOption.getAttribute('data-db-id') || null;
-      const isOnline = selectedOption.getAttribute('data-online') === 'true';
-      
-      watchButton.disabled = !isOnline;
-      exportActivitiesButton.disabled = !selectedBroadcasterDbId;
-      exportUrlsButton.disabled = !selectedBroadcasterDbId;
     }
   });
 

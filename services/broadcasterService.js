@@ -324,20 +324,11 @@ class BroadcasterService {
   
   async getViewerPermissions(viewerId) {
     const result = await db.query(
-      `SELECT bp.broadcaster_id, b.name as broadcaster_name, b.is_active
+      `SELECT bp.broadcaster_id, b.name as broadcaster_name
        FROM broadcaster_permissions bp
        INNER JOIN broadcasters b ON bp.broadcaster_id = b.id
        WHERE bp.viewer_id = $1`,
       [viewerId]
-    );
-    return result.rows;
-  }
-
-  async getBroadcastersByIds(ids) {
-    if (!ids || ids.length === 0) return [];
-    const result = await db.query(
-      `SELECT id, name, is_active FROM broadcasters WHERE id = ANY($1)`,
-      [ids]
     );
     return result.rows;
   }
