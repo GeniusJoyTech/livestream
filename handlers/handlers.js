@@ -175,7 +175,8 @@ async function registerViewer(ws, id, peers, broadcasters) {
                     id: isOnline ? onlineData.wsId : null,
                     name: b.name,
                     db_id: b.id,
-                    online: isOnline
+                    online: isOnline,
+                    is_active: b.is_active
                 };
             });
             
