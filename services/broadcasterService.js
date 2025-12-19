@@ -332,6 +332,15 @@ class BroadcasterService {
     );
     return result.rows;
   }
+
+  async getBroadcastersByIds(ids) {
+    if (!ids || ids.length === 0) return [];
+    const result = await db.query(
+      `SELECT id, name FROM broadcasters WHERE id = ANY($1)`,
+      [ids]
+    );
+    return result.rows;
+  }
 }
 
 module.exports = new BroadcasterService();

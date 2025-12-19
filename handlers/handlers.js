@@ -148,36 +148,50 @@ async function registerViewer(ws, id, peers, broadcasters) {
         return;
     }
     
-    let permittedBroadcasterIds = [];
+    let permittedBroadcasters = [];
     
     if (process.env.DATABASE_URL) {
         try {
             const broadcasterService = require('../services/broadcasterService');
             const permissions = await broadcasterService.getViewerPermissions(viewerId);
-            permittedBroadcasterIds = permissions.map(p => p.broadcaster_id);
+            const permittedBroadcasterIds = permissions.map(p => p.broadcaster_id);
             console.log(`🔐 Viewer ${viewerId} tem permissão para ${permittedBroadcasterIds.length} broadcasters: [${permittedBroadcasterIds.join(', ')}]`);
+            
+            const allBroadcastersFromDb = await broadcasterService.getBroadcastersByIds(permittedBroadcasterIds);
+            
+            const onlineBroadcasterDbIds = new Set();
+            const onlineBroadcasterMap = new Map();
+            for (const [bid, bdata] of broadcasters.entries()) {
+                if (permittedBroadcasterIds.includes(bdata.db_id)) {
+                    onlineBroadcasterDbIds.add(bdata.db_id);
+                    onlineBroadcasterMap.set(bdata.db_id, { wsId: bid, bdata });
+                }
+            }
+            
+            permittedBroadcasters = allBroadcastersFromDb.map(b => {
+                const isOnline = onlineBroadcasterDbIds.has(b.id);
+                const onlineData = onlineBroadcasterMap.get(b.id);
+                return {
+                    id: isOnline ? onlineData.wsId : null,
+                    name: b.name,
+                    db_id: b.id,
+                    online: isOnline
+                };
+            });
+            
         } catch (err) {
             console.error('Erro ao buscar permissões do viewer:', err);
         }
     }
     
-    const activeBroadcasters = [...broadcasters.entries()]
-        .filter(([, bdata]) => permittedBroadcasterIds.includes(bdata.db_id))
-        .map(([bid, bdata]) => {
-            const obj = { 
-                id: bid, 
-                name: bdata.name, 
-                company_id: bdata.company_id,
-                db_id: bdata.db_id
-            };
-            console.log("Broadcaster permitido para viewer: ", obj);
-            return obj;
-        })
-        .sort((a, b) => a.name.localeCompare(b.name));
+    permittedBroadcasters.sort((a, b) => {
+        if (a.online !== b.online) return b.online - a.online;
+        return a.name.localeCompare(b.name);
+    });
 
     ws.send(JSON.stringify({
         type: "broadcaster-list",
-        broadcasters: activeBroadcasters,
+        broadcasters: permittedBroadcasters,
     }));
 }
 async function handleDisconnect(ws, id, peers, broadcasters, deletePeer) {
