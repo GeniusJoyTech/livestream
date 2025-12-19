@@ -44,7 +44,7 @@ router.get('/export/excel', authenticateToken, async (req, res) => {
     
     console.log(`📊 [EXPORT] Buscando dados para broadcaster ${broadcasterIdInt} (${broadcaster.name}), período: ${startDate.toISOString()} - ${endDate.toISOString()}`);
     
-    const activities = await databaseStorage.getActivities(broadcasterIdInt, startDate, endDate);
+    const activities = await databaseStorage.getActivities(broadcasterIdInt, startDate, endDate, 50000);
     
     console.log(`📊 [EXPORT] Resultado: ${activities.length} atividades para broadcaster ${broadcasterIdInt}`);
     
@@ -78,7 +78,7 @@ router.get('/export/excel', authenticateToken, async (req, res) => {
     const sortedActivities = [...activities].sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
     
     const sessions = [];
-    const activeWindows = new Map();
+    const windowStates = new Map();
     
     for (let i = 0; i < sortedActivities.length; i++) {
       const activity = sortedActivities[i];
@@ -90,74 +90,72 @@ router.get('/export/excel', authenticateToken, async (req, res) => {
       if (i < sortedActivities.length - 1) {
         const nextActivity = sortedActivities[i + 1];
         elapsed = (new Date(nextActivity.timestamp) - timestamp) / 1000;
-        if (elapsed > 120) elapsed = 2;
+        if (elapsed > 300) elapsed = 2;
       }
       
+      const currentApps = new Set();
+      
       apps.forEach(app => {
-        const windowKey = `${app.app}|${app.title}`;
-        const isForeground = app.app === foregroundApp;
+        const windowKey = `${app.app}|||${app.title}`;
+        currentApps.add(windowKey);
+        const isActive = app.app === foregroundApp;
         
-        if (!activeWindows.has(windowKey)) {
-          activeWindows.set(windowKey, {
+        if (!windowStates.has(windowKey)) {
+          windowStates.set(windowKey, {
             app: app.app,
             title: app.title,
             startTime: timestamp,
-            isForeground: isForeground,
-            duration: 0
+            isActive: isActive,
+            accumulatedTime: elapsed
           });
-        }
-        
-        const window = activeWindows.get(windowKey);
-        
-        if (window.isForeground !== isForeground) {
-          if (window.duration > 0) {
-            sessions.push({
-              app: window.app,
-              title: window.title,
-              startTime: window.startTime,
-              duration: window.duration,
-              isForeground: window.isForeground
-            });
-          }
-          
-          window.startTime = timestamp;
-          window.isForeground = isForeground;
-          window.duration = elapsed;
         } else {
-          window.duration += elapsed;
+          const state = windowStates.get(windowKey);
+          
+          if (state.isActive !== isActive) {
+            sessions.push({
+              app: state.app,
+              title: state.title,
+              startTime: state.startTime,
+              duration: state.accumulatedTime,
+              isActive: state.isActive
+            });
+            
+            state.startTime = timestamp;
+            state.isActive = isActive;
+            state.accumulatedTime = elapsed;
+          } else {
+            state.accumulatedTime += elapsed;
+          }
         }
       });
       
-      const currentWindowKeys = new Set(apps.map(app => `${app.app}|${app.title}`));
-      for (const [key, window] of activeWindows) {
-        if (!currentWindowKeys.has(key)) {
-          if (window.duration > 0) {
-            sessions.push({
-              app: window.app,
-              title: window.title,
-              startTime: window.startTime,
-              duration: window.duration,
-              isForeground: window.isForeground
-            });
-          }
-          activeWindows.delete(key);
+      for (const [key, state] of windowStates) {
+        if (!currentApps.has(key)) {
+          sessions.push({
+            app: state.app,
+            title: state.title,
+            startTime: state.startTime,
+            duration: state.accumulatedTime,
+            isActive: state.isActive
+          });
+          windowStates.delete(key);
         }
       }
     }
     
-    for (const [key, window] of activeWindows) {
-      if (window.duration > 0) {
-        sessions.push({
-          app: window.app,
-          title: window.title,
-          startTime: window.startTime,
-          duration: window.duration,
-          isForeground: window.isForeground
-        });
-      }
+    for (const [key, state] of windowStates) {
+      sessions.push({
+        app: state.app,
+        title: state.title,
+        startTime: state.startTime,
+        duration: state.accumulatedTime,
+        isActive: state.isActive
+      });
     }
     
     sessions.sort((a, b) => a.startTime - b.startTime);
+    
+    console.log(`📊 [EXPORT] ${sessions.length} sessões geradas`);
     
     const workbook = new ExcelJS.Workbook();
     workbook.creator = 'SimplificaVideos';
@@ -185,11 +183,11 @@ router.get('/export/excel', authenticateToken, async (req, res) => {
         start_time: toBrazilTime(session.startTime),
         title: session.title || '-',
         app: session.app || '-',
-        status: session.isForeground ? 'Ativo' : 'Inativo',
+        status: session.isActive ? 'Ativo' : 'Inativo',
         duration: formatDuration(session.duration)
       });
       
-      if (session.isForeground) {
+      if (session.isActive) {
         row.getCell('status').fill = {
           type: 'pattern',
           pattern: 'solid',
