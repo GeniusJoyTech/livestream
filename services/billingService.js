@@ -653,8 +653,12 @@ class BillingService {
   }
   
   async getOwnerUsageStats(ownerId) {
-    const broadcastersResult = await db.query(
-      `SELECT COUNT(*) as count FROM broadcasters WHERE owner_id = $1 AND is_active = true`,
+    const installationsResult = await db.query(
+      `SELECT COUNT(DISTINCT bi.id) as count 
+       FROM broadcaster_installations bi
+       JOIN broadcasters b ON b.id = bi.broadcaster_id
+       WHERE b.owner_id = $1 AND b.is_active = true
+       AND (bi.is_active = true OR bi.is_active IS NULL)`,
       [ownerId]
     );
     
@@ -664,12 +668,12 @@ class BillingService {
     );
     
     const groupsResult = await db.query(
-      `SELECT COUNT(*) as count FROM broadcaster_groups WHERE owner_id = $1 AND is_active = true`,
+      `SELECT COUNT(*) as count FROM broadcasters WHERE owner_id = $1 AND is_active = true`,
       [ownerId]
     );
     
     return {
-      broadcasters: parseInt(broadcastersResult.rows[0]?.count || 0),
+      broadcasters: parseInt(installationsResult.rows[0]?.count || 0),
       viewers: parseInt(viewersResult.rows[0]?.count || 0),
       broadcasterGroups: parseInt(groupsResult.rows[0]?.count || 0)
     };
