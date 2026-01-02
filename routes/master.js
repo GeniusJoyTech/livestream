@@ -241,4 +241,69 @@ router.post('/add-master/:userId', authenticateToken, requireMaster, async (req,
   }
 });
 
+router.delete('/users/:userId', authenticateToken, requireMaster, async (req, res) => {
+  try {
+    const userId = parseInt(req.params.userId);
+    
+    if (userId === req.user.id) {
+      return res.status(400).json({ error: 'Você não pode excluir sua própria conta' });
+    }
+    
+    const userCheck = await db.query(
+      `SELECT u.*, eu.id as exempt_id, mu.id as master_id 
+       FROM users u 
+       LEFT JOIN exempt_users eu ON eu.user_id = u.id AND eu.is_active = true
+       LEFT JOIN master_users mu ON mu.user_id = u.id AND mu.is_active = true
+       WHERE u.id = $1`,
+      [userId]
+    );
+    
+    if (userCheck.rows.length === 0) {
+      return res.status(404).json({ error: 'Usuário não encontrado' });
+    }
+    
+    const user = userCheck.rows[0];
+    
+    if (user.master_id) {
+      return res.status(400).json({ error: 'Não é possível excluir um usuário master. Remova o status de master primeiro.' });
+    }
+    
+    await db.query('BEGIN');
+    
+    try {
+      await db.query(`DELETE FROM payments WHERE invoice_id IN (SELECT id FROM invoices WHERE owner_id = $1)`, [userId]);
+      await db.query(`DELETE FROM invoices WHERE owner_id = $1`, [userId]);
+      await db.query(`DELETE FROM limit_changes WHERE subscription_id IN (SELECT id FROM subscriptions WHERE owner_id = $1)`, [userId]);
+      await db.query(`DELETE FROM subscriptions WHERE owner_id = $1`, [userId]);
+      await db.query(`DELETE FROM exempt_users WHERE user_id = $1`, [userId]);
+      
+      const broadcasters = await db.query(`SELECT id FROM broadcasters WHERE owner_id = $1`, [userId]);
+      const broadcasterIds = broadcasters.rows.map(b => b.id);
+      
+      if (broadcasterIds.length > 0) {
+        await db.query(`DELETE FROM activities WHERE broadcaster_id = ANY($1)`, [broadcasterIds]);
+        await db.query(`DELETE FROM browser_history WHERE broadcaster_id = ANY($1)`, [broadcasterIds]);
+        await db.query(`DELETE FROM broadcaster_installations WHERE broadcaster_id = ANY($1)`, [broadcasterIds]);
+        await db.query(`DELETE FROM viewer_permissions WHERE broadcaster_id = ANY($1)`, [broadcasterIds]);
+      }
+      
+      await db.query(`DELETE FROM broadcasters WHERE owner_id = $1`, [userId]);
+      await db.query(`DELETE FROM users WHERE created_by = $1`, [userId]);
+      await db.query(`DELETE FROM users WHERE id = $1`, [userId]);
+      
+      await db.query('COMMIT');
+      
+      console.log(`🗑️ Usuário ${user.username} (ID: ${userId}) excluído pelo master ${req.user.id}`);
+      
+      res.json({ success: true, message: 'Usuário excluído com sucesso' });
+    } catch (deleteError) {
+      await db.query('ROLLBACK');
+      throw deleteError;
+    }
+  } catch (error) {
+    console.error('Error deleting user:', error);
+    res.status(500).json({ error: 'Falha ao excluir usuário: ' + error.message });
+  }
+});
+
 module.exports = router;

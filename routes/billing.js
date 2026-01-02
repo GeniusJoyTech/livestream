@@ -34,6 +34,29 @@ router.post('/subscription', authenticateToken, async (req, res) => {
       viewerLimit,
       broadcasterGroupLimit
     });
+    
+    const isExempt = await billingService.isUserExempt(req.user.id);
+    if (!isExempt) {
+      const openInvoices = await billingService.getOpenInvoices(req.user.id);
+      if (openInvoices.length === 0) {
+        const now = new Date();
+        const periodStart = now;
+        const periodEnd = new Date(now);
+        if (planType === 'annual') {
+          periodEnd.setFullYear(periodEnd.getFullYear() + 1);
+        } else {
+          periodEnd.setMonth(periodEnd.getMonth() + 1);
+        }
+        
+        try {
+          await billingService.createInvoice(req.user.id, periodStart, periodEnd);
+          console.log(`📄 Fatura gerada automaticamente para owner ${req.user.id}`);
+        } catch (invoiceError) {
+          console.error('Error creating invoice:', invoiceError);
+        }
+      }
+    }
+    
     res.json(subscription);
   } catch (error) {
     console.error('Error updating subscription:', error);

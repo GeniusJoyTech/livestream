@@ -407,6 +407,7 @@
                         <th>Viewers</th>
                         <th>Status</th>
                         <th>Criado Em</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody id="usersTable"></tbody>
@@ -678,6 +679,9 @@
                         </span>
                     </td>
                     <td>${formatDate(u.created_at)}</td>
+                    <td class="action-btns">
+                        <button class="btn-small btn-danger" onclick="deleteUser(${u.id}, '${u.username}')">Excluir</button>
+                    </td>
                 </tr>
             `).join('');
         }
@@ -752,6 +756,32 @@
             });
             
             loadExemptUsers();
+        }
+        
+        async function deleteUser(userId, username) {
+            if (!confirm(`ATENÇÃO: Você está prestes a EXCLUIR PERMANENTEMENTE o usuário "${username}" e todos os seus dados (broadcasters, viewers, faturas, atividades, etc).\n\nEsta ação NÃO pode ser desfeita!\n\nDeseja continuar?`)) return;
+            
+            if (!confirm(`Confirme novamente: Excluir permanentemente "${username}"?`)) return;
+            
+            try {
+                const response = await fetch(`/api/master/users/${userId}`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    alert('Usuário excluído com sucesso!');
+                    loadUsers();
+                    loadStats();
+                    loadSubscriptions();
+                } else {
+                    alert('Erro: ' + result.error);
+                }
+            } catch (error) {
+                alert('Erro ao excluir usuário: ' + error.message);
+            }
         }
         
         document.querySelectorAll('.tab-btn').forEach(btn => {
