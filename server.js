@@ -194,6 +194,12 @@ async function initializeDatabase() {
            ON CONFLICT (user_id) DO UPDATE SET is_active = true`,
           [userId]
         );
+        await db.query(
+          `INSERT INTO master_users (user_id, is_active)
+           VALUES ($1, true)
+           ON CONFLICT (user_id) DO UPDATE SET is_active = true`,
+          [userId]
+        );
         console.log(`✅ Usuário ana.rodrigues marcado como isento e master admin`);
       }
     } catch (exemptError) {
