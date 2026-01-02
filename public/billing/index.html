@@ -281,7 +281,8 @@
             <h1>Faturamento</h1>
         </div>
         <div class="nav-actions">
-            <a href="/owner-dashboard/owner-dashboard.html" class="btn btn-secondary btn-small">Voltar ao Painel</a>
+            <a href="/owner-dashboard/dashboard.html" class="btn btn-secondary btn-small">📊 Painel</a>
+            <a href="/master/" id="masterLink" class="btn btn-secondary btn-small" style="display: none;">👑 Painel Master</a>
             <button class="btn btn-small" style="background: var(--danger-color); color: white;" onclick="logout()">Sair</button>
         </div>
     </nav>
@@ -654,6 +655,24 @@
             await loadPricing();
             await loadSubscription();
             await loadInvoices();
+            await checkMasterAdmin();
+        }
+        
+        async function checkMasterAdmin() {
+            try {
+                const response = await fetch('/api/users/me', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (response.ok) {
+                    const user = await response.json();
+                    if (user.is_master_admin) {
+                        const masterLink = document.getElementById('masterLink');
+                        if (masterLink) masterLink.style.display = 'inline-flex';
+                    }
+                }
+            } catch (error) {
+                console.log('Could not check master admin status');
+            }
         }
         
         init();

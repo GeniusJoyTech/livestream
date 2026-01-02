@@ -96,6 +96,72 @@ class BillingService {
     return await this.canOwnerUseSystem(ownerId);
   }
   
+  async checkBroadcasterLimit(ownerId) {
+    const isExempt = await this.isUserExempt(ownerId);
+    if (isExempt) {
+      return { allowed: true, reason: 'exempt' };
+    }
+    
+    const subscription = await this.getSubscription(ownerId);
+    if (!subscription) {
+      return { allowed: false, reason: 'no_subscription', message: 'Nenhuma assinatura encontrada. Configure seu plano primeiro.' };
+    }
+    
+    const currentCount = await db.query(
+      `SELECT COUNT(DISTINCT bi.id) as count FROM broadcaster_installations bi
+       JOIN broadcasters b ON b.id = bi.broadcaster_id
+       WHERE b.owner_id = $1 AND b.is_active = true
+       AND (bi.is_active = true OR bi.is_active IS NULL)`,
+      [ownerId]
+    );
+    
+    const activeInstallations = parseInt(currentCount.rows[0].count) || 0;
+    
+    if (activeInstallations > subscription.broadcaster_limit) {
+      return { 
+        allowed: false, 
+        reason: 'limit_exceeded', 
+        message: `Limite de broadcasters excedido (${activeInstallations}/${subscription.broadcaster_limit}). Aumente seu limite no painel de faturamento.`,
+        current: activeInstallations,
+        limit: subscription.broadcaster_limit
+      };
+    }
+    
+    return { allowed: true, reason: 'within_limit', current: activeInstallations, limit: subscription.broadcaster_limit };
+  }
+  
+  async checkViewerLimit(ownerId) {
+    const isExempt = await this.isUserExempt(ownerId);
+    if (isExempt) {
+      return { allowed: true, reason: 'exempt' };
+    }
+    
+    const subscription = await this.getSubscription(ownerId);
+    if (!subscription) {
+      return { allowed: false, reason: 'no_subscription', message: 'Nenhuma assinatura encontrada. Configure seu plano primeiro.' };
+    }
+    
+    const currentCount = await db.query(
+      `SELECT COUNT(*) as count FROM users
+       WHERE created_by = $1 AND role = 'viewer' AND is_active = true`,
+      [ownerId]
+    );
+    
+    const activeViewers = parseInt(currentCount.rows[0].count) || 0;
+    
+    if (activeViewers > subscription.viewer_limit) {
+      return { 
+        allowed: false, 
+        reason: 'limit_exceeded', 
+        message: `Limite de viewers excedido (${activeViewers}/${subscription.viewer_limit}). Aumente seu limite no painel de faturamento.`,
+        current: activeViewers,
+        limit: subscription.viewer_limit
+      };
+    }
+    
+    return { allowed: true, reason: 'within_limit', current: activeViewers, limit: subscription.viewer_limit };
+  }
+  
   async getOwnerIdByBroadcasterToken(token) {
     const result = await db.query(
       `SELECT b.owner_id FROM broadcaster_installations bi

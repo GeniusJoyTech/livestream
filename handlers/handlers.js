@@ -38,6 +38,20 @@ async function registerBroadcaster(ws, id, msg, peers, broadcasters) {
                         ws.close(4010, accessCheck.message);
                         return;
                     }
+                    
+                    const limitCheck = await billingService.checkBroadcasterLimit(installationJwt.owner_id);
+                    if (!limitCheck.allowed) {
+                        console.warn(`⚠️ Broadcaster bloqueado - limite excedido: ${limitCheck.message}`);
+                        ws.send(JSON.stringify({
+                            type: "limit-exceeded",
+                            reason: limitCheck.reason,
+                            message: limitCheck.message,
+                            current: limitCheck.current,
+                            limit: limitCheck.limit
+                        }));
+                        ws.close(4011, limitCheck.message);
+                        return;
+                    }
                 }
                 
                 if (installationJwt) {
@@ -72,6 +86,20 @@ async function registerBroadcaster(ws, id, msg, peers, broadcasters) {
                                 message: accessCheck.message
                             }));
                             ws.close(4010, accessCheck.message);
+                            return;
+                        }
+                        
+                        const limitCheck = await billingService.checkBroadcasterLimit(broadcasterGroup.owner_id);
+                        if (!limitCheck.allowed) {
+                            console.warn(`⚠️ Broadcaster bloqueado (nova instalação) - limite excedido: ${limitCheck.message}`);
+                            ws.send(JSON.stringify({
+                                type: "limit-exceeded",
+                                reason: limitCheck.reason,
+                                message: limitCheck.message,
+                                current: limitCheck.current,
+                                limit: limitCheck.limit
+                            }));
+                            ws.close(4011, limitCheck.message);
                             return;
                         }
                         
@@ -184,6 +212,23 @@ async function registerViewer(ws, id, peers, broadcasters) {
                 type: "payment-required",
                 reason: ownerAccessCheck.reason,
                 message: "O administrador da sua conta precisa regularizar o pagamento para você poder acessar."
+            }));
+            ws.send(JSON.stringify({
+                type: "broadcaster-list",
+                broadcasters: [],
+            }));
+            return;
+        }
+        
+        const viewerLimitCheck = await billingService.checkViewerLimit(viewerOwnerId);
+        if (!viewerLimitCheck.allowed) {
+            console.warn(`⚠️ Viewer bloqueado - limite excedido: ${viewerLimitCheck.message}`);
+            ws.send(JSON.stringify({
+                type: "limit-exceeded",
+                reason: viewerLimitCheck.reason,
+                message: viewerLimitCheck.message,
+                current: viewerLimitCheck.current,
+                limit: viewerLimitCheck.limit
             }));
             ws.send(JSON.stringify({
                 type: "broadcaster-list",

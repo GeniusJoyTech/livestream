@@ -391,6 +391,11 @@ document.addEventListener("DOMContentLoaded", () => {
           alert(`⚠️ Acesso bloqueado: ${paymentMsg}`);
           setStatus("Acesso bloqueado - pagamento pendente", false);
           break;
+        case "limit-exceeded":
+          const limitMsg = message.message || "Limite de usuários excedido. Entre em contato com o administrador.";
+          alert(`⚠️ Limite excedido: ${limitMsg}`);
+          setStatus(`Limite excedido (${message.current}/${message.limit})`, false);
+          break;
         case "error":
           alert(`Erro: ${message.message || 'Erro desconhecido'}`);
           break;

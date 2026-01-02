@@ -50,6 +50,12 @@ None specified yet.
 - **Exempt users**: Always have full access regardless of payment status
 - **Error messages**: Clear Portuguese messages displayed when access is blocked due to payment issues
 
+### Limit Enforcement (January 02, 2026)
+- **Broadcaster limits**: System blocks new broadcaster connections when installation count exceeds subscription.broadcaster_limit
+- **Viewer limits**: System blocks viewer access when active viewer count exceeds subscription.viewer_limit
+- **Real-time validation**: Limits checked at connection time for both broadcasters and viewers
+- **Billing page link**: Master admin panel link now visible on billing page for is_master_admin users
+
 ### Previous Improvements (December 02, 2025)
 ✅ **Focus-time tracking**: Added "Tempo em Foco" column showing accumulated time per app in viewer monitoring table
 ✅ **Excel export redesigned**: Now exports all apps per activity (not just foreground app) with columns matching the monitoring screen
