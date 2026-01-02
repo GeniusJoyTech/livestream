@@ -603,7 +603,8 @@
             
             if (response.ok) {
                 alert('Assinatura atualizada com sucesso!');
-                loadSubscription();
+                await loadSubscription();
+                await loadInvoices();
             } else {
                 alert('Erro ao atualizar assinatura');
             }
