@@ -386,6 +386,14 @@ document.addEventListener("DOMContentLoaded", () => {
             updateMonitoringTable(message.data);
           }
           break;
+        case "payment-required":
+          const paymentMsg = message.message || "Pagamento pendente. Entre em contato com o administrador.";
+          alert(`⚠️ Acesso bloqueado: ${paymentMsg}`);
+          setStatus("Acesso bloqueado - pagamento pendente", false);
+          break;
+        case "error":
+          alert(`Erro: ${message.message || 'Erro desconhecido'}`);
+          break;
       }
     };
 

@@ -37,11 +37,18 @@ None specified yet.
 - Server already configured to listen on 0.0.0.0:5000, perfect for Replit's proxy
 
 ### Recent Improvements (January 02, 2026)
+✅ **Payment verification for access**: Viewers and broadcasters can only connect if owner has active subscription/payment
 ✅ **Billing link in dashboard**: Added "Faturamento" tab in owner dashboard to access billing area
 ✅ **Master admin panel link**: Master admins now see "Painel Master" tab in owner dashboard
 ✅ **is_master_admin field**: Added to users table for master admin identification
 ✅ **Auto-setup for ana.rodrigues**: On server startup, ana.rodrigues@simplificacontabilidade.com.br is automatically marked as exempt and master admin
 ✅ **Stripe webhook error handling**: Improved error handling for webhook configuration
+
+### Payment Access Control
+- **Broadcasters**: Cannot connect if owner has no active subscription or suspended/cancelled status
+- **Viewers**: Cannot see broadcaster list or watch streams if owner hasn't paid
+- **Exempt users**: Always have full access regardless of payment status
+- **Error messages**: Clear Portuguese messages displayed when access is blocked due to payment issues
 
 ### Previous Improvements (December 02, 2025)
 ✅ **Focus-time tracking**: Added "Tempo em Foco" column showing accumulated time per app in viewer monitoring table

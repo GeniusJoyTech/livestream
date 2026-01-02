@@ -52,6 +52,60 @@ class BillingService {
     return result.rows.length > 0;
   }
   
+  async canOwnerUseSystem(ownerId) {
+    const isExempt = await this.isUserExempt(ownerId);
+    if (isExempt) {
+      return { allowed: true, reason: 'exempt' };
+    }
+    
+    const subscription = await this.getSubscription(ownerId);
+    if (!subscription) {
+      return { allowed: false, reason: 'no_subscription', message: 'Nenhuma assinatura encontrada. Por favor, configure seu plano de pagamento.' };
+    }
+    
+    if (subscription.status === 'active') {
+      return { allowed: true, reason: 'active_subscription' };
+    }
+    
+    if (subscription.status === 'pending') {
+      return { allowed: false, reason: 'pending_payment', message: 'Pagamento pendente. Por favor, efetue o pagamento para ativar o serviço.' };
+    }
+    
+    if (subscription.status === 'suspended') {
+      return { allowed: false, reason: 'suspended', message: 'Conta suspensa por falta de pagamento. Por favor, regularize sua situação.' };
+    }
+    
+    if (subscription.status === 'cancelled') {
+      return { allowed: false, reason: 'cancelled', message: 'Assinatura cancelada. Entre em contato para reativar.' };
+    }
+    
+    return { allowed: false, reason: 'unknown', message: 'Status de assinatura desconhecido.' };
+  }
+  
+  async canViewerAccessBroadcaster(viewerId, broadcasterId) {
+    const broadcasterResult = await db.query(
+      `SELECT b.owner_id FROM broadcasters b WHERE b.id = $1`,
+      [broadcasterId]
+    );
+    
+    if (broadcasterResult.rows.length === 0) {
+      return { allowed: false, reason: 'broadcaster_not_found', message: 'Broadcaster não encontrado.' };
+    }
+    
+    const ownerId = broadcasterResult.rows[0].owner_id;
+    return await this.canOwnerUseSystem(ownerId);
+  }
+  
+  async getOwnerIdByBroadcasterToken(token) {
+    const result = await db.query(
+      `SELECT b.owner_id FROM broadcaster_installations bi
+       JOIN broadcasters b ON b.id = bi.broadcaster_id
+       WHERE bi.jwt_token = $1`,
+      [token]
+    );
+    return result.rows[0]?.owner_id;
+  }
+  
   async isUserExemptByEmail(email) {
     const result = await db.query(
       `SELECT eu.*, u.email, u.username 

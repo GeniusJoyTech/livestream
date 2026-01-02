@@ -1,4 +1,5 @@
 const WebSocket = require("ws");
+const billingService = require('../services/billingService');
 /*
     registerBroadcaster: cadastra um broadcaster e avisa os viewers.
     registerViewer: cadastra um viewer e envia lista de broadcasters.
@@ -26,6 +27,20 @@ async function registerBroadcaster(ws, id, msg, peers, broadcasters) {
                 const installationJwt = await broadcasterService.getInstallationByJwt(msg.broadcaster_token);
                 
                 if (installationJwt) {
+                    const accessCheck = await billingService.canOwnerUseSystem(installationJwt.owner_id);
+                    if (!accessCheck.allowed) {
+                        console.warn(`⚠️ Broadcaster bloqueado - ${accessCheck.reason}: ${accessCheck.message}`);
+                        ws.send(JSON.stringify({
+                            type: "payment-required",
+                            reason: accessCheck.reason,
+                            message: accessCheck.message
+                        }));
+                        ws.close(4010, accessCheck.message);
+                        return;
+                    }
+                }
+                
+                if (installationJwt) {
                     db_id = installationJwt.broadcaster_id;
                     installation_id = installationJwt.id;
                     broadcaster_group_name = installationJwt.broadcaster_name;
@@ -48,6 +63,18 @@ async function registerBroadcaster(ws, id, msg, peers, broadcasters) {
                     const broadcasterGroup = await broadcasterService.getBroadcasterByInstallationToken(msg.broadcaster_token);
                     
                     if (broadcasterGroup) {
+                        const accessCheck = await billingService.canOwnerUseSystem(broadcasterGroup.owner_id);
+                        if (!accessCheck.allowed) {
+                            console.warn(`⚠️ Broadcaster bloqueado (nova instalação) - ${accessCheck.reason}: ${accessCheck.message}`);
+                            ws.send(JSON.stringify({
+                                type: "payment-required",
+                                reason: accessCheck.reason,
+                                message: accessCheck.message
+                            }));
+                            ws.close(4010, accessCheck.message);
+                            return;
+                        }
+                        
                         db_id = broadcasterGroup.id;
                         broadcaster_group_name = broadcasterGroup.name;
                         
@@ -146,6 +173,24 @@ async function registerViewer(ws, id, peers, broadcasters) {
             broadcasters: [],
         }));
         return;
+    }
+    
+    const viewerOwnerId = ws.user?.created_by;
+    if (viewerOwnerId) {
+        const ownerAccessCheck = await billingService.canOwnerUseSystem(viewerOwnerId);
+        if (!ownerAccessCheck.allowed) {
+            console.warn(`⚠️ Viewer bloqueado - owner sem pagamento: ${ownerAccessCheck.message}`);
+            ws.send(JSON.stringify({
+                type: "payment-required",
+                reason: ownerAccessCheck.reason,
+                message: "O administrador da sua conta precisa regularizar o pagamento para você poder acessar."
+            }));
+            ws.send(JSON.stringify({
+                type: "broadcaster-list",
+                broadcasters: [],
+            }));
+            return;
+        }
     }
     
     let permittedBroadcasterIds = [];
@@ -253,6 +298,18 @@ async function handleWatch(ws, id, msg, peers, broadcasters) {
     if (viewerId && db_id && process.env.DATABASE_URL) {
         try {
             const broadcasterService = require('../services/broadcasterService');
+            
+            const accessCheck = await billingService.canViewerAccessBroadcaster(viewerId, db_id);
+            if (!accessCheck.allowed) {
+                console.log(`💰 Viewer ${viewerId} bloqueado - owner sem pagamento: ${accessCheck.message}`);
+                ws.send(JSON.stringify({
+                    type: "payment-required",
+                    reason: accessCheck.reason,
+                    message: "O administrador precisa regularizar o pagamento para você poder assistir."
+                }));
+                return;
+            }
+            
             const hasPermission = await broadcasterService.hasViewerPermission(db_id, viewerId);
             if (!hasPermission) {
                 console.log(`🚫 Viewer ${viewerId} tentou assistir broadcaster ${db_id} sem permissão`);
