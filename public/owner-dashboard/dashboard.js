@@ -51,6 +51,12 @@ async function loadUserInfo() {
         if (response.ok) {
             currentUser = await response.json();
             document.getElementById('username-display').textContent = `👤 ${currentUser.username}`;
+            
+            // Show master link if user is master admin
+            if (currentUser.is_master_admin) {
+                const masterLink = document.getElementById('masterLink');
+                if (masterLink) masterLink.style.display = 'inline-block';
+            }
         } else {
             logout();
         }

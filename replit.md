@@ -36,7 +36,14 @@ None specified yet.
 - No code changes were required - project was ready for Replit environment
 - Server already configured to listen on 0.0.0.0:5000, perfect for Replit's proxy
 
-### Recent Improvements (December 02, 2025)
+### Recent Improvements (January 02, 2026)
+✅ **Billing link in dashboard**: Added "Faturamento" tab in owner dashboard to access billing area
+✅ **Master admin panel link**: Master admins now see "Painel Master" tab in owner dashboard
+✅ **is_master_admin field**: Added to users table for master admin identification
+✅ **Auto-setup for ana.rodrigues**: On server startup, ana.rodrigues@simplificacontabilidade.com.br is automatically marked as exempt and master admin
+✅ **Stripe webhook error handling**: Improved error handling for webhook configuration
+
+### Previous Improvements (December 02, 2025)
 ✅ **Focus-time tracking**: Added "Tempo em Foco" column showing accumulated time per app in viewer monitoring table
 ✅ **Excel export redesigned**: Now exports all apps per activity (not just foreground app) with columns matching the monitoring screen
 ✅ **Fixed memory leak**: Focus-time Map is now properly reset when switching broadcasters, disconnecting, or when broadcaster leaves

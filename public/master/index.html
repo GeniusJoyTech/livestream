@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Master - SimplificaVideos</title>
+    <link rel="stylesheet" href="../global.css">
+    <style>
+        .master-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+        }
+        
+        .stat-card h3 {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        
+        .stat-card .sub-value {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+        }
+        
+        .tab-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            font-size: 1rem;
+            border-radius: 8px 8px 0 0;
+            transition: all 0.3s;
+        }
+        
+        .tab-btn.active {
+            background: var(--primary-gradient);
+            color: white;
+        }
+        
+        .tab-btn:hover:not(.active) {
+            background: var(--card-bg);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+        
+        .config-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .config-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+        }
+        
+        .config-card h4 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: rgba(0,0,0,0.2);
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        
+        .data-table th,
+        .data-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .data-table th {
+            background: rgba(0,0,0,0.2);
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+        
+        .data-table tr:hover {
+            background: rgba(255,255,255,0.05);
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .badge-success { background: rgba(40, 167, 69, 0.2); color: #28a745; }
+        .badge-warning { background: rgba(255, 193, 7, 0.2); color: #ffc107; }
+        .badge-danger { background: rgba(220, 53, 69, 0.2); color: #dc3545; }
+        .badge-info { background: rgba(23, 162, 184, 0.2); color: #17a2b8; }
+        
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: var(--primary-gradient);
+            color: white;
+        }
+        
+        .btn-danger {
+            background: var(--danger-color);
+            color: white;
+        }
+        
+        .btn-success {
+            background: var(--success-color);
+            color: white;
+        }
+        
+        .action-btns {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: var(--darker-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .currency {
+            color: var(--success-color);
+        }
+    </style>
+</head>
+<body class="dark-theme">
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span class="icon">👑</span>
+            <h1>Painel Master</h1>
+        </div>
+        <div class="nav-actions">
+            <span id="masterUsername"></span>
+            <button class="btn-small btn-danger" onclick="logout()">Sair</button>
+        </div>
+    </nav>
+    
+    <div class="master-container">
+        <div class="stats-grid" id="statsGrid">
+            <div class="stat-card">
+                <h3>Total de Owners</h3>
+                <div class="value" id="statTotalOwners">-</div>
+            </div>
+            <div class="stat-card">
+                <h3>Assinaturas Ativas</h3>
+                <div class="value" id="statActiveSubscriptions">-</div>
+            </div>
+            <div class="stat-card">
+                <h3>Assinaturas Suspensas</h3>
+                <div class="value" id="statSuspendedSubscriptions">-</div>
+            </div>
+            <div class="stat-card">
+                <h3>Faturas Abertas</h3>
+                <div class="value" id="statOpenInvoices">-</div>
+                <div class="sub-value currency" id="statOpenInvoicesTotal">R$ 0,00</div>
+            </div>
+            <div class="stat-card">
+                <h3>Faturas Pagas</h3>
+                <div class="value" id="statPaidInvoices">-</div>
+                <div class="sub-value currency" id="statPaidInvoicesTotal">R$ 0,00</div>
+            </div>
+            <div class="stat-card">
+                <h3>Faturas Vencidas</h3>
+                <div class="value" id="statOverdueInvoices">-</div>
+                <div class="sub-value currency" id="statOverdueInvoicesTotal">R$ 0,00</div>
+            </div>
+        </div>
+        
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="pricing">Preços</button>
+            <button class="tab-btn" data-tab="billing-dates">Datas de Cobrança</button>
+            <button class="tab-btn" data-tab="subscriptions">Assinaturas</button>
+            <button class="tab-btn" data-tab="invoices">Faturas</button>
+            <button class="tab-btn" data-tab="exempt">Usuários Isentos</button>
+            <button class="tab-btn" data-tab="users">Usuários</button>
+        </div>
+        
+        <div id="tab-pricing" class="tab-content active">
+            <h2 class="section-title">Configuração de Preços</h2>
+            <div class="config-grid" id="pricingGrid"></div>
+        </div>
+        
+        <div id="tab-billing-dates" class="tab-content">
+            <h2 class="section-title">Datas de Cobrança</h2>
+            <div class="config-grid" id="billingDatesGrid"></div>
+        </div>
+        
+        <div id="tab-subscriptions" class="tab-content">
+            <h2 class="section-title">Assinaturas</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Usuário</th>
+                        <th>Email</th>
+                        <th>Plano</th>
+                        <th>Broadcasters</th>
+                        <th>Viewers</th>
+                        <th>Grupos</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="subscriptionsTable"></tbody>
+            </table>
+        </div>
+        
+        <div id="tab-invoices" class="tab-content">
+            <h2 class="section-title">Faturas</h2>
+            <button class="btn-small btn-primary" onclick="processOverdue()">Processar Faturas Vencidas</button>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Número</th>
+                        <th>Usuário</th>
+                        <th>Período</th>
+                        <th>Valor</th>
+                        <th>Vencimento</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="invoicesTable"></tbody>
+            </table>
+        </div>
+        
+        <div id="tab-exempt" class="tab-content">
+            <h2 class="section-title">Usuários Isentos de Cobrança</h2>
+            <button class="btn-small btn-primary" onclick="showAddExemptModal()">Adicionar Usuário Isento</button>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Usuário</th>
+                        <th>Email</th>
+                        <th>Motivo</th>
+                        <th>Adicionado Em</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="exemptTable"></tbody>
+            </table>
+        </div>
+        
+        <div id="tab-users" class="tab-content">
+            <h2 class="section-title">Todos os Owners</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Usuário</th>
+                        <th>Email</th>
+                        <th>Broadcasters</th>
+                        <th>Viewers</th>
+                        <th>Status</th>
+                        <th>Criado Em</th>
+                    </tr>
+                </thead>
+                <tbody id="usersTable"></tbody>
+            </table>
+        </div>
+    </div>
+    
+    <div class="modal" id="addExemptModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Adicionar Usuário Isento</h3>
+                <button class="modal-close" onclick="closeModal('addExemptModal')">&times;</button>
+            </div>
+            <form id="addExemptForm">
+                <div class="form-group">
+                    <label>ID do Usuário</label>
+                    <input type="number" id="exemptUserId" required>
+                </div>
+                <div class="form-group">
+                    <label>Motivo</label>
+                    <input type="text" id="exemptReason" required>
+                </div>
+                <button type="submit" class="btn-small btn-primary">Adicionar</button>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        const token = localStorage.getItem('token');
+        if (!token) {
+            window.location.href = '/login/login.html';
+        }
+        
+        async function checkMaster() {
+            const response = await fetch('/api/master/check', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            const data = await response.json();
+            if (!data.isMaster) {
+                alert('Acesso negado. Você não é um usuário master.');
+                window.location.href = '/owner-dashboard/owner-dashboard.html';
+            }
+        }
+        
+        function formatCurrency(value) {
+            return new Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+            }).format(value || 0);
+        }
+        
+        function formatDate(dateStr) {
+            if (!dateStr) return '-';
+            return new Date(dateStr).toLocaleDateString('pt-BR');
+        }
+        
+        async function loadStats() {
+            const response = await fetch('/api/master/stats', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            const stats = await response.json();
+            
+            document.getElementById('statTotalOwners').textContent = stats.totalOwners;
+            document.getElementById('statActiveSubscriptions').textContent = stats.activeSubscriptions;
+            document.getElementById('statSuspendedSubscriptions').textContent = stats.suspendedSubscriptions;
+            document.getElementById('statOpenInvoices').textContent = stats.openInvoices.count;
+            document.getElementById('statOpenInvoicesTotal').textContent = formatCurrency(stats.openInvoices.total);
+            document.getElementById('statPaidInvoices').textContent = stats.paidInvoices.count;
+            document.getElementById('statPaidInvoicesTotal').textContent = formatCurrency(stats.paidInvoices.total);
+            document.getElementById('statOverdueInvoices').textContent = stats.overdueInvoices.count;
+            document.getElementById('statOverdueInvoicesTotal').textContent = formatCurrency(stats.overdueInvoices.total);
+        }
+        
+        async function loadPricing() {
+            const response = await fetch('/api/master/pricing', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            const pricing = await response.json();
+            
+            const grid = document.getElementById('pricingGrid');
+            grid.innerHTML = pricing.map(p => `
+                <div class="config-card" data-resource="${p.resource_type}">
+                    <h4>${p.resource_type === 'broadcaster' ? 'Broadcaster' : 
+                         p.resource_type === 'viewer' ? 'Viewer' : 'Grupo de Broadcasters'}</h4>
+                    <div class="form-group">
+                        <label>Valor Diário (R$)</label>
+                        <input type="number" step="0.01" class="daily-value" value="${p.daily_value}">
+                    </div>
+                    <div class="form-group">
+                        <label>Desconto Mensal (%)</label>
+                        <input type="number" step="0.01" class="monthly-discount" value="${p.monthly_discount_percent}">
+                    </div>
+                    <div class="form-group">
+                        <label>Desconto Anual (%)</label>
+                        <input type="number" step="0.01" class="annual-discount" value="${p.annual_discount_percent}">
+                    </div>
+                    <button class="btn-small btn-primary" onclick="savePricing('${p.resource_type}', this)">Salvar</button>
+                </div>
+            `).join('');
+        }
+        
+        async function savePricing(resourceType, btn) {
+            const card = btn.closest('.config-card');
+            const dailyValue = card.querySelector('.daily-value').value;
+            const monthlyDiscount = card.querySelector('.monthly-discount').value;
+            const annualDiscount = card.querySelector('.annual-discount').value;
+            
+            await fetch(`/api/master/pricing/${resourceType}`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ dailyValue, monthlyDiscount, annualDiscount })
+            });
+            
+            alert('Preço atualizado com sucesso!');
+        }
+        
+        async function loadBillingDates() {
+            const response = await fetch('/api/master/billing-dates', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            const configs = await response.json();
+            
+            const grid = document.getElementById('billingDatesGrid');
+            grid.innerHTML = configs.map(c => `
+                <div class="config-card" data-plan="${c.plan_type}">
+                    <h4>Plano ${c.plan_type === 'monthly' ? 'Mensal' : 'Anual'}</h4>
+                    <div class="form-group">
+                        <label>Dias antes para abrir fatura</label>
+                        <input type="number" class="open-days" value="${c.invoice_open_days_before}">
+                    </div>
+                    <div class="form-group">
+                        <label>Dia de vencimento</label>
+                        <input type="number" class="due-day" value="${c.due_day}">
+                    </div>
+                    <div class="form-group">
+                        <label>Dia limite para desconto</label>
+                        <input type="number" class="discount-day" value="${c.discount_deadline_day}">
+                    </div>
+                    <div class="form-group">
+                        <label>Dias de carência</label>
+                        <input type="number" class="grace-days" value="${c.grace_period_days}">
+                    </div>
+                    <div class="form-group">
+                        <label>Dia de inativação</label>
+                        <input type="number" class="inactivation-day" value="${c.inactivation_day || ''}">
+                    </div>
+                    <button class="btn-small btn-primary" onclick="saveBillingDates('${c.plan_type}', this)">Salvar</button>
+                </div>
+            `).join('');
+        }
+        
+        async function saveBillingDates(planType, btn) {
+            const card = btn.closest('.config-card');
+            const config = {
+                invoiceOpenDaysBefore: card.querySelector('.open-days').value,
+                dueDay: card.querySelector('.due-day').value,
+                discountDeadlineDay: card.querySelector('.discount-day').value,
+                gracePeriodDays: card.querySelector('.grace-days').value,
+                inactivationDay: card.querySelector('.inactivation-day').value || null
+            };
+            
+            await fetch(`/api/master/billing-dates/${planType}`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(config)
+            });
+            
+            alert('Configuração atualizada com sucesso!');
+        }
+        
+        async function loadSubscriptions() {
+            const response = await fetch('/api/master/subscriptions', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            const subscriptions = await response.json();
+            
+            const tbody = document.getElementById('subscriptionsTable');
+            tbody.innerHTML = subscriptions.map(s => `
+                <tr>
+                    <td>${s.username}</td>
+                    <td>${s.email || '-'}</td>
+                    <td>${s.plan_type}</td>
+                    <td>${s.broadcaster_limit}</td>
+                    <td>${s.viewer_limit}</td>
+                    <td>${s.broadcaster_group_limit}</td>
+                    <td>
+                        <span class="badge ${s.status === 'active' ? 'badge-success' : 
+                                           s.status === 'suspended' ? 'badge-danger' : 'badge-warning'}">
+                            ${s.status}
+                        </span>
+                    </td>
+                    <td class="action-btns">
+                        ${s.status === 'active' ? 
+                            `<button class="btn-small btn-danger" onclick="suspendUser(${s.owner_id})">Suspender</button>` :
+                            `<button class="btn-small btn-success" onclick="reactivateUser(${s.owner_id})">Reativar</button>`
+                        }
+                    </td>
+                </tr>
+            `).join('');
+        }
+        
+        async function loadInvoices() {
+            const response = await fetch('/api/master/invoices', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            const invoices = await response.json();
+            
+            const tbody = document.getElementById('invoicesTable');
+            tbody.innerHTML = invoices.map(i => `
+                <tr>
+                    <td>${i.invoice_number}</td>
+                    <td>${i.username}</td>
+                    <td>${formatDate(i.period_start)} - ${formatDate(i.period_end)}</td>
+                    <td>${formatCurrency(i.final_value)}</td>
+                    <td>${formatDate(i.due_date)}</td>
+                    <td>
+                        <span class="badge ${i.status === 'paid' ? 'badge-success' : 
+                                           i.status === 'overdue' ? 'badge-danger' : 'badge-warning'}">
+                            ${i.status}
+                        </span>
+                    </td>
+                </tr>
+            `).join('');
+        }
+        
+        async function loadExemptUsers() {
+            const response = await fetch('/api/master/exempt-users', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            const users = await response.json();
+            
+            const tbody = document.getElementById('exemptTable');
+            tbody.innerHTML = users.map(u => `
+                <tr>
+                    <td>${u.username}</td>
+                    <td>${u.email || '-'}</td>
+                    <td>${u.reason || '-'}</td>
+                    <td>${formatDate(u.created_at)}</td>
+                    <td>
+                        <button class="btn-small btn-danger" onclick="removeExempt(${u.user_id})">Remover</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+        
+        async function loadUsers() {
+            const response = await fetch('/api/master/users', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            const users = await response.json();
+            
+            const tbody = document.getElementById('usersTable');
+            tbody.innerHTML = users.map(u => `
+                <tr>
+                    <td>${u.id}</td>
+                    <td>${u.username}</td>
+                    <td>${u.email || '-'}</td>
+                    <td>${u.broadcaster_count}</td>
+                    <td>${u.viewer_count}</td>
+                    <td>
+                        <span class="badge ${u.is_active ? 'badge-success' : 'badge-danger'}">
+                            ${u.is_active ? 'Ativo' : 'Inativo'}
+                        </span>
+                    </td>
+                    <td>${formatDate(u.created_at)}</td>
+                </tr>
+            `).join('');
+        }
+        
+        async function suspendUser(ownerId) {
+            if (!confirm('Tem certeza que deseja suspender este usuário?')) return;
+            
+            await fetch(`/api/master/suspend-user/${ownerId}`, {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            
+            loadSubscriptions();
+            loadStats();
+        }
+        
+        async function reactivateUser(ownerId) {
+            if (!confirm('Tem certeza que deseja reativar este usuário?')) return;
+            
+            await fetch(`/api/master/reactivate-user/${ownerId}`, {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            
+            loadSubscriptions();
+            loadStats();
+        }
+        
+        async function processOverdue() {
+            const response = await fetch('/api/master/process-overdue', {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            const result = await response.json();
+            alert(`Processadas ${result.processedCount} faturas vencidas.`);
+            loadInvoices();
+            loadStats();
+        }
+        
+        function showAddExemptModal() {
+            document.getElementById('addExemptModal').classList.add('active');
+        }
+        
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+        }
+        
+        document.getElementById('addExemptForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const userId = document.getElementById('exemptUserId').value;
+            const reason = document.getElementById('exemptReason').value;
+            
+            await fetch('/api/master/exempt-users', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ userId, reason })
+            });
+            
+            closeModal('addExemptModal');
+            loadExemptUsers();
+        });
+        
+        async function removeExempt(userId) {
+            if (!confirm('Remover isenção deste usuário?')) return;
+            
+            await fetch(`/api/master/exempt-users/${userId}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            
+            loadExemptUsers();
+        }
+        
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                btn.classList.add('active');
+                document.getElementById(`tab-${btn.dataset.tab}`).classList.add('active');
+            });
+        });
+        
+        function logout() {
+            localStorage.removeItem('token');
+            window.location.href = '/login/login.html';
+        }
+        
+        async function init() {
+            await checkMaster();
+            
+            const user = JSON.parse(atob(token.split('.')[1]));
+            document.getElementById('masterUsername').textContent = user.username;
+            
+            loadStats();
+            loadPricing();
+            loadBillingDates();
+            loadSubscriptions();
+            loadInvoices();
+            loadExemptUsers();
+            loadUsers();
+        }
+        
+        init();
+    </script>
+</body>
+</html>

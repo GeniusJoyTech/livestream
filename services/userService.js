@@ -24,7 +24,7 @@ class UserService {
   
   async getUserById(userId) {
     const result = await db.query(
-      'SELECT id, username, email, role, created_by, created_at, last_login, is_active FROM users WHERE id = $1',
+      'SELECT id, username, email, role, created_by, created_at, last_login, is_active, is_master_admin FROM users WHERE id = $1',
       [userId]
     );
     return result.rows[0];
