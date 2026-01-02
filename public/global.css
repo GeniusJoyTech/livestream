@@ -9,18 +9,24 @@
     --primary-color: #667eea;
     --primary-dark: #5568d3;
     --secondary-color: #764ba2;
-    --success-color: #28a745;
-    --danger-color: #dc3545;
-    --warning-color: #ffc107;
-    --info-color: #17a2b8;
-    --dark-bg: #1a1a2e;
-    --darker-bg: #16213e;
-    --card-bg: rgba(255, 255, 255, 0.05);
-    --text-primary: #f0f0f0;
-    --text-secondary: #a0a0a0;
-    --border-color: rgba(255, 255, 255, 0.1);
-    --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.4);
+    --success-color: #2ecc71;
+    --danger-color: #e74c3c;
+    --warning-color: #f39c12;
+    --info-color: #3498db;
+    --dark-bg: #0f0f1a;
+    --darker-bg: #0a0a12;
+    --card-bg: rgba(30, 30, 50, 0.95);
+    --card-bg-light: rgba(45, 45, 75, 0.9);
+    --text-primary: #ffffff;
+    --text-secondary: #b0b0c0;
+    --border-color: rgba(102, 126, 234, 0.3);
+    --border-color-light: rgba(255, 255, 255, 0.15);
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    --shadow-hover: 0 8px 30px rgba(102, 126, 234, 0.3);
+    --accent-blue: #4fa3d1;
+    --accent-purple: #9b59b6;
+    --accent-orange: #e67e22;
+    --accent-teal: #1abc9c;
 }
 
 body {
