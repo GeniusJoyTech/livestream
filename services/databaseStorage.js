@@ -6,11 +6,13 @@ class DatabaseStorage {
     const { installation_id, idle_seconds, active_url, foreground_app, app_count, apps } = activityData;
     
     try {
-      await db.query(
+      const result = await db.query(
         `INSERT INTO activities (broadcaster_id, installation_id, idle_seconds, active_url, foreground_app, app_count, apps_data)
-         VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+         VALUES ($1, $2, $3, $4, $5, $6, $7)
+         RETURNING id`,
         [broadcasterId, installation_id || null, idle_seconds || 0, active_url, foreground_app, app_count || 0, JSON.stringify(apps || [])]
       );
+      console.log(`💾 Atividade salva no banco (ID: ${result.rows[0].id}, Broadcaster: ${broadcasterId})`);
     } catch (error) {
       console.error('Error saving activity:', error);
       throw error;
