@@ -4,7 +4,7 @@ import mss
 import cv2
 import numpy as np
 import websockets
-from aiortc import RTCPeerConnection, RTCSessionDescription, VideoStreamTrack
+from aiortc import RTCPeerConnection, RTCSessionDescription, VideoStreamTrack, RTCConfiguration, RTCIceServer
 from aiortc.sdp import candidate_from_sdp
 from av import VideoFrame
 import platform
@@ -543,7 +543,16 @@ class Broadcaster:
 
         # Cria uma nova conexão para cada viewer
         video_track = ScreenCaptureTrack(monitor_number=monitor_number)
-        pc = RTCPeerConnection()
+        
+        # Configuração de servidores ICE (STUN) para NAT traversal
+        ice_config = RTCConfiguration(
+            iceServers=[
+                RTCIceServer(urls=["stun:stun.l.google.com:19302"]),
+                RTCIceServer(urls=["stun:stun1.l.google.com:19302"]),
+                RTCIceServer(urls=["stun:stun2.l.google.com:19302"])
+            ]
+        )
+        pc = RTCPeerConnection(configuration=ice_config)
         pc.addTrack(video_track)
 
         @pc.on("icecandidate")
