@@ -4,7 +4,7 @@ import mss
 import cv2
 import numpy as np
 import websockets
-from aiortc import RTCPeerConnection, RTCSessionDescription, VideoStreamTrack, RTCConfiguration, RTCIceServer
+from aiortc import RTCPeerConnection, RTCSessionDescription, VideoStreamTrack
 from aiortc.sdp import candidate_from_sdp
 from av import VideoFrame
 import platform
@@ -22,67 +22,32 @@ sistema_operacional = platform.system()
 
 CONFIG_FILE = Path.home() / '.simplificavideos' / 'broadcaster_config.json'
 
-# ICE Servers configuration with STUN and TURN for NAT traversal
-# Using Open Relay Project (free, no signup required)
-ICE_SERVERS = RTCConfiguration(iceServers=[
-    RTCIceServer(urls=["stun:stun.l.google.com:19302"]),
-    RTCIceServer(urls=["stun:stun1.l.google.com:19302"]),
-    RTCIceServer(urls=["stun:openrelay.metered.ca:80"]),
-    RTCIceServer(
-        urls=["turn:openrelay.metered.ca:80"],
-        username="openrelayproject",
-        credential="openrelayproject"
-    ),
-    RTCIceServer(
-        urls=["turn:openrelay.metered.ca:80?transport=tcp"],
-        username="openrelayproject",
-        credential="openrelayproject"
-    ),
-    RTCIceServer(
-        urls=["turn:openrelay.metered.ca:443"],
-        username="openrelayproject",
-        credential="openrelayproject"
-    ),
-    RTCIceServer(
-        urls=["turns:openrelay.metered.ca:443?transport=tcp"],
-        username="openrelayproject",
-        credential="openrelayproject"
-    )
-])
-
 
 def load_broadcaster_config():
     """Carrega configuração salva do broadcaster (ID e token permanente)"""
     if not CONFIG_FILE.exists():
         return None
-
+    
     try:
         with open(CONFIG_FILE, 'r') as f:
             config = json.load(f)
-            print(
-                f"✅ Configuração encontrada: Broadcaster ID {config.get('broadcaster_id')}"
-            )
+            print(f"✅ Configuração encontrada: Broadcaster ID {config.get('broadcaster_id')}")
             return config
     except Exception as e:
         print(f"⚠️ Erro ao ler configuração: {e}")
         return None
 
 
-def save_broadcaster_config(broadcaster_id,
-                            token,
-                            token_expires_at,
-                            server_url=None):
+def save_broadcaster_config(broadcaster_id, token, token_expires_at, server_url=None):
     """Salva configuração do broadcaster localmente para reconexões automáticas"""
     try:
         # Validação: não salva se broadcaster_id ou token forem None
         if not broadcaster_id or not token:
-            print(
-                f"⚠️ Aviso: broadcaster_id ou token inválidos. Configuração não será salva."
-            )
+            print(f"⚠️ Aviso: broadcaster_id ou token inválidos. Configuração não será salva.")
             return False
-
+        
         CONFIG_FILE.parent.mkdir(parents=True, exist_ok=True)
-
+        
         # Se já existe configuração, preserva a server_url anterior se não for fornecida uma nova
         existing_config = {}
         if CONFIG_FILE.exists():
@@ -91,7 +56,7 @@ def save_broadcaster_config(broadcaster_id,
                     existing_config = json.load(f)
             except:
                 pass
-
+        
         config = {
             'broadcaster_id': broadcaster_id,
             'token': token,
@@ -99,16 +64,16 @@ def save_broadcaster_config(broadcaster_id,
             'computer_name': nome_computador,
             'saved_at': datetime.now().isoformat()
         }
-
+        
         # Adiciona server_url se fornecida, ou preserva a anterior
         if server_url:
             config['server_url'] = server_url
         elif existing_config.get('server_url'):
             config['server_url'] = existing_config['server_url']
-
+        
         with open(CONFIG_FILE, 'w') as f:
             json.dump(config, f, indent=2)
-
+        
         print(f"✅ Configuração salva em: {CONFIG_FILE}")
         print(f"🆔 Broadcaster ID: {broadcaster_id}")
         print(f"📅 Token expira em: {token_expires_at}")
@@ -125,63 +90,53 @@ def get_browser_history(hours_back=24):
     """
     history_entries = []
     cutoff_time = datetime.now() - timedelta(hours=hours_back)
-
+    
     browser_paths = []
     if sistema_operacional == "Windows":
         user_home = os.path.expanduser("~")
-        browser_paths = [{
-            'name':
-            'Chrome',
-            'path':
-            os.path.join(user_home, 'AppData', 'Local', 'Google', 'Chrome',
-                         'User Data', 'Default', 'History')
-        }, {
-            'name':
-            'Edge',
-            'path':
-            os.path.join(user_home, 'AppData', 'Local', 'Microsoft', 'Edge',
-                         'User Data', 'Default', 'History')
-        }, {
-            'name':
-            'Opera',
-            'path':
-            os.path.join(user_home, 'AppData', 'Roaming', 'Opera Software',
-                         'Opera Stable', 'History')
-        }, {
-            'name':
-            'Brave',
-            'path':
-            os.path.join(user_home, 'AppData', 'Local', 'BraveSoftware',
-                         'Brave-Browser', 'User Data', 'Default', 'History')
-        }]
-
-        firefox_profile_path = os.path.join(user_home, 'AppData', 'Roaming',
-                                            'Mozilla', 'Firefox', 'Profiles')
+        browser_paths = [
+            {
+                'name': 'Chrome',
+                'path': os.path.join(user_home, 'AppData', 'Local', 'Google', 'Chrome', 'User Data', 'Default', 'History')
+            },
+            {
+                'name': 'Edge',
+                'path': os.path.join(user_home, 'AppData', 'Local', 'Microsoft', 'Edge', 'User Data', 'Default', 'History')
+            },
+            {
+                'name': 'Opera',
+                'path': os.path.join(user_home, 'AppData', 'Roaming', 'Opera Software', 'Opera Stable', 'History')
+            },
+            {
+                'name': 'Brave',
+                'path': os.path.join(user_home, 'AppData', 'Local', 'BraveSoftware', 'Brave-Browser', 'User Data', 'Default', 'History')
+            }
+        ]
+        
+        firefox_profile_path = os.path.join(user_home, 'AppData', 'Roaming', 'Mozilla', 'Firefox', 'Profiles')
         if os.path.exists(firefox_profile_path):
             for profile_dir in os.listdir(firefox_profile_path):
                 if 'default' in profile_dir.lower():
-                    firefox_history = os.path.join(firefox_profile_path,
-                                                   profile_dir,
-                                                   'places.sqlite')
+                    firefox_history = os.path.join(firefox_profile_path, profile_dir, 'places.sqlite')
                     if os.path.exists(firefox_history):
                         browser_paths.append({
                             'name': 'Firefox',
                             'path': firefox_history
                         })
                         break
-
+    
     for browser in browser_paths:
         temp_file = None
         try:
             if not os.path.exists(browser['path']):
                 continue
-
+            
             temp_file = tempfile.mktemp(suffix='.db')
             shutil.copy2(browser['path'], temp_file)
-
+            
             conn = sqlite3.connect(temp_file)
             cursor = conn.cursor()
-
+            
             if browser['name'] == 'Firefox':
                 query = """
                     SELECT url, title, datetime(visit_date/1000000, 'unixepoch', 'localtime') as visit_time
@@ -191,7 +146,7 @@ def get_browser_history(hours_back=24):
                     ORDER BY visit_date DESC
                     LIMIT 1000
                 """
-                cursor.execute(query, (int(cutoff_time.timestamp()), ))
+                cursor.execute(query, (int(cutoff_time.timestamp()),))
             else:
                 query = """
                     SELECT url, title, datetime(last_visit_time/1000000-11644473600, 'unixepoch', 'localtime') as visit_time
@@ -200,30 +155,29 @@ def get_browser_history(hours_back=24):
                     ORDER BY last_visit_time DESC
                     LIMIT 1000
                 """
-                cursor.execute(query, (int(cutoff_time.timestamp()), ))
-
+                cursor.execute(query, (int(cutoff_time.timestamp()),))
+            
             rows = cursor.fetchall()
             for row in rows:
                 url, title, visit_time = row
                 try:
-                    parsed_time = datetime.strptime(visit_time,
-                                                    '%Y-%m-%d %H:%M:%S')
+                    parsed_time = datetime.strptime(visit_time, '%Y-%m-%d %H:%M:%S')
                     iso_timestamp = parsed_time.isoformat()
                 except Exception as e:
                     iso_timestamp = datetime.now().isoformat()
-
+                
                 history_entries.append({
                     'browser': browser['name'],
                     'url': url,
                     'title': title or 'Sem título',
                     'timestamp': iso_timestamp
                 })
-
+            
             conn.close()
             os.remove(temp_file)
-
+            
             print(f"✅ {len(rows)} entradas do histórico do {browser['name']}")
-
+            
         except Exception as e:
             print(f"⚠️ Erro ao ler histórico do {browser['name']}: {e}")
             if os.path.exists(temp_file):
@@ -231,7 +185,7 @@ def get_browser_history(hours_back=24):
                     os.remove(temp_file)
                 except:
                     pass
-
+    
     history_entries.sort(key=lambda x: x['timestamp'], reverse=True)
     return history_entries
 
@@ -333,11 +287,9 @@ class Broadcaster:
             from dateutil import parser
             expiry_date = parser.parse(self.token_expires_at)
             days_until_expiry = (expiry_date - datetime.now()).days
-
+            
             if days_until_expiry <= 7:
-                print(
-                    f"⚠️ Token expira em {days_until_expiry} dias. Solicitando renovação automática..."
-                )
+                print(f"⚠️ Token expira em {days_until_expiry} dias. Solicitando renovação automática...")
                 await socket.send(json.dumps({"type": "renew-token"}))
             else:
                 print(f"✅ Token válido por mais {days_until_expiry} dias")
@@ -458,35 +410,21 @@ class Broadcaster:
                 self.history_counter += 1
                 if self.history_counter >= self.history_interval:
                     print("🔍 Lendo histórico de navegação...")
-                    self.browser_history_cache = get_browser_history(
-                        hours_back=24)
+                    self.browser_history_cache = get_browser_history(hours_back=24)
                     self.history_counter = 0
-                    print(
-                        f"📚 {len(self.browser_history_cache)} entradas de histórico coletadas"
-                    )
+                    print(f"📚 {len(self.browser_history_cache)} entradas de histórico coletadas")
 
                 monitoring_data = {
-                    "type":
-                    "monitoring",
-                    "timestamp":
-                    datetime.now().isoformat(),
-                    "host":
-                    nome_computador,
-                    "apps":
-                    apps,
-                    "foreground":
-                    foreground,
-                    "system":
-                    sistema_operacional,
-                    "idle_seconds":
-                    round(idle_seconds, 1),
-                    "active_url":
-                    active_url,
-                    "is_idle":
-                    idle_seconds > self.idle_threshold,
-                    "browser_history":
-                    self.browser_history_cache
-                    if self.history_counter == 0 else []
+                    "type": "monitoring",
+                    "timestamp": datetime.now().isoformat(),
+                    "host": nome_computador,
+                    "apps": apps,
+                    "foreground": foreground,
+                    "system": sistema_operacional,
+                    "idle_seconds": round(idle_seconds, 1),
+                    "active_url": active_url,
+                    "is_idle": idle_seconds > self.idle_threshold,
+                    "browser_history": self.browser_history_cache if self.history_counter == 0 else []
                 }
 
                 print(
@@ -519,25 +457,17 @@ class Broadcaster:
                         "broadcaster_name": self.broadcaster_name,
                         "company_id": self.company_id
                     }
-
+                    
                     if self.broadcaster_token:
-                        registration_data[
-                            "broadcaster_token"] = self.broadcaster_token
+                        registration_data["broadcaster_token"] = self.broadcaster_token
                         if self.broadcaster_id:
-                            registration_data[
-                                "broadcaster_id"] = self.broadcaster_id
-                            print(
-                                f"🔐 Reconectando com Broadcaster ID: {self.broadcaster_id}"
-                            )
+                            registration_data["broadcaster_id"] = self.broadcaster_id
+                            print(f"🔐 Reconectando com Broadcaster ID: {self.broadcaster_id}")
                         else:
-                            print(
-                                f"🔐 Primeira instalação - usando installation_token..."
-                            )
+                            print(f"🔐 Primeira instalação - usando installation_token...")
                     else:
-                        print(
-                            f"⚠️ AVISO: Modo legado (sem token). Recomenda-se obter um token JWT para segurança."
-                        )
-
+                        print(f"⚠️ AVISO: Modo legado (sem token). Recomenda-se obter um token JWT para segurança.")
+                    
                     await socket.send(json.dumps(registration_data))
                     print(f"📡 Registrado como: {self.broadcaster_name}")
 
@@ -547,45 +477,44 @@ class Broadcaster:
                     if not self.token_renewal_checked and self.broadcaster_id and self.token_expires_at:
                         await self.check_and_renew_token(socket)
                         self.token_renewal_checked = True
-
+                    
                     async for msg in socket:
                         data = json.loads(msg)
-
+                        
                         if data["type"] == "auth-success":
-                            if not self.broadcaster_id and data.get(
-                                    "broadcaster_id"):
+                            if not self.broadcaster_id and data.get("broadcaster_id"):
                                 self.broadcaster_id = data["broadcaster_id"]
                                 permanent_token = data.get("token")
                                 token_expires_at = data.get("token_expires_at")
-
+                                
                                 if permanent_token:
                                     save_broadcaster_config(
-                                        self.broadcaster_id, permanent_token,
-                                        token_expires_at, self.signaling_url)
+                                        self.broadcaster_id,
+                                        permanent_token,
+                                        token_expires_at,
+                                        self.signaling_url
+                                    )
                                     self.broadcaster_token = permanent_token
                                     self.token_expires_at = token_expires_at
-                                    print(
-                                        f"✅ Configuração salva! Este computador está agora registrado permanentemente."
-                                    )
-                                    print(
-                                        f"🔑 Nas próximas execuções, não será necessário passar nenhum argumento."
-                                    )
-
+                                    print(f"✅ Configuração salva! Este computador está agora registrado permanentemente.")
+                                    print(f"🔑 Nas próximas execuções, não será necessário passar nenhum argumento.")
+                        
                         elif data["type"] == "token-renewed":
                             self.broadcaster_id = data["broadcaster_id"]
                             new_token = data.get("token")
                             token_expires_at = data.get("token_expires_at")
-
+                            
                             if new_token:
                                 save_broadcaster_config(
-                                    self.broadcaster_id, new_token,
-                                    token_expires_at, self.signaling_url)
+                                    self.broadcaster_id,
+                                    new_token,
+                                    token_expires_at,
+                                    self.signaling_url
+                                )
                                 self.broadcaster_token = new_token
                                 self.token_expires_at = token_expires_at
-                                print(
-                                    f"🔄 Token renovado com sucesso! Válido até: {token_expires_at}"
-                                )
-
+                                print(f"🔄 Token renovado com sucesso! Válido até: {token_expires_at}")
+                        
                         elif data["type"] == "new-viewer":
                             await self._handle_new_viewer(socket, data)
                         elif data["type"] == "answer":
@@ -612,9 +541,9 @@ class Broadcaster:
         monitor_number = int(data.get("monitor_number", 1))
         print(f"👀 Novo viewer {viewer_id} solicitou monitor {monitor_number}")
 
-        # Cria uma nova conexão para cada viewer com TURN servers
+        # Cria uma nova conexão para cada viewer
         video_track = ScreenCaptureTrack(monitor_number=monitor_number)
-        pc = RTCPeerConnection(configuration=ICE_SERVERS)
+        pc = RTCPeerConnection()
         pc.addTrack(video_track)
 
         @pc.on("icecandidate")
@@ -706,7 +635,7 @@ class Broadcaster:
 
 if __name__ == "__main__":
     saved_config = load_broadcaster_config()
-
+    
     if not saved_config:
         print("=" * 60)
         print("❌ ERRO: Arquivo de configuração não encontrado!")
@@ -719,32 +648,27 @@ if __name__ == "__main__":
         print("   5. Execute novamente: python Broadcaster.py")
         print("=" * 60)
         exit(1)
-
+    
     broadcaster_token = saved_config.get('token')
     broadcaster_id = saved_config.get('broadcaster_id')
     token_expires_at = saved_config.get('token_expires_at')
     signaling_url = saved_config.get('server_url')
-
+    
     if not broadcaster_token:
         print("❌ Erro: Token não encontrado no arquivo de configuração")
         print("   Baixe um novo arquivo broadcaster_config.json do painel")
         exit(1)
-
+    
     if not signaling_url:
-        print(
-            "❌ Erro: URL do servidor não encontrada no arquivo de configuração"
-        )
+        print("❌ Erro: URL do servidor não encontrada no arquivo de configuração")
         print("   Baixe um novo arquivo broadcaster_config.json do painel")
         exit(1)
-
-    if not signaling_url.startswith('wss://') and not signaling_url.startswith(
-            'ws://'):
+    
+    if not signaling_url.startswith('wss://') and not signaling_url.startswith('ws://'):
         print("❌ Erro: URL inválida no arquivo de configuração")
-        print(
-            f"   URL deve começar com wss:// ou ws://, encontrado: {signaling_url}"
-        )
+        print(f"   URL deve começar com wss:// ou ws://, encontrado: {signaling_url}")
         exit(1)
-
+    
     is_installation_token = broadcaster_token.startswith('inst_')
     if is_installation_token:
         is_installation = True
@@ -752,37 +676,39 @@ if __name__ == "__main__":
         token_expires_at = None
     else:
         is_installation = False
-
+    
     print("=" * 60)
     print(f"🚀 SimplificaVideos Broadcaster v4.0")
     print(f"📡 Nome do computador: {nome_computador}")
-
+    
     if is_installation_token:
         print(f"🔐 Modo: Primeira Instalação")
         print(f"🆔 Broadcaster ID será gerado pelo servidor")
     else:
         print(f"🆔 Broadcaster ID: {broadcaster_id}")
         print(f"🔒 Modo: Reconexão Automática")
-
+    
     print(f"🌐 Servidor: {signaling_url.split('?')[0]}")
     print(f"💾 Config: {CONFIG_FILE}")
     print("=" * 60)
-
+    
     if '?' not in signaling_url:
         signaling_url = f"{signaling_url}?role=broadcaster"
     elif 'role=' not in signaling_url:
         signaling_url = f"{signaling_url}&role=broadcaster"
-
+    
     company_id = "1"
-
-    broadcaster = Broadcaster(signaling_url,
-                              broadcaster_name=nome_computador,
-                              company_id=company_id,
-                              broadcaster_token=broadcaster_token,
-                              broadcaster_id=broadcaster_id,
-                              is_installation=is_installation,
-                              token_expires_at=token_expires_at)
-
+    
+    broadcaster = Broadcaster(
+        signaling_url,
+        broadcaster_name=nome_computador,
+        company_id=company_id,
+        broadcaster_token=broadcaster_token,
+        broadcaster_id=broadcaster_id,
+        is_installation=is_installation,
+        token_expires_at=token_expires_at
+    )
+    
     try:
         asyncio.run(broadcaster.connect())
     except KeyboardInterrupt:

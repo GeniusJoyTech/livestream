@@ -36,12 +36,7 @@ None specified yet.
 - No code changes were required - project was ready for Replit environment
 - Server already configured to listen on 0.0.0.0:5000, perfect for Replit's proxy
 
-### Recent Improvements (January 08, 2026)
-✅ **TURN Server Integration**: Added Open Relay TURN servers (Metered.ca) for NAT traversal
-✅ **Cross-network video streaming**: Video now works even when broadcaster is behind corporate firewall
-✅ **ICE Servers updated**: Both viewer.js and Broadcaster.py now use STUN+TURN configuration
-
-### Previous Improvements (December 02, 2025)
+### Recent Improvements (December 02, 2025)
 ✅ **Focus-time tracking**: Added "Tempo em Foco" column showing accumulated time per app in viewer monitoring table
 ✅ **Excel export redesigned**: Now exports all apps per activity (not just foreground app) with columns matching the monitoring screen
 ✅ **Fixed memory leak**: Focus-time Map is now properly reset when switching broadcasters, disconnecting, or when broadcaster leaves
