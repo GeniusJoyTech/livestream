@@ -1,0 +1,108 @@
+Iniciando build...
+
+292 INFO: PyInstaller: 6.11.0, contrib hooks: 2024.9
+293 INFO: Python: 3.13.1
+371 INFO: Platform: Windows-11-10.0.26100-SP0
+371 INFO: Python environment: C:\Users\depto\AppData\Local\Programs\Python\Python313
+375 INFO: Removing temporary files and cleaning cache in C:\Users\depto\AppData\Local\pyinstaller
+1992 INFO: Module search paths (PYTHONPATH):
+['C:\\Users\\depto\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\pyinstaller.exe',
+ 'C:\\Users\\depto\\AppData\\Local\\Programs\\Python\\Python313\\python313.zip',
+ 'C:\\Users\\depto\\AppData\\Local\\Programs\\Python\\Python313\\DLLs',
+ 'C:\\Users\\depto\\AppData\\Local\\Programs\\Python\\Python313\\Lib',
+ 'C:\\Users\\depto\\AppData\\Local\\Programs\\Python\\Python313',
+ 'C:\\Users\\depto\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages',
+ 'C:\\Users\\depto\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\win32',
+ 'C:\\Users\\depto\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\win32\\lib',
+ 'C:\\Users\\depto\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\Pythonwin',
+ 'C:\\Users\\depto\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\setuptools\\_vendor',
+ 'C:\\Users\\depto\\OneDrive\\Documentos\\T.i\\0001. Rascunhos de '
+ 'projetos\\SimplificaVideos\\public\\broadcaster']
+2508 INFO: checking Analysis
+2508 INFO: Building Analysis because Analysis-00.toc is non existent
+2508 INFO: Running Analysis Analysis-00.toc
+2509 INFO: Target bytecode optimization level: 0
+2509 INFO: Initializing module dependency graph...
+2511 INFO: Initializing module graph hook caches...
+2550 INFO: Analyzing base_library.zip ...
+3842 INFO: Processing standard module hook 'hook-encodings.py' from 'C:\\Users\\depto\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks'
+4486 INFO: Processing standard module hook 'hook-heapq.py' from 'C:\\Users\\depto\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks'
+5386 INFO: Processing standard module hook 'hook-pickle.py' from 'C:\\Users\\depto\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks'
+6891 INFO: Caching module dependency graph...
+6981 INFO: Looking for Python shared library...
+6987 INFO: Using Python shared library: C:\Users\depto\AppData\Local\Programs\Python\Python313\python313.dll
+6987 INFO: Analyzing C:\Users\depto\OneDrive\Documentos\T.i\0001. Rascunhos de projetos\SimplificaVideos\public\broadcaster\Broadcaster.py
+7283 INFO: Processing standard module hook 'hook-multiprocessing.util.py' from 'C:\\Users\\depto\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks'
+7444 INFO: Processing standard module hook 'hook-xml.py' from 'C:\\Users\\depto\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks'
+8050 INFO: Processing standard module hook 'hook-platform.py' from 'C:\\Users\\depto\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks'
+8137 INFO: Processing standard module hook 'hook-cv2.py' from 'C:\\Users\\depto\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+8672 INFO: Processing standard module hook 'hook-numpy.py' from 'C:\\Users\\depto\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks'
+9777 INFO: Processing standard module hook 'hook-sysconfig.py' from 'C:\\Users\\depto\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks'
+10665 INFO: Processing standard module hook 'hook-difflib.py' from 'C:\\Users\\depto\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks'
+10976 INFO: Processing standard module hook 'hook-psutil.py' from 'C:\\Users\\depto\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+11710 INFO: Processing standard module hook 'hook-charset_normalizer.py' from 'C:\\Users\\depto\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+11782 INFO: Processing pre-safe-import-module hook 'hook-typing_extensions.py' from 'C:\\Users\\depto\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+11786 INFO: SetuptoolsInfo: initializing cached setuptools info...
+15408 INFO: Processing standard module hook 'hook-websockets.py' from 'C:\\Users\\depto\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+15970 INFO: Processing standard module hook 'hook-av.py' from 'C:\\Users\\depto\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+16470 INFO: Processing standard module hook 'hook-cryptography.py' from 'C:\\Users\\depto\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+18303 INFO: Processing standard module hook 'hook-dns.rdata.py' from 'C:\\Users\\depto\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+19060 INFO: Processing standard module hook 'hook-sqlite3.py' from 'C:\\Users\\depto\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks'
+19517 INFO: Processing pre-safe-import-module hook 'hook-six.moves.py' from 'C:\\Users\\depto\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+19649 INFO: Analyzing hidden import 'aiortc.contrib'
+19650 INFO: Analyzing hidden import 'aiortc.contrib.media'
+19669 INFO: Analyzing hidden import 'av.filter'
+19671 INFO: Analyzing hidden import 'PIL'
+19673 INFO: Processing standard module hook 'hook-PIL.py' from 'C:\\Users\\depto\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks'
+19689 INFO: Analyzing hidden import 'PIL.Image'
+19819 INFO: Processing standard module hook 'hook-PIL.Image.py' from 'C:\\Users\\depto\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks'
+20389 INFO: Processing standard module hook 'hook-xml.etree.cElementTree.py' from 'C:\\Users\\depto\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks'
+20463 INFO: Processing standard module hook 'hook-PIL.ImageFilter.py' from 'C:\\Users\\depto\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks'
+21136 INFO: Analyzing hidden import 'av.__main__'
+21139 INFO: Analyzing hidden import 'av.audio.plane'
+21140 INFO: Analyzing hidden import 'av.buffer'
+21140 INFO: Analyzing hidden import 'av.bytesource'
+21141 INFO: Analyzing hidden import 'av.container.pyio'
+21141 INFO: Analyzing hidden import 'av.container.streams'
+21141 INFO: Analyzing hidden import 'av.datasets'
+21145 INFO: Analyzing hidden import 'av.descriptor'
+21145 INFO: Analyzing hidden import 'av.dictionary'
+21146 INFO: Analyzing hidden import 'av.filter.context'
+21146 INFO: Analyzing hidden import 'av.filter.link'
+21146 INFO: Analyzing hidden import 'av.opaque'
+21146 INFO: Analyzing hidden import 'av.option'
+21146 INFO: Analyzing hidden import 'av.plane'
+21147 INFO: Analyzing hidden import 'av.sidedata'
+21147 INFO: Analyzing hidden import 'av.sidedata.motionvectors'
+21148 INFO: Analyzing hidden import 'av.sidedata.sidedata'
+21148 INFO: Analyzing hidden import 'av.stream'
+21148 INFO: Analyzing hidden import 'av.subtitles'
+21148 INFO: Analyzing hidden import 'av.subtitles.codeccontext'
+21149 INFO: Analyzing hidden import 'av.subtitles.stream'
+21149 INFO: Analyzing hidden import 'av.subtitles.subtitle'
+21149 INFO: Analyzing hidden import 'av.utils'
+21149 INFO: Analyzing hidden import 'av.video.plane'
+21150 INFO: Analyzing hidden import 'av.video.reformatter'
+21150 INFO: Analyzing hidden import 'aiortc.contrib.signaling'
+21159 INFO: Analyzing hidden import 'mss.__main__'
+21163 INFO: Processing module hooks (post-graph stage)...
+22379 INFO: Processing standard module hook 'hook-PIL.SpiderImagePlugin.py' from 'C:\\Users\\depto\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks'
+22600 INFO: Performing binary vs. data reclassification (48 entries)
+22664 INFO: Looking for ctypes DLLs
+22707 INFO: Analyzing run-time hooks ...
+22712 INFO: Including run-time hook 'pyi_rth_inspect.py' from 'C:\\Users\\depto\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+22714 INFO: Including run-time hook 'pyi_rth_multiprocessing.py' from 'C:\\Users\\depto\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+22716 INFO: Including run-time hook 'pyi_rth_pkgutil.py' from 'C:\\Users\\depto\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+22718 INFO: Including run-time hook 'pyi_rth_cryptography_openssl.py' from 'C:\\Users\\depto\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\rthooks'
+22730 INFO: Looking for dynamic libraries
+23443 INFO: Extra DLL search directories (AddDllDirectory): ['C:\\Users\\depto\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\google_crc32c\\extra-dll', 'C:\\Users\\depto\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\av.libs', 'C:\\Users\\depto\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\numpy.libs', 'C:\\Users\\depto\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\cv2\\../../x64/vc17/bin']
+23443 INFO: Extra DLL search directories (PATH): ['C:\\Users\\depto\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\cv2\\../../x64/vc17/bin']
+24518 INFO: Warnings written to C:\Users\depto\OneDrive\Documentos\T.i\0001. Rascunhos de projetos\SimplificaVideos\public\broadcaster\build\Broadcaster\warn-Broadcaster.txt
+24662 INFO: Graph cross-reference written to C:\Users\depto\OneDrive\Documentos\T.i\0001. Rascunhos de projetos\SimplificaVideos\public\broadcaster\build\Broadcaster\xref-Broadcaster.html
+24699 INFO: checking PYZ
+24699 INFO: Building PYZ because PYZ-00.toc is non existent
+24699 INFO: Building PYZ (ZlibArchive) C:\Users\depto\OneDrive\Documentos\T.i\0001. Rascunhos de projetos\SimplificaVideos\public\broadcaster\build\Broadcaster\PYZ-00.pyz
+25558 INFO: Building PYZ (ZlibArchive) C:\Users\depto\OneDrive\Documentos\T.i\0001. Rascunhos de projetos\SimplificaVideos\public\broadcaster\build\Broadcaster\PYZ-00.pyz completed successfully.
+25581 INFO: checking PKG
+25581 INFO: Building PKG because PKG-00.toc is non existent
+25582 INFO: Building PKG (CArchive) Broadcaster.pkg
