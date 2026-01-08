@@ -268,43 +268,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   function createPeerConnection(id, monitor_number) {
-    const iceConfig = {
-      iceServers: [
-        { urls: "stun:stun.l.google.com:19302" },
-        { urls: "stun:stun1.l.google.com:19302" },
-        { urls: "stun:stun2.l.google.com:19302" },
-        { urls: "stun:stun.relay.metered.ca:80" },
-        { 
-          urls: "turn:global.relay.metered.ca:80",
-          username: "e8dd65b92aad6dce5c349164",
-          credential: "uWdWNmkhvyqTEj3B"
-        },
-        { 
-          urls: "turn:global.relay.metered.ca:443",
-          username: "e8dd65b92aad6dce5c349164",
-          credential: "uWdWNmkhvyqTEj3B"
-        },
-        { 
-          urls: "turn:global.relay.metered.ca:443?transport=tcp",
-          username: "e8dd65b92aad6dce5c349164",
-          credential: "uWdWNmkhvyqTEj3B"
-        }
-      ],
-      iceCandidatePoolSize: 10
-    };
-    const pc = new RTCPeerConnection(iceConfig);
-    
-    pc.oniceconnectionstatechange = () => {
-      console.log(`ICE Connection State: ${pc.iceConnectionState}`);
-      if (pc.iceConnectionState === 'failed') {
-        console.error('ICE Connection Failed - tentando restart...');
-        pc.restartIce();
-      }
-    };
-    
-    pc.onicegatheringstatechange = () => {
-      console.log(`ICE Gathering State: ${pc.iceGatheringState}`);
-    };
+    const pc = new RTCPeerConnection({ iceServers: [{ urls: "stun:stun.l.google.com:19302" }] });
 
     pc.onicecandidate = (event) => {
       if (event.candidate && socket.readyState === WebSocket.OPEN) {
@@ -421,19 +385,6 @@ document.addEventListener("DOMContentLoaded", () => {
           if (message.broadcasterId === selectedBroadcasterId) {
             updateMonitoringTable(message.data);
           }
-          break;
-        case "payment-required":
-          const paymentMsg = message.message || "Pagamento pendente. Entre em contato com o administrador.";
-          alert(`⚠️ Acesso bloqueado: ${paymentMsg}`);
-          setStatus("Acesso bloqueado - pagamento pendente", false);
-          break;
-        case "limit-exceeded":
-          const limitMsg = message.message || "Limite de usuários excedido. Entre em contato com o administrador.";
-          alert(`⚠️ Limite excedido: ${limitMsg}`);
-          setStatus(`Limite excedido (${message.current}/${message.limit})`, false);
-          break;
-        case "error":
-          alert(`Erro: ${message.message || 'Erro desconhecido'}`);
           break;
       }
     };

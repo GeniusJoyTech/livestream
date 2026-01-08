@@ -1,5 +1,4 @@
 const WebSocket = require("ws");
-const billingService = require('../services/billingService');
 /*
     registerBroadcaster: cadastra um broadcaster e avisa os viewers.
     registerViewer: cadastra um viewer e envia lista de broadcasters.
@@ -27,34 +26,6 @@ async function registerBroadcaster(ws, id, msg, peers, broadcasters) {
                 const installationJwt = await broadcasterService.getInstallationByJwt(msg.broadcaster_token);
                 
                 if (installationJwt) {
-                    const accessCheck = await billingService.canOwnerUseSystem(installationJwt.owner_id);
-                    if (!accessCheck.allowed) {
-                        console.warn(`⚠️ Broadcaster bloqueado - ${accessCheck.reason}: ${accessCheck.message}`);
-                        ws.send(JSON.stringify({
-                            type: "payment-required",
-                            reason: accessCheck.reason,
-                            message: accessCheck.message
-                        }));
-                        ws.close(4010, accessCheck.message);
-                        return;
-                    }
-                    
-                    const limitCheck = await billingService.checkBroadcasterLimit(installationJwt.owner_id);
-                    if (!limitCheck.allowed) {
-                        console.warn(`⚠️ Broadcaster bloqueado - limite excedido: ${limitCheck.message}`);
-                        ws.send(JSON.stringify({
-                            type: "limit-exceeded",
-                            reason: limitCheck.reason,
-                            message: limitCheck.message,
-                            current: limitCheck.current,
-                            limit: limitCheck.limit
-                        }));
-                        ws.close(4011, limitCheck.message);
-                        return;
-                    }
-                }
-                
-                if (installationJwt) {
                     db_id = installationJwt.broadcaster_id;
                     installation_id = installationJwt.id;
                     broadcaster_group_name = installationJwt.broadcaster_name;
@@ -77,32 +48,6 @@ async function registerBroadcaster(ws, id, msg, peers, broadcasters) {
                     const broadcasterGroup = await broadcasterService.getBroadcasterByInstallationToken(msg.broadcaster_token);
                     
                     if (broadcasterGroup) {
-                        const accessCheck = await billingService.canOwnerUseSystem(broadcasterGroup.owner_id);
-                        if (!accessCheck.allowed) {
-                            console.warn(`⚠️ Broadcaster bloqueado (nova instalação) - ${accessCheck.reason}: ${accessCheck.message}`);
-                            ws.send(JSON.stringify({
-                                type: "payment-required",
-                                reason: accessCheck.reason,
-                                message: accessCheck.message
-                            }));
-                            ws.close(4010, accessCheck.message);
-                            return;
-                        }
-                        
-                        const limitCheck = await billingService.checkBroadcasterLimit(broadcasterGroup.owner_id);
-                        if (!limitCheck.allowed) {
-                            console.warn(`⚠️ Broadcaster bloqueado (nova instalação) - limite excedido: ${limitCheck.message}`);
-                            ws.send(JSON.stringify({
-                                type: "limit-exceeded",
-                                reason: limitCheck.reason,
-                                message: limitCheck.message,
-                                current: limitCheck.current,
-                                limit: limitCheck.limit
-                            }));
-                            ws.close(4011, limitCheck.message);
-                            return;
-                        }
-                        
                         db_id = broadcasterGroup.id;
                         broadcaster_group_name = broadcasterGroup.name;
                         
@@ -201,41 +146,6 @@ async function registerViewer(ws, id, peers, broadcasters) {
             broadcasters: [],
         }));
         return;
-    }
-    
-    const viewerOwnerId = ws.user?.created_by;
-    if (viewerOwnerId) {
-        const ownerAccessCheck = await billingService.canOwnerUseSystem(viewerOwnerId);
-        if (!ownerAccessCheck.allowed) {
-            console.warn(`⚠️ Viewer bloqueado - owner sem pagamento: ${ownerAccessCheck.message}`);
-            ws.send(JSON.stringify({
-                type: "payment-required",
-                reason: ownerAccessCheck.reason,
-                message: "O administrador da sua conta precisa regularizar o pagamento para você poder acessar."
-            }));
-            ws.send(JSON.stringify({
-                type: "broadcaster-list",
-                broadcasters: [],
-            }));
-            return;
-        }
-        
-        const viewerLimitCheck = await billingService.checkViewerLimit(viewerOwnerId);
-        if (!viewerLimitCheck.allowed) {
-            console.warn(`⚠️ Viewer bloqueado - limite excedido: ${viewerLimitCheck.message}`);
-            ws.send(JSON.stringify({
-                type: "limit-exceeded",
-                reason: viewerLimitCheck.reason,
-                message: viewerLimitCheck.message,
-                current: viewerLimitCheck.current,
-                limit: viewerLimitCheck.limit
-            }));
-            ws.send(JSON.stringify({
-                type: "broadcaster-list",
-                broadcasters: [],
-            }));
-            return;
-        }
     }
     
     let permittedBroadcasterIds = [];
@@ -343,18 +253,6 @@ async function handleWatch(ws, id, msg, peers, broadcasters) {
     if (viewerId && db_id && process.env.DATABASE_URL) {
         try {
             const broadcasterService = require('../services/broadcasterService');
-            
-            const accessCheck = await billingService.canViewerAccessBroadcaster(viewerId, db_id);
-            if (!accessCheck.allowed) {
-                console.log(`💰 Viewer ${viewerId} bloqueado - owner sem pagamento: ${accessCheck.message}`);
-                ws.send(JSON.stringify({
-                    type: "payment-required",
-                    reason: accessCheck.reason,
-                    message: "O administrador precisa regularizar o pagamento para você poder assistir."
-                }));
-                return;
-            }
-            
             const hasPermission = await broadcasterService.hasViewerPermission(db_id, viewerId);
             if (!hasPermission) {
                 console.log(`🚫 Viewer ${viewerId} tentou assistir broadcaster ${db_id} sem permissão`);

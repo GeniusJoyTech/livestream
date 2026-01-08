@@ -4,7 +4,7 @@ import mss
 import cv2
 import numpy as np
 import websockets
-from aiortc import RTCPeerConnection, RTCSessionDescription, VideoStreamTrack, RTCConfiguration, RTCIceServer
+from aiortc import RTCPeerConnection, RTCSessionDescription, VideoStreamTrack
 from aiortc.sdp import candidate_from_sdp
 from av import VideoFrame
 import platform
@@ -543,49 +543,12 @@ class Broadcaster:
 
         # Cria uma nova conexão para cada viewer
         video_track = ScreenCaptureTrack(monitor_number=monitor_number)
-        
-        # Configuração de servidores ICE (STUN + TURN) para NAT traversal
-        # TURN servers são necessários para redes corporativas restritivas
-        ice_config = RTCConfiguration(
-            iceServers=[
-                RTCIceServer(urls=["stun:stun.l.google.com:19302"]),
-                RTCIceServer(urls=["stun:stun1.l.google.com:19302"]),
-                RTCIceServer(urls=["stun:stun2.l.google.com:19302"]),
-                RTCIceServer(urls=["stun:stun.relay.metered.ca:80"]),
-                RTCIceServer(
-                    urls=["turn:global.relay.metered.ca:80"],
-                    username="e8dd65b92aad6dce5c349164",
-                    credential="uWdWNmkhvyqTEj3B"
-                ),
-                RTCIceServer(
-                    urls=["turn:global.relay.metered.ca:443"],
-                    username="e8dd65b92aad6dce5c349164",
-                    credential="uWdWNmkhvyqTEj3B"
-                ),
-                RTCIceServer(
-                    urls=["turn:global.relay.metered.ca:443?transport=tcp"],
-                    username="e8dd65b92aad6dce5c349164",
-                    credential="uWdWNmkhvyqTEj3B"
-                )
-            ]
-        )
-        pc = RTCPeerConnection(configuration=ice_config)
+        pc = RTCPeerConnection()
         pc.addTrack(video_track)
 
         @pc.on("icecandidate")
         async def on_icecandidate(event):
             if event.candidate:
-                candidate_str = event.candidate.candidate
-                # Log detalhado do tipo de candidato ICE
-                if "typ host" in candidate_str:
-                    print(f"🧊 ICE Candidato HOST para {viewer_id}: {candidate_str[:80]}...")
-                elif "typ srflx" in candidate_str:
-                    print(f"🧊 ICE Candidato SRFLX (STUN) para {viewer_id}: {candidate_str[:80]}...")
-                elif "typ relay" in candidate_str:
-                    print(f"🧊 ICE Candidato RELAY (TURN) para {viewer_id}: {candidate_str[:80]}...")
-                else:
-                    print(f"🧊 ICE Candidato para {viewer_id}: {candidate_str[:80]}...")
-                    
                 await socket.send(
                     json.dumps({
                         "type": "candidate",
@@ -596,51 +559,10 @@ class Broadcaster:
                         },
                         "targetId": viewer_id
                     }))
-            else:
-                print(f"🧊 ICE Gathering completo para {viewer_id}")
-
-        @pc.on("icegatheringstatechange")
-        async def on_icegatheringstatechange():
-            print(f"🔍 ICE Gathering State [{viewer_id}]: {pc.iceGatheringState}")
-
-        @pc.on("iceconnectionstatechange")
-        async def on_iceconnectionstatechange():
-            state = pc.iceConnectionState
-            if state == "checking":
-                print(f"🔄 ICE [{viewer_id}]: Verificando conectividade...")
-            elif state == "connected":
-                print(f"✅ ICE [{viewer_id}]: Conectado! Vídeo deve estar fluindo.")
-            elif state == "completed":
-                print(f"✅ ICE [{viewer_id}]: Conexão completa e estável.")
-            elif state == "failed":
-                print(f"❌ ICE [{viewer_id}]: FALHOU - Não foi possível estabelecer conexão de vídeo")
-            elif state == "disconnected":
-                print(f"⚠️ ICE [{viewer_id}]: Desconectado temporariamente...")
-            elif state == "closed":
-                print(f"🔒 ICE [{viewer_id}]: Conexão fechada")
-            else:
-                print(f"🧊 ICE [{viewer_id}]: Estado = {state}")
-
-        @pc.on("signalingstatechange")
-        async def on_signalingstatechange():
-            print(f"📡 Signaling State [{viewer_id}]: {pc.signalingState}")
 
         @pc.on("connectionstatechange")
         async def on_connectionstatechange():
-            state = pc.connectionState
-            if state == "connecting":
-                print(f"📶 Conexão [{viewer_id}]: Conectando...")
-            elif state == "connected":
-                print(f"📶 Conexão [{viewer_id}]: ✅ CONECTADO - Vídeo ativo!")
-            elif state == "failed":
-                print(f"📶 Conexão [{viewer_id}]: ❌ FALHOU")
-            elif state == "disconnected":
-                print(f"📶 Conexão [{viewer_id}]: ⚠️ Desconectado")
-            elif state == "closed":
-                print(f"📶 Conexão [{viewer_id}]: Fechada")
-            else:
-                print(f"📶 Conexão [{viewer_id}]: {state}")
-                
+            print(f"📶 Estado da conexão com {viewer_id}: {pc.connectionState}")
             if pc.connectionState in ["failed", "disconnected", "closed"]:
                 await self._handle_viewer_disconnected({"viewerId": viewer_id})
 

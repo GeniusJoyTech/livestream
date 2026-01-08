@@ -12,8 +12,7 @@ CREATE TABLE IF NOT EXISTS users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     last_login TIMESTAMP,
-    is_active BOOLEAN DEFAULT true,
-    is_master_admin BOOLEAN DEFAULT false
+    is_active BOOLEAN DEFAULT true
 );
 
 -- Broadcasters table - logical broadcaster entities (can have multiple installations)
