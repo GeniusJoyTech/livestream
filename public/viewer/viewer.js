@@ -268,28 +268,30 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // ICE Servers configuration with STUN and TURN for NAT traversal
+  // Using Open Relay Project (free, no signup required)
   const iceServers = [
     { urls: "stun:stun.l.google.com:19302" },
-    { urls: "stun:stun.relay.metered.ca:80" },
+    { urls: "stun:stun1.l.google.com:19302" },
+    { urls: "stun:openrelay.metered.ca:80" },
     {
-      urls: "turn:standard.relay.metered.ca:80",
-      username: "open",
-      credential: "open"
+      urls: "turn:openrelay.metered.ca:80",
+      username: "openrelayproject",
+      credential: "openrelayproject"
     },
     {
-      urls: "turn:standard.relay.metered.ca:80?transport=tcp",
-      username: "open",
-      credential: "open"
+      urls: "turn:openrelay.metered.ca:80?transport=tcp",
+      username: "openrelayproject",
+      credential: "openrelayproject"
     },
     {
-      urls: "turn:standard.relay.metered.ca:443",
-      username: "open",
-      credential: "open"
+      urls: "turn:openrelay.metered.ca:443",
+      username: "openrelayproject",
+      credential: "openrelayproject"
     },
     {
-      urls: "turns:standard.relay.metered.ca:443?transport=tcp",
-      username: "open",
-      credential: "open"
+      urls: "turns:openrelay.metered.ca:443?transport=tcp",
+      username: "openrelayproject",
+      credential: "openrelayproject"
     }
   ];
 

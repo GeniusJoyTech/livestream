@@ -23,28 +23,30 @@ sistema_operacional = platform.system()
 CONFIG_FILE = Path.home() / '.simplificavideos' / 'broadcaster_config.json'
 
 # ICE Servers configuration with STUN and TURN for NAT traversal
+# Using Open Relay Project (free, no signup required)
 ICE_SERVERS = RTCConfiguration(iceServers=[
     RTCIceServer(urls=["stun:stun.l.google.com:19302"]),
-    RTCIceServer(urls=["stun:stun.relay.metered.ca:80"]),
+    RTCIceServer(urls=["stun:stun1.l.google.com:19302"]),
+    RTCIceServer(urls=["stun:openrelay.metered.ca:80"]),
     RTCIceServer(
-        urls=["turn:standard.relay.metered.ca:80"],
-        username="open",
-        credential="open"
+        urls=["turn:openrelay.metered.ca:80"],
+        username="openrelayproject",
+        credential="openrelayproject"
     ),
     RTCIceServer(
-        urls=["turn:standard.relay.metered.ca:80?transport=tcp"],
-        username="open",
-        credential="open"
+        urls=["turn:openrelay.metered.ca:80?transport=tcp"],
+        username="openrelayproject",
+        credential="openrelayproject"
     ),
     RTCIceServer(
-        urls=["turn:standard.relay.metered.ca:443"],
-        username="open",
-        credential="open"
+        urls=["turn:openrelay.metered.ca:443"],
+        username="openrelayproject",
+        credential="openrelayproject"
     ),
     RTCIceServer(
-        urls=["turns:standard.relay.metered.ca:443?transport=tcp"],
-        username="open",
-        credential="open"
+        urls=["turns:openrelay.metered.ca:443?transport=tcp"],
+        username="openrelayproject",
+        credential="openrelayproject"
     )
 ])
 
