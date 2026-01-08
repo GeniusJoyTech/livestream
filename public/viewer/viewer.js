@@ -268,7 +268,43 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   function createPeerConnection(id, monitor_number) {
-    const pc = new RTCPeerConnection({ iceServers: [{ urls: "stun:stun.l.google.com:19302" }] });
+    const iceConfig = {
+      iceServers: [
+        { urls: "stun:stun.l.google.com:19302" },
+        { urls: "stun:stun1.l.google.com:19302" },
+        { urls: "stun:stun2.l.google.com:19302" },
+        { urls: "stun:stun.relay.metered.ca:80" },
+        { 
+          urls: "turn:global.relay.metered.ca:80",
+          username: "e8dd65b92aad6dce5c349164",
+          credential: "uWdWNmkhvyqTEj3B"
+        },
+        { 
+          urls: "turn:global.relay.metered.ca:443",
+          username: "e8dd65b92aad6dce5c349164",
+          credential: "uWdWNmkhvyqTEj3B"
+        },
+        { 
+          urls: "turn:global.relay.metered.ca:443?transport=tcp",
+          username: "e8dd65b92aad6dce5c349164",
+          credential: "uWdWNmkhvyqTEj3B"
+        }
+      ],
+      iceCandidatePoolSize: 10
+    };
+    const pc = new RTCPeerConnection(iceConfig);
+    
+    pc.oniceconnectionstatechange = () => {
+      console.log(`ICE Connection State: ${pc.iceConnectionState}`);
+      if (pc.iceConnectionState === 'failed') {
+        console.error('ICE Connection Failed - tentando restart...');
+        pc.restartIce();
+      }
+    };
+    
+    pc.onicegatheringstatechange = () => {
+      console.log(`ICE Gathering State: ${pc.iceGatheringState}`);
+    };
 
     pc.onicecandidate = (event) => {
       if (event.candidate && socket.readyState === WebSocket.OPEN) {

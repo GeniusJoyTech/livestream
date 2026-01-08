@@ -544,12 +544,29 @@ class Broadcaster:
         # Cria uma nova conexão para cada viewer
         video_track = ScreenCaptureTrack(monitor_number=monitor_number)
         
-        # Configuração de servidores ICE (STUN) para NAT traversal
+        # Configuração de servidores ICE (STUN + TURN) para NAT traversal
+        # TURN servers são necessários para redes corporativas restritivas
         ice_config = RTCConfiguration(
             iceServers=[
                 RTCIceServer(urls=["stun:stun.l.google.com:19302"]),
                 RTCIceServer(urls=["stun:stun1.l.google.com:19302"]),
-                RTCIceServer(urls=["stun:stun2.l.google.com:19302"])
+                RTCIceServer(urls=["stun:stun2.l.google.com:19302"]),
+                RTCIceServer(urls=["stun:stun.relay.metered.ca:80"]),
+                RTCIceServer(
+                    urls=["turn:global.relay.metered.ca:80"],
+                    username="e8dd65b92aad6dce5c349164",
+                    credential="uWdWNmkhvyqTEj3B"
+                ),
+                RTCIceServer(
+                    urls=["turn:global.relay.metered.ca:443"],
+                    username="e8dd65b92aad6dce5c349164",
+                    credential="uWdWNmkhvyqTEj3B"
+                ),
+                RTCIceServer(
+                    urls=["turn:global.relay.metered.ca:443?transport=tcp"],
+                    username="e8dd65b92aad6dce5c349164",
+                    credential="uWdWNmkhvyqTEj3B"
+                )
             ]
         )
         pc = RTCPeerConnection(configuration=ice_config)
