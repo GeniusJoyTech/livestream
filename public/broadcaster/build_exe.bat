@@ -4,37 +4,70 @@ echo SimplificaVideos Broadcaster - Build EXE
 echo ========================================
 echo.
 
+REM Verifica se Visual C++ Redistributable existe
+echo [1/4] Verificando Visual C++ Redistributable...
+if not exist "vc_redist.x64.exe" (
+    echo.
+    echo AVISO: Visual C++ Redistributable nao encontrado!
+    echo Baixando automaticamente...
+    echo.
+    powershell -Command "Invoke-WebRequest -Uri 'https://aka.ms/vs/17/release/vc_redist.x64.exe' -OutFile 'vc_redist.x64.exe'"
+    if exist "vc_redist.x64.exe" (
+        echo Download concluido: vc_redist.x64.exe
+    ) else (
+        echo ERRO: Falha no download. Baixe manualmente de:
+        echo https://aka.ms/vs/17/release/vc_redist.x64.exe
+    )
+)
+
 REM Verifica se PyInstaller está instalado
+echo.
+echo [2/4] Verificando PyInstaller...
 pip show pyinstaller >nul 2>&1
 if errorlevel 1 (
     echo Instalando PyInstaller...
     pip install pyinstaller
+) else (
+    echo PyInstaller ja instalado.
 )
 
 echo.
-echo Iniciando build...
+echo [3/4] Iniciando build COM console (para debug)...
 echo.
 
-REM Usa o arquivo .spec para build
+REM Build com console (para ver logs)
 pyinstaller Broadcaster.spec --clean
 
 echo.
 if exist "dist\Broadcaster.exe" (
     echo ========================================
-    echo BUILD CONCLUIDO COM SUCESSO!
+    echo BUILD COM CONSOLE - CONCLUIDO!
     echo ========================================
+    echo Arquivo: dist\Broadcaster.exe
     echo.
-    echo O arquivo foi criado em: dist\Broadcaster.exe
-    echo.
-    echo IMPORTANTE: Copie tambem o arquivo broadcaster_config.json
-    echo para a pasta ~/.simplificavideos/ no computador de destino.
+    
+    REM Copia o VC++ Redistributable para a pasta dist
+    if exist "vc_redist.x64.exe" (
+        copy "vc_redist.x64.exe" "dist\vc_redist.x64.exe" >nul
+        echo Visual C++ Redistributable copiado para dist\
+    )
 ) else (
     echo ========================================
     echo ERRO NO BUILD!
     echo ========================================
-    echo.
-    echo Verifique os erros acima e tente novamente.
+    echo Verifique os erros acima.
 )
 
+echo.
+echo ========================================
+echo INSTRUCOES DE DISTRIBUICAO:
+echo ========================================
+echo.
+echo 1. Copie dist\Broadcaster.exe para o PC de destino
+echo 2. Se o .exe nao executar, instale o vc_redist.x64.exe
+echo 3. Coloque broadcaster_config.json em:
+echo    %%USERPROFILE%%\.simplificavideos\broadcaster_config.json
+echo.
+echo Para versao SEM CONSOLE, use: build_exe_noconsole.bat
 echo.
 pause
