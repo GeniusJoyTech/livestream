@@ -304,12 +304,7 @@ class Broadcaster:
         try:
             from dateutil import parser
             expiry_date = parser.parse(self.token_expires_at)
-            now = datetime.now()
-            
-            if expiry_date.tzinfo is not None:
-                expiry_date = expiry_date.replace(tzinfo=None)
-            
-            days_until_expiry = (expiry_date - now).days
+            days_until_expiry = (expiry_date - datetime.now()).days
 
             if days_until_expiry <= 7:
                 print(
