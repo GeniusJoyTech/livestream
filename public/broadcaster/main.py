@@ -4,6 +4,7 @@ SimplificaVideos Broadcaster - Ponto de Entrada Principal
 Coordena monitoramento de atividades e transmissão de vídeo WebRTC
 """
 
+import sys
 import asyncio
 from broadcaster import (
     load_broadcaster_config,
@@ -100,4 +101,4 @@ def main():
 
 
 if __name__ == "__main__":
-    exit(main())
+    sys.exit(main())
