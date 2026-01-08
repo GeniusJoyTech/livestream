@@ -268,7 +268,13 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   function createPeerConnection(id, monitor_number) {
-    const pc = new RTCPeerConnection({ iceServers: [{ urls: "stun:stun.l.google.com:19302" }] });
+    const pc = new RTCPeerConnection({ 
+      iceServers: [
+        { urls: "stun:stun.l.google.com:19302" },
+        { urls: "stun:stun1.l.google.com:19302" },
+        { urls: "stun:stun2.l.google.com:19302" }
+      ]
+    });
 
     pc.onicecandidate = (event) => {
       if (event.candidate && socket.readyState === WebSocket.OPEN) {

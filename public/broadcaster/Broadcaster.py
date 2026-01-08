@@ -4,7 +4,7 @@ import mss
 import cv2
 import numpy as np
 import websockets
-from aiortc import RTCPeerConnection, RTCSessionDescription, VideoStreamTrack
+from aiortc import RTCPeerConnection, RTCSessionDescription, VideoStreamTrack, RTCConfiguration, RTCIceServer
 from aiortc.sdp import candidate_from_sdp
 from av import VideoFrame
 import platform
@@ -541,9 +541,16 @@ class Broadcaster:
         monitor_number = int(data.get("monitor_number", 1))
         print(f"👀 Novo viewer {viewer_id} solicitou monitor {monitor_number}")
 
-        # Cria uma nova conexão para cada viewer
+        # Cria uma nova conexão para cada viewer com servidores ICE
         video_track = ScreenCaptureTrack(monitor_number=monitor_number)
-        pc = RTCPeerConnection()
+        
+        ice_servers = [
+            RTCIceServer(urls=["stun:stun.l.google.com:19302"]),
+            RTCIceServer(urls=["stun:stun1.l.google.com:19302"]),
+            RTCIceServer(urls=["stun:stun2.l.google.com:19302"])
+        ]
+        config = RTCConfiguration(iceServers=ice_servers)
+        pc = RTCPeerConnection(configuration=config)
         pc.addTrack(video_track)
 
         @pc.on("icecandidate")
