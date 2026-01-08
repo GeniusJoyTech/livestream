@@ -1,0 +1,99 @@
+https://simplificacontabilidade.replit.app/viewer/viewer.html, {"iceServers":[{"urls":["stun:stun.l.google.com:19302"]}]},
+
+ICE connection state: new => "failed" => "failed" => "failed" => "failed" => "failed" => "failed" => "failed" => "failed" => "failed"
+Connection state: new => "failed" => "failed" => "failed" => "failed" => "failed" => "failed" => "failed" => "failed" => "failed"
+Signaling state: new => "stable" => "stable" => "stable" => "stable" => "stable" => "stable" => "stable" => "stable" => "stable"
+ICE Candidate pair:
+ICE candidate grid
+Time	Event
+08/01/2026, 15:18:24	
+setRemoteDescription (type: "offer", 2 sections)
+08/01/2026, 15:18:24	
+setLocalDescription (type: "answer", 2 sections)
+08/01/2026, 15:18:24	
+onsignalingstatechange
+08/01/2026, 15:18:24	
+oniceconnectionstatechange
+08/01/2026, 15:18:24	
+onconnectionstatechange
+08/01/2026, 15:18:47	
+setRemoteDescription (type: "offer", 2 sections)
+08/01/2026, 15:18:47	
+setLocalDescription (type: "answer", 2 sections)
+08/01/2026, 15:18:47	
+onsignalingstatechange
+08/01/2026, 15:18:47	
+oniceconnectionstatechange
+08/01/2026, 15:18:47	
+onconnectionstatechange
+08/01/2026, 15:18:51	
+setRemoteDescription (type: "offer", 2 sections)
+08/01/2026, 15:18:51	
+setLocalDescription (type: "answer", 2 sections)
+08/01/2026, 15:18:51	
+onsignalingstatechange
+08/01/2026, 15:18:51	
+oniceconnectionstatechange
+08/01/2026, 15:18:51	
+onconnectionstatechange
+08/01/2026, 15:18:51	
+setRemoteDescription (type: "offer", 2 sections)
+08/01/2026, 15:18:51	
+setLocalDescription (type: "answer", 2 sections)
+08/01/2026, 15:18:51	
+onsignalingstatechange
+08/01/2026, 15:18:51	
+oniceconnectionstatechange
+08/01/2026, 15:18:51	
+onconnectionstatechange
+08/01/2026, 15:18:52	
+setRemoteDescription (type: "offer", 2 sections)
+08/01/2026, 15:18:52	
+setLocalDescription (type: "answer", 2 sections)
+08/01/2026, 15:18:52	
+onsignalingstatechange
+08/01/2026, 15:18:52	
+oniceconnectionstatechange
+08/01/2026, 15:18:52	
+onconnectionstatechange
+08/01/2026, 15:18:52	
+setRemoteDescription (type: "offer", 2 sections)
+08/01/2026, 15:18:52	
+setLocalDescription (type: "answer", 2 sections)
+08/01/2026, 15:18:52	
+onsignalingstatechange
+08/01/2026, 15:18:52	
+oniceconnectionstatechange
+08/01/2026, 15:18:52	
+onconnectionstatechange
+08/01/2026, 15:18:52	
+setRemoteDescription (type: "offer", 2 sections)
+08/01/2026, 15:18:52	
+setLocalDescription (type: "answer", 2 sections)
+08/01/2026, 15:18:52	
+onsignalingstatechange
+08/01/2026, 15:18:52	
+oniceconnectionstatechange
+08/01/2026, 15:18:52	
+onconnectionstatechange
+08/01/2026, 15:18:52	
+setRemoteDescription (type: "offer", 2 sections)
+08/01/2026, 15:18:52	
+setLocalDescription (type: "answer", 2 sections)
+08/01/2026, 15:18:52	
+onsignalingstatechange
+08/01/2026, 15:18:52	
+oniceconnectionstatechange
+08/01/2026, 15:18:52	
+onconnectionstatechange
+08/01/2026, 15:18:52	
+setRemoteDescription (type: "offer", 2 sections)
+08/01/2026, 15:18:52	
+setLocalDescription (type: "answer", 2 sections)
+08/01/2026, 15:18:52	
+onsignalingstatechange
+08/01/2026, 15:18:52	
+oniceconnectionstatechange
+08/01/2026, 15:18:52	
+onconnectionstatechange
+"failed"

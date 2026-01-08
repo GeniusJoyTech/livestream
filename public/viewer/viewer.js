@@ -267,8 +267,34 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // ICE Servers configuration with STUN and TURN for NAT traversal
+  const iceServers = [
+    { urls: "stun:stun.l.google.com:19302" },
+    { urls: "stun:stun.relay.metered.ca:80" },
+    {
+      urls: "turn:standard.relay.metered.ca:80",
+      username: "open",
+      credential: "open"
+    },
+    {
+      urls: "turn:standard.relay.metered.ca:80?transport=tcp",
+      username: "open",
+      credential: "open"
+    },
+    {
+      urls: "turn:standard.relay.metered.ca:443",
+      username: "open",
+      credential: "open"
+    },
+    {
+      urls: "turns:standard.relay.metered.ca:443?transport=tcp",
+      username: "open",
+      credential: "open"
+    }
+  ];
+
   function createPeerConnection(id, monitor_number) {
-    const pc = new RTCPeerConnection({ iceServers: [{ urls: "stun:stun.l.google.com:19302" }] });
+    const pc = new RTCPeerConnection({ iceServers });
 
     pc.onicecandidate = (event) => {
       if (event.candidate && socket.readyState === WebSocket.OPEN) {

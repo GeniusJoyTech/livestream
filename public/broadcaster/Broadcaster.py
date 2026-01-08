@@ -4,7 +4,7 @@ import mss
 import cv2
 import numpy as np
 import websockets
-from aiortc import RTCPeerConnection, RTCSessionDescription, VideoStreamTrack
+from aiortc import RTCPeerConnection, RTCSessionDescription, VideoStreamTrack, RTCConfiguration, RTCIceServer
 from aiortc.sdp import candidate_from_sdp
 from av import VideoFrame
 import platform
@@ -21,6 +21,32 @@ nome_computador = platform.node()
 sistema_operacional = platform.system()
 
 CONFIG_FILE = Path.home() / '.simplificavideos' / 'broadcaster_config.json'
+
+# ICE Servers configuration with STUN and TURN for NAT traversal
+ICE_SERVERS = RTCConfiguration(iceServers=[
+    RTCIceServer(urls=["stun:stun.l.google.com:19302"]),
+    RTCIceServer(urls=["stun:stun.relay.metered.ca:80"]),
+    RTCIceServer(
+        urls=["turn:standard.relay.metered.ca:80"],
+        username="open",
+        credential="open"
+    ),
+    RTCIceServer(
+        urls=["turn:standard.relay.metered.ca:80?transport=tcp"],
+        username="open",
+        credential="open"
+    ),
+    RTCIceServer(
+        urls=["turn:standard.relay.metered.ca:443"],
+        username="open",
+        credential="open"
+    ),
+    RTCIceServer(
+        urls=["turns:standard.relay.metered.ca:443?transport=tcp"],
+        username="open",
+        credential="open"
+    )
+])
 
 
 def load_broadcaster_config():
@@ -584,9 +610,9 @@ class Broadcaster:
         monitor_number = int(data.get("monitor_number", 1))
         print(f"👀 Novo viewer {viewer_id} solicitou monitor {monitor_number}")
 
-        # Cria uma nova conexão para cada viewer
+        # Cria uma nova conexão para cada viewer com TURN servers
         video_track = ScreenCaptureTrack(monitor_number=monitor_number)
-        pc = RTCPeerConnection()
+        pc = RTCPeerConnection(configuration=ICE_SERVERS)
         pc.addTrack(video_track)
 
         @pc.on("icecandidate")
