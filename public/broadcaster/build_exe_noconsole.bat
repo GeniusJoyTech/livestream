@@ -29,8 +29,13 @@ pip install pyinstaller mss opencv-python numpy websockets aiortc av psutil pywi
 
 echo.
 echo [4/6] Verificando arquivos...
-if not exist "Broadcaster.py" (
-    echo ERRO: Broadcaster.py nao encontrado!
+if not exist "main.py" (
+    echo ERRO: main.py nao encontrado!
+    pause
+    exit /b 1
+)
+if not exist "broadcaster" (
+    echo ERRO: Pasta broadcaster nao encontrada!
     pause
     exit /b 1
 )

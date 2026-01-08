@@ -27,5 +27,11 @@ Pillow>=10.0.0
 # Criptografia
 cryptography>=41.0.0
 
+# ICE/STUN/TURN
+aioice>=0.9.0
+
+# Parsing de datas
+python-dateutil>=2.8.0
+
 # Build (apenas para criar o .exe)
 pyinstaller>=6.0.0
