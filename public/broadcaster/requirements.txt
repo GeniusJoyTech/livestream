@@ -1,0 +1,31 @@
+# SimplificaVideos Broadcaster - Dependencias Python
+# Instale com: pip install -r requirements.txt
+
+# Captura de tela
+mss>=9.0.0
+
+# Processamento de video
+opencv-python>=4.8.0
+numpy>=1.24.0
+
+# WebRTC e comunicacao
+aiortc>=1.6.0
+websockets>=12.0
+
+# Codecs de video
+av>=12.0.0
+
+# Informacoes do sistema
+psutil>=5.9.0
+
+# APIs do Windows
+pywin32>=306; sys_platform == 'win32'
+
+# Processamento de imagem
+Pillow>=10.0.0
+
+# Criptografia
+cryptography>=41.0.0
+
+# Build (apenas para criar o .exe)
+pyinstaller>=6.0.0
