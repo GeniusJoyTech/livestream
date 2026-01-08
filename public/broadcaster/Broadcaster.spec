@@ -29,11 +29,17 @@ hidden_imports += collect_submodules('aioice')
 hidden_imports += collect_submodules('mss')
 hidden_imports += collect_submodules('websockets')
 
+import glob
+import os
+
 binaries = []
 binaries += collect_dynamic_libs('av')
 binaries += collect_dynamic_libs('aiortc')
 binaries += collect_dynamic_libs('cryptography')
 binaries += collect_dynamic_libs('cv2')
+
+for dll in glob.glob('openh264*.dll'):
+    binaries.append((dll, '.'))
 
 datas = []
 datas += collect_data_files('av')
