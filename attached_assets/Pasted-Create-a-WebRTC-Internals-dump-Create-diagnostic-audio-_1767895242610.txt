@@ -1,0 +1,132 @@
+Create a WebRTC-Internals dump
+Create diagnostic audio recordings
+Create diagnostic packet recordings
+Create DataChannel message recordings
+https://chatgpt.com/c/695eea8d-1270-832e-be0c-8eed8753e42a [ rid: 20, lid: 1, pid: 3300 ]https://chatgpt.com/ [ rid: 41, lid: 1, pid: 8948 ]https://simplificacontabilidade.replit.app/viewer/viewer.html [ rid: 80, lid: 1, pid: 24088 ]
+https://simplificacontabilidade.replit.app/viewer/viewer.html, {"iceServers":[{"urls":["stun:stun.l.google.com:19302"]}]},
+
+ICE connection state: new => "checking" => "connected"
+Connection state: new => "connecting" => "connected"
+Signaling state: new => "have-remote-offer" => "stable"
+ICE Candidate pair: (not set):51797 <=>192.168.1.86:56478
+ICE candidate grid
+Time	Event
+08/01/2026, 14:59:46	
+setRemoteDescription (type: "offer", 2 sections)
+Copy description to clipboard
+v=0 (5 more lines)
+o=- 3976883981 3976883981 IN IP4 0.0.0.0
+s=-
+t=0 0
+a=group:BUNDLE 0
+a=msid-semantic:WMS *
+m=video 56475 UDP/TLS/RTP/SAVPF 97 98 99 100 101 102 (43 more lines) direction=sendrecv mid=0
+c=IN IP4 192.168.56.1
+a=sendrecv
+a=extmap:1 urn:ietf:params:rtp-hdrext:sdes:mid
+a=extmap:3 http://www.webrtc.org/experiments/rtp-hdrext/abs-send-time
+a=mid:0
+a=msid:416a1fc0-04b2-4643-9501-68a9f4ba4c2a ceda6e75-ae8b-40db-b5d1-48bf08100852
+a=rtcp:9 IN IP4 0.0.0.0
+a=rtcp-mux
+a=ssrc-group:FID 366381619 2139503815
+a=ssrc:366381619 cname:564277b6-7f92-4129-97f1-cdb5bd920467
+a=ssrc:2139503815 cname:564277b6-7f92-4129-97f1-cdb5bd920467
+a=rtpmap:97 VP8/90000
+a=rtcp-fb:97 nack
+a=rtcp-fb:97 nack pli
+a=rtcp-fb:97 goog-remb
+a=rtpmap:98 rtx/90000
+a=fmtp:98 apt=97
+a=rtpmap:99 H264/90000
+a=rtcp-fb:99 nack
+a=rtcp-fb:99 nack pli
+a=rtcp-fb:99 goog-remb
+a=fmtp:99 level-asymmetry-allowed=1;packetization-mode=1;profile-level-id=42001f
+a=rtpmap:100 rtx/90000
+a=fmtp:100 apt=99
+a=rtpmap:101 H264/90000
+a=rtcp-fb:101 nack
+a=rtcp-fb:101 nack pli
+a=rtcp-fb:101 goog-remb
+a=fmtp:101 level-asymmetry-allowed=1;packetization-mode=1;profile-level-id=42e01f
+a=rtpmap:102 rtx/90000
+a=fmtp:102 apt=101
+a=candidate:ae5c2359578edcf27f2d217b587052e6 1 udp 2130706431 192.168.56.1 56475 typ host
+a=candidate:b4acc424a80d43a3759d36f9344faab0 1 udp 2130706431 2804:868:d060:802c:4c56:44d7:54a6:8a8e 56476 typ host
+a=candidate:2ff56d4cd214516f756150105b86fe55 1 udp 2130706431 2804:868:d060:802c:55cb:596c:ae71:187b 56477 typ host
+a=candidate:f71893f72cf7246a25a75122cf7fe620 1 udp 2130706431 192.168.1.86 56478 typ host
+a=candidate:f1bfc659ff9d414c836f963542a9641a 1 udp 1694498815 45.175.112.26 49755 typ srflx raddr 192.168.1.86 rport 56478
+a=end-of-candidates
+a=ice-ufrag:6lHb
+a=ice-pwd:ZOu6fk2fGYaoP3WdmaZjkt
+a=fingerprint:sha-256 B0:37:9B:C9:36:5A:BB:0D:36:1E:3A:FE:4C:9D:B6:0C:AE:51:4A:4C:D2:7A:17:7B:1D:2B:21:9D:E1:1F:86:60
+a=fingerprint:sha-384 B6:E6:E7:9F:9C:E9:AF:DD:49:46:3F:FC:91:7F:D4:FB:66:B1:35:58:0F:82:C2:12:16:42:DE:F4:59:E7:5B:DC:EB:F6:2B:95:F0:34:F1:E8:3F:12:7D:DD:94:03:F8:DF
+a=fingerprint:sha-512 C0:06:16:2F:72:FB:5C:C7:80:F7:5C:A1:98:25:72:08:1F:B4:4C:D7:B0:42:2E:64:D4:93:76:CF:6A:25:E3:E0:BF:68:A1:61:C1:B5:75:47:62:1F:D2:16:12:EF:33:AC:F0:98:7D:61:09:18:CA:A7:AD:12:58:89:15:53:0A:BC
+a=setup:actpass
+08/01/2026, 14:59:46	setRemoteDescriptionOnSuccess
+08/01/2026, 14:59:46	
+onsignalingstatechange
+08/01/2026, 14:59:46	
+transceiverAdded(index=0, kind=video)
+08/01/2026, 14:59:46	
+createAnswer
+08/01/2026, 14:59:46	
+createAnswerOnSuccess (type: "answer", 2 sections)
+08/01/2026, 14:59:46	
+setLocalDescription (type: "answer", 2 sections)
+08/01/2026, 14:59:46	setLocalDescriptionOnSuccess
+08/01/2026, 14:59:46	
+onsignalingstatechange
+08/01/2026, 14:59:46	
+transceiverModified(index=0, kind=video)
+08/01/2026, 14:59:46	
+onicegatheringstatechange
+08/01/2026, 14:59:46	
+oniceconnectionstatechange
+08/01/2026, 14:59:46	
+onconnectionstatechange
+08/01/2026, 14:59:46	
+onicecandidate
+08/01/2026, 14:59:46	
+onicecandidate
+08/01/2026, 14:59:46	
+oniceconnectionstatechange
+08/01/2026, 14:59:46	
+onicegatheringstatechange
+08/01/2026, 14:59:46	
+onconnectionstatechange
+Stats Tables
+Filter statistics by type including 
+separate multiple values by `,`
+inbound-rtp (kind=video, mid=0, ssrc=366381619, rtxSsrc=2139503815, frameHeight=1080, decoderImplementation=libvpx, powerEfficientDecoder=false, [codec]=VP8 (97), id=IT01V366381619)
+certificate (id=CF22:CE:D2:4C:6E:22:AC:BB:65:DA:95:A7:45:16:25:8C:07:D3:B2:A6:6E:44:0F:31:28:48:12:5E:6F:A2:4D:5E)
+certificate (id=CFB0:37:9B:C9:36:5A:BB:0D:36:1E:3A:FE:4C:9D:B6:0C:AE:51:4A:4C:D2:7A:17:7B:1D:2B:21:9D:E1:1F:86:60)
+codec (mimeType=video/VP8, payloadType=97, id=CIT01_97)
+candidate-pair (state=in-progress, id=CP4Q7gDaY8_jRGxiyy5)
+candidate-pair (state=in-progress, id=CP4Q7gDaY8_kUZVMCfY)
+candidate-pair (state=waiting, id=CP8dpBNkRr_88k4LBX1)
+candidate-pair (state=succeeded, id=CP8dpBNkRr_YPHprjGZ)
+candidate-pair (state=succeeded, id=CPYJJ3+4wq_5jTC6Yno)
+local-candidate (candidateType=host, id=I4Q7gDaY8)
+remote-candidate (candidateType=host, id=I5jTC6Yno)
+remote-candidate (candidateType=srflx, id=I88k4LBX1)
+local-candidate (candidateType=host, id=I8dpBNkRr)
+local-candidate (candidateType=prflx, id=IYJJ3+4wq)
+remote-candidate (candidateType=host, id=IYPHprjGZ)
+remote-candidate (candidateType=host, id=IjRGxiyy5)
+remote-candidate (candidateType=host, id=IkUZVMCfY)
+peer-connection (id=P)
+transport (iceState=connected, dtlsState=connected, id=T01)
+remote-outbound-rtp (kind=video, ssrc=366381619, id=ROV366381619)
+Filter statistics graphs by type including 
+separate multiple values by `,`
+Stats graphs for inbound-rtp (kind=video, mid=0, ssrc=366381619, rtxSsrc=2139503815, frameHeight=1080, decoderImplementation=libvpx, powerEfficientDecoder=false, [codec]=VP8 (97), id=IT01V366381619)
+Stats graphs for candidate-pair (state=in-progress, id=CP4Q7gDaY8_jRGxiyy5)
+Stats graphs for candidate-pair (state=in-progress, id=CP4Q7gDaY8_kUZVMCfY)
+Stats graphs for candidate-pair (state=waiting, id=CP8dpBNkRr_88k4LBX1)
+Stats graphs for candidate-pair (state=succeeded, id=CP8dpBNkRr_YPHprjGZ)
+Stats graphs for candidate-pair (state=succeeded, id=CPYJJ3+4wq_5jTC6Yno)
+Stats graphs for peer-connection (id=P)
+Stats graphs for transport (iceState=connected, dtlsState=connected, id=T01)
+Stats graphs for remote-outbound-rtp (kind=video, ssrc=366381619, id=ROV366381619)
