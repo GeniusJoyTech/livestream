@@ -4,6 +4,8 @@ Gerencia carregamento e salvamento de configurações
 """
 
 import json
+import sys
+import os
 import platform
 from pathlib import Path
 from datetime import datetime
@@ -11,7 +13,25 @@ from datetime import datetime
 nome_computador = platform.node()
 sistema_operacional = platform.system()
 
-CONFIG_FILE = Path.home() / '.simplificavideos' / 'broadcaster_config.json'
+def get_exe_dir():
+    """Retorna o diretório do executável ou script"""
+    if getattr(sys, 'frozen', False):
+        return Path(sys.executable).parent
+    return Path(__file__).parent.parent
+
+def get_config_file():
+    """Retorna o caminho do arquivo de configuração.
+    Prioridade: 1) pasta do exe, 2) pasta do usuário
+    """
+    exe_dir = get_exe_dir()
+    local_config = exe_dir / 'broadcaster_config.json'
+    
+    if local_config.exists():
+        return local_config
+    
+    return Path.home() / '.simplificavideos' / 'broadcaster_config.json'
+
+CONFIG_FILE = get_config_file()
 
 
 def load_broadcaster_config():
