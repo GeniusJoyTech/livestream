@@ -1,0 +1,140 @@
+
+
+Name                          : {E756BC55-A330-4314-BF90-4CC6B285BBC0}
+DisplayName                   : broadcaster.exe
+Description                   :
+DisplayGroup                  :
+Group                         :
+Enabled                       : False
+Profile                       : Domain
+Platform                      : {}
+Direction                     : Inbound
+Action                        : Allow
+EdgeTraversalPolicy           : Block
+LooseSourceMapping            : False
+LocalOnlyMapping              : False
+Owner                         :
+PrimaryStatus                 : OK
+Status                        : A regra foi analisada com êxito no repositório. (65536)
+EnforcementStatus             : NotApplicable
+PolicyStoreSource             : PersistentStore
+PolicyStoreSourceType         : Local
+RemoteDynamicKeywordAddresses : {}
+PolicyAppId                   :
+PackageFamilyName             :
+
+Name                          : {1DB3A1A7-C159-45F1-BDB4-B161DAE65896}
+DisplayName                   : broadcaster.exe
+Description                   :
+DisplayGroup                  :
+Group                         :
+Enabled                       : False
+Profile                       : Domain
+Platform                      : {}
+Direction                     : Inbound
+Action                        : Allow
+EdgeTraversalPolicy           : Block
+LooseSourceMapping            : False
+LocalOnlyMapping              : False
+Owner                         :
+PrimaryStatus                 : OK
+Status                        : A regra foi analisada com êxito no repositório. (65536)
+EnforcementStatus             : NotApplicable
+PolicyStoreSource             : PersistentStore
+PolicyStoreSourceType         : Local
+RemoteDynamicKeywordAddresses : {}
+PolicyAppId                   :
+PackageFamilyName             :
+
+Name                          : {5F05EBB2-CF5D-4A70-9C38-C06D88AA2AF8}
+DisplayName                   : broadcaster.exe
+Description                   :
+DisplayGroup                  :
+Group                         :
+Enabled                       : True
+Profile                       : Private, Public
+Platform                      : {}
+Direction                     : Inbound
+Action                        : Allow
+EdgeTraversalPolicy           : Block
+LooseSourceMapping            : False
+LocalOnlyMapping              : False
+Owner                         :
+PrimaryStatus                 : OK
+Status                        : A regra foi analisada com êxito no repositório. (65536)
+EnforcementStatus             : NotApplicable
+PolicyStoreSource             : PersistentStore
+PolicyStoreSourceType         : Local
+RemoteDynamicKeywordAddresses : {}
+PolicyAppId                   :
+PackageFamilyName             :
+
+Name                          : {54494E96-6DD0-48ED-AF30-29235EE8D561}
+DisplayName                   : broadcaster.exe
+Description                   :
+DisplayGroup                  :
+Group                         :
+Enabled                       : True
+Profile                       : Private, Public
+Platform                      : {}
+Direction                     : Inbound
+Action                        : Allow
+EdgeTraversalPolicy           : Block
+LooseSourceMapping            : False
+LocalOnlyMapping              : False
+Owner                         :
+PrimaryStatus                 : OK
+Status                        : A regra foi analisada com êxito no repositório. (65536)
+EnforcementStatus             : NotApplicable
+PolicyStoreSource             : PersistentStore
+PolicyStoreSourceType         : Local
+RemoteDynamicKeywordAddresses : {}
+PolicyAppId                   :
+PackageFamilyName             :
+
+Name                          : {EEAD998F-1308-4573-9239-5CAC70FC6A39}
+DisplayName                   : broadcaster.exe
+Description                   :
+DisplayGroup                  :
+Group                         :
+Enabled                       : False
+Profile                       : Domain
+Platform                      : {}
+Direction                     : Inbound
+Action                        : Allow
+EdgeTraversalPolicy           : Block
+LooseSourceMapping            : False
+LocalOnlyMapping              : False
+Owner                         :
+PrimaryStatus                 : OK
+Status                        : A regra foi analisada com êxito no repositório. (65536)
+EnforcementStatus             : NotApplicable
+PolicyStoreSource             : PersistentStore
+PolicyStoreSourceType         : Local
+RemoteDynamicKeywordAddresses : {}
+PolicyAppId                   :
+PackageFamilyName             :
+
+Name                          : {51315129-5959-4985-9928-5EF43C4BBF8B}
+DisplayName                   : broadcaster.exe
+Description                   :
+DisplayGroup                  :
+Group                         :
+Enabled                       : False
+Profile                       : Domain
+Platform                      : {}
+Direction                     : Inbound
+Action                        : Allow
+EdgeTraversalPolicy           : Block
+LooseSourceMapping            : False
+LocalOnlyMapping              : False
+Owner                         :
+PrimaryStatus                 : OK
+Status                        : A regra foi analisada com êxito no repositório. (65536)
+EnforcementStatus             : NotApplicable
+PolicyStoreSource             : PersistentStore
+PolicyStoreSourceType         : Local
+RemoteDynamicKeywordAddresses : {}
+PolicyAppId                   :
+PackageFamilyName             :
+
