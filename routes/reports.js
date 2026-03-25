@@ -361,10 +361,25 @@ function authenticateTokenQuery(req, res, next) {
   const token = headerToken || queryToken;
   if (!token) return res.status(401).json({ error: 'Token ausente' });
   const user = verifyToken(token);
-  if (!user) return res.status(403).json({ error: 'Token inválido' });
+  if (!user) return res.status(403).json({ error: 'Token inválido ou expirado' });
   req.user = user;
   next();
 }
+
+router.post('/power-query/token', authenticateToken, async (req, res) => {
+  try {
+    const { generateToken } = require('../jwt/jwtUtils');
+    const pqToken = generateToken(
+      { id: req.user.id, role: req.user.role, type: 'power_query' },
+      '30d'
+    );
+    const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
+    res.json({ token: pqToken, expires_at: expiresAt.toISOString() });
+  } catch (error) {
+    console.error('Erro ao gerar token Power Query:', error);
+    res.status(500).json({ error: 'Erro ao gerar token' });
+  }
+});
 
 router.get('/power-query/activities', authenticateTokenQuery, async (req, res) => {
   try {

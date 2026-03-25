@@ -56,16 +56,43 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function renderGlobalPowerQueryLinks() {
+  async function renderGlobalPowerQueryLinks() {
     const pqListEl = document.getElementById('pq-list');
     if (!pqListEl) return;
+
+    pqListEl.innerHTML = '<p class="pq-loading">Gerando links...</p>';
+
+    let pqToken = token;
+    let expiresAt = null;
+    try {
+      const res = await fetch('/api/reports/power-query/token', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (res.ok) {
+        const data = await res.json();
+        pqToken = data.token;
+        expiresAt = data.expires_at;
+      }
+    } catch (e) {
+      console.error('Erro ao gerar token Power Query:', e);
+    }
+
     const base = window.location.origin;
-    const paramsAct = new URLSearchParams({ token });
-    const paramsUrl = new URLSearchParams({ token });
-    const linkAct = `${base}/api/reports/power-query/all-activities?${paramsAct}`;
-    const linkUrl = `${base}/api/reports/power-query/all-urls?${paramsUrl}`;
+    const linkAct = `${base}/api/reports/power-query/all-activities?token=${encodeURIComponent(pqToken)}`;
+    const linkUrl = `${base}/api/reports/power-query/all-urls?token=${encodeURIComponent(pqToken)}`;
 
     pqListEl.innerHTML = '';
+
+    const note = document.createElement('p');
+    note.className = 'pq-expiry-note';
+    if (expiresAt) {
+      const expDate = new Date(expiresAt).toLocaleDateString('pt-BR');
+      note.textContent = `🔑 Links válidos até ${expDate} — abra esta página para renovar`;
+    } else {
+      note.textContent = '⚠️ Link com validade curta. Abra esta página para renovar.';
+    }
+    pqListEl.appendChild(note);
 
     [
       { label: 'Aplicativos (todas as máquinas):', link: linkAct },
