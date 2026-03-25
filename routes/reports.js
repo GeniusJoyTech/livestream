@@ -248,7 +248,7 @@ router.get('/export/excel-urls', authenticateToken, async (req, res) => {
     let endDate = toDate ? new Date(toDate) : new Date();
     endDate.setHours(23, 59, 59, 999);
     
-    const browserHistory = await databaseStorage.getBrowserHistory(broadcasterIdInt, startDate, endDate);
+    const browserHistory = await databaseStorage.getBrowserHistory(broadcasterIdInt, startDate, endDate, 5000);
     const stats = await databaseStorage.getStatistics(broadcasterIdInt, startDate, endDate);
     
     console.log(`📊 [EXPORT-URLS] Resultado: ${browserHistory.length} URLs para broadcaster ${broadcasterIdInt} (${broadcaster.name})`);
@@ -383,9 +383,19 @@ router.post('/power-query/token', authenticateToken, async (req, res) => {
 
 function parsePQDate(raw) {
   if (!raw) return null;
-  const d = new Date(raw);
-  if (isNaN(d.getTime())) return { error: `Data inválida: "${raw}". Use o formato AAAA-MM-DD ou AAAA-MM-DDTHH:MM:SS` };
-  return d;
+  const trimmed = raw.trim();
+  const m = /^(\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])(?:T\d{2}:\d{2}:\d{2}(?:Z|[+-]\d{2}:?\d{2})?)?$/.exec(trimmed);
+  if (!m) {
+    return { error: `Data inválida: "${trimmed}". Use o formato AAAA-MM-DD ou AAAA-MM-DDTHH:MM:SS` };
+  }
+  const year = parseInt(m[1], 10);
+  const month = parseInt(m[2], 10);
+  const day = parseInt(m[3], 10);
+  const maxDay = new Date(year, month, 0).getDate();
+  if (day > maxDay) {
+    return { error: `Data inválida: "${trimmed}". O mês ${m[2]}/${m[1]} tem apenas ${maxDay} dias.` };
+  }
+  return new Date(trimmed);
 }
 
 function getPQDates(query) {
