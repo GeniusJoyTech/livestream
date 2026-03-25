@@ -428,3 +428,25 @@ video {
     grid-template-columns: 1fr;
   }
 }
+
+.pq-broadcaster-block {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.pq-broadcaster-name {
+  font-weight: 600;
+  color: #a78bfa;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.pq-loading {
+  color: #a0aec0;
+  font-size: 0.85rem;
+  text-align: center;
+  padding: 1rem 0;
+}

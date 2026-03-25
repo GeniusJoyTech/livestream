@@ -40,6 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   fetchUserInfo();
+  fetchBroadcastersForPowerQuery();
 
   async function fetchUserInfo() {
     try {
@@ -52,6 +53,29 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     } catch (err) {
       console.error("Erro ao buscar info do usuario:", err);
+    }
+  }
+
+  async function fetchBroadcastersForPowerQuery() {
+    try {
+      const res = await fetch("/api/broadcasters", {
+        headers: { "Authorization": `Bearer ${token}` }
+      });
+      if (!res.ok) return;
+      const data = await res.json();
+      const list = data.broadcasters || [];
+      const pqListEl = document.getElementById('pq-list');
+      if (!pqListEl) return;
+      if (list.length === 0) {
+        pqListEl.innerHTML = '<p class="pq-loading">Nenhum broadcaster disponível.</p>';
+        return;
+      }
+      pqListEl.innerHTML = '';
+      list.forEach(b => {
+        pqListEl.appendChild(buildPowerQueryBlock({ id: b.id, name: b.name }));
+      });
+    } catch (err) {
+      console.error("Erro ao buscar broadcasters para Power Query:", err);
     }
   }
 
@@ -337,6 +361,7 @@ document.addEventListener("DOMContentLoaded", () => {
           allBroadcasters = message.broadcasters || [];
           broadcasters = [...allBroadcasters];
           updateSelect();
+          buildPowerQueryList();
           break;
         case "new-broadcaster":
           const newB = {
@@ -346,12 +371,14 @@ document.addEventListener("DOMContentLoaded", () => {
           };
           allBroadcasters.push(newB);
           filterBroadcasters(broadcasterSearch.value);
+          buildPowerQueryList();
           break;
         case "broadcaster-left":
           const departingId = message.broadcasterId;
           const wasActiveStream = selectedBroadcasterId === departingId && remoteVideo.srcObject;
           
           allBroadcasters = allBroadcasters.filter(b => b.id !== departingId);
+          buildPowerQueryList();
           
           if (wasActiveStream || selectedBroadcasterId === departingId) {
             remoteVideo.srcObject = null;
@@ -560,50 +587,79 @@ document.addEventListener("DOMContentLoaded", () => {
   exportActivitiesButton.onclick = () => exportReport('excel', 'atividades');
   exportUrlsButton.onclick = () => exportReport('excel-urls', 'urls');
 
-  const pqActivitiesLink = document.getElementById('pqActivitiesLink');
-  const pqUrlsLink = document.getElementById('pqUrlsLink');
-  const copyActivitiesLink = document.getElementById('copyActivitiesLink');
-  const copyUrlsLink = document.getElementById('copyUrlsLink');
-  const pqStatus = document.getElementById('pq-status');
-
-  function buildPowerQueryLinks() {
-    if (!selectedBroadcasterDbId) return;
-    const base = window.location.origin;
-    const params = new URLSearchParams({ broadcasterId: selectedBroadcasterDbId, token: token });
-    pqActivitiesLink.value = `${base}/api/reports/power-query/activities?${params}`;
-    pqUrlsLink.value = `${base}/api/reports/power-query/urls?${params}`;
-    copyActivitiesLink.disabled = false;
-    copyUrlsLink.disabled = false;
-  }
-
-  async function copyToClipboard(input, button) {
-    try {
-      await navigator.clipboard.writeText(input.value);
-      const original = button.textContent;
-      button.textContent = 'Copiado!';
-      button.classList.add('btn-success');
-      button.classList.remove('btn-secondary');
-      pqStatus.textContent = 'Link copiado! Cole no Excel em: Dados → Obter Dados → Da Web';
-      pqStatus.className = 'export-status success';
-      setTimeout(() => {
-        button.textContent = original;
-        button.classList.remove('btn-success');
-        button.classList.add('btn-secondary');
-      }, 2000);
-    } catch (e) {
-      input.select();
+  const pqList = document.getElementById('pq-list');
+  function copyText(text, button) {
+    const pqStatusEl = document.getElementById('pq-status');
+    navigator.clipboard.writeText(text).catch(() => {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
       document.execCommand('copy');
-      pqStatus.textContent = 'Link copiado!';
-      pqStatus.className = 'export-status success';
+      ta.remove();
+    });
+    const original = button.textContent;
+    button.textContent = 'Copiado!';
+    button.classList.add('btn-success');
+    button.classList.remove('btn-secondary');
+    if (pqStatusEl) {
+      pqStatusEl.textContent = 'Link copiado! Cole no Excel em: Dados → Obter Dados → Da Web';
+      pqStatusEl.className = 'export-status success';
     }
+    setTimeout(() => {
+      button.textContent = original;
+      button.classList.remove('btn-success');
+      button.classList.add('btn-secondary');
+      if (pqStatusEl) {
+        pqStatusEl.textContent = '';
+        pqStatusEl.className = 'export-status';
+      }
+    }, 2500);
   }
 
-  copyActivitiesLink.onclick = () => copyToClipboard(pqActivitiesLink, copyActivitiesLink);
-  copyUrlsLink.onclick = () => copyToClipboard(pqUrlsLink, copyUrlsLink);
+  function buildPowerQueryBlock(b) {
+    const base = window.location.origin;
+    const paramsAct = new URLSearchParams({ broadcasterId: b.id || b.db_id, token });
+    const paramsUrl = new URLSearchParams({ broadcasterId: b.id || b.db_id, token });
+    const linkAct = `${base}/api/reports/power-query/activities?${paramsAct}`;
+    const linkUrl = `${base}/api/reports/power-query/urls?${paramsUrl}`;
 
-  broadcasterSelect.addEventListener('change', () => {
-    setTimeout(buildPowerQueryLinks, 100);
-  });
+    const block = document.createElement('div');
+    block.className = 'pq-broadcaster-block';
+    block.innerHTML = `
+      <div class="pq-broadcaster-name">${b.name}</div>
+      <div class="pq-link-row">
+        <label>Atividades:</label>
+        <input type="text" readonly value="${linkAct}" class="pq-input" />
+        <button class="btn btn-secondary btn-sm pq-copy-btn">Copiar</button>
+      </div>
+      <div class="pq-link-row">
+        <label>URLs:</label>
+        <input type="text" readonly value="${linkUrl}" class="pq-input" />
+        <button class="btn btn-secondary btn-sm pq-copy-btn">Copiar</button>
+      </div>
+    `;
+    block.querySelectorAll('.pq-link-row').forEach(row => {
+      const btn = row.querySelector('.pq-copy-btn');
+      const input = row.querySelector('.pq-input');
+      btn.onclick = () => copyText(input.value, btn);
+      input.addEventListener('click', () => input.select());
+    });
+    return block;
+  }
+
+  function buildPowerQueryList() {
+    if (!pqList) return;
+    const validBroadcasters = allBroadcasters.filter(b => b.db_id);
+    if (validBroadcasters.length === 0) {
+      pqList.innerHTML = '<p class="pq-loading">Nenhum broadcaster disponível.</p>';
+      return;
+    }
+    pqList.innerHTML = '';
+    validBroadcasters.forEach(b => {
+      pqList.appendChild(buildPowerQueryBlock({ id: b.db_id, name: b.name }));
+    });
+  }
 
   connect();
 });

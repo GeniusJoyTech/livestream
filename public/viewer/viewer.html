@@ -119,18 +119,9 @@
 
         <div class="export-section power-query-section">
           <h4>Links Power Query (Excel)</h4>
-          <p class="pq-description">Selecione um broadcaster e copie o link. Cole no Excel em <strong>Dados → Obter Dados → Da Web</strong> para atualização automática.</p>
-          <div class="pq-links">
-            <div class="pq-link-row">
-              <label>Atividades:</label>
-              <input type="text" id="pqActivitiesLink" readonly placeholder="Selecione um broadcaster primeiro" />
-              <button id="copyActivitiesLink" class="btn btn-secondary btn-sm" disabled>Copiar</button>
-            </div>
-            <div class="pq-link-row">
-              <label>URLs:</label>
-              <input type="text" id="pqUrlsLink" readonly placeholder="Selecione um broadcaster primeiro" />
-              <button id="copyUrlsLink" class="btn btn-secondary btn-sm" disabled>Copiar</button>
-            </div>
+          <p class="pq-description">Cole os links no Excel em <strong>Dados → Obter Dados → Da Web</strong> para atualização automática.</p>
+          <div id="pq-list">
+            <p class="pq-loading">Carregando links...</p>
           </div>
           <div id="pq-status" class="export-status"></div>
         </div>
