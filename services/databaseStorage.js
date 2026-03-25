@@ -76,6 +76,46 @@ class DatabaseStorage {
     }
   }
   
+  async getAllActivities(broadcasterIds, startDate, endDate, limit = 200000) {
+    if (!broadcasterIds || broadcasterIds.length === 0) return [];
+    const result = await db.query(
+      `SELECT a.timestamp, a.idle_seconds, a.active_url, a.foreground_app, a.app_count,
+              b.name AS maquina
+       FROM activities a
+       INNER JOIN broadcasters b ON a.broadcaster_id = b.id
+       WHERE a.broadcaster_id = ANY($1::int[])
+         AND a.timestamp >= $2
+         AND a.timestamp <= $3
+       ORDER BY a.timestamp DESC
+       LIMIT $4`,
+      [broadcasterIds, startDate, endDate, limit]
+    );
+    return result.rows;
+  }
+
+  async getAllBrowserHistory(broadcasterIds, startDate, endDate, limit = 100000) {
+    if (!broadcasterIds || broadcasterIds.length === 0) return [];
+    const result = await db.query(
+      `SELECT bh.browser, bh.url, bh.title, bh.visit_timestamp,
+              b.name AS maquina
+       FROM browser_history bh
+       INNER JOIN broadcasters b ON bh.broadcaster_id = b.id
+       WHERE bh.broadcaster_id = ANY($1::int[])
+         AND bh.visit_timestamp >= $2
+         AND bh.visit_timestamp <= $3
+       ORDER BY bh.visit_timestamp DESC
+       LIMIT $4`,
+      [broadcasterIds, startDate, endDate, limit]
+    );
+    return result.rows.map(row => ({
+      maquina: row.maquina,
+      browser: row.browser,
+      url: row.url,
+      title: row.title,
+      timestamp: row.visit_timestamp.toISOString()
+    }));
+  }
+
   async getActivities(broadcasterId, startDate, endDate, limit = 1000) {
     const result = await db.query(
       `SELECT id, timestamp, idle_seconds, active_url, foreground_app, app_count, apps_data

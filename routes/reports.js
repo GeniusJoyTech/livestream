@@ -469,4 +469,89 @@ router.get('/power-query/urls', authenticateTokenQuery, async (req, res) => {
   }
 });
 
+router.get('/power-query/all-activities', authenticateTokenQuery, async (req, res) => {
+  try {
+    const { fromDate, toDate } = req.query;
+
+    let broadcasters;
+    if (req.user.role === 'owner') {
+      broadcasters = await broadcasterService.getBroadcastersByOwner(req.user.id);
+    } else {
+      broadcasters = await broadcasterService.getBroadcastersForViewer(req.user.id);
+    }
+
+    const broadcasterIds = broadcasters.map(b => b.id);
+
+    const startDate = fromDate ? new Date(fromDate) : new Date('2000-01-01');
+    let endDate = toDate ? new Date(toDate) : new Date();
+    endDate.setHours(23, 59, 59, 999);
+
+    const activities = await databaseStorage.getAllActivities(broadcasterIds, startDate, endDate);
+
+    const result = activities.map(a => ({
+      maquina: a.maquina || '',
+      timestamp: a.timestamp,
+      aplicativo: a.foreground_app || '',
+      url_ativa: a.active_url || '',
+      tempo_ocioso_seg: a.idle_seconds || 0,
+      qtd_apps_abertos: a.app_count || 0
+    }));
+
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.json({
+      periodo_inicio: startDate.toISOString(),
+      periodo_fim: endDate.toISOString(),
+      total_registros: result.length,
+      maquinas: broadcasters.map(b => b.name),
+      dados: result
+    });
+  } catch (error) {
+    console.error('Erro no power-query/all-activities:', error);
+    res.status(500).json({ error: 'Erro ao obter atividades' });
+  }
+});
+
+router.get('/power-query/all-urls', authenticateTokenQuery, async (req, res) => {
+  try {
+    const { fromDate, toDate } = req.query;
+
+    let broadcasters;
+    if (req.user.role === 'owner') {
+      broadcasters = await broadcasterService.getBroadcastersByOwner(req.user.id);
+    } else {
+      broadcasters = await broadcasterService.getBroadcastersForViewer(req.user.id);
+    }
+
+    const broadcasterIds = broadcasters.map(b => b.id);
+
+    const startDate = fromDate ? new Date(fromDate) : new Date('2000-01-01');
+    let endDate = toDate ? new Date(toDate) : new Date();
+    endDate.setHours(23, 59, 59, 999);
+
+    const history = await databaseStorage.getAllBrowserHistory(broadcasterIds, startDate, endDate);
+
+    const result = history.map(h => ({
+      maquina: h.maquina || '',
+      data_hora: h.timestamp,
+      navegador: h.browser || '',
+      url: h.url || '',
+      titulo_pagina: h.title || ''
+    }));
+
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.json({
+      periodo_inicio: startDate.toISOString(),
+      periodo_fim: endDate.toISOString(),
+      total_registros: result.length,
+      maquinas: broadcasters.map(b => b.name),
+      dados: result
+    });
+  } catch (error) {
+    console.error('Erro no power-query/all-urls:', error);
+    res.status(500).json({ error: 'Erro ao obter URLs' });
+  }
+});
+
 module.exports = router;

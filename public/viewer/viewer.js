@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   fetchUserInfo();
-  fetchBroadcastersForPowerQuery();
+  renderGlobalPowerQueryLinks();
 
   async function fetchUserInfo() {
     try {
@@ -56,27 +56,34 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  async function fetchBroadcastersForPowerQuery() {
-    try {
-      const res = await fetch("/api/broadcasters", {
-        headers: { "Authorization": `Bearer ${token}` }
-      });
-      if (!res.ok) return;
-      const data = await res.json();
-      const list = data.broadcasters || [];
-      const pqListEl = document.getElementById('pq-list');
-      if (!pqListEl) return;
-      if (list.length === 0) {
-        pqListEl.innerHTML = '<p class="pq-loading">Nenhum broadcaster disponível.</p>';
-        return;
-      }
-      pqListEl.innerHTML = '';
-      list.forEach(b => {
-        pqListEl.appendChild(buildPowerQueryBlock({ id: b.id, name: b.name }));
-      });
-    } catch (err) {
-      console.error("Erro ao buscar broadcasters para Power Query:", err);
-    }
+  function renderGlobalPowerQueryLinks() {
+    const pqListEl = document.getElementById('pq-list');
+    if (!pqListEl) return;
+    const base = window.location.origin;
+    const paramsAct = new URLSearchParams({ token });
+    const paramsUrl = new URLSearchParams({ token });
+    const linkAct = `${base}/api/reports/power-query/all-activities?${paramsAct}`;
+    const linkUrl = `${base}/api/reports/power-query/all-urls?${paramsUrl}`;
+
+    pqListEl.innerHTML = '';
+
+    [
+      { label: 'Aplicativos (todas as máquinas):', link: linkAct },
+      { label: 'URLs (todas as máquinas):', link: linkUrl }
+    ].forEach(({ label, link }) => {
+      const row = document.createElement('div');
+      row.className = 'pq-link-row';
+      row.innerHTML = `
+        <label>${label}</label>
+        <input type="text" readonly value="${link}" class="pq-input" />
+        <button class="btn btn-secondary btn-sm pq-copy-btn">Copiar</button>
+      `;
+      const btn = row.querySelector('.pq-copy-btn');
+      const input = row.querySelector('.pq-input');
+      btn.onclick = () => copyText(input.value, btn);
+      input.addEventListener('click', () => input.select());
+      pqListEl.appendChild(row);
+    });
   }
 
   logoutButton.addEventListener("click", () => {
@@ -361,7 +368,6 @@ document.addEventListener("DOMContentLoaded", () => {
           allBroadcasters = message.broadcasters || [];
           broadcasters = [...allBroadcasters];
           updateSelect();
-          buildPowerQueryList();
           break;
         case "new-broadcaster":
           const newB = {
@@ -371,14 +377,12 @@ document.addEventListener("DOMContentLoaded", () => {
           };
           allBroadcasters.push(newB);
           filterBroadcasters(broadcasterSearch.value);
-          buildPowerQueryList();
           break;
         case "broadcaster-left":
           const departingId = message.broadcasterId;
           const wasActiveStream = selectedBroadcasterId === departingId && remoteVideo.srcObject;
           
           allBroadcasters = allBroadcasters.filter(b => b.id !== departingId);
-          buildPowerQueryList();
           
           if (wasActiveStream || selectedBroadcasterId === departingId) {
             remoteVideo.srcObject = null;
@@ -587,7 +591,6 @@ document.addEventListener("DOMContentLoaded", () => {
   exportActivitiesButton.onclick = () => exportReport('excel', 'atividades');
   exportUrlsButton.onclick = () => exportReport('excel-urls', 'urls');
 
-  const pqList = document.getElementById('pq-list');
   function copyText(text, button) {
     const pqStatusEl = document.getElementById('pq-status');
     navigator.clipboard.writeText(text).catch(() => {
@@ -615,50 +618,6 @@ document.addEventListener("DOMContentLoaded", () => {
         pqStatusEl.className = 'export-status';
       }
     }, 2500);
-  }
-
-  function buildPowerQueryBlock(b) {
-    const base = window.location.origin;
-    const paramsAct = new URLSearchParams({ broadcasterId: b.id || b.db_id, token });
-    const paramsUrl = new URLSearchParams({ broadcasterId: b.id || b.db_id, token });
-    const linkAct = `${base}/api/reports/power-query/activities?${paramsAct}`;
-    const linkUrl = `${base}/api/reports/power-query/urls?${paramsUrl}`;
-
-    const block = document.createElement('div');
-    block.className = 'pq-broadcaster-block';
-    block.innerHTML = `
-      <div class="pq-broadcaster-name">${b.name}</div>
-      <div class="pq-link-row">
-        <label>Atividades:</label>
-        <input type="text" readonly value="${linkAct}" class="pq-input" />
-        <button class="btn btn-secondary btn-sm pq-copy-btn">Copiar</button>
-      </div>
-      <div class="pq-link-row">
-        <label>URLs:</label>
-        <input type="text" readonly value="${linkUrl}" class="pq-input" />
-        <button class="btn btn-secondary btn-sm pq-copy-btn">Copiar</button>
-      </div>
-    `;
-    block.querySelectorAll('.pq-link-row').forEach(row => {
-      const btn = row.querySelector('.pq-copy-btn');
-      const input = row.querySelector('.pq-input');
-      btn.onclick = () => copyText(input.value, btn);
-      input.addEventListener('click', () => input.select());
-    });
-    return block;
-  }
-
-  function buildPowerQueryList() {
-    if (!pqList) return;
-    const validBroadcasters = allBroadcasters.filter(b => b.db_id);
-    if (validBroadcasters.length === 0) {
-      pqList.innerHTML = '<p class="pq-loading">Nenhum broadcaster disponível.</p>';
-      return;
-    }
-    pqList.innerHTML = '';
-    validBroadcasters.forEach(b => {
-      pqList.appendChild(buildPowerQueryBlock({ id: b.db_id, name: b.name }));
-    });
   }
 
   connect();
