@@ -80,9 +80,10 @@ class DatabaseStorage {
     if (!broadcasterIds || broadcasterIds.length === 0) return [];
     const result = await db.query(
       `SELECT a.timestamp, a.idle_seconds, a.active_url, a.foreground_app, a.app_count,
-              b.name AS maquina
+              COALESCE(bi.computer_name, b.name) AS maquina
        FROM activities a
        INNER JOIN broadcasters b ON a.broadcaster_id = b.id
+       LEFT JOIN broadcaster_installations bi ON a.installation_id = bi.id
        WHERE a.broadcaster_id = ANY($1::int[])
          AND a.timestamp >= $2
          AND a.timestamp <= $3
@@ -97,9 +98,10 @@ class DatabaseStorage {
     if (!broadcasterIds || broadcasterIds.length === 0) return [];
     const result = await db.query(
       `SELECT bh.browser, bh.url, bh.title, bh.visit_timestamp,
-              b.name AS maquina
+              COALESCE(bi.computer_name, b.name) AS maquina
        FROM browser_history bh
        INNER JOIN broadcasters b ON bh.broadcaster_id = b.id
+       LEFT JOIN broadcaster_installations bi ON bh.installation_id = bi.id
        WHERE bh.broadcaster_id = ANY($1::int[])
          AND bh.visit_timestamp >= $2
          AND bh.visit_timestamp <= $3
