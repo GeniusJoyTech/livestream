@@ -111,6 +111,11 @@ document.addEventListener("DOMContentLoaded", () => {
       input.addEventListener('click', () => input.select());
       pqListEl.appendChild(row);
     });
+
+    const dateHint = document.createElement('p');
+    dateHint.className = 'pq-date-hint';
+    dateHint.innerHTML = '📅 Filtro de datas (opcional): adicione <code>&amp;startDate=AAAA-MM-DD&amp;endDate=AAAA-MM-DD</code> ao final de cada link.';
+    pqListEl.appendChild(dateHint);
   }
 
   logoutButton.addEventListener("click", () => {

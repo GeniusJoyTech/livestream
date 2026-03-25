@@ -76,8 +76,9 @@ class DatabaseStorage {
     }
   }
   
-  async getAllActivities(broadcasterIds, startDate, endDate, limit = 200000) {
+  async getAllActivities(broadcasterIds, startDate, endDate, limit = null) {
     if (!broadcasterIds || broadcasterIds.length === 0) return [];
+    const limitClause = limit != null ? `LIMIT ${parseInt(limit)}` : '';
     const result = await db.query(
       `SELECT a.timestamp, a.idle_seconds, a.active_url, a.foreground_app, a.app_count,
               COALESCE(bi.computer_name, b.name) AS maquina
@@ -88,14 +89,15 @@ class DatabaseStorage {
          AND a.timestamp >= $2
          AND a.timestamp <= $3
        ORDER BY a.timestamp DESC
-       LIMIT $4`,
-      [broadcasterIds, startDate, endDate, limit]
+       ${limitClause}`,
+      [broadcasterIds, startDate, endDate]
     );
     return result.rows;
   }
 
-  async getAllBrowserHistory(broadcasterIds, startDate, endDate, limit = 100000) {
+  async getAllBrowserHistory(broadcasterIds, startDate, endDate, limit = null) {
     if (!broadcasterIds || broadcasterIds.length === 0) return [];
+    const limitClause = limit != null ? `LIMIT ${parseInt(limit)}` : '';
     const result = await db.query(
       `SELECT bh.browser, bh.url, bh.title, bh.visit_timestamp,
               COALESCE(bi.computer_name, b.name) AS maquina
@@ -106,8 +108,8 @@ class DatabaseStorage {
          AND bh.visit_timestamp >= $2
          AND bh.visit_timestamp <= $3
        ORDER BY bh.visit_timestamp DESC
-       LIMIT $4`,
-      [broadcasterIds, startDate, endDate, limit]
+       ${limitClause}`,
+      [broadcasterIds, startDate, endDate]
     );
     return result.rows.map(row => ({
       maquina: row.maquina,
@@ -118,7 +120,8 @@ class DatabaseStorage {
     }));
   }
 
-  async getActivities(broadcasterId, startDate, endDate, limit = 1000) {
+  async getActivities(broadcasterId, startDate, endDate, limit = null) {
+    const limitClause = limit != null ? `LIMIT ${parseInt(limit)}` : '';
     const result = await db.query(
       `SELECT id, timestamp, idle_seconds, active_url, foreground_app, app_count, apps_data
        FROM activities
@@ -126,8 +129,8 @@ class DatabaseStorage {
          AND timestamp >= $2 
          AND timestamp <= $3
        ORDER BY timestamp DESC
-       LIMIT $4`,
-      [broadcasterId, startDate, endDate, limit]
+       ${limitClause}`,
+      [broadcasterId, startDate, endDate]
     );
     
     return result.rows.map(row => ({
@@ -136,7 +139,8 @@ class DatabaseStorage {
     }));
   }
   
-  async getBrowserHistory(broadcasterId, startDate, endDate, limit = 5000) {
+  async getBrowserHistory(broadcasterId, startDate, endDate, limit = null) {
+    const limitClause = limit != null ? `LIMIT ${parseInt(limit)}` : '';
     const result = await db.query(
       `SELECT id, browser, url, title, visit_timestamp
        FROM browser_history
@@ -144,8 +148,8 @@ class DatabaseStorage {
          AND visit_timestamp >= $2
          AND visit_timestamp <= $3
        ORDER BY visit_timestamp DESC
-       LIMIT $4`,
-      [broadcasterId, startDate, endDate, limit]
+       ${limitClause}`,
+      [broadcasterId, startDate, endDate]
     );
     
     return result.rows.map(row => ({

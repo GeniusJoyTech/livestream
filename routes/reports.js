@@ -381,13 +381,37 @@ router.post('/power-query/token', authenticateToken, async (req, res) => {
   }
 });
 
+function parsePQDate(raw) {
+  if (!raw) return null;
+  const d = new Date(raw);
+  if (isNaN(d.getTime())) return { error: `Data inválida: "${raw}". Use o formato AAAA-MM-DD ou AAAA-MM-DDTHH:MM:SS` };
+  return d;
+}
+
+function getPQDates(query) {
+  const rawStart = query.startDate || query.fromDate || null;
+  const rawEnd   = query.endDate   || query.toDate   || null;
+
+  const start = rawStart ? parsePQDate(rawStart) : new Date('2000-01-01');
+  const end   = rawEnd   ? parsePQDate(rawEnd)   : new Date();
+
+  if (start && start.error) return { error: start.error };
+  if (end   && end.error)   return { error: end.error };
+
+  end.setHours(23, 59, 59, 999);
+  return { startDate: start, endDate: end };
+}
+
 router.get('/power-query/activities', authenticateTokenQuery, async (req, res) => {
   try {
-    const { broadcasterId, fromDate, toDate } = req.query;
+    const { broadcasterId } = req.query;
 
     if (!broadcasterId) {
       return res.status(400).json({ error: 'broadcasterId é obrigatório' });
     }
+
+    const dates = getPQDates(req.query);
+    if (dates.error) return res.status(400).json({ error: dates.error });
 
     const broadcasterIdInt = parseInt(broadcasterId);
     const broadcaster = await broadcasterService.getBroadcasterById(broadcasterIdInt);
@@ -404,11 +428,7 @@ router.get('/power-query/activities', authenticateTokenQuery, async (req, res) =
       if (!hasPermission) return res.status(403).json({ error: 'Sem permissão' });
     }
 
-    const startDate = fromDate ? new Date(fromDate) : new Date('2000-01-01');
-    let endDate = toDate ? new Date(toDate) : new Date();
-    endDate.setHours(23, 59, 59, 999);
-
-    const activities = await databaseStorage.getActivities(broadcasterIdInt, startDate, endDate, 50000);
+    const activities = await databaseStorage.getActivities(broadcasterIdInt, dates.startDate, dates.endDate);
 
     const result = activities.map(a => ({
       timestamp: a.timestamp,
@@ -422,8 +442,8 @@ router.get('/power-query/activities', authenticateTokenQuery, async (req, res) =
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.json({
       broadcaster: broadcaster.name,
-      periodo_inicio: startDate.toISOString(),
-      periodo_fim: endDate.toISOString(),
+      periodo_inicio: dates.startDate.toISOString(),
+      periodo_fim: dates.endDate.toISOString(),
       total_registros: result.length,
       dados: result
     });
@@ -435,11 +455,14 @@ router.get('/power-query/activities', authenticateTokenQuery, async (req, res) =
 
 router.get('/power-query/urls', authenticateTokenQuery, async (req, res) => {
   try {
-    const { broadcasterId, fromDate, toDate } = req.query;
+    const { broadcasterId } = req.query;
 
     if (!broadcasterId) {
       return res.status(400).json({ error: 'broadcasterId é obrigatório' });
     }
+
+    const dates = getPQDates(req.query);
+    if (dates.error) return res.status(400).json({ error: dates.error });
 
     const broadcasterIdInt = parseInt(broadcasterId);
     const broadcaster = await broadcasterService.getBroadcasterById(broadcasterIdInt);
@@ -456,11 +479,7 @@ router.get('/power-query/urls', authenticateTokenQuery, async (req, res) => {
       if (!hasPermission) return res.status(403).json({ error: 'Sem permissão' });
     }
 
-    const startDate = fromDate ? new Date(fromDate) : new Date('2000-01-01');
-    let endDate = toDate ? new Date(toDate) : new Date();
-    endDate.setHours(23, 59, 59, 999);
-
-    const history = await databaseStorage.getBrowserHistory(broadcasterIdInt, startDate, endDate, 5000);
+    const history = await databaseStorage.getBrowserHistory(broadcasterIdInt, dates.startDate, dates.endDate);
 
     const result = history.map(h => ({
       data_hora: h.timestamp,
@@ -473,8 +492,8 @@ router.get('/power-query/urls', authenticateTokenQuery, async (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.json({
       broadcaster: broadcaster.name,
-      periodo_inicio: startDate.toISOString(),
-      periodo_fim: endDate.toISOString(),
+      periodo_inicio: dates.startDate.toISOString(),
+      periodo_fim: dates.endDate.toISOString(),
       total_registros: result.length,
       dados: result
     });
@@ -486,7 +505,8 @@ router.get('/power-query/urls', authenticateTokenQuery, async (req, res) => {
 
 router.get('/power-query/all-activities', authenticateTokenQuery, async (req, res) => {
   try {
-    const { fromDate, toDate } = req.query;
+    const dates = getPQDates(req.query);
+    if (dates.error) return res.status(400).json({ error: dates.error });
 
     let broadcasters;
     if (req.user.role === 'owner') {
@@ -498,11 +518,7 @@ router.get('/power-query/all-activities', authenticateTokenQuery, async (req, re
 
     const broadcasterIds = broadcasters.map(b => b.id);
 
-    const startDate = fromDate ? new Date(fromDate) : new Date('2000-01-01');
-    let endDate = toDate ? new Date(toDate) : new Date();
-    endDate.setHours(23, 59, 59, 999);
-
-    const activities = await databaseStorage.getAllActivities(broadcasterIds, startDate, endDate);
+    const activities = await databaseStorage.getAllActivities(broadcasterIds, dates.startDate, dates.endDate);
 
     const result = activities.map(a => ({
       maquina: a.maquina || '',
@@ -516,8 +532,8 @@ router.get('/power-query/all-activities', authenticateTokenQuery, async (req, re
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.json({
-      periodo_inicio: startDate.toISOString(),
-      periodo_fim: endDate.toISOString(),
+      periodo_inicio: dates.startDate.toISOString(),
+      periodo_fim: dates.endDate.toISOString(),
       total_registros: result.length,
       maquinas: broadcasters.map(b => b.name),
       dados: result
@@ -530,7 +546,8 @@ router.get('/power-query/all-activities', authenticateTokenQuery, async (req, re
 
 router.get('/power-query/all-urls', authenticateTokenQuery, async (req, res) => {
   try {
-    const { fromDate, toDate } = req.query;
+    const dates = getPQDates(req.query);
+    if (dates.error) return res.status(400).json({ error: dates.error });
 
     let broadcasters;
     if (req.user.role === 'owner') {
@@ -542,11 +559,7 @@ router.get('/power-query/all-urls', authenticateTokenQuery, async (req, res) => 
 
     const broadcasterIds = broadcasters.map(b => b.id);
 
-    const startDate = fromDate ? new Date(fromDate) : new Date('2000-01-01');
-    let endDate = toDate ? new Date(toDate) : new Date();
-    endDate.setHours(23, 59, 59, 999);
-
-    const history = await databaseStorage.getAllBrowserHistory(broadcasterIds, startDate, endDate);
+    const history = await databaseStorage.getAllBrowserHistory(broadcasterIds, dates.startDate, dates.endDate);
 
     const result = history.map(h => ({
       maquina: h.maquina || '',
@@ -559,8 +572,8 @@ router.get('/power-query/all-urls', authenticateTokenQuery, async (req, res) => 
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.json({
-      periodo_inicio: startDate.toISOString(),
-      periodo_fim: endDate.toISOString(),
+      periodo_inicio: dates.startDate.toISOString(),
+      periodo_fim: dates.endDate.toISOString(),
       total_registros: result.length,
       maquinas: broadcasters.map(b => b.name),
       dados: result
