@@ -560,40 +560,21 @@ document.addEventListener("DOMContentLoaded", () => {
   exportActivitiesButton.onclick = () => exportReport('excel', 'atividades');
   exportUrlsButton.onclick = () => exportReport('excel-urls', 'urls');
 
-  const pqFromDate = document.getElementById('pqFromDate');
-  const pqToDate = document.getElementById('pqToDate');
   const pqActivitiesLink = document.getElementById('pqActivitiesLink');
   const pqUrlsLink = document.getElementById('pqUrlsLink');
   const copyActivitiesLink = document.getElementById('copyActivitiesLink');
   const copyUrlsLink = document.getElementById('copyUrlsLink');
   const pqStatus = document.getElementById('pq-status');
 
-  const today = new Date();
-  const firstOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-  pqFromDate.value = firstOfMonth.toISOString().split('T')[0];
-  pqToDate.value = today.toISOString().split('T')[0];
-
   function buildPowerQueryLinks() {
     if (!selectedBroadcasterDbId) return;
-
     const base = window.location.origin;
-    const fromDate = pqFromDate.value;
-    const toDate = pqToDate.value;
-    const params = new URLSearchParams({
-      broadcasterId: selectedBroadcasterDbId,
-      token: token,
-      ...(fromDate && { fromDate }),
-      ...(toDate && { toDate })
-    });
-
+    const params = new URLSearchParams({ broadcasterId: selectedBroadcasterDbId, token: token });
     pqActivitiesLink.value = `${base}/api/reports/power-query/activities?${params}`;
     pqUrlsLink.value = `${base}/api/reports/power-query/urls?${params}`;
     copyActivitiesLink.disabled = false;
     copyUrlsLink.disabled = false;
   }
-
-  pqFromDate.addEventListener('change', buildPowerQueryLinks);
-  pqToDate.addEventListener('change', buildPowerQueryLinks);
 
   async function copyToClipboard(input, button) {
     try {
@@ -620,7 +601,6 @@ document.addEventListener("DOMContentLoaded", () => {
   copyActivitiesLink.onclick = () => copyToClipboard(pqActivitiesLink, copyActivitiesLink);
   copyUrlsLink.onclick = () => copyToClipboard(pqUrlsLink, copyUrlsLink);
 
-  const originalBroadcasterSelectChange = broadcasterSelect.onchange;
   broadcasterSelect.addEventListener('change', () => {
     setTimeout(buildPowerQueryLinks, 100);
   });

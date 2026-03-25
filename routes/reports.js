@@ -389,7 +389,7 @@ router.get('/power-query/activities', authenticateTokenQuery, async (req, res) =
       if (!hasPermission) return res.status(403).json({ error: 'Sem permissão' });
     }
 
-    const startDate = fromDate ? new Date(fromDate) : new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+    const startDate = fromDate ? new Date(fromDate) : new Date('2000-01-01');
     let endDate = toDate ? new Date(toDate) : new Date();
     endDate.setHours(23, 59, 59, 999);
 
@@ -441,7 +441,7 @@ router.get('/power-query/urls', authenticateTokenQuery, async (req, res) => {
       if (!hasPermission) return res.status(403).json({ error: 'Sem permissão' });
     }
 
-    const startDate = fromDate ? new Date(fromDate) : new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+    const startDate = fromDate ? new Date(fromDate) : new Date('2000-01-01');
     let endDate = toDate ? new Date(toDate) : new Date();
     endDate.setHours(23, 59, 59, 999);
 
