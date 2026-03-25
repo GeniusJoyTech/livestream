@@ -76,9 +76,15 @@ class DatabaseStorage {
     }
   }
   
+  _safeLimitClause(limit) {
+    if (limit == null) return '';
+    const n = parseInt(limit, 10);
+    return Number.isFinite(n) && n > 0 ? `LIMIT ${n}` : '';
+  }
+
   async getAllActivities(broadcasterIds, startDate, endDate, limit = null) {
     if (!broadcasterIds || broadcasterIds.length === 0) return [];
-    const limitClause = limit != null ? `LIMIT ${parseInt(limit)}` : '';
+    const limitClause = this._safeLimitClause(limit);
     const result = await db.query(
       `SELECT a.timestamp, a.idle_seconds, a.active_url, a.foreground_app, a.app_count,
               COALESCE(bi.computer_name, b.name) AS maquina
@@ -97,7 +103,7 @@ class DatabaseStorage {
 
   async getAllBrowserHistory(broadcasterIds, startDate, endDate, limit = null) {
     if (!broadcasterIds || broadcasterIds.length === 0) return [];
-    const limitClause = limit != null ? `LIMIT ${parseInt(limit)}` : '';
+    const limitClause = this._safeLimitClause(limit);
     const result = await db.query(
       `SELECT bh.browser, bh.url, bh.title, bh.visit_timestamp,
               COALESCE(bi.computer_name, b.name) AS maquina
@@ -121,7 +127,7 @@ class DatabaseStorage {
   }
 
   async getActivities(broadcasterId, startDate, endDate, limit = null) {
-    const limitClause = limit != null ? `LIMIT ${parseInt(limit)}` : '';
+    const limitClause = this._safeLimitClause(limit);
     const result = await db.query(
       `SELECT id, timestamp, idle_seconds, active_url, foreground_app, app_count, apps_data
        FROM activities
@@ -140,7 +146,7 @@ class DatabaseStorage {
   }
   
   async getBrowserHistory(broadcasterId, startDate, endDate, limit = null) {
-    const limitClause = limit != null ? `LIMIT ${parseInt(limit)}` : '';
+    const limitClause = this._safeLimitClause(limit);
     const result = await db.query(
       `SELECT id, browser, url, title, visit_timestamp
        FROM browser_history
