@@ -382,9 +382,11 @@ router.post('/power-query/token', authenticateToken, async (req, res) => {
 });
 
 function parsePQDate(raw) {
-  if (!raw) return null;
+  if (!raw || typeof raw !== 'string') {
+    return { error: 'Data inválida. Use o formato AAAA-MM-DD ou AAAA-MM-DDTHH:MM:SS' };
+  }
   const trimmed = raw.trim();
-  const m = /^(\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])(?:T\d{2}:\d{2}:\d{2}(?:Z|[+-]\d{2}:?\d{2})?)?$/.exec(trimmed);
+  const m = /^(\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])(?:T([01]\d|2[0-3]):([0-5]\d):([0-5]\d)(?:Z|[+-][01]\d:?\d{2})?)?$/.exec(trimmed);
   if (!m) {
     return { error: `Data inválida: "${trimmed}". Use o formato AAAA-MM-DD ou AAAA-MM-DDTHH:MM:SS` };
   }
@@ -395,7 +397,11 @@ function parsePQDate(raw) {
   if (day > maxDay) {
     return { error: `Data inválida: "${trimmed}". O mês ${m[2]}/${m[1]} tem apenas ${maxDay} dias.` };
   }
-  return new Date(trimmed);
+  const d = new Date(trimmed);
+  if (isNaN(d.getTime())) {
+    return { error: `Data inválida: "${trimmed}". Use o formato AAAA-MM-DD ou AAAA-MM-DDTHH:MM:SS` };
+  }
+  return d;
 }
 
 function getPQDates(query) {
