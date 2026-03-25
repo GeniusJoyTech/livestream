@@ -374,3 +374,57 @@ video {
     grid-template-columns: 1fr;
   }
 }
+
+.power-query-section {
+  margin-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 1.5rem;
+}
+
+.pq-description {
+  font-size: 0.85rem;
+  color: #a0aec0;
+  margin-bottom: 1rem;
+}
+
+.pq-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.pq-link-row {
+  display: grid;
+  grid-template-columns: 90px 1fr auto;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.pq-link-row label {
+  font-size: 0.85rem;
+  color: #a0aec0;
+  font-weight: 600;
+}
+
+.pq-link-row input[type="text"] {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  color: #e2e8f0;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.78rem;
+  font-family: monospace;
+  cursor: text;
+}
+
+.pq-link-row input[type="text"]:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+@media (max-width: 768px) {
+  .pq-link-row {
+    grid-template-columns: 1fr;
+  }
+}

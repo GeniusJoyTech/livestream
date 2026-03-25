@@ -353,4 +353,120 @@ router.get('/stats', authenticateToken, async (req, res) => {
   }
 });
 
+function authenticateTokenQuery(req, res, next) {
+  const { verifyToken } = require('../jwt/jwtUtils');
+  const authHeader = req.headers['authorization'];
+  const headerToken = authHeader && authHeader.split(' ')[1];
+  const queryToken = req.query.token;
+  const token = headerToken || queryToken;
+  if (!token) return res.status(401).json({ error: 'Token ausente' });
+  const user = verifyToken(token);
+  if (!user) return res.status(403).json({ error: 'Token inválido' });
+  req.user = user;
+  next();
+}
+
+router.get('/power-query/activities', authenticateTokenQuery, async (req, res) => {
+  try {
+    const { broadcasterId, fromDate, toDate } = req.query;
+
+    if (!broadcasterId) {
+      return res.status(400).json({ error: 'broadcasterId é obrigatório' });
+    }
+
+    const broadcasterIdInt = parseInt(broadcasterId);
+    const broadcaster = await broadcasterService.getBroadcasterById(broadcasterIdInt);
+    if (!broadcaster) {
+      return res.status(404).json({ error: 'Broadcaster não encontrado' });
+    }
+
+    if (req.user.role === 'owner' && broadcaster.owner_id !== req.user.id) {
+      return res.status(403).json({ error: 'Sem permissão' });
+    }
+
+    if (req.user.role === 'viewer') {
+      const hasPermission = await broadcasterService.hasViewerPermission(broadcasterIdInt, req.user.id);
+      if (!hasPermission) return res.status(403).json({ error: 'Sem permissão' });
+    }
+
+    const startDate = fromDate ? new Date(fromDate) : new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+    let endDate = toDate ? new Date(toDate) : new Date();
+    endDate.setHours(23, 59, 59, 999);
+
+    const activities = await databaseStorage.getActivities(broadcasterIdInt, startDate, endDate, 50000);
+
+    const result = activities.map(a => ({
+      timestamp: a.timestamp,
+      aplicativo: a.foreground_app || '',
+      url_ativa: a.active_url || '',
+      tempo_ocioso_seg: a.idle_seconds || 0,
+      qtd_apps_abertos: a.app_count || 0
+    }));
+
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.json({
+      broadcaster: broadcaster.name,
+      periodo_inicio: startDate.toISOString(),
+      periodo_fim: endDate.toISOString(),
+      total_registros: result.length,
+      dados: result
+    });
+  } catch (error) {
+    console.error('Erro no power-query/activities:', error);
+    res.status(500).json({ error: 'Erro ao obter atividades' });
+  }
+});
+
+router.get('/power-query/urls', authenticateTokenQuery, async (req, res) => {
+  try {
+    const { broadcasterId, fromDate, toDate } = req.query;
+
+    if (!broadcasterId) {
+      return res.status(400).json({ error: 'broadcasterId é obrigatório' });
+    }
+
+    const broadcasterIdInt = parseInt(broadcasterId);
+    const broadcaster = await broadcasterService.getBroadcasterById(broadcasterIdInt);
+    if (!broadcaster) {
+      return res.status(404).json({ error: 'Broadcaster não encontrado' });
+    }
+
+    if (req.user.role === 'owner' && broadcaster.owner_id !== req.user.id) {
+      return res.status(403).json({ error: 'Sem permissão' });
+    }
+
+    if (req.user.role === 'viewer') {
+      const hasPermission = await broadcasterService.hasViewerPermission(broadcasterIdInt, req.user.id);
+      if (!hasPermission) return res.status(403).json({ error: 'Sem permissão' });
+    }
+
+    const startDate = fromDate ? new Date(fromDate) : new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+    let endDate = toDate ? new Date(toDate) : new Date();
+    endDate.setHours(23, 59, 59, 999);
+
+    const history = await databaseStorage.getBrowserHistory(broadcasterIdInt, startDate, endDate, 5000);
+
+    const result = history.map(h => ({
+      data_hora: h.timestamp,
+      navegador: h.browser || '',
+      url: h.url || '',
+      titulo_pagina: h.title || ''
+    }));
+
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.json({
+      broadcaster: broadcaster.name,
+      periodo_inicio: startDate.toISOString(),
+      periodo_fim: endDate.toISOString(),
+      total_registros: result.length,
+      dados: result
+    });
+  } catch (error) {
+    console.error('Erro no power-query/urls:', error);
+    res.status(500).json({ error: 'Erro ao obter URLs' });
+  }
+});
+
 module.exports = router;
