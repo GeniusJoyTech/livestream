@@ -156,6 +156,7 @@ function renderBroadcasters() {
         ` : `
             <div class="card-actions">
                 <div class="deactivated-message">Este grupo foi desativado e não pode mais ser usado</div>
+                <button onclick="deleteBroadcasterPermanently(${b.id}, '${escapeHtml(b.name).replace(/'/g, "&#39;")}')" class="btn-danger btn-small">🗑️ Excluir</button>
             </div>
         `;
         
@@ -727,6 +728,36 @@ async function deactivateBroadcaster(broadcasterId) {
     } catch (error) {
         console.error('Error deactivating broadcaster:', error);
         showError('Erro ao desativar broadcaster');
+    }
+}
+
+async function deleteBroadcasterPermanently(broadcasterId, broadcasterName) {
+    const confirmed = confirm(
+        `⚠️ ATENÇÃO: Esta ação é irreversível!\n\n` +
+        `Você está prestes a excluir permanentemente o broadcaster "${broadcasterName}".\n\n` +
+        `Todos os dados de atividades, histórico de navegação e instalações associados serão removidos.\n\n` +
+        `Digite OK para confirmar.`
+    );
+    if (!confirmed) return;
+
+    try {
+        const response = await fetch(`/api/broadcasters/${broadcasterId}/permanent`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if (response.ok) {
+            showSuccess('Broadcaster excluído permanentemente.');
+            await loadBroadcasters();
+        } else {
+            const error = await response.json();
+            showError(error.error || 'Erro ao excluir broadcaster');
+        }
+    } catch (error) {
+        console.error('Error deleting broadcaster:', error);
+        showError('Erro ao excluir broadcaster');
     }
 }
 

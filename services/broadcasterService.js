@@ -162,6 +162,17 @@ class BroadcasterService {
       [broadcasterId]
     );
   }
+
+  async deleteBroadcasterPermanently(broadcasterId, ownerId) {
+    const broadcaster = await this.getBroadcasterById(broadcasterId, ownerId);
+    if (!broadcaster) {
+      throw new Error('Broadcaster not found or access denied');
+    }
+    if (broadcaster.is_active) {
+      throw new Error('Only inactive broadcasters can be permanently deleted. Deactivate it first.');
+    }
+    await db.query('DELETE FROM broadcasters WHERE id = $1 AND owner_id = $2', [broadcasterId, ownerId]);
+  }
   
   // ========== INSTALLATION METHODS ==========
   

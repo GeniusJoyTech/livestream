@@ -157,6 +157,25 @@ router.delete('/:broadcasterId', authenticateToken, async (req, res) => {
   }
 });
 
+router.delete('/:broadcasterId/permanent', authenticateToken, async (req, res) => {
+  try {
+    if (req.user.role !== 'owner') {
+      return res.status(403).json({ error: 'Only owners can delete broadcasters' });
+    }
+
+    const { broadcasterId } = req.params;
+
+    await broadcasterService.deleteBroadcasterPermanently(parseInt(broadcasterId), req.user.id);
+
+    await userService.logAuditAction(req.user.id, 'BROADCASTER_DELETED', 'broadcaster', parseInt(broadcasterId), req.ip, req.get('user-agent'));
+
+    res.json({ message: 'Broadcaster permanently deleted' });
+  } catch (error) {
+    console.error('Delete broadcaster error:', error);
+    res.status(400).json({ error: error.message });
+  }
+});
+
 router.get('/:broadcasterId/installations', authenticateToken, async (req, res) => {
   try {
     const { broadcasterId } = req.params;
