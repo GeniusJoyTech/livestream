@@ -475,7 +475,8 @@ router.get('/power-query/all-activities', authenticateTokenQuery, async (req, re
 
     let broadcasters;
     if (req.user.role === 'owner') {
-      broadcasters = await broadcasterService.getBroadcastersByOwner(req.user.id);
+      const all = await broadcasterService.getBroadcastersByOwner(req.user.id);
+      broadcasters = all.filter(b => b.is_active);
     } else {
       broadcasters = await broadcasterService.getBroadcastersForViewer(req.user.id);
     }
@@ -518,7 +519,8 @@ router.get('/power-query/all-urls', authenticateTokenQuery, async (req, res) => 
 
     let broadcasters;
     if (req.user.role === 'owner') {
-      broadcasters = await broadcasterService.getBroadcastersByOwner(req.user.id);
+      const all = await broadcasterService.getBroadcastersByOwner(req.user.id);
+      broadcasters = all.filter(b => b.is_active);
     } else {
       broadcasters = await broadcasterService.getBroadcastersForViewer(req.user.id);
     }
