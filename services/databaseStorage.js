@@ -247,19 +247,16 @@ class DatabaseStorage {
   async getAppSessions(broadcasterIds, startDate, endDate) {
     if (!broadcasterIds || broadcasterIds.length === 0) return [];
     const result = await db.query(
-      `WITH ranked AS (
+      `WITH all_ranked AS (
          SELECT
            a.broadcaster_id,
            a.installation_id,
            COALESCE(bi.computer_name, b.name) AS maquina,
            a.foreground_app,
            a.timestamp,
+           a.apps_data,
            LEAD(a.timestamp) OVER w AS next_ts,
-           ROW_NUMBER() OVER w AS rn,
-           ROW_NUMBER() OVER (
-             PARTITION BY a.broadcaster_id, a.installation_id, a.foreground_app
-             ORDER BY a.timestamp
-           ) AS rn_per_app
+           ROW_NUMBER() OVER w AS rn
          FROM activities a
          INNER JOIN broadcasters b ON a.broadcaster_id = b.id
          LEFT JOIN broadcaster_installations bi ON a.installation_id = bi.id
@@ -267,6 +264,15 @@ class DatabaseStorage {
            AND a.timestamp >= $2
            AND a.timestamp <= $3
          WINDOW w AS (PARTITION BY a.broadcaster_id, a.installation_id ORDER BY a.timestamp)
+       ),
+       fg_ranked AS (
+         SELECT *,
+           ROW_NUMBER() OVER (
+             PARTITION BY broadcaster_id, installation_id, foreground_app
+             ORDER BY timestamp
+           ) AS rn_per_app
+         FROM all_ranked
+         WHERE foreground_app IS NOT NULL
        ),
        fg_islands AS (
          SELECT
@@ -281,49 +287,28 @@ class DatabaseStorage {
            ROUND(SUM(LEAST(300, GREATEST(0,
              EXTRACT(EPOCH FROM (COALESCE(next_ts, timestamp) - timestamp))
            )))) AS tempo_seg
-         FROM ranked
-         WHERE foreground_app IS NOT NULL AND next_ts IS NOT NULL
+         FROM fg_ranked
+         WHERE next_ts IS NOT NULL
          GROUP BY broadcaster_id, installation_id, maquina, foreground_app, (rn - rn_per_app)
        ),
-       valid_bg AS (
+       bg_exploded AS (
          SELECT
-           a.broadcaster_id,
-           a.installation_id,
-           a.foreground_app,
-           a.timestamp,
-           a.apps_data,
-           LEAD(a.timestamp) OVER (
-             PARTITION BY a.broadcaster_id, a.installation_id ORDER BY a.timestamp
-           ) AS next_ts,
-           ROW_NUMBER() OVER (
-             PARTITION BY a.broadcaster_id, a.installation_id ORDER BY a.timestamp
-           ) AS rn,
-           COALESCE(bi.computer_name, b.name) AS maquina
-         FROM activities a
-         INNER JOIN broadcasters b ON a.broadcaster_id = b.id
-         LEFT JOIN broadcaster_installations bi ON a.installation_id = bi.id
-         WHERE a.broadcaster_id = ANY($1::int[])
-           AND a.timestamp >= $2
-           AND a.timestamp <= $3
-           AND a.apps_data IS NOT NULL
-           AND jsonb_array_length(a.apps_data) > 0
-       ),
-       bg_ranked AS (
-         SELECT
-           v.broadcaster_id,
-           v.installation_id,
-           v.maquina,
+           ar.broadcaster_id,
+           ar.installation_id,
+           ar.maquina,
            app_entry->>'app' AS aplicativo,
-           v.timestamp,
-           v.next_ts,
-           v.rn,
+           ar.timestamp,
+           ar.next_ts,
+           ar.rn,
            ROW_NUMBER() OVER (
-             PARTITION BY v.broadcaster_id, v.installation_id, app_entry->>'app'
-             ORDER BY v.timestamp
+             PARTITION BY ar.broadcaster_id, ar.installation_id, app_entry->>'app'
+             ORDER BY ar.timestamp
            ) AS rn_per_app
-         FROM valid_bg v
-         CROSS JOIN LATERAL jsonb_array_elements(v.apps_data) AS app_entry
-         WHERE app_entry->>'app' IS DISTINCT FROM v.foreground_app
+         FROM all_ranked ar
+         CROSS JOIN LATERAL jsonb_array_elements(ar.apps_data) AS app_entry
+         WHERE ar.apps_data IS NOT NULL
+           AND jsonb_array_length(ar.apps_data) > 0
+           AND app_entry->>'app' IS DISTINCT FROM ar.foreground_app
            AND app_entry->>'app' IS NOT NULL
        ),
        bg_islands AS (
@@ -339,7 +324,7 @@ class DatabaseStorage {
            ROUND(SUM(LEAST(300, GREATEST(0,
              EXTRACT(EPOCH FROM (COALESCE(next_ts, timestamp) - timestamp))
            )))) AS tempo_seg
-         FROM bg_ranked
+         FROM bg_exploded
          WHERE next_ts IS NOT NULL
          GROUP BY broadcaster_id, installation_id, maquina, aplicativo, (rn - rn_per_app)
        )
