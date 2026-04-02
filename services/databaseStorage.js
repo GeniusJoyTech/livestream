@@ -327,6 +327,25 @@ class DatabaseStorage {
          FROM bg_exploded
          WHERE next_ts IS NOT NULL
          GROUP BY broadcaster_id, installation_id, maquina, aplicativo, (rn - rn_per_app)
+       ),
+       bg_between_fg AS (
+         SELECT bi.*
+         FROM bg_islands bi
+         WHERE bi.tempo_seg > 0
+           AND EXISTS (
+             SELECT 1 FROM fg_islands fi
+             WHERE fi.broadcaster_id = bi.broadcaster_id
+               AND fi.installation_id = bi.installation_id
+               AND fi.aplicativo = bi.aplicativo
+               AND fi.fim_sessao <= bi.inicio_sessao
+           )
+           AND EXISTS (
+             SELECT 1 FROM fg_islands fi
+             WHERE fi.broadcaster_id = bi.broadcaster_id
+               AND fi.installation_id = bi.installation_id
+               AND fi.aplicativo = bi.aplicativo
+               AND fi.inicio_sessao >= bi.fim_sessao
+           )
        )
        SELECT dia, maquina, aplicativo, 'primeiro_plano' AS tipo,
               inicio_sessao, fim_sessao, tempo_seg
@@ -335,8 +354,7 @@ class DatabaseStorage {
        UNION ALL
        SELECT dia, maquina, aplicativo, 'segundo_plano' AS tipo,
               inicio_sessao, fim_sessao, tempo_seg
-       FROM bg_islands
-       WHERE tempo_seg > 0
+       FROM bg_between_fg
        ORDER BY maquina, dia, inicio_sessao`,
       [broadcasterIds, startDate, endDate]
     );
