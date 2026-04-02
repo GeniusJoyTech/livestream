@@ -84,6 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const linkUrl        = `${base}/api/reports/power-query/all-urls?token=${tk}`;
     const linkTimeApp    = `${base}/api/reports/power-query/time-per-app?token=${tk}`;
     const linkTimeUrl    = `${base}/api/reports/power-query/time-per-url?token=${tk}`;
+    const linkSessions   = `${base}/api/reports/power-query/app-sessions?token=${tk}`;
 
     pqListEl.innerHTML = '';
 
@@ -100,8 +101,9 @@ document.addEventListener("DOMContentLoaded", () => {
     [
       { label: 'Registros de aplicativos (todas as máquinas):', link: linkAct },
       { label: 'Registros de URLs visitadas (todas as máquinas):', link: linkUrl },
-      { label: 'Tempo ativo/inativo por aplicativo:', link: linkTimeApp },
-      { label: 'Tempo ativo/inativo por URL:', link: linkTimeUrl }
+      { label: 'Tempo por aplicativo (totais diários):', link: linkTimeApp },
+      { label: 'Tempo por URL (totais diários):', link: linkTimeUrl },
+      { label: 'Sessões por aplicativo (1º e 2º plano):', link: linkSessions }
     ].forEach(({ label, link }) => {
       const row = document.createElement('div');
       row.className = 'pq-link-row';

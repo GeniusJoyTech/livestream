@@ -173,6 +173,7 @@ class DatabaseStorage {
          SELECT
            COALESCE(bi.computer_name, b.name) AS maquina,
            a.foreground_app,
+           DATE(a.timestamp AT TIME ZONE 'America/Sao_Paulo') AS dia,
            COALESCE(a.idle_seconds, 0) AS idle_seconds,
            LEAST(300,
              EXTRACT(EPOCH FROM (
@@ -188,6 +189,7 @@ class DatabaseStorage {
            AND a.timestamp <= $3
        )
        SELECT
+         dia,
          maquina,
          COALESCE(foreground_app, '(sem aplicativo)') AS aplicativo,
          ROUND(SUM(GREATEST(0, COALESCE(interval_seconds, 0) - LEAST(idle_seconds, COALESCE(interval_seconds, 0))))) AS tempo_ativo_seg,
@@ -195,8 +197,8 @@ class DatabaseStorage {
          ROUND(SUM(COALESCE(interval_seconds, 0)))                                                                  AS tempo_total_seg
        FROM intervals
        WHERE interval_seconds IS NOT NULL AND interval_seconds > 0
-       GROUP BY maquina, foreground_app
-       ORDER BY tempo_ativo_seg DESC`,
+       GROUP BY dia, maquina, foreground_app
+       ORDER BY dia DESC, tempo_ativo_seg DESC`,
       [broadcasterIds, startDate, endDate]
     );
     return result.rows;
@@ -209,6 +211,7 @@ class DatabaseStorage {
          SELECT
            COALESCE(bi.computer_name, b.name) AS maquina,
            a.active_url,
+           DATE(a.timestamp AT TIME ZONE 'America/Sao_Paulo') AS dia,
            COALESCE(a.idle_seconds, 0) AS idle_seconds,
            LEAST(300,
              EXTRACT(EPOCH FROM (
@@ -226,6 +229,7 @@ class DatabaseStorage {
            AND a.active_url <> ''
        )
        SELECT
+         dia,
          maquina,
          active_url AS url,
          ROUND(SUM(GREATEST(0, COALESCE(interval_seconds, 0) - LEAST(idle_seconds, COALESCE(interval_seconds, 0))))) AS tempo_ativo_seg,
@@ -233,8 +237,106 @@ class DatabaseStorage {
          ROUND(SUM(COALESCE(interval_seconds, 0)))                                                                  AS tempo_total_seg
        FROM intervals
        WHERE interval_seconds IS NOT NULL AND interval_seconds > 0
-       GROUP BY maquina, active_url
-       ORDER BY tempo_ativo_seg DESC`,
+       GROUP BY dia, maquina, active_url
+       ORDER BY dia DESC, tempo_ativo_seg DESC`,
+      [broadcasterIds, startDate, endDate]
+    );
+    return result.rows;
+  }
+
+  async getAppSessions(broadcasterIds, startDate, endDate) {
+    if (!broadcasterIds || broadcasterIds.length === 0) return [];
+    const result = await db.query(
+      `WITH ranked AS (
+         SELECT
+           a.broadcaster_id,
+           a.installation_id,
+           COALESCE(bi.computer_name, b.name) AS maquina,
+           a.foreground_app,
+           a.timestamp,
+           LEAD(a.timestamp) OVER w AS next_ts,
+           ROW_NUMBER() OVER w AS rn,
+           ROW_NUMBER() OVER (PARTITION BY a.broadcaster_id, a.installation_id, a.foreground_app ORDER BY a.timestamp) AS rn_per_app
+         FROM activities a
+         INNER JOIN broadcasters b ON a.broadcaster_id = b.id
+         LEFT JOIN broadcaster_installations bi ON a.installation_id = bi.id
+         WHERE a.broadcaster_id = ANY($1::int[])
+           AND a.timestamp >= $2
+           AND a.timestamp <= $3
+         WINDOW w AS (PARTITION BY a.broadcaster_id, a.installation_id ORDER BY a.timestamp)
+       ),
+       fg_islands AS (
+         SELECT
+           maquina,
+           foreground_app AS aplicativo,
+           (rn - rn_per_app) AS grp_key,
+           DATE(MIN(timestamp) AT TIME ZONE 'America/Sao_Paulo') AS dia,
+           MIN(timestamp) AS inicio_sessao,
+           MAX(COALESCE(next_ts, timestamp)) AS fim_sessao,
+           ROUND(SUM(LEAST(300, GREATEST(0,
+             EXTRACT(EPOCH FROM (COALESCE(next_ts, timestamp) - timestamp))
+           )))) AS tempo_seg
+         FROM ranked
+         WHERE foreground_app IS NOT NULL AND next_ts IS NOT NULL
+         GROUP BY maquina, foreground_app, (rn - rn_per_app)
+       ),
+       valid_bg AS (
+         SELECT
+           a.broadcaster_id,
+           a.installation_id,
+           a.foreground_app,
+           a.timestamp,
+           a.apps_data,
+           COALESCE(bi.computer_name, b.name) AS maquina
+         FROM activities a
+         INNER JOIN broadcasters b ON a.broadcaster_id = b.id
+         LEFT JOIN broadcaster_installations bi ON a.installation_id = bi.id
+         WHERE a.broadcaster_id = ANY($1::int[])
+           AND a.timestamp >= $2
+           AND a.timestamp <= $3
+           AND a.apps_data IS NOT NULL
+           AND jsonb_array_length(a.apps_data) > 0
+       ),
+       bg_ranked AS (
+         SELECT
+           v.broadcaster_id,
+           v.installation_id,
+           v.maquina,
+           app_entry->>'app' AS aplicativo,
+           v.timestamp,
+           LEAD(v.timestamp) OVER (PARTITION BY v.broadcaster_id, v.installation_id ORDER BY v.timestamp) AS next_ts,
+           ROW_NUMBER() OVER (PARTITION BY v.broadcaster_id, v.installation_id ORDER BY v.timestamp) AS rn,
+           ROW_NUMBER() OVER (PARTITION BY v.broadcaster_id, v.installation_id, app_entry->>'app' ORDER BY v.timestamp) AS rn_per_app
+         FROM valid_bg v
+         CROSS JOIN LATERAL jsonb_array_elements(v.apps_data) AS app_entry
+         WHERE app_entry->>'app' IS DISTINCT FROM v.foreground_app
+           AND app_entry->>'app' IS NOT NULL
+       ),
+       bg_islands AS (
+         SELECT
+           maquina,
+           aplicativo,
+           (rn - rn_per_app) AS grp_key,
+           DATE(MIN(timestamp) AT TIME ZONE 'America/Sao_Paulo') AS dia,
+           MIN(timestamp) AS inicio_sessao,
+           MAX(COALESCE(next_ts, timestamp)) AS fim_sessao,
+           ROUND(SUM(LEAST(300, GREATEST(0,
+             EXTRACT(EPOCH FROM (COALESCE(next_ts, timestamp) - timestamp))
+           )))) AS tempo_seg
+         FROM bg_ranked
+         WHERE next_ts IS NOT NULL
+         GROUP BY maquina, aplicativo, (rn - rn_per_app)
+       )
+       SELECT dia, maquina, aplicativo, 'primeiro_plano' AS tipo,
+              inicio_sessao, fim_sessao, tempo_seg
+       FROM fg_islands
+       WHERE tempo_seg > 0
+       UNION ALL
+       SELECT dia, maquina, aplicativo, 'segundo_plano' AS tipo,
+              inicio_sessao, fim_sessao, tempo_seg
+       FROM bg_islands
+       WHERE tempo_seg > 0
+       ORDER BY maquina, dia, inicio_sessao`,
       [broadcasterIds, startDate, endDate]
     );
     return result.rows;
