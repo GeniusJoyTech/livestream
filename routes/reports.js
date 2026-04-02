@@ -705,7 +705,10 @@ router.get('/power-query/app-sessions', authenticateTokenQuery, async (req, res)
     for (const r of fgRows) {
       const key = `${r.broadcaster_id}:${r.installation_id}:${r.aplicativo}`;
       if (!fgByInstallApp.has(key)) fgByInstallApp.set(key, []);
-      fgByInstallApp.get(key).push(r);
+      fgByInstallApp.get(key).push({
+        fimMs: new Date(r.fim_sessao).getTime(),
+        inicioMs: new Date(r.inicio_sessao).getTime()
+      });
     }
 
     const bgRows = [];
@@ -716,10 +719,10 @@ router.get('/power-query/app-sessions', authenticateTokenQuery, async (req, res)
       for (const bg of rawBg) {
         const fgKey = `${broadcasterId}:${installationId}:${bg.aplicativo}`;
         const appFg = fgByInstallApp.get(fgKey) || [];
-        const bgStart = new Date(bg.inicio_sessao);
-        const bgEnd = new Date(bg.fim_sessao);
-        const hasPrev = appFg.some(f => new Date(f.fim_sessao) <= bgStart);
-        const hasNext = appFg.some(f => new Date(f.inicio_sessao) >= bgEnd);
+        const bgStartMs = new Date(bg.inicio_sessao).getTime();
+        const bgEndMs = new Date(bg.fim_sessao).getTime();
+        const hasPrev = appFg.some(f => f.fimMs <= bgStartMs);
+        const hasNext = appFg.some(f => f.inicioMs >= bgEndMs);
         if (hasPrev && hasNext) {
           bgRows.push({ ...bg, maquina });
         }
