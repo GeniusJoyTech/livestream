@@ -88,15 +88,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
     pqListEl.innerHTML = '';
 
+    const header = document.createElement('div');
+    header.className = 'pq-header-row';
+
     const note = document.createElement('p');
     note.className = 'pq-expiry-note';
     if (expiresAt) {
       const expDate = new Date(expiresAt).toLocaleDateString('pt-BR');
-      note.textContent = `🔑 Links válidos até ${expDate} — abra esta página para renovar`;
+      note.textContent = `🔑 Links válidos até ${expDate}`;
     } else {
-      note.textContent = '⚠️ Link com validade curta. Abra esta página para renovar.';
+      note.textContent = '⚠️ Token de sessão (validade curta). Clique em Renovar para obter links com 30 dias de validade.';
     }
-    pqListEl.appendChild(note);
+
+    const renewBtn = document.createElement('button');
+    renewBtn.className = 'btn btn-secondary btn-sm pq-renew-btn';
+    renewBtn.textContent = '🔄 Renovar Links';
+    renewBtn.title = 'Gera novos links com validade de 30 dias';
+    renewBtn.onclick = () => renderGlobalPowerQueryLinks();
+
+    header.appendChild(note);
+    header.appendChild(renewBtn);
+    pqListEl.appendChild(header);
 
     [
       { label: 'Registros de aplicativos (todas as máquinas):', link: linkAct },

@@ -7,6 +7,15 @@ const { authenticateToken } = require('../jwt/authMiddleware');
 
 const router = express.Router();
 
+router.use('/power-query', (req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Authorization, Content-Type');
+  res.setHeader('Access-Control-Max-Age', '86400');
+  if (req.method === 'OPTIONS') return res.status(204).end();
+  next();
+});
+
 router.get('/export/excel', authenticateToken, async (req, res) => {
   try {
     const { broadcasterId, fromDate, toDate } = req.query;
@@ -361,7 +370,7 @@ function authenticateTokenQuery(req, res, next) {
   const token = headerToken || queryToken;
   if (!token) return res.status(401).json({ error: 'Token ausente' });
   const user = verifyToken(token);
-  if (!user) return res.status(403).json({ error: 'Token inválido ou expirado' });
+  if (!user) return res.status(401).json({ error: 'Token inválido ou expirado' });
   req.user = user;
   next();
 }
