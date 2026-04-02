@@ -244,7 +244,7 @@ class DatabaseStorage {
     return result.rows;
   }
 
-  async getAppSessions(broadcasterIds, startDate, endDate) {
+  async getForegroundSessions(broadcasterIds, startDate, endDate) {
     if (!broadcasterIds || broadcasterIds.length === 0) return [];
     const result = await db.query(
       `WITH all_ranked AS (
@@ -254,7 +254,6 @@ class DatabaseStorage {
            COALESCE(bi.computer_name, b.name) AS maquina,
            a.foreground_app,
            a.timestamp,
-           a.apps_data,
            LEAD(a.timestamp) OVER w AS next_ts,
            ROW_NUMBER() OVER w AS rn
          FROM activities a
@@ -273,90 +272,79 @@ class DatabaseStorage {
            ) AS rn_per_app
          FROM all_ranked
          WHERE foreground_app IS NOT NULL
-       ),
-       fg_islands AS (
+       )
+       SELECT
+         broadcaster_id,
+         installation_id,
+         maquina,
+         foreground_app AS aplicativo,
+         DATE(MIN(timestamp) AT TIME ZONE 'America/Sao_Paulo') AS dia,
+         MIN(timestamp) AS inicio_sessao,
+         MAX(COALESCE(next_ts, timestamp)) AS fim_sessao,
+         ROUND(SUM(LEAST(300, GREATEST(0,
+           EXTRACT(EPOCH FROM (COALESCE(next_ts, timestamp) - timestamp))
+         )))) AS tempo_seg
+       FROM fg_ranked
+       WHERE next_ts IS NOT NULL
+       GROUP BY broadcaster_id, installation_id, maquina, foreground_app, (rn - rn_per_app)
+       HAVING ROUND(SUM(LEAST(300, GREATEST(0,
+         EXTRACT(EPOCH FROM (COALESCE(next_ts, timestamp) - timestamp))
+       )))) > 0
+       ORDER BY maquina, dia, inicio_sessao`,
+      [broadcasterIds, startDate, endDate]
+    );
+    return result.rows;
+  }
+
+  async getBackgroundSessionsForInstallation(broadcasterId, installationId, startDate, endDate) {
+    const result = await db.query(
+      `WITH all_ranked AS (
          SELECT
-           broadcaster_id,
-           installation_id,
-           maquina,
-           foreground_app AS aplicativo,
-           (rn - rn_per_app) AS grp_key,
-           DATE(MIN(timestamp) AT TIME ZONE 'America/Sao_Paulo') AS dia,
-           MIN(timestamp) AS inicio_sessao,
-           MAX(COALESCE(next_ts, timestamp)) AS fim_sessao,
-           ROUND(SUM(LEAST(300, GREATEST(0,
-             EXTRACT(EPOCH FROM (COALESCE(next_ts, timestamp) - timestamp))
-           )))) AS tempo_seg
-         FROM fg_ranked
-         WHERE next_ts IS NOT NULL
-         GROUP BY broadcaster_id, installation_id, maquina, foreground_app, (rn - rn_per_app)
+           a.foreground_app,
+           a.timestamp,
+           a.apps_data,
+           LEAD(a.timestamp) OVER (ORDER BY a.timestamp) AS next_ts,
+           ROW_NUMBER() OVER (ORDER BY a.timestamp) AS rn
+         FROM activities a
+         WHERE a.broadcaster_id = $1
+           AND a.installation_id = $2
+           AND a.timestamp >= $3
+           AND a.timestamp <= $4
        ),
        bg_exploded AS (
          SELECT
-           ar.broadcaster_id,
-           ar.installation_id,
-           ar.maquina,
            app_entry->>'app' AS aplicativo,
-           ar.timestamp,
-           ar.next_ts,
-           ar.rn,
+           timestamp,
+           next_ts,
+           rn,
            ROW_NUMBER() OVER (
-             PARTITION BY ar.broadcaster_id, ar.installation_id, app_entry->>'app'
-             ORDER BY ar.timestamp
+             PARTITION BY app_entry->>'app'
+             ORDER BY timestamp
            ) AS rn_per_app
-         FROM all_ranked ar
-         CROSS JOIN LATERAL jsonb_array_elements(ar.apps_data) AS app_entry
-         WHERE ar.apps_data IS NOT NULL
-           AND jsonb_array_length(ar.apps_data) > 0
-           AND app_entry->>'app' IS DISTINCT FROM ar.foreground_app
+         FROM all_ranked
+         CROSS JOIN LATERAL jsonb_array_elements(
+           CASE WHEN apps_data IS NOT NULL AND jsonb_array_length(apps_data) > 0
+                THEN apps_data ELSE '[]'::jsonb END
+         ) AS app_entry
+         WHERE app_entry->>'app' IS DISTINCT FROM foreground_app
            AND app_entry->>'app' IS NOT NULL
-       ),
-       bg_islands AS (
-         SELECT
-           broadcaster_id,
-           installation_id,
-           maquina,
-           aplicativo,
-           (rn - rn_per_app) AS grp_key,
-           DATE(MIN(timestamp) AT TIME ZONE 'America/Sao_Paulo') AS dia,
-           MIN(timestamp) AS inicio_sessao,
-           MAX(COALESCE(next_ts, timestamp)) AS fim_sessao,
-           ROUND(SUM(LEAST(300, GREATEST(0,
-             EXTRACT(EPOCH FROM (COALESCE(next_ts, timestamp) - timestamp))
-           )))) AS tempo_seg
-         FROM bg_exploded
-         WHERE next_ts IS NOT NULL
-         GROUP BY broadcaster_id, installation_id, maquina, aplicativo, (rn - rn_per_app)
-       ),
-       bg_between_fg AS (
-         SELECT bi.*
-         FROM bg_islands bi
-         WHERE bi.tempo_seg > 0
-           AND EXISTS (
-             SELECT 1 FROM fg_islands fi
-             WHERE fi.broadcaster_id = bi.broadcaster_id
-               AND fi.installation_id = bi.installation_id
-               AND fi.aplicativo = bi.aplicativo
-               AND fi.fim_sessao <= bi.inicio_sessao
-           )
-           AND EXISTS (
-             SELECT 1 FROM fg_islands fi
-             WHERE fi.broadcaster_id = bi.broadcaster_id
-               AND fi.installation_id = bi.installation_id
-               AND fi.aplicativo = bi.aplicativo
-               AND fi.inicio_sessao >= bi.fim_sessao
-           )
        )
-       SELECT dia, maquina, aplicativo, 'primeiro_plano' AS tipo,
-              inicio_sessao, fim_sessao, tempo_seg
-       FROM fg_islands
-       WHERE tempo_seg > 0
-       UNION ALL
-       SELECT dia, maquina, aplicativo, 'segundo_plano' AS tipo,
-              inicio_sessao, fim_sessao, tempo_seg
-       FROM bg_between_fg
-       ORDER BY maquina, dia, inicio_sessao`,
-      [broadcasterIds, startDate, endDate]
+       SELECT
+         aplicativo,
+         DATE(MIN(timestamp) AT TIME ZONE 'America/Sao_Paulo') AS dia,
+         MIN(timestamp) AS inicio_sessao,
+         MAX(COALESCE(next_ts, timestamp)) AS fim_sessao,
+         ROUND(SUM(LEAST(300, GREATEST(0,
+           EXTRACT(EPOCH FROM (COALESCE(next_ts, timestamp) - timestamp))
+         )))) AS tempo_seg
+       FROM bg_exploded
+       WHERE next_ts IS NOT NULL
+       GROUP BY aplicativo, (rn - rn_per_app)
+       HAVING ROUND(SUM(LEAST(300, GREATEST(0,
+         EXTRACT(EPOCH FROM (COALESCE(next_ts, timestamp) - timestamp))
+       )))) > 0
+       ORDER BY aplicativo, inicio_sessao`,
+      [broadcasterId, installationId, startDate, endDate]
     );
     return result.rows;
   }

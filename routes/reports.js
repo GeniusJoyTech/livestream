@@ -690,16 +690,63 @@ router.get('/power-query/app-sessions', authenticateTokenQuery, async (req, res)
     }
 
     const broadcasterIds = broadcasters.map(b => b.id);
-    const rows = await databaseStorage.getAppSessions(broadcasterIds, dates.startDate, dates.endDate);
+
+    const fgRows = await databaseStorage.getForegroundSessions(broadcasterIds, dates.startDate, dates.endDate);
+
+    const installationsSeen = new Map();
+    for (const r of fgRows) {
+      const key = `${r.broadcaster_id}:${r.installation_id}`;
+      if (!installationsSeen.has(key)) {
+        installationsSeen.set(key, { broadcasterId: r.broadcaster_id, installationId: r.installation_id, maquina: r.maquina || '' });
+      }
+    }
+
+    const fgByInstallApp = new Map();
+    for (const r of fgRows) {
+      const key = `${r.broadcaster_id}:${r.installation_id}:${r.aplicativo}`;
+      if (!fgByInstallApp.has(key)) fgByInstallApp.set(key, []);
+      fgByInstallApp.get(key).push(r);
+    }
+
+    const bgRows = [];
+    for (const { broadcasterId, installationId, maquina } of installationsSeen.values()) {
+      const rawBg = await databaseStorage.getBackgroundSessionsForInstallation(
+        broadcasterId, installationId, dates.startDate, dates.endDate
+      );
+      for (const bg of rawBg) {
+        const fgKey = `${broadcasterId}:${installationId}:${bg.aplicativo}`;
+        const appFg = fgByInstallApp.get(fgKey) || [];
+        const bgStart = new Date(bg.inicio_sessao);
+        const bgEnd = new Date(bg.fim_sessao);
+        const hasPrev = appFg.some(f => new Date(f.fim_sessao) <= bgStart);
+        const hasNext = appFg.some(f => new Date(f.inicio_sessao) >= bgEnd);
+        if (hasPrev && hasNext) {
+          bgRows.push({ ...bg, maquina });
+        }
+      }
+    }
+
+    const allRows = [
+      ...fgRows.map(r => ({ ...r, tipo: 'primeiro_plano' })),
+      ...bgRows.map(r => ({ ...r, tipo: 'segundo_plano' }))
+    ].sort((a, b) => {
+      if (a.maquina < b.maquina) return -1;
+      if (a.maquina > b.maquina) return 1;
+      const da = a.dia ? a.dia.toString() : '';
+      const db2 = b.dia ? b.dia.toString() : '';
+      if (da < db2) return -1;
+      if (da > db2) return 1;
+      return new Date(a.inicio_sessao) - new Date(b.inicio_sessao);
+    });
 
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.json({
       periodo_inicio: dates.startDate.toISOString(),
       periodo_fim: dates.endDate.toISOString(),
-      total_registros: rows.length,
+      total_registros: allRows.length,
       maquinas: broadcasters.map(b => b.name),
-      dados: rows.map(r => ({
+      dados: allRows.map(r => ({
         dia: r.dia,
         maquina: r.maquina || '',
         aplicativo: r.aplicativo || '',
