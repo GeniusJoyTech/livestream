@@ -600,4 +600,78 @@ router.get('/power-query/all-urls', authenticateTokenQuery, async (req, res) => 
   }
 });
 
+router.get('/power-query/time-per-app', authenticateTokenQuery, async (req, res) => {
+  try {
+    const dates = getPQDates(req.query);
+    if (dates.error) return res.status(400).json({ error: dates.error });
+
+    let broadcasters;
+    if (req.user.role === 'owner') {
+      const all = await broadcasterService.getBroadcastersByOwner(req.user.id);
+      broadcasters = all.filter(b => b.is_active);
+    } else {
+      broadcasters = await broadcasterService.getBroadcastersForViewer(req.user.id);
+    }
+
+    const broadcasterIds = broadcasters.map(b => b.id);
+    const rows = await databaseStorage.getTimePerApp(broadcasterIds, dates.startDate, dates.endDate);
+
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.json({
+      periodo_inicio: dates.startDate.toISOString(),
+      periodo_fim: dates.endDate.toISOString(),
+      total_registros: rows.length,
+      maquinas: broadcasters.map(b => b.name),
+      dados: rows.map(r => ({
+        maquina: r.maquina || '',
+        aplicativo: r.aplicativo || '',
+        tempo_ativo_seg: Number(r.tempo_ativo_seg) || 0,
+        tempo_inativo_seg: Number(r.tempo_inativo_seg) || 0,
+        tempo_total_seg: Number(r.tempo_total_seg) || 0
+      }))
+    });
+  } catch (error) {
+    console.error('Erro no power-query/time-per-app:', error);
+    res.status(500).json({ error: 'Erro ao obter tempo por aplicativo' });
+  }
+});
+
+router.get('/power-query/time-per-url', authenticateTokenQuery, async (req, res) => {
+  try {
+    const dates = getPQDates(req.query);
+    if (dates.error) return res.status(400).json({ error: dates.error });
+
+    let broadcasters;
+    if (req.user.role === 'owner') {
+      const all = await broadcasterService.getBroadcastersByOwner(req.user.id);
+      broadcasters = all.filter(b => b.is_active);
+    } else {
+      broadcasters = await broadcasterService.getBroadcastersForViewer(req.user.id);
+    }
+
+    const broadcasterIds = broadcasters.map(b => b.id);
+    const rows = await databaseStorage.getTimePerUrl(broadcasterIds, dates.startDate, dates.endDate);
+
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.json({
+      periodo_inicio: dates.startDate.toISOString(),
+      periodo_fim: dates.endDate.toISOString(),
+      total_registros: rows.length,
+      maquinas: broadcasters.map(b => b.name),
+      dados: rows.map(r => ({
+        maquina: r.maquina || '',
+        url: r.url || '',
+        tempo_ativo_seg: Number(r.tempo_ativo_seg) || 0,
+        tempo_inativo_seg: Number(r.tempo_inativo_seg) || 0,
+        tempo_total_seg: Number(r.tempo_total_seg) || 0
+      }))
+    });
+  } catch (error) {
+    console.error('Erro no power-query/time-per-url:', error);
+    res.status(500).json({ error: 'Erro ao obter tempo por URL' });
+  }
+});
+
 module.exports = router;

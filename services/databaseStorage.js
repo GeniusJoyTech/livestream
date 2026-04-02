@@ -166,6 +166,80 @@ class DatabaseStorage {
     }));
   }
   
+  async getTimePerApp(broadcasterIds, startDate, endDate) {
+    if (!broadcasterIds || broadcasterIds.length === 0) return [];
+    const result = await db.query(
+      `WITH intervals AS (
+         SELECT
+           COALESCE(bi.computer_name, b.name) AS maquina,
+           a.foreground_app,
+           COALESCE(a.idle_seconds, 0) AS idle_seconds,
+           LEAST(300,
+             EXTRACT(EPOCH FROM (
+               LEAD(a.timestamp) OVER (PARTITION BY a.broadcaster_id, a.installation_id ORDER BY a.timestamp)
+               - a.timestamp
+             ))
+           ) AS interval_seconds
+         FROM activities a
+         INNER JOIN broadcasters b ON a.broadcaster_id = b.id
+         LEFT JOIN broadcaster_installations bi ON a.installation_id = bi.id
+         WHERE a.broadcaster_id = ANY($1::int[])
+           AND a.timestamp >= $2
+           AND a.timestamp <= $3
+       )
+       SELECT
+         maquina,
+         COALESCE(foreground_app, '(sem aplicativo)') AS aplicativo,
+         ROUND(SUM(GREATEST(0, COALESCE(interval_seconds, 0) - LEAST(idle_seconds, COALESCE(interval_seconds, 0))))) AS tempo_ativo_seg,
+         ROUND(SUM(LEAST(idle_seconds, COALESCE(interval_seconds, 0))))                                             AS tempo_inativo_seg,
+         ROUND(SUM(COALESCE(interval_seconds, 0)))                                                                  AS tempo_total_seg
+       FROM intervals
+       WHERE interval_seconds IS NOT NULL AND interval_seconds > 0
+       GROUP BY maquina, foreground_app
+       ORDER BY tempo_ativo_seg DESC`,
+      [broadcasterIds, startDate, endDate]
+    );
+    return result.rows;
+  }
+
+  async getTimePerUrl(broadcasterIds, startDate, endDate) {
+    if (!broadcasterIds || broadcasterIds.length === 0) return [];
+    const result = await db.query(
+      `WITH intervals AS (
+         SELECT
+           COALESCE(bi.computer_name, b.name) AS maquina,
+           a.active_url,
+           COALESCE(a.idle_seconds, 0) AS idle_seconds,
+           LEAST(300,
+             EXTRACT(EPOCH FROM (
+               LEAD(a.timestamp) OVER (PARTITION BY a.broadcaster_id, a.installation_id ORDER BY a.timestamp)
+               - a.timestamp
+             ))
+           ) AS interval_seconds
+         FROM activities a
+         INNER JOIN broadcasters b ON a.broadcaster_id = b.id
+         LEFT JOIN broadcaster_installations bi ON a.installation_id = bi.id
+         WHERE a.broadcaster_id = ANY($1::int[])
+           AND a.timestamp >= $2
+           AND a.timestamp <= $3
+           AND a.active_url IS NOT NULL
+           AND a.active_url <> ''
+       )
+       SELECT
+         maquina,
+         active_url AS url,
+         ROUND(SUM(GREATEST(0, COALESCE(interval_seconds, 0) - LEAST(idle_seconds, COALESCE(interval_seconds, 0))))) AS tempo_ativo_seg,
+         ROUND(SUM(LEAST(idle_seconds, COALESCE(interval_seconds, 0))))                                             AS tempo_inativo_seg,
+         ROUND(SUM(COALESCE(interval_seconds, 0)))                                                                  AS tempo_total_seg
+       FROM intervals
+       WHERE interval_seconds IS NOT NULL AND interval_seconds > 0
+       GROUP BY maquina, active_url
+       ORDER BY tempo_ativo_seg DESC`,
+      [broadcasterIds, startDate, endDate]
+    );
+    return result.rows;
+  }
+
   async getStatistics(broadcasterId, startDate, endDate) {
     const activitiesResult = await db.query(
       `SELECT 

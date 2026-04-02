@@ -36,6 +36,12 @@ None specified yet.
 - No code changes were required - project was ready for Replit environment
 - Server already configured to listen on 0.0.0.0:5000, perfect for Replit's proxy
 
+### Recent Improvements (April 02, 2026)
+✅ **Power Query sem limite**: endpoints Power Query retornam todos os registros sem cap de linhas
+✅ **Filtro de datas nos endpoints PQ**: suporte a `startDate`/`endDate` (formato Power BI) e `fromDate`/`toDate` (retrocompatibilidade); datas inválidas retornam HTTP 400 com mensagem clara
+✅ **Novos endpoints de tempo por app/URL**: `/api/reports/power-query/time-per-app` e `/api/reports/power-query/time-per-url` calculam `tempo_ativo_seg`, `tempo_inativo_seg` e `tempo_total_seg` usando window function LEAD() por máquina; cap de 300s por intervalo evita inflar gaps overnight
+✅ **Viewer atualizado**: 4 links Power Query (registros + tempo por app + tempo por URL) com dica de filtro de datas
+
 ### Recent Improvements (December 02, 2025)
 ✅ **Focus-time tracking**: Added "Tempo em Foco" column showing accumulated time per app in viewer monitoring table
 ✅ **Excel export redesigned**: Now exports all apps per activity (not just foreground app) with columns matching the monitoring screen

@@ -79,8 +79,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const base = window.location.origin;
-    const linkAct = `${base}/api/reports/power-query/all-activities?token=${encodeURIComponent(pqToken)}`;
-    const linkUrl = `${base}/api/reports/power-query/all-urls?token=${encodeURIComponent(pqToken)}`;
+    const tk = encodeURIComponent(pqToken);
+    const linkAct        = `${base}/api/reports/power-query/all-activities?token=${tk}`;
+    const linkUrl        = `${base}/api/reports/power-query/all-urls?token=${tk}`;
+    const linkTimeApp    = `${base}/api/reports/power-query/time-per-app?token=${tk}`;
+    const linkTimeUrl    = `${base}/api/reports/power-query/time-per-url?token=${tk}`;
 
     pqListEl.innerHTML = '';
 
@@ -95,8 +98,10 @@ document.addEventListener("DOMContentLoaded", () => {
     pqListEl.appendChild(note);
 
     [
-      { label: 'Aplicativos (todas as máquinas):', link: linkAct },
-      { label: 'URLs (todas as máquinas):', link: linkUrl }
+      { label: 'Registros de aplicativos (todas as máquinas):', link: linkAct },
+      { label: 'Registros de URLs visitadas (todas as máquinas):', link: linkUrl },
+      { label: 'Tempo ativo/inativo por aplicativo:', link: linkTimeApp },
+      { label: 'Tempo ativo/inativo por URL:', link: linkTimeUrl }
     ].forEach(({ label, link }) => {
       const row = document.createElement('div');
       row.className = 'pq-link-row';
