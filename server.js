@@ -96,11 +96,17 @@ app.use("/api/reports", reportsRouter);
 // Inicializa Banco de Dados
 // ===========================
 async function initializeApp() {
-  try {
-    if (process.env.DATABASE_URL) {
+  setupWebSocket(server);
+
+  server.listen(PORT, "0.0.0.0", () => {
+    console.log(`🚀 Servidor rodando em http://localhost:${PORT}`);
+  });
+
+  if (process.env.DATABASE_URL) {
+    try {
       console.log('📦 Initializing database...');
       await db.initializeDatabase();
-      
+
       setInterval(async () => {
         try {
           await databaseStorage.cleanOldData();
@@ -108,20 +114,14 @@ async function initializeApp() {
           console.error('Error during scheduled cleanup:', error);
         }
       }, 24 * 60 * 60 * 1000);
-    } else {
-      console.warn('⚠️  DATABASE_URL not set - database features disabled');
-      console.warn('⚠️  Please create a PostgreSQL database in Replit to enable all features');
+    } catch (error) {
+      console.error('❌ Database initialization error:', error);
+      console.warn('⚠️  Running without database - some features may not work');
     }
-  } catch (error) {
-    console.error('❌ Database initialization error:', error);
-    console.warn('⚠️  Running without database - some features may not work');
+  } else {
+    console.warn('⚠️  DATABASE_URL not set - database features disabled');
+    console.warn('⚠️  Please create a PostgreSQL database in Replit to enable all features');
   }
-  
-  setupWebSocket(server);
-  
-  server.listen(PORT, "0.0.0.0", () => {
-    console.log(`🚀 Servidor rodando em http://localhost:${PORT}`);
-  });
 }
 
 initializeApp();

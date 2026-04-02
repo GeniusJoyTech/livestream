@@ -664,6 +664,7 @@ router.get('/power-query/time-per-url', authenticateTokenQuery, async (req, res)
       dados: rows.map(r => ({
         dia: r.dia,
         maquina: r.maquina || '',
+        aplicativo: r.aplicativo || '',
         url: r.url || '',
         tempo_ativo_seg: Number(r.tempo_ativo_seg) || 0,
         tempo_inativo_seg: Number(r.tempo_inativo_seg) || 0,

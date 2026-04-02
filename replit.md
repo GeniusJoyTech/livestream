@@ -41,6 +41,9 @@ None specified yet.
 ✅ **Filtro de datas nos endpoints PQ**: suporte a `startDate`/`endDate` (formato Power BI) e `fromDate`/`toDate` (retrocompatibilidade); datas inválidas retornam HTTP 400 com mensagem clara
 ✅ **Novos endpoints de tempo por app/URL**: `/api/reports/power-query/time-per-app` e `/api/reports/power-query/time-per-url` calculam `tempo_ativo_seg`, `tempo_inativo_seg` e `tempo_total_seg` usando window function LEAD() por máquina; cap de 300s por intervalo evita inflar gaps overnight
 ✅ **Viewer atualizado**: 4 links Power Query (registros + tempo por app + tempo por URL) com dica de filtro de datas
+✅ **time-per-url melhorado**: coluna `aplicativo` (foreground_app) adicionada ao endpoint `/power-query/time-per-url`; agrupamento por `dia + maquina + aplicativo + url` permite análise cruzada no Power BI de qual app abriu cada URL e por quanto tempo
+✅ **App-sessions fix (Neon disk quota)**: query monolítica substituída por `getForegroundSessions()` + `getBackgroundSessionsForInstallation()` por máquina + orquestração Node.js; elimina CROSS JOIN LATERAL global que causava `Disk quota exceeded`
+✅ **Server startup fix**: `server.listen()` movido para antes da inicialização do DB para que o workflow detecte a porta imediatamente, mesmo quando Neon tem latência de DNS no arranque
 
 ### Recent Improvements (December 02, 2025)
 ✅ **Focus-time tracking**: Added "Tempo em Foco" column showing accumulated time per app in viewer monitoring table

@@ -210,6 +210,7 @@ class DatabaseStorage {
       `WITH intervals AS (
          SELECT
            COALESCE(bi.computer_name, b.name) AS maquina,
+           COALESCE(a.foreground_app, '(sem aplicativo)') AS aplicativo,
            a.active_url,
            DATE(a.timestamp AT TIME ZONE 'America/Sao_Paulo') AS dia,
            COALESCE(a.idle_seconds, 0) AS idle_seconds,
@@ -231,13 +232,14 @@ class DatabaseStorage {
        SELECT
          dia,
          maquina,
+         aplicativo,
          active_url AS url,
          ROUND(SUM(GREATEST(0, COALESCE(interval_seconds, 0) - LEAST(idle_seconds, COALESCE(interval_seconds, 0))))) AS tempo_ativo_seg,
          ROUND(SUM(LEAST(idle_seconds, COALESCE(interval_seconds, 0))))                                             AS tempo_inativo_seg,
          ROUND(SUM(COALESCE(interval_seconds, 0)))                                                                  AS tempo_total_seg
        FROM intervals
        WHERE interval_seconds IS NOT NULL AND interval_seconds > 0
-       GROUP BY dia, maquina, active_url
+       GROUP BY dia, maquina, aplicativo, active_url
        ORDER BY dia DESC, tempo_ativo_seg DESC`,
       [broadcasterIds, startDate, endDate]
     );
