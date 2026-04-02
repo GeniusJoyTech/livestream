@@ -256,7 +256,10 @@ class DatabaseStorage {
            a.timestamp,
            LEAD(a.timestamp) OVER w AS next_ts,
            ROW_NUMBER() OVER w AS rn,
-           ROW_NUMBER() OVER (PARTITION BY a.broadcaster_id, a.installation_id, a.foreground_app ORDER BY a.timestamp) AS rn_per_app
+           ROW_NUMBER() OVER (
+             PARTITION BY a.broadcaster_id, a.installation_id, a.foreground_app
+             ORDER BY a.timestamp
+           ) AS rn_per_app
          FROM activities a
          INNER JOIN broadcasters b ON a.broadcaster_id = b.id
          LEFT JOIN broadcaster_installations bi ON a.installation_id = bi.id
@@ -267,6 +270,8 @@ class DatabaseStorage {
        ),
        fg_islands AS (
          SELECT
+           broadcaster_id,
+           installation_id,
            maquina,
            foreground_app AS aplicativo,
            (rn - rn_per_app) AS grp_key,
@@ -278,7 +283,7 @@ class DatabaseStorage {
            )))) AS tempo_seg
          FROM ranked
          WHERE foreground_app IS NOT NULL AND next_ts IS NOT NULL
-         GROUP BY maquina, foreground_app, (rn - rn_per_app)
+         GROUP BY broadcaster_id, installation_id, maquina, foreground_app, (rn - rn_per_app)
        ),
        valid_bg AS (
          SELECT
@@ -287,6 +292,12 @@ class DatabaseStorage {
            a.foreground_app,
            a.timestamp,
            a.apps_data,
+           LEAD(a.timestamp) OVER (
+             PARTITION BY a.broadcaster_id, a.installation_id ORDER BY a.timestamp
+           ) AS next_ts,
+           ROW_NUMBER() OVER (
+             PARTITION BY a.broadcaster_id, a.installation_id ORDER BY a.timestamp
+           ) AS rn,
            COALESCE(bi.computer_name, b.name) AS maquina
          FROM activities a
          INNER JOIN broadcasters b ON a.broadcaster_id = b.id
@@ -304,9 +315,12 @@ class DatabaseStorage {
            v.maquina,
            app_entry->>'app' AS aplicativo,
            v.timestamp,
-           LEAD(v.timestamp) OVER (PARTITION BY v.broadcaster_id, v.installation_id ORDER BY v.timestamp) AS next_ts,
-           ROW_NUMBER() OVER (PARTITION BY v.broadcaster_id, v.installation_id ORDER BY v.timestamp) AS rn,
-           ROW_NUMBER() OVER (PARTITION BY v.broadcaster_id, v.installation_id, app_entry->>'app' ORDER BY v.timestamp) AS rn_per_app
+           v.next_ts,
+           v.rn,
+           ROW_NUMBER() OVER (
+             PARTITION BY v.broadcaster_id, v.installation_id, app_entry->>'app'
+             ORDER BY v.timestamp
+           ) AS rn_per_app
          FROM valid_bg v
          CROSS JOIN LATERAL jsonb_array_elements(v.apps_data) AS app_entry
          WHERE app_entry->>'app' IS DISTINCT FROM v.foreground_app
@@ -314,6 +328,8 @@ class DatabaseStorage {
        ),
        bg_islands AS (
          SELECT
+           broadcaster_id,
+           installation_id,
            maquina,
            aplicativo,
            (rn - rn_per_app) AS grp_key,
@@ -325,7 +341,7 @@ class DatabaseStorage {
            )))) AS tempo_seg
          FROM bg_ranked
          WHERE next_ts IS NOT NULL
-         GROUP BY maquina, aplicativo, (rn - rn_per_app)
+         GROUP BY broadcaster_id, installation_id, maquina, aplicativo, (rn - rn_per_app)
        )
        SELECT dia, maquina, aplicativo, 'primeiro_plano' AS tipo,
               inicio_sessao, fim_sessao, tempo_seg
