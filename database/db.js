@@ -12,8 +12,10 @@ function createPool() {
     return new Pool({
       connectionString: url,
       ssl: { rejectUnauthorized: false },
-      connectionTimeoutMillis: 10000,
-      idleTimeoutMillis: 30000
+      max: 20,
+      connectionTimeoutMillis: 30000,
+      idleTimeoutMillis: 60000,
+      allowExitOnIdle: false
     });
   }
   
@@ -26,8 +28,10 @@ function createPool() {
     return new Pool({
       connectionString: url,
       ssl: { rejectUnauthorized: false },
-      connectionTimeoutMillis: 10000,
-      idleTimeoutMillis: 30000
+      max: 20,
+      connectionTimeoutMillis: 30000,
+      idleTimeoutMillis: 60000,
+      allowExitOnIdle: false
     });
   }
   
@@ -37,8 +41,7 @@ function createPool() {
 const pool = createPool();
 
 pool.on('error', (err) => {
-  console.error('Unexpected error on idle client', err);
-  process.exit(-1);
+  console.error('Unexpected error on idle DB client (continuando):', err.message);
 });
 
 async function query(text, params) {
