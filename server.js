@@ -31,9 +31,9 @@ app.use("/owner-dashboard", express.static(path.join(__dirname, "./public/owner-
 // Rotas HTTP
 // ===========================
 
-// Redireciona raiz para login
+// Redireciona raiz para login (retorna 200 para healthchecks de deploy)
 app.get("/", (req, res) => {
-  res.redirect("/login/login.html");
+  res.status(200).send('<!DOCTYPE html><html><head><meta http-equiv="refresh" content="0;url=/login/login.html"></head><body>Redirecionando...</body></html>');
 });
 
 // Rota de login com banco de dados
@@ -107,6 +107,17 @@ async function initializeApp() {
       console.log('📦 Initializing database...');
       await db.initializeDatabase();
 
+      // Limpeza imediata na inicialização (não-bloqueante)
+      setImmediate(async () => {
+        try {
+          console.log('🧹 Iniciando limpeza de dados antigos...');
+          await databaseStorage.cleanOldData();
+        } catch (error) {
+          console.error('Error during startup cleanup:', error);
+        }
+      });
+
+      // Limpeza agendada diária
       setInterval(async () => {
         try {
           await databaseStorage.cleanOldData();

@@ -123,18 +123,18 @@ DROP TRIGGER IF EXISTS update_broadcaster_installations_updated_at ON broadcaste
 CREATE TRIGGER update_broadcaster_installations_updated_at BEFORE UPDATE ON broadcaster_installations
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
--- Function to clean old data (90 days retention policy)
+-- Function to clean old data (30 days retention policy)
 CREATE OR REPLACE FUNCTION clean_old_data()
 RETURNS INTEGER AS $$
 DECLARE
     deleted_count INTEGER;
 BEGIN
-    -- Delete activities older than 90 days
-    DELETE FROM activities WHERE timestamp < CURRENT_TIMESTAMP - INTERVAL '90 days';
+    -- Delete activities older than 30 days
+    DELETE FROM activities WHERE timestamp < CURRENT_TIMESTAMP - INTERVAL '30 days';
     GET DIAGNOSTICS deleted_count = ROW_COUNT;
     
-    -- Delete browser history older than 90 days
-    DELETE FROM browser_history WHERE visit_timestamp < CURRENT_TIMESTAMP - INTERVAL '90 days';
+    -- Delete browser history older than 30 days
+    DELETE FROM browser_history WHERE visit_timestamp < CURRENT_TIMESTAMP - INTERVAL '30 days';
     
     RETURN deleted_count;
 END;

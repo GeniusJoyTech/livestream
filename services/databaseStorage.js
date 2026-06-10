@@ -412,11 +412,30 @@ class DatabaseStorage {
   }
   
   async cleanOldData() {
+    const BATCH_SIZE = 50000;
+    const RETENTION_DAYS = 30;
+    let totalDeleted = 0;
     try {
-      const result = await db.query('SELECT clean_old_data()');
-      const deletedCount = result.rows[0].clean_old_data;
-      console.log(`🧹 Cleaned ${deletedCount} old records (90+ days)`);
-      return deletedCount;
+      while (true) {
+        const result = await db.query(
+          `DELETE FROM activities WHERE id IN (
+             SELECT id FROM activities
+             WHERE timestamp < CURRENT_TIMESTAMP - INTERVAL '${RETENTION_DAYS} days'
+             LIMIT ${BATCH_SIZE}
+           )`
+        );
+        const n = result.rowCount || 0;
+        totalDeleted += n;
+        if (n === 0) break;
+        await new Promise(r => setTimeout(r, 200));
+      }
+      const histResult = await db.query(
+        `DELETE FROM browser_history
+         WHERE visit_timestamp < CURRENT_TIMESTAMP - INTERVAL '${RETENTION_DAYS} days'`
+      );
+      totalDeleted += histResult.rowCount || 0;
+      console.log(`🧹 Cleaned ${totalDeleted} old records (${RETENTION_DAYS}+ days)`);
+      return totalDeleted;
     } catch (error) {
       console.error('Error cleaning old data:', error);
       throw error;
