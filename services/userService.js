@@ -129,11 +129,15 @@ class UserService {
   }
   
   async logAuditAction(userId, action, resourceType = null, resourceId = null, ipAddress = null, userAgent = null) {
-    await db.query(
-      `INSERT INTO audit_log (user_id, action, resource_type, resource_id, ip_address, user_agent)
-       VALUES ($1, $2, $3, $4, $5, $6)`,
-      [userId, action, resourceType, resourceId, ipAddress, userAgent]
-    );
+    try {
+      await db.query(
+        `INSERT INTO audit_log (user_id, action, resource_type, resource_id, ip_address, user_agent)
+         VALUES ($1, $2, $3, $4, $5, $6)`,
+        [userId, action, resourceType, resourceId, ipAddress, userAgent]
+      );
+    } catch (err) {
+      console.warn(`⚠️ logAuditAction falhou (não crítico): ${err.message}`);
+    }
   }
 }
 
