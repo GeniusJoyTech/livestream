@@ -441,6 +441,84 @@ class DatabaseStorage {
       throw error;
     }
   }
+
+  /**
+   * Verifica o volume de dados armazenados e apaga os registros mais antigos
+   * caso a estimativa de armazenamento ultrapasse o limite configurado.
+   *
+   * Lógica de estimativa:
+   *   - Usa ~1500 bytes por linha (valor conservador baseado em dados reais)
+   *   - Evita falsos positivos após exclusão (dead tuples inflam pg_total_relation_size)
+   *
+   * @param {number} thresholdGB  - Dispara limpeza quando estimativa ≥ este valor (padrão 8 GB)
+   * @param {number} targetGB     - Mantém dados até este volume após limpeza (padrão 5 GB)
+   */
+  async checkAndTrimStorage(thresholdGB = 8, targetGB = 5) {
+    const AVG_BYTES_PER_ROW = 1500;
+    const BATCH_SIZE = 50000;
+
+    const thresholdBytes = thresholdGB * 1024 * 1024 * 1024;
+    const targetBytes    = targetGB    * 1024 * 1024 * 1024;
+    const rowsAtThreshold = Math.ceil(thresholdBytes / AVG_BYTES_PER_ROW);
+    const rowsAtTarget    = Math.ceil(targetBytes    / AVG_BYTES_PER_ROW);
+
+    let countResult;
+    try {
+      countResult = await db.query('SELECT COUNT(*) AS rows FROM activities');
+    } catch (err) {
+      console.error('checkAndTrimStorage: erro ao contar registros:', err.message);
+      return 0;
+    }
+
+    const totalRows = parseInt(countResult.rows[0].rows, 10);
+    const estimatedMB = Math.round(totalRows * AVG_BYTES_PER_ROW / 1024 / 1024);
+
+    if (totalRows < rowsAtThreshold) {
+      return 0;
+    }
+
+    const rowsToDelete = totalRows - rowsAtTarget;
+    console.log(
+      `⚠️  Armazenamento estimado: ~${estimatedMB} MB (${totalRows} registros). ` +
+      `Limite de ${thresholdGB} GB atingido — removendo ${rowsToDelete} registros mais antigos...`
+    );
+
+    let totalDeleted = 0;
+    try {
+      while (totalDeleted < rowsToDelete) {
+        const batch = Math.min(BATCH_SIZE, rowsToDelete - totalDeleted);
+        const result = await db.query(
+          `DELETE FROM activities
+           WHERE id IN (
+             SELECT id FROM activities
+             ORDER BY timestamp ASC
+             LIMIT $1
+           )`,
+          [batch]
+        );
+        const n = result.rowCount || 0;
+        totalDeleted += n;
+        if (n === 0) break;
+        await new Promise(r => setTimeout(r, 200));
+      }
+
+      try {
+        await db.query('VACUUM ANALYZE activities');
+      } catch (vacuumErr) {
+        console.warn('checkAndTrimStorage: VACUUM falhou (não crítico):', vacuumErr.message);
+      }
+
+      const savedMB = Math.round(totalDeleted * AVG_BYTES_PER_ROW / 1024 / 1024);
+      console.log(
+        `✅ Limpeza de armazenamento concluída: ${totalDeleted} registros removidos, ` +
+        `~${savedMB} MB liberados. Estimativa atual: ~${Math.round((totalRows - totalDeleted) * AVG_BYTES_PER_ROW / 1024 / 1024)} MB`
+      );
+    } catch (error) {
+      console.error('checkAndTrimStorage: erro durante limpeza:', error.message);
+    }
+
+    return totalDeleted;
+  }
 }
 
 module.exports = new DatabaseStorage();

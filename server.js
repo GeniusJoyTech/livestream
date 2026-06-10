@@ -117,7 +117,7 @@ async function initializeApp() {
         }
       });
 
-      // Limpeza agendada diária
+      // Limpeza agendada diária (registros com mais de 30 dias)
       setInterval(async () => {
         try {
           await databaseStorage.cleanOldData();
@@ -125,6 +125,16 @@ async function initializeApp() {
           console.error('Error during scheduled cleanup:', error);
         }
       }, 24 * 60 * 60 * 1000);
+
+      // Verificação de armazenamento a cada hora:
+      // se atingir 8 GB estimados → apaga os mais antigos até ~5 GB
+      setInterval(async () => {
+        try {
+          await databaseStorage.checkAndTrimStorage(8, 5);
+        } catch (error) {
+          console.error('Error during storage threshold check:', error);
+        }
+      }, 60 * 60 * 1000);
     } catch (error) {
       console.error('❌ Database initialization error:', error);
       console.warn('⚠️  Running without database - some features may not work');
