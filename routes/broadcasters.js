@@ -193,6 +193,27 @@ router.get('/:broadcasterId/installations', authenticateToken, async (req, res) 
   }
 });
 
+router.post('/:broadcasterId/installations/:installationId/renew-token', authenticateToken, async (req, res) => {
+  try {
+    if (req.user.role !== 'owner') {
+      return res.status(403).json({ error: 'Only owners can renew installation tokens' });
+    }
+
+    const { installationId } = req.params;
+    const updated = await broadcasterService.refreshInstallationToken(parseInt(installationId), req.user.id);
+
+    await userService.logAuditAction(req.user.id, 'INSTALLATION_TOKEN_RENEWED', 'broadcaster_installation', parseInt(installationId), req.ip, req.get('user-agent'));
+
+    res.json({
+      message: 'Installation token renewed successfully',
+      expires_at: updated.expires_at
+    });
+  } catch (error) {
+    console.error('Renew installation token error:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 router.delete('/:broadcasterId/installations/:installationId', authenticateToken, async (req, res) => {
   try {
     if (req.user.role !== 'owner') {

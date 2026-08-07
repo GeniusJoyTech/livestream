@@ -392,39 +392,64 @@ async function handleTokenRenewal(ws, broadcasterId, broadcasters) {
         return;
     }
 
+    if (!broadcaster.installation_id) {
+        console.warn(`⚠️ Broadcaster ${broadcaster.db_id} não possui installation_id — não é possível renovar token`);
+        ws.send(JSON.stringify({
+            type: "error",
+            message: "Renovação de token não disponível para esta conexão. Reconecte com um token de instalação válido."
+        }));
+        return;
+    }
+
     try {
         const db = require('../database/db');
         const { generateToken } = require('../jwt/jwtUtils');
         
-        const result = await db.query('SELECT owner_id FROM broadcasters WHERE id = $1', [broadcaster.db_id]);
+        // Fetch installation + broadcaster owner info
+        const result = await db.query(
+            `SELECT bi.id as installation_id, bi.computer_name, bi.broadcaster_id,
+                    b.owner_id, b.name as broadcaster_name
+             FROM broadcaster_installations bi
+             INNER JOIN broadcasters b ON bi.broadcaster_id = b.id
+             WHERE bi.id = $1 AND bi.is_active = true AND b.is_active = true`,
+            [broadcaster.installation_id]
+        );
+
         if (result.rows.length === 0) {
-            console.warn(`⚠️ Broadcaster ${broadcaster.db_id} não encontrado no banco para renovação`);
+            console.warn(`⚠️ Installation ${broadcaster.installation_id} não encontrada ou inativa`);
+            ws.send(JSON.stringify({
+                type: "error",
+                message: "Installation não encontrada. O token não pode ser renovado automaticamente."
+            }));
             return;
         }
         
-        const ownerId = result.rows[0].owner_id;
-        const tokenExpiresAt = new Date(Date.now() + 60 * 24 * 60 * 60 * 1000);
+        const inst = result.rows[0];
+        const jwtExpiresAt = new Date(Date.now() + 60 * 24 * 60 * 60 * 1000); // 60 days
         
         const newToken = generateToken({ 
-            type: 'broadcaster', 
-            ownerId: ownerId, 
-            broadcasterId: broadcaster.db_id 
+            type: 'installation_jwt', 
+            ownerId: inst.owner_id,
+            broadcasterId: inst.broadcaster_id,
+            computerName: inst.computer_name
         }, '60d');
         
         await db.query(
-            'UPDATE broadcasters SET token = $1, token_expires_at = $2 WHERE id = $3',
-            [newToken, tokenExpiresAt, broadcaster.db_id]
+            `UPDATE broadcaster_installations 
+             SET jwt_token = $1, jwt_expires_at = $2, updated_at = CURRENT_TIMESTAMP
+             WHERE id = $3`,
+            [newToken, jwtExpiresAt, inst.installation_id]
         );
         
         ws.send(JSON.stringify({
             type: "token-renewed",
-            broadcaster_id: broadcaster.db_id,
+            broadcaster_id: inst.broadcaster_id,
             token: newToken,
-            token_expires_at: tokenExpiresAt.toISOString(),
+            token_expires_at: jwtExpiresAt.toISOString(),
             message: "Token renovado com sucesso! Configuração atualizada."
         }));
         
-        console.log(`🔄 Token renovado para broadcaster ${broadcaster.db_id} (${broadcaster.name})`);
+        console.log(`🔄 Token renovado para installation ${inst.installation_id} (${inst.computer_name}) do broadcaster ${inst.broadcaster_id} (${inst.broadcaster_name})`);
         
     } catch (err) {
         console.error('Erro ao renovar token:', err);

@@ -217,7 +217,7 @@ class BroadcasterService {
     if (ownerId) {
       // Verify owner has access to this broadcaster
       query = `SELECT bi.id, bi.broadcaster_id, bi.computer_name, bi.is_active, 
-                      bi.last_connected_at, bi.created_at
+                      bi.last_connected_at, bi.created_at, bi.jwt_expires_at
                FROM broadcaster_installations bi
                INNER JOIN broadcasters b ON bi.broadcaster_id = b.id
                WHERE bi.broadcaster_id = $1 AND b.owner_id = $2
@@ -225,7 +225,7 @@ class BroadcasterService {
       params = [broadcasterId, ownerId];
     } else {
       query = `SELECT id, broadcaster_id, computer_name, is_active, 
-                      last_connected_at, created_at
+                      last_connected_at, created_at, jwt_expires_at
                FROM broadcaster_installations
                WHERE broadcaster_id = $1
                ORDER BY last_connected_at DESC NULLS LAST`;
@@ -278,6 +278,64 @@ class BroadcasterService {
     );
   }
   
+  async refreshInstallationToken(installationId, ownerId) {
+    // Verify owner has access to this installation
+    const result = await db.query(
+      `SELECT bi.id, bi.broadcaster_id, bi.computer_name, b.owner_id, b.name as broadcaster_name
+       FROM broadcaster_installations bi
+       INNER JOIN broadcasters b ON bi.broadcaster_id = b.id
+       WHERE bi.id = $1 AND b.owner_id = $2 AND bi.is_active = true AND b.is_active = true`,
+      [installationId, ownerId]
+    );
+
+    if (result.rows.length === 0) {
+      throw new Error('Installation not found or access denied');
+    }
+
+    const inst = result.rows[0];
+    const jwtExpiresAt = new Date(Date.now() + 60 * 24 * 60 * 60 * 1000); // 60 days
+
+    const newToken = generateToken({
+      type: 'installation_jwt',
+      ownerId: inst.owner_id,
+      broadcasterId: inst.broadcaster_id,
+      computerName: inst.computer_name
+    }, INSTALLATION_JWT_DURATION);
+
+    await db.query(
+      `UPDATE broadcaster_installations 
+       SET jwt_token = $1, jwt_expires_at = $2, updated_at = CURRENT_TIMESTAMP
+       WHERE id = $3`,
+      [newToken, jwtExpiresAt, inst.id]
+    );
+
+    return { token: newToken, expires_at: jwtExpiresAt };
+  }
+
+  async refreshBroadcasterToken(broadcasterId, ownerId) {
+    // Refresh the installation token (24h) so new machines can be added
+    const broadcaster = await this.getBroadcasterById(broadcasterId, ownerId);
+    if (!broadcaster) {
+      throw new Error('Broadcaster not found or access denied');
+    }
+
+    const installationExpiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
+    const installationToken = generateToken({
+      type: 'installation',
+      ownerId,
+      broadcasterName: broadcaster.name
+    }, INSTALLATION_TOKEN_DURATION);
+
+    await db.query(
+      `UPDATE broadcasters 
+       SET installation_token = $1, installation_token_expires_at = $2
+       WHERE id = $3 AND owner_id = $4`,
+      [installationToken, installationExpiresAt, broadcasterId, ownerId]
+    );
+
+    return { token: installationToken, token_expires_at: installationExpiresAt };
+  }
+
   async deactivateInstallation(installationId, ownerId) {
     // Verify owner has access
     const result = await db.query(

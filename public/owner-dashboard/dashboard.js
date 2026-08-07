@@ -402,22 +402,42 @@ async function showInstallations(broadcasterId, broadcasterName) {
                             const isOnline = inst.is_active && inst.last_connected_at && isRecentlyConnected(inst.last_connected_at);
                             const statusBadge = isOnline ? '🟢 Online' : '🔴 Offline';
                             const statusClass = isOnline ? 'badge-active' : 'badge-inactive';
+
+                            // Token expiry status
+                            const tokenExpired = isTokenExpired(inst.jwt_expires_at);
+                            const tokenExpiresSoon = !tokenExpired && inst.jwt_expires_at && isTokenExpiringSoon(inst.jwt_expires_at, 7);
+                            let tokenBadge = '';
+                            let tokenInfo = '';
+                            if (!inst.jwt_expires_at) {
+                                tokenInfo = '<div>🔑 Token: não disponível</div>';
+                            } else if (tokenExpired) {
+                                tokenBadge = '<span class="card-badge badge-expired">⏰ Token Vencido</span>';
+                                tokenInfo = `<div>🔑 Token venceu em: ${new Date(inst.jwt_expires_at).toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' })}</div>`;
+                            } else if (tokenExpiresSoon) {
+                                tokenBadge = '<span class="card-badge badge-warning">⚠️ Token Expira em Breve</span>';
+                                tokenInfo = `<div>🔑 Token expira em: ${new Date(inst.jwt_expires_at).toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' })}</div>`;
+                            } else {
+                                tokenInfo = `<div>🔑 Token válido até: ${new Date(inst.jwt_expires_at).toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' })}</div>`;
+                            }
                             
                             return `
                                 <div class="card">
                                     <div class="card-header">
                                         <div class="card-title">🖥️ ${escapeHtml(inst.computer_name)}</div>
-                                        <span class="card-badge ${statusClass}">
-                                            ${statusBadge}
-                                        </span>
+                                        <div class="card-badges">
+                                            <span class="card-badge ${statusClass}">${statusBadge}</span>
+                                            ${tokenBadge}
+                                        </div>
                                     </div>
                                     <div class="card-info">
                                         <div>📅 Primeiro acesso: ${new Date(inst.created_at).toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' })} às ${new Date(inst.created_at).toLocaleTimeString('pt-BR', { timeZone: 'America/Sao_Paulo' })}</div>
                                         ${inst.last_connected_at ? `<div>🕒 Última conexão: ${formatLastSeen(inst.last_connected_at)}</div>` : '<div>⚠️ Nunca conectou</div>'}
+                                        ${tokenInfo}
                                         <div>🔐 Status: ${inst.is_active ? 'Ativa' : 'Desativada'}</div>
                                     </div>
                                     ${inst.is_active ? `
                                         <div class="card-actions">
+                                            ${(tokenExpired || tokenExpiresSoon) ? `<button onclick="renewInstallationToken(${broadcasterId}, ${inst.id})" class="btn-primary btn-small">🔄 Renovar Token</button>` : ''}
                                             <button onclick="deactivateInstallation(${broadcasterId}, ${inst.id})" class="btn-danger btn-small">❌ Desativar</button>
                                         </div>
                                     ` : ''}
@@ -776,6 +796,36 @@ function escapeHtml(text) {
         "'": '&#039;'
     };
     return text.replace(/[&<>"']/g, m => map[m]);
+}
+
+function isTokenExpiringSoon(expiresAt, daysThreshold) {
+    if (!expiresAt) return false;
+    const expiry = new Date(expiresAt);
+    const threshold = new Date(Date.now() + daysThreshold * 24 * 60 * 60 * 1000);
+    return expiry < threshold;
+}
+
+async function renewInstallationToken(broadcasterId, installationId) {
+    if (!confirm('Renovar o token desta máquina? A máquina receberá o novo token automaticamente na próxima conexão.')) return;
+
+    try {
+        const response = await fetch(`/api/broadcasters/${broadcasterId}/installations/${installationId}/renew-token`, {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+
+        if (response.ok) {
+            showSuccess('Token renovado com sucesso! A máquina usará o novo token na próxima vez que se conectar.');
+            document.querySelectorAll('.modal').forEach(m => m.remove());
+            await loadBroadcasters();
+        } else {
+            const error = await response.json();
+            showError(error.error || 'Erro ao renovar token da máquina');
+        }
+    } catch (error) {
+        console.error('Error renewing installation token:', error);
+        showError('Erro ao renovar token da máquina');
+    }
 }
 
 function isRecentlyConnected(dateString) {
