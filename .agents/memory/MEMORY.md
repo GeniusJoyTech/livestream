@@ -1,2 +1,3 @@
 - [Neon disk quota overflow](neon-disk-quota.md) — activities table alone can hit 10 GB limit; 30-day batch-deletion + startup cleanup prevents recurrence.
 - [Healthcheck 500 on deploy](healthcheck-root-500.md) — Replit deploy healthcheck follows redirects; root handler must return 200, not 302.
+- [ws maxPayload needs error handler](ws-maxpayload-error.md) — setting maxPayload without per-connection ws.on('error') crashes the whole Node process on oversized frames.

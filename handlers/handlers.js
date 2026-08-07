@@ -305,12 +305,35 @@ function handleClientData(ws, id, msg, peers) {
     // Aqui você poderia salvar em um banco de dados, se quiser
 }
 
+// Limites para proteger a memória do servidor
+const MAX_APPS_PER_MESSAGE = 300;
+const MAX_HISTORY_PER_MESSAGE = 2000;
+const MAX_PENDING_SAVES_PER_BROADCASTER = 3;
+const pendingSaves = new Map(); // broadcasterId -> contagem de gravações em andamento
+
 async function handleMonitoring(broadcasterId, msg, peers, broadcasters) {
     console.log(`📊 Monitoramento recebido de broadcaster ${broadcasterId}`);
     const broadcaster = broadcasters.get(broadcasterId);
     if (!broadcaster) {
         console.log(`⚠️ Broadcaster ${broadcasterId} não encontrado`);
         return;
+    }
+
+    // Trunca arrays absurdamente grandes para evitar estouro de memória
+    if (Array.isArray(msg.apps) && msg.apps.length > MAX_APPS_PER_MESSAGE) {
+        console.warn(`⚠️ Lista de apps truncada de ${msg.apps.length} para ${MAX_APPS_PER_MESSAGE} (broadcaster ${broadcasterId})`);
+        msg.apps = msg.apps.slice(0, MAX_APPS_PER_MESSAGE);
+    }
+    if (Array.isArray(msg.browser_history) && msg.browser_history.length > MAX_HISTORY_PER_MESSAGE) {
+        console.warn(`⚠️ Histórico truncado de ${msg.browser_history.length} para ${MAX_HISTORY_PER_MESSAGE} entradas (broadcaster ${broadcasterId})`);
+        msg.browser_history = msg.browser_history.slice(0, MAX_HISTORY_PER_MESSAGE);
+    }
+
+    // Backpressure: se o banco não acompanha, descarta a gravação (dados de monitoramento são periódicos)
+    const pending = pendingSaves.get(broadcasterId) || 0;
+    const canSave = pending < MAX_PENDING_SAVES_PER_BROADCASTER;
+    if (!canSave) {
+        console.warn(`⚠️ ${pending} gravações pendentes para broadcaster ${broadcasterId} — descartando esta gravação (backpressure)`);
     }
 
     if (process.env.DATABASE_URL) {
@@ -323,39 +346,54 @@ async function handleMonitoring(broadcasterId, msg, peers, broadcasters) {
             return;
         }
         
-        try {
-            await databaseStorage.saveActivity(broadcasterDbId, {
-                installation_id: installationId,
-                idle_seconds: parseInt(msg.idle_seconds) || 0,
-                active_url: msg.active_url,
-                foreground_app: msg.foreground?.app,
-                app_count: msg.apps ? msg.apps.length : 0,
-                apps: msg.apps
-            });
-        } catch (err) {
-            console.error('Erro ao salvar atividade no banco:', err);
-        }
-
-        if (msg.browser_history && msg.browser_history.length > 0) {
-            console.log(`📚 Salvando ${msg.browser_history.length} entradas de histórico de navegação`);
+        if (canSave) {
+            pendingSaves.set(broadcasterId, pending + 1);
             try {
-                await databaseStorage.saveBrowserHistory(broadcasterDbId, installationId, msg.browser_history);
+                await databaseStorage.saveActivity(broadcasterDbId, {
+                    installation_id: installationId,
+                    idle_seconds: parseInt(msg.idle_seconds) || 0,
+                    active_url: msg.active_url,
+                    foreground_app: msg.foreground?.app,
+                    app_count: msg.apps ? msg.apps.length : 0,
+                    apps: msg.apps
+                });
+
+                if (msg.browser_history && msg.browser_history.length > 0) {
+                    console.log(`📚 Salvando ${msg.browser_history.length} entradas de histórico de navegação`);
+                    try {
+                        await databaseStorage.saveBrowserHistory(broadcasterDbId, installationId, msg.browser_history);
+                    } catch (err) {
+                        console.error('Erro ao salvar histórico de navegação no banco:', err);
+                    }
+                }
             } catch (err) {
-                console.error('Erro ao salvar histórico de navegação no banco:', err);
+                console.error('Erro ao salvar atividade no banco:', err);
+            } finally {
+                const current = pendingSaves.get(broadcasterId) || 1;
+                if (current <= 1) pendingSaves.delete(broadcasterId);
+                else pendingSaves.set(broadcasterId, current - 1);
             }
         }
-    } else {
+    } else if (canSave) {
         const { addActivity, addBrowserHistory } = require('../services/activityStorage');
-        addActivity(broadcasterId, msg).catch(err => {
-            console.error('Erro ao salvar atividade:', err);
-        });
-
+        pendingSaves.set(broadcasterId, pending + 1);
+        const decrement = () => {
+            const current = pendingSaves.get(broadcasterId) || 1;
+            if (current <= 1) pendingSaves.delete(broadcasterId);
+            else pendingSaves.set(broadcasterId, current - 1);
+        };
+        const savePromises = [
+            addActivity(broadcasterId, msg).catch(err => {
+                console.error('Erro ao salvar atividade:', err);
+            })
+        ];
         if (msg.browser_history && msg.browser_history.length > 0) {
             console.log(`📚 Salvando ${msg.browser_history.length} entradas de histórico de navegação`);
-            addBrowserHistory(broadcasterId, msg.browser_history).catch(err => {
+            savePromises.push(addBrowserHistory(broadcasterId, msg.browser_history).catch(err => {
                 console.error('Erro ao salvar histórico de navegação:', err);
-            });
+            }));
         }
+        Promise.all(savePromises).finally(decrement);
     }
 
     let viewersNotified = 0;

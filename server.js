@@ -13,23 +13,23 @@ const app = express();
 const server = http.createServer(app);
 const PORT = process.env.PORT || 5000;
 
-// ===========================
+// ---------------------------
 // Middleware
-// ===========================
+// ---------------------------
 app.use(express.json({ limit: '5mb' }));
 
-// ===========================
+// ---------------------------
 // Servir arquivos estáticos
-// ===========================
+// ---------------------------
 app.use(express.static(path.join(__dirname, "./public")));
 app.use("/viewer", express.static(path.join(__dirname, "./public/viewer")));
 app.use("/login", express.static(path.join(__dirname, "./public/login")));
 app.use("/register", express.static(path.join(__dirname, "./public/register")));
 app.use("/owner-dashboard", express.static(path.join(__dirname, "./public/owner-dashboard")));
 
-// ===========================
+// ---------------------------
 // Rotas HTTP
-// ===========================
+// ---------------------------
 
 // Redireciona raiz para login (retorna 200 para healthchecks de deploy)
 app.get("/", (req, res) => {
@@ -92,9 +92,9 @@ app.use("/api/broadcasters", broadcastersRouter);
 const reportsRouter = require("./routes/reports");
 app.use("/api/reports", reportsRouter);
 
-// ===========================
+// ---------------------------
 // Inicializa Banco de Dados
-// ===========================
+// ---------------------------
 async function initializeApp() {
   setupWebSocket(server);
 

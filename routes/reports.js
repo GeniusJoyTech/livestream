@@ -53,7 +53,7 @@ router.get('/export/excel', authenticateToken, async (req, res) => {
     
     console.log(`📊 [EXPORT] Buscando dados para broadcaster ${broadcasterIdInt} (${broadcaster.name}), período: ${startDate.toISOString()} - ${endDate.toISOString()}`);
     
-    const activities = await databaseStorage.getActivities(broadcasterIdInt, startDate, endDate, 50000);
+    const activities = await databaseStorage.getActivities(broadcasterIdInt, startDate, endDate, 20000);
     
     console.log(`📊 [EXPORT] Resultado: ${activities.length} atividades para broadcaster ${broadcasterIdInt}`);
     
@@ -414,16 +414,33 @@ function parsePQDate(raw) {
 }
 
 function getPQDates(query) {
+  const MAX_RANGE_DAYS = 92;
   const rawStart = query.startDate || query.fromDate || null;
   const rawEnd   = query.endDate   || query.toDate   || null;
 
-  const start = rawStart ? parsePQDate(rawStart) : new Date('2000-01-01');
-  const end   = rawEnd   ? parsePQDate(rawEnd)   : new Date();
-
-  if (start && start.error) return { error: start.error };
-  if (end   && end.error)   return { error: end.error };
-
+  const end = rawEnd ? parsePQDate(rawEnd) : new Date();
+  if (end && end.error) return { error: end.error };
   end.setHours(23, 59, 59, 999);
+
+  let start;
+  if (rawStart) {
+    start = parsePQDate(rawStart);
+    if (start && start.error) return { error: start.error };
+  } else {
+    // Sem data inicial: assume os últimos 30 dias em vez de todo o histórico
+    start = new Date(end.getTime() - 30 * 24 * 60 * 60 * 1000);
+    start.setHours(0, 0, 0, 0);
+  }
+
+  if (start > end) {
+    return { error: 'Data inicial não pode ser posterior à data final.' };
+  }
+
+  const rangeDays = (end - start) / (24 * 60 * 60 * 1000);
+  if (rangeDays > MAX_RANGE_DAYS) {
+    return { error: `Intervalo de datas muito grande (${Math.ceil(rangeDays)} dias). O máximo permitido é ${MAX_RANGE_DAYS} dias.` };
+  }
+
   return { startDate: start, endDate: end };
 }
 
@@ -453,8 +470,8 @@ router.get('/power-query/activities', authenticateTokenQuery, async (req, res) =
       if (!hasPermission) return res.status(403).json({ error: 'Sem permissão' });
     }
 
-    const MAX_ROWS = 100000;
-    const activities = await databaseStorage.getActivities(broadcasterIdInt, dates.startDate, dates.endDate, MAX_ROWS);
+    const MAX_ROWS = 50000;
+    const activities = await databaseStorage.getActivitiesLight(broadcasterIdInt, dates.startDate, dates.endDate, MAX_ROWS);
 
     const result = activities.map(a => ({
       timestamp: a.timestamp,
@@ -505,7 +522,7 @@ router.get('/power-query/urls', authenticateTokenQuery, async (req, res) => {
       if (!hasPermission) return res.status(403).json({ error: 'Sem permissão' });
     }
 
-    const history = await databaseStorage.getBrowserHistory(broadcasterIdInt, dates.startDate, dates.endDate, 100000);
+    const history = await databaseStorage.getBrowserHistory(broadcasterIdInt, dates.startDate, dates.endDate, 50000);
 
     const result = history.map(h => ({
       data_hora: h.timestamp,
@@ -544,7 +561,7 @@ router.get('/power-query/all-activities', authenticateTokenQuery, async (req, re
 
     const broadcasterIds = broadcasters.map(b => b.id);
 
-    const activities = await databaseStorage.getAllActivities(broadcasterIds, dates.startDate, dates.endDate, 200000);
+    const activities = await databaseStorage.getAllActivities(broadcasterIds, dates.startDate, dates.endDate, 50000);
 
     const result = activities.map(a => ({
       maquina: a.maquina || '',
@@ -585,7 +602,7 @@ router.get('/power-query/all-urls', authenticateTokenQuery, async (req, res) => 
 
     const broadcasterIds = broadcasters.map(b => b.id);
 
-    const history = await databaseStorage.getAllBrowserHistory(broadcasterIds, dates.startDate, dates.endDate, 200000);
+    const history = await databaseStorage.getAllBrowserHistory(broadcasterIds, dates.startDate, dates.endDate, 50000);
 
     const result = history.map(h => ({
       maquina: h.maquina || '',

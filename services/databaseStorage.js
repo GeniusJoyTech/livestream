@@ -77,9 +77,11 @@ class DatabaseStorage {
   }
   
   _safeLimitClause(limit) {
-    if (limit == null) return '';
+    const DEFAULT_LIMIT = 50000;
+    const MAX_LIMIT = 100000;
     const n = parseInt(limit, 10);
-    return Number.isFinite(n) && n > 0 ? `LIMIT ${n}` : '';
+    const effective = Number.isFinite(n) && n > 0 ? Math.min(n, MAX_LIMIT) : DEFAULT_LIMIT;
+    return `LIMIT ${effective}`;
   }
 
   async getAllActivities(broadcasterIds, startDate, endDate, limit = null) {
@@ -124,6 +126,22 @@ class DatabaseStorage {
       title: row.title,
       timestamp: row.visit_timestamp.toISOString()
     }));
+  }
+
+  // Versão leve: não seleciona apps_data (JSON potencialmente enorme por linha)
+  async getActivitiesLight(broadcasterId, startDate, endDate, limit = null) {
+    const limitClause = this._safeLimitClause(limit);
+    const result = await db.query(
+      `SELECT id, timestamp, idle_seconds, active_url, foreground_app, app_count
+       FROM activities
+       WHERE broadcaster_id = $1 
+         AND timestamp >= $2 
+         AND timestamp <= $3
+       ORDER BY timestamp DESC
+       ${limitClause}`,
+      [broadcasterId, startDate, endDate]
+    );
+    return result.rows;
   }
 
   async getActivities(broadcasterId, startDate, endDate, limit = null) {
@@ -198,7 +216,8 @@ class DatabaseStorage {
        FROM intervals
        WHERE interval_seconds IS NOT NULL AND interval_seconds > 0
        GROUP BY dia, maquina, foreground_app
-       ORDER BY dia DESC, tempo_ativo_seg DESC`,
+       ORDER BY dia DESC, tempo_ativo_seg DESC
+       LIMIT 50000`,
       [broadcasterIds, startDate, endDate]
     );
     return result.rows;
@@ -240,7 +259,8 @@ class DatabaseStorage {
        FROM intervals
        WHERE interval_seconds IS NOT NULL AND interval_seconds > 0
        GROUP BY dia, maquina, aplicativo, active_url
-       ORDER BY dia DESC, tempo_ativo_seg DESC`,
+       ORDER BY dia DESC, tempo_ativo_seg DESC
+       LIMIT 50000`,
       [broadcasterIds, startDate, endDate]
     );
     return result.rows;
@@ -292,7 +312,8 @@ class DatabaseStorage {
        HAVING ROUND(SUM(LEAST(300, GREATEST(0,
          EXTRACT(EPOCH FROM (COALESCE(next_ts, timestamp) - timestamp))
        )))) > 0
-       ORDER BY maquina, dia, inicio_sessao`,
+       ORDER BY maquina, dia, inicio_sessao
+       LIMIT 50000`,
       [broadcasterIds, startDate, endDate]
     );
     return result.rows;
@@ -345,7 +366,8 @@ class DatabaseStorage {
        HAVING ROUND(SUM(LEAST(300, GREATEST(0,
          EXTRACT(EPOCH FROM (COALESCE(next_ts, timestamp) - timestamp))
        )))) > 0
-       ORDER BY aplicativo, inicio_sessao`,
+       ORDER BY aplicativo, inicio_sessao
+       LIMIT 20000`,
       [broadcasterId, installationId, startDate, endDate]
     );
     return result.rows;

@@ -8,9 +8,17 @@ const { registerBroadcaster, registerViewer, handleWatch, relayMessage, handleDi
 setupHeartbeat();
 
 function setupWebSocket(server) {
-  const wss = new WebSocket.Server({ server });
+  // maxPayload: rejeita mensagens acima de 2 MB para evitar estouro de memória
+  const wss = new WebSocket.Server({ server, maxPayload: 2 * 1024 * 1024 });
 
   wss.on("connection", (ws, req) => {
+    // Trata erros da conexão (ex.: payload acima do limite) sem derrubar o processo.
+    // Registrado ANTES de qualquer validação/early-return para cobrir todas as conexões.
+    ws.on("error", (err) => {
+      console.warn(`⚠️ Erro na conexão WebSocket (${err.code || err.message}) — encerrando conexão`);
+      try { ws.terminate(); } catch {}
+    });
+
     // Extrai parâmetros da URL
     const params = url.parse(req.url, true);
     const { role, token } = params.query;
