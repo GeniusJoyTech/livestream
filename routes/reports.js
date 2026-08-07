@@ -453,7 +453,8 @@ router.get('/power-query/activities', authenticateTokenQuery, async (req, res) =
       if (!hasPermission) return res.status(403).json({ error: 'Sem permissão' });
     }
 
-    const activities = await databaseStorage.getActivities(broadcasterIdInt, dates.startDate, dates.endDate);
+    const MAX_ROWS = 100000;
+    const activities = await databaseStorage.getActivities(broadcasterIdInt, dates.startDate, dates.endDate, MAX_ROWS);
 
     const result = activities.map(a => ({
       timestamp: a.timestamp,
@@ -504,7 +505,7 @@ router.get('/power-query/urls', authenticateTokenQuery, async (req, res) => {
       if (!hasPermission) return res.status(403).json({ error: 'Sem permissão' });
     }
 
-    const history = await databaseStorage.getBrowserHistory(broadcasterIdInt, dates.startDate, dates.endDate);
+    const history = await databaseStorage.getBrowserHistory(broadcasterIdInt, dates.startDate, dates.endDate, 100000);
 
     const result = history.map(h => ({
       data_hora: h.timestamp,
@@ -543,7 +544,7 @@ router.get('/power-query/all-activities', authenticateTokenQuery, async (req, re
 
     const broadcasterIds = broadcasters.map(b => b.id);
 
-    const activities = await databaseStorage.getAllActivities(broadcasterIds, dates.startDate, dates.endDate);
+    const activities = await databaseStorage.getAllActivities(broadcasterIds, dates.startDate, dates.endDate, 200000);
 
     const result = activities.map(a => ({
       maquina: a.maquina || '',
@@ -584,7 +585,7 @@ router.get('/power-query/all-urls', authenticateTokenQuery, async (req, res) => 
 
     const broadcasterIds = broadcasters.map(b => b.id);
 
-    const history = await databaseStorage.getAllBrowserHistory(broadcasterIds, dates.startDate, dates.endDate);
+    const history = await databaseStorage.getAllBrowserHistory(broadcasterIds, dates.startDate, dates.endDate, 200000);
 
     const result = history.map(h => ({
       maquina: h.maquina || '',
@@ -739,10 +740,31 @@ router.get('/power-query/app-sessions', authenticateTokenQuery, async (req, res)
       }
     }
 
-    const allRows = [
-      ...fgRows.map(r => ({ ...r, tipo: 'primeiro_plano' })),
-      ...bgRows.map(r => ({ ...r, tipo: 'segundo_plano' }))
-    ].sort((a, b) => {
+    // Build output array directly without spreading full row objects (avoids memory duplication)
+    const allRows = [];
+    for (const r of fgRows) {
+      allRows.push({
+        dia: r.dia,
+        maquina: r.maquina || '',
+        aplicativo: r.aplicativo || '',
+        tipo: 'primeiro_plano',
+        inicio_sessao: r.inicio_sessao,
+        fim_sessao: r.fim_sessao,
+        tempo_seg: Number(r.tempo_seg) || 0
+      });
+    }
+    for (const r of bgRows) {
+      allRows.push({
+        dia: r.dia,
+        maquina: r.maquina || '',
+        aplicativo: r.aplicativo || '',
+        tipo: 'segundo_plano',
+        inicio_sessao: r.inicio_sessao,
+        fim_sessao: r.fim_sessao,
+        tempo_seg: Number(r.tempo_seg) || 0
+      });
+    }
+    allRows.sort((a, b) => {
       if (a.maquina < b.maquina) return -1;
       if (a.maquina > b.maquina) return 1;
       const da = a.dia ? a.dia.toString() : '';
@@ -759,15 +781,7 @@ router.get('/power-query/app-sessions', authenticateTokenQuery, async (req, res)
       periodo_fim: dates.endDate.toISOString(),
       total_registros: allRows.length,
       maquinas: broadcasters.map(b => b.name),
-      dados: allRows.map(r => ({
-        dia: r.dia,
-        maquina: r.maquina || '',
-        aplicativo: r.aplicativo || '',
-        tipo: r.tipo,
-        inicio_sessao: r.inicio_sessao,
-        fim_sessao: r.fim_sessao,
-        tempo_seg: Number(r.tempo_seg) || 0
-      }))
+      dados: allRows
     });
   } catch (error) {
     console.error('Erro no power-query/app-sessions:', error);
