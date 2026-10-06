@@ -29,7 +29,7 @@ function createPeer(ws) {
   });
 
   ws.on('close', () => {
-    deletePeer(id);
+    // setupWebsocket's close handler needs this peer to notify viewers first.
     console.log(`❌ Peer desconectado: ${id}`);
   });
 
@@ -54,7 +54,6 @@ function setupHeartbeat() {
       if (inactiveDuration > TWO_MINUTES) {
         console.log(`❌ Peer inativo há ${(inactiveDuration/1000).toFixed(0)}s: ${id} (${peer.role || 'unknown'}), removendo...`);
         peer.ws.terminate();
-        deletePeer(id);
         continue;
       }
       
@@ -70,7 +69,7 @@ function setupHeartbeat() {
         peer.ws.ping();
       } catch (err) {
         console.log(`❌ Erro ao enviar ping para ${id}: ${err.message}`);
-        deletePeer(id);
+        peer.ws.terminate();
       }
     }
     

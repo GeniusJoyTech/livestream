@@ -223,6 +223,11 @@ async function handleDisconnect(ws, id, peers, broadcasters, deletePeer) {
                 }
             }
         }
+    } else if (peer.role === "viewer") {
+        const watched = broadcasters.get(peer.watchingBroadcaster);
+        if (watched?.ws.readyState === WebSocket.OPEN) {
+            watched.ws.send(JSON.stringify({ type: "viewer-disconnected", viewerId: id }));
+        }
     }
 
     deletePeer(id);
@@ -245,7 +250,10 @@ async function handleWatch(ws, id, msg, peers, broadcasters) {
     const broadcasterId = msg.targetId;
     const monitor = msg.monitor_number || 1;
 
-    if (!broadcasters.has(broadcasterId)) return;
+    if (!broadcasters.has(broadcasterId)) {
+        ws.send(JSON.stringify({ type: "error", message: "Esta máquina desconectou. Aguarde ela aparecer novamente na lista." }));
+        return;
+    }
     const broadcasterData = broadcasters.get(broadcasterId);
     const { ws: bws, name, db_id } = broadcasterData;
     
@@ -264,11 +272,17 @@ async function handleWatch(ws, id, msg, peers, broadcasters) {
             }
         } catch (err) {
             console.error('Erro ao verificar permissão:', err);
+            ws.send(JSON.stringify({ type: "error", message: "Não foi possível verificar a permissão para assistir. Tente novamente." }));
+            return;
         }
     }
 
     const viewer = peers.get(id);
     if (viewer) {
+        const previous = broadcasters.get(viewer.watchingBroadcaster);
+        if (previous?.ws.readyState === WebSocket.OPEN) {
+            previous.ws.send(JSON.stringify({ type: "viewer-disconnected", viewerId: id }));
+        }
         viewer.watchingBroadcaster = broadcasterId;
     }
 
@@ -284,6 +298,8 @@ async function handleWatch(ws, id, msg, peers, broadcasters) {
             monitor_number: monitor,
             broadcaster_name: name,
         }));
+    } else {
+        ws.send(JSON.stringify({ type: "error", message: "A máquina está desconectada. Aguarde a reconexão." }));
     }
 }
 

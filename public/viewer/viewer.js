@@ -26,6 +26,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let shouldReconnect = true;
   let reconnectAttempts = 0;
   let reconnectTimer = null;
+  let watchTimer = null;
+  let earlyCandidates = [];
   const MAX_RECONNECT_DELAY = 30000;
   
   let appFocusTime = new Map();
@@ -350,31 +352,20 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   function createPeerConnection(id, monitor_number) {
-    const pc = new RTCPeerConnection({ 
-      iceServers: [
-        { urls: "stun:stun.l.google.com:19302" },
-        { urls: "stun:stun1.l.google.com:19302" },
-        { urls: "stun:stun2.l.google.com:19302" }
-      ]
-    });
-
-    pc.onicecandidate = (event) => {
-      if (event.candidate && socket.readyState === WebSocket.OPEN) {
-        socket.send(JSON.stringify({ type: "candidate", candidate: event.candidate, targetId: id }));
-      }
-    };
-
-    pc.ontrack = (event) => {
-      if (remoteVideo.srcObject !== event.streams[0]) {
-        remoteVideo.srcObject = event.streams[0];
-        remoteVideo.play().catch(err => console.warn("Erro ao iniciar video:", err));
-        setStatus("Recebendo video...", true);
+    return new ViewerVideoConnection({
+      video: remoteVideo,
+      onStatus: setStatus,
+      send: message => {
+        if (socket?.readyState === WebSocket.OPEN) {
+          socket.send(JSON.stringify({ ...message, targetId: id }));
+        }
+      },
+      onPlaying: pc => {
+        setStatus("Estabelecendo conexão de vídeo...", false);
         if (videoOverlay) videoOverlay.classList.add('hidden');
         startStats(pc);
       }
-    };
-
-    return pc;
+    });
   }
 
   function startStats(pc) {
@@ -412,6 +403,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     socket.onmessage = async (event) => {
+      try {
       const message = JSON.parse(event.data);
 
       switch (message.type) {
@@ -436,6 +428,8 @@ document.addEventListener("DOMContentLoaded", () => {
           allBroadcasters = allBroadcasters.filter(b => b.id !== departingId);
           
           if (wasActiveStream || selectedBroadcasterId === departingId) {
+            peers.get(departingId)?.close();
+            peers.delete(departingId);
             remoteVideo.srcObject = null;
             if (videoOverlay) videoOverlay.classList.remove('hidden');
             setStatus("Broadcaster saiu", false);
@@ -453,21 +447,22 @@ document.addEventListener("DOMContentLoaded", () => {
           filterBroadcasters(broadcasterSearch.value);
           break;
         case "offer":
+          if (message.senderId !== selectedBroadcasterId) break;
+          clearTimeout(watchTimer);
+          peers.get(message.senderId)?.close();
           const pc = createPeerConnection(message.senderId, message.monitor_number);
           peers.set(message.senderId, pc);
-          await pc.setRemoteDescription(new RTCSessionDescription(message.sdp));
-          const answer = await pc.createAnswer();
-          await pc.setLocalDescription(answer);
-          socket.send(JSON.stringify({
-            type: "answer",
-            sdp: pc.localDescription,
-            targetId: message.senderId
-          }));
-          setStatus("Conectado ao broadcaster", true);
+          for (const candidate of earlyCandidates.splice(0)) await pc.addCandidate(candidate);
+          await pc.acceptOffer(message.sdp);
           break;
         case "candidate":
           const candidatePc = peers.get(message.senderId);
-          if (candidatePc) await candidatePc.addIceCandidate(new RTCIceCandidate(message.candidate));
+          if (candidatePc) await candidatePc.addCandidate(message.candidate);
+          else if (message.senderId === selectedBroadcasterId && earlyCandidates.length < 128) earlyCandidates.push(message.candidate);
+          break;
+        case "error":
+          clearTimeout(watchTimer);
+          setStatus(message.message || "Não foi possível iniciar o vídeo.", false);
           break;
         case "monitoring":
           if (message.broadcasterId === selectedBroadcasterId) {
@@ -475,10 +470,24 @@ document.addEventListener("DOMContentLoaded", () => {
           }
           break;
       }
+      } catch (err) {
+        console.error("Erro na negociação de vídeo:", err);
+        setStatus("Erro ao iniciar o vídeo. Clique em Assistir para tentar novamente.", false);
+      }
     };
 
     socket.onclose = () => {
       console.warn("WebSocket desconectado");
+      peers.forEach(pc => pc.close());
+      peers.clear();
+      clearTimeout(watchTimer);
+      earlyCandidates = [];
+      allBroadcasters = [];
+      broadcasters = [];
+      remoteVideo.srcObject = null;
+      if (videoOverlay) videoOverlay.classList.remove('hidden');
+      clearInterval(statsInterval);
+      updateSelect();
       
       if (shouldReconnect) {
         reconnectAttempts++;
@@ -507,6 +516,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   disconnectButton.onclick = () => {
     shouldReconnect = false;
+    clearTimeout(watchTimer);
+    earlyCandidates = [];
     if (reconnectTimer) clearTimeout(reconnectTimer);
     peers.forEach(pc => pc.close());
     peers.clear();
@@ -534,14 +545,27 @@ document.addEventListener("DOMContentLoaded", () => {
     selectedMonitorNumber = monitorSelect.value;
     
     if (!selectedBroadcasterId || !socket || socket.readyState !== WebSocket.OPEN) {
+      setStatus("Conecte ao servidor e selecione uma máquina para assistir.", false);
       return;
     }
+
+    peers.forEach(pc => pc.close());
+    peers.clear();
+    earlyCandidates = [];
+    clearTimeout(watchTimer);
+    remoteVideo.srcObject = null;
+    if (videoOverlay) videoOverlay.classList.remove('hidden');
+    clearInterval(statsInterval);
+    statsDiv.textContent = "";
 
     appFocusTime.clear();
     appBackgroundTime.clear();
     lastUpdateTime = null;
 
     setStatus("Solicitando transmissao...", false);
+    watchTimer = setTimeout(() => {
+      setStatus("A máquina não respondeu à solicitação de vídeo. Verifique se o Broadcaster está executando nela e tente novamente.", false);
+    }, 30000);
 
     socket.send(JSON.stringify({
       type: "watch",
