@@ -1,7 +1,7 @@
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const { EventEmitter } = require('node:events');
-const { ViewerVideoConnection } = require('../public/viewer/video-connection');
+const { ViewerVideoConnection, findWatchedBroadcaster } = require('../public/viewer/video-connection');
 const { createPeer, peers, broadcasters, deletePeer } = require('../services/peers');
 const { handleDisconnect, handleWatch } = require('../handlers/handlers');
 
@@ -117,4 +117,58 @@ test('switching machines releases the previous broadcaster connection', async ()
   assert.equal(previous.sent[0].type, 'viewer-disconnected');
   assert.equal(next.sent[0].type, 'new-viewer');
   assert.equal(testPeers.get('viewer').watchingBroadcaster, 'next');
+});
+
+test('a temporary interruption gets a grace period and recovery cancels the retry', () => {
+  let retry = null, delay = null, count = 0;
+  const session = new ViewerVideoConnection({
+    PeerConnection: FakePeerConnection, video: {}, send() {}, onStatus() {}, onPlaying() {},
+    onRetry: () => count++,
+    setTimer: (fn, ms) => { retry = fn; delay = ms; return 1; },
+    clearTimer: () => { retry = null; }
+  });
+  session.pc.connectionState = 'disconnected';
+  session.pc.onconnectionstatechange();
+  assert.equal(delay, 15000);
+  session.pc.connectionState = 'connected';
+  session.pc.onconnectionstatechange();
+  assert.equal(retry, null);
+  assert.equal(count, 0);
+});
+
+test('a sustained video failure retries automatically, once, with bounded delay', () => {
+  let retry, delay, scheduled = 0, count = 0;
+  const session = new ViewerVideoConnection({
+    PeerConnection: FakePeerConnection, video: {}, send() {}, onStatus() {}, onPlaying() {},
+    retryDelay: 30000, onRetry: () => count++,
+    setTimer: (fn, ms) => { retry = fn; delay = ms; scheduled++; return 1; },
+    clearTimer() {}
+  });
+  session.pc.connectionState = 'failed';
+  session.pc.onconnectionstatechange();
+  session.pc.onconnectionstatechange();
+  assert.equal(scheduled, 1);
+  assert.equal(delay, 30000);
+  retry();
+  assert.equal(count, 1);
+});
+
+test('a manually closed video session cannot retry', () => {
+  let retry, count = 0;
+  const session = new ViewerVideoConnection({
+    PeerConnection: FakePeerConnection, video: {}, send() {}, onStatus() {}, onPlaying() {},
+    onRetry: () => count++, setTimer: fn => { retry = fn; return 1; }, clearTimer() {}
+  });
+  session.pc.connectionState = 'failed';
+  session.pc.onconnectionstatechange();
+  session.close();
+  retry();
+  assert.equal(count, 0);
+});
+
+test('resumes the same installation after its WebSocket ID changes', () => {
+  const wanted = { id: 'old', installation_id: 42 };
+  const machines = [{ id: 'other', installation_id: 41, db_id: 1 }, { id: 'new', installation_id: '42', db_id: 1 }];
+  assert.equal(findWatchedBroadcaster(machines, wanted).id, 'new');
+  assert.equal(findWatchedBroadcaster(machines.slice(0, 1), wanted), null);
 });

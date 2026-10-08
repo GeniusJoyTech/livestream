@@ -28,6 +28,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let reconnectTimer = null;
   let watchTimer = null;
   let earlyCandidates = [];
+  let desiredWatch = null;
+  let videoRetryAttempts = 0;
   const MAX_RECONNECT_DELAY = 30000;
   
   let appFocusTime = new Map();
@@ -354,7 +356,16 @@ document.addEventListener("DOMContentLoaded", () => {
   function createPeerConnection(id, monitor_number) {
     return new ViewerVideoConnection({
       video: remoteVideo,
-      onStatus: setStatus,
+      onStatus: (message, online) => {
+        if (online) videoRetryAttempts = 0;
+        setStatus(message, online);
+      },
+      retryDelay: Math.min(1000 * Math.pow(2, videoRetryAttempts), 30000),
+      onRetry: () => {
+        if (!desiredWatch || desiredWatch.id !== id) return;
+        videoRetryAttempts++;
+        resumeWatching(true);
+      },
       send: message => {
         if (socket?.readyState === WebSocket.OPEN) {
           socket.send(JSON.stringify({ ...message, targetId: id }));
@@ -411,15 +422,18 @@ document.addEventListener("DOMContentLoaded", () => {
           allBroadcasters = message.broadcasters || [];
           broadcasters = [...allBroadcasters];
           updateSelect();
+          resumeWatching();
           break;
         case "new-broadcaster":
           const newB = {
             id: message.broadcasterId,
             name: message.broadcaster_name || `Broadcaster ${message.broadcasterId.slice(0,6)}`,
-            db_id: message.db_id
+            db_id: message.db_id,
+            installation_id: message.installation_id
           };
           allBroadcasters.push(newB);
           filterBroadcasters(broadcasterSearch.value);
+          resumeWatching();
           break;
         case "broadcaster-left":
           const departingId = message.broadcasterId;
@@ -432,7 +446,9 @@ document.addEventListener("DOMContentLoaded", () => {
             peers.delete(departingId);
             remoteVideo.srcObject = null;
             if (videoOverlay) videoOverlay.classList.remove('hidden');
-            setStatus("Broadcaster saiu", false);
+            clearTimeout(watchTimer);
+            watchTimer = null;
+            setStatus("A máquina desconectou. O vídeo será retomado quando ela voltar.", false);
             selectedBroadcasterId = null;
             selectedBroadcasterDbId = null;
             exportActivitiesButton.disabled = true;
@@ -449,6 +465,7 @@ document.addEventListener("DOMContentLoaded", () => {
         case "offer":
           if (message.senderId !== selectedBroadcasterId) break;
           clearTimeout(watchTimer);
+          watchTimer = null;
           peers.get(message.senderId)?.close();
           const pc = createPeerConnection(message.senderId, message.monitor_number);
           peers.set(message.senderId, pc);
@@ -462,6 +479,7 @@ document.addEventListener("DOMContentLoaded", () => {
           break;
         case "error":
           clearTimeout(watchTimer);
+          watchTimer = null;
           setStatus(message.message || "Não foi possível iniciar o vídeo.", false);
           break;
         case "monitoring":
@@ -481,6 +499,7 @@ document.addEventListener("DOMContentLoaded", () => {
       peers.forEach(pc => pc.close());
       peers.clear();
       clearTimeout(watchTimer);
+      watchTimer = null;
       earlyCandidates = [];
       allBroadcasters = [];
       broadcasters = [];
@@ -516,6 +535,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   disconnectButton.onclick = () => {
     shouldReconnect = false;
+    desiredWatch = null;
     clearTimeout(watchTimer);
     earlyCandidates = [];
     if (reconnectTimer) clearTimeout(reconnectTimer);
@@ -538,13 +558,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
   reconnectButton.onclick = connect;
 
-  watchButton.onclick = () => {
-    selectedBroadcasterId = broadcasterSelect.value;
-    const selectedOption = broadcasterSelect.options[broadcasterSelect.selectedIndex];
-    selectedBroadcasterDbId = selectedOption ? selectedOption.getAttribute('data-db-id') : null;
-    selectedMonitorNumber = monitorSelect.value;
-    
-    if (!selectedBroadcasterId || !socket || socket.readyState !== WebSocket.OPEN) {
+  function resumeWatching(force = false) {
+    if (!desiredWatch || !socket || socket.readyState !== WebSocket.OPEN) return;
+    const target = findWatchedBroadcaster(allBroadcasters, desiredWatch);
+    if (target && (force || (!peers.has(target.id) && !watchTimer))) {
+      startWatching(target, desiredWatch.monitor);
+    }
+  }
+
+  function startWatching(target, monitor) {
+    selectedBroadcasterId = target.id;
+    selectedBroadcasterDbId = target.db_id || null;
+    selectedMonitorNumber = monitor;
+    desiredWatch = { id: target.id, installation_id: target.installation_id, monitor };
+    updateSelect();
+    broadcasterSelect.value = target.id;
+    monitorSelect.value = monitor;
+
+    if (!socket || socket.readyState !== WebSocket.OPEN) {
       setStatus("Conecte ao servidor e selecione uma máquina para assistir.", false);
       return;
     }
@@ -564,7 +595,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     setStatus("Solicitando transmissao...", false);
     watchTimer = setTimeout(() => {
-      setStatus("A máquina não respondeu à solicitação de vídeo. Verifique se o Broadcaster está executando nela e tente novamente.", false);
+      watchTimer = null;
+      setStatus("Aguardando a máquina responder. Tentando retomar o vídeo...", false);
+      resumeWatching(true);
     }, 30000);
 
     socket.send(JSON.stringify({
@@ -575,6 +608,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     exportActivitiesButton.disabled = false;
     exportUrlsButton.disabled = false;
+  }
+
+  watchButton.onclick = () => {
+    const target = allBroadcasters.find(b => b.id === broadcasterSelect.value);
+    if (!target || !socket || socket.readyState !== WebSocket.OPEN) {
+      setStatus("Conecte ao servidor e selecione uma máquina para assistir.", false);
+      return;
+    }
+    videoRetryAttempts = 0;
+    startWatching(target, monitorSelect.value);
   };
 
   fullscreenButton.onclick = () => {

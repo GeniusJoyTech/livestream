@@ -168,7 +168,8 @@ async function registerViewer(ws, id, peers, broadcasters) {
                 id: bid, 
                 name: bdata.name, 
                 company_id: bdata.company_id,
-                db_id: bdata.db_id
+                db_id: bdata.db_id,
+                installation_id: bdata.installation_id
             };
             console.log("Broadcaster permitido para viewer: ", obj);
             return obj;

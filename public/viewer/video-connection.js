@@ -1,6 +1,7 @@
 // Keep ICE messages until both sides have received the SDP they belong to.
 class ViewerVideoConnection {
-  constructor({ send, video, onStatus, onPlaying, PeerConnection = RTCPeerConnection }) {
+  constructor({ send, video, onStatus, onPlaying, onRetry, retryDelay = 1000,
+    setTimer = setTimeout, clearTimer = clearTimeout, PeerConnection = RTCPeerConnection }) {
     this.send = send;
     this.video = video;
     this.onStatus = onStatus;
@@ -8,6 +9,8 @@ class ViewerVideoConnection {
     this.outgoingCandidates = [];
     this.answerSent = false;
     this.closed = false;
+    this.retryTimer = null;
+    this.clearTimer = clearTimer;
     this.pc = new PeerConnection({
       iceServers: [
         { urls: "stun:stun.l.google.com:19302" },
@@ -34,10 +37,23 @@ class ViewerVideoConnection {
     this.pc.onconnectionstatechange = () => {
       if (this.closed) return;
       const state = this.pc.connectionState;
-      if (state === "connected") this.onStatus("Recebendo vídeo...", true);
+      if (state === "connected") {
+        clearTimer(this.retryTimer);
+        this.retryTimer = null;
+        this.onStatus("Recebendo vídeo...", true);
+      }
       if (state === "connecting") this.onStatus("Estabelecendo conexão de vídeo...", false);
-      if (state === "disconnected") this.onStatus("Conexão de vídeo interrompida. Clique em Assistir para reconectar.", false);
-      if (state === "failed") this.onStatus("Não foi possível conectar o vídeo entre as redes. Verifique a rede/firewall da máquina e tente novamente.", false);
+      if (state === "disconnected" || state === "failed") {
+        this.onStatus(onRetry ? "Conexão de vídeo interrompida. Recuperando automaticamente..." :
+          "Não foi possível conectar o vídeo entre as redes. Verifique a rede/firewall da máquina e tente novamente.", false);
+        // A transient disconnect can recover on its own; do not destroy the PC immediately.
+        if (onRetry && this.retryTimer === null) {
+          this.retryTimer = setTimer(() => {
+            this.retryTimer = null;
+            if (!this.closed && this.pc.connectionState !== "connected") onRetry();
+          }, state === "disconnected" ? Math.max(15000, retryDelay) : retryDelay);
+        }
+      }
     };
   }
 
@@ -65,10 +81,20 @@ class ViewerVideoConnection {
 
   close() {
     this.closed = true;
+    this.clearTimer(this.retryTimer);
+    this.retryTimer = null;
     this.incomingCandidates.length = 0;
     this.outgoingCandidates.length = 0;
     this.pc.close();
   }
 }
 
-if (typeof module !== "undefined") module.exports = { ViewerVideoConnection };
+function findWatchedBroadcaster(broadcasters, watched) {
+  if (!watched) return null;
+  // Never recover by group ID or name: a group can contain several different machines.
+  return broadcasters.find(b => watched.installation_id != null
+    ? String(b.installation_id) === String(watched.installation_id)
+    : b.id === watched.id) || null;
+}
+
+if (typeof module !== "undefined") module.exports = { ViewerVideoConnection, findWatchedBroadcaster };

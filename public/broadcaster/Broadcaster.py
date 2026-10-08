@@ -534,12 +534,33 @@ class Broadcaster:
             except Exception as e:
                 print(f"❌ Erro inesperado: {e}")
                 await asyncio.sleep(5)
+            else:
+                # A normal WebSocket close also needs backoff before reconnecting.
+                await asyncio.sleep(retry_delay)
+                retry_delay = min(retry_delay * 2, 30)
+            finally:
+                # Do not retain a monitoring loop or video sessions from an old socket.
+                if self.monitoring_task:
+                    self.monitoring_task.cancel()
+                    try:
+                        await self.monitoring_task
+                    except asyncio.CancelledError:
+                        pass
+                    except Exception as e:
+                        print(f"⚠️ Erro ao finalizar monitoramento: {e}")
+                    self.monitoring_task = None
+                old_peers = list(self.peers.values())
+                self.peers.clear()
+                for old_pc in old_peers:
+                    await old_pc.close()
+                self.socket = None
         print("🛑 Reconexão desativada, encerrando.")
 
     async def _handle_new_viewer(self, socket, data):
         viewer_id = data["viewerId"]
         monitor_number = int(data.get("monitor_number", 1))
         print(f"👀 Novo viewer {viewer_id} solicitou monitor {monitor_number}")
+        await self._handle_viewer_disconnected({"viewerId": viewer_id})
 
         # Cria uma nova conexão para cada viewer com servidores ICE
         video_track = ScreenCaptureTrack(monitor_number=monitor_number)
@@ -552,6 +573,8 @@ class Broadcaster:
         config = RTCConfiguration(iceServers=ice_servers)
         pc = RTCPeerConnection(configuration=config)
         pc.addTrack(video_track)
+        self.peers[viewer_id] = pc
+        disconnect_task = None
 
         @pc.on("icecandidate")
         async def on_icecandidate(event):
@@ -569,14 +592,29 @@ class Broadcaster:
 
         @pc.on("connectionstatechange")
         async def on_connectionstatechange():
+            nonlocal disconnect_task
             print(f"📶 Estado da conexão com {viewer_id}: {pc.connectionState}")
-            if pc.connectionState in ["failed", "disconnected", "closed"]:
-                await self._handle_viewer_disconnected({"viewerId": viewer_id})
+            if pc.connectionState == "connected":
+                if disconnect_task:
+                    disconnect_task.cancel()
+                    disconnect_task = None
+            elif pc.connectionState == "disconnected":
+                if disconnect_task is None:
+                    async def expire_disconnect():
+                        nonlocal disconnect_task
+                        await asyncio.sleep(15)
+                        disconnect_task = None
+                        if pc.connectionState == "disconnected":
+                            await self._handle_viewer_disconnected({"viewerId": viewer_id}, expected_pc=pc)
+                    disconnect_task = asyncio.create_task(expire_disconnect())
+            elif pc.connectionState in ["failed", "closed"]:
+                if disconnect_task:
+                    disconnect_task.cancel()
+                    disconnect_task = None
+                await self._handle_viewer_disconnected({"viewerId": viewer_id}, expected_pc=pc)
 
         offer = await pc.createOffer()
         await pc.setLocalDescription(offer)
-
-        self.peers[viewer_id] = pc
 
         await socket.send(
             json.dumps({
@@ -620,8 +658,10 @@ class Broadcaster:
             await pc.addIceCandidate(cand)
             print(f"➕ Candidate adicionado de {viewer_id}")
 
-    async def _handle_viewer_disconnected(self, data):
+    async def _handle_viewer_disconnected(self, data, expected_pc=None):
         viewer_id = data["viewerId"]
+        if expected_pc is not None and self.peers.get(viewer_id) is not expected_pc:
+            return
         pc = self.peers.pop(viewer_id, None)
         if pc:
             await pc.close()
@@ -633,9 +673,10 @@ class Broadcaster:
         self.should_reconnect = False
         if self.monitoring_task:
             self.monitoring_task.cancel()
-        for pc in self.peers.values():
-            await pc.close()
+        old_peers = list(self.peers.values())
         self.peers.clear()
+        for pc in old_peers:
+            await pc.close()
         self.socket = None
         print("🧹 Broadcaster encerrado e conexões limpas.")
 
