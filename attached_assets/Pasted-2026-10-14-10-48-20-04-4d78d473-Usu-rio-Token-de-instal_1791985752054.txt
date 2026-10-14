@@ -1,0 +1,441 @@
+2026-10-14 10:48:20.04
+4d78d473
+Usuário
+⚠️ Token de instalação inválido ou expirado
+
+2026-10-14 10:48:20.10
+4d78d473
+Usuário
+📊 Monitoramento recebido de broadcaster 17b518dd-1961-43b7-9b29-939f6cbf2e5d
+
+2026-10-14 10:48:20.12
+4d78d473
+Usuário
+✅ Dados enviados para 0 viewer(s)
+
+2026-10-14 10:48:20.13
+4d78d473
+Usuário
+❌ Peer desconectado: 4753059f-b718-4c46-8be3-2b71b1b2f5da
+
+2026-10-14 10:48:20.13
+4d78d473
+Usuário
+❌ Peer desconectado: 4753059f-b718-4c46-8be3-2b71b1b2f5da (broadcaster)
+
+2026-10-14 10:48:20.18
+4d78d473
+Usuário
+❌ Peer desconectado: f0d83244-d9a1-4f07-b5f8-643137feb8b1
+
+2026-10-14 10:48:20.18
+4d78d473
+Usuário
+❌ Peer desconectado: f0d83244-d9a1-4f07-b5f8-643137feb8b1 (broadcaster)
+
+2026-10-14 10:48:20.31
+4d78d473
+Usuário
+📊 Monitoramento recebido de broadcaster f2091c24-dd93-4641-a2fb-01873bfce211
+
+2026-10-14 10:48:20.32
+4d78d473
+Usuário
+❌ Peer desconectado: b700f852-4b5c-4075-9cf6-8b620eec24dd (broadcaster)
+
+2026-10-14 10:48:20.32
+4d78d473
+Usuário
+❌ Peer desconectado: b700f852-4b5c-4075-9cf6-8b620eec24dd
+
+2026-10-14 10:48:20.33
+4d78d473
+Usuário
+✅ Dados enviados para 0 viewer(s)
+
+2026-10-14 10:48:20.75
+4d78d473
+Usuário
+📊 Monitoramento recebido de broadcaster 94253568-20e5-4b9d-bc17-2fbf3dbad4ef
+
+2026-10-14 10:48:24.96
+4d78d473
+Usuário
+📊 Monitoramento recebido de broadcaster 94253568-20e5-4b9d-bc17-2fbf3dbad4ef
+
+2026-10-14 10:48:24.99
+4d78d473
+Usuário
+📚 Salvando 72 entradas de histórico de navegação
+
+2026-10-14 10:48:25.04
+4d78d473
+Usuário
+🔗 Novo peer conectado: 1ed9e8a7-4025-4438-a07e-48f606d716a3
+
+2026-10-14 10:48:25.19
+4d78d473
+Usuário
+⚠️ Broadcaster 2320435a-cf50-43d8-a496-729adcfc4447 não encontrado
+
+2026-10-14 10:48:25.20
+4d78d473
+Usuário
+⚠️ Broadcaster 1ed9e8a7-4025-4438-a07e-48f606d716a3 não encontrado
+
+2026-10-14 10:48:25.20
+4d78d473
+Usuário
+📊 Monitoramento recebido de broadcaster 1ed9e8a7-4025-4438-a07e-48f606d716a3
+
+2026-10-14 10:48:25.20
+4d78d473
+Usuário
+✅ Dados enviados para 0 viewer(s)
+
+2026-10-14 10:48:25.23
+4d78d473
+Usuário
+⚠️ Token de instalação inválido ou expirado
+
+2026-10-14 10:48:25.24
+4d78d473
+Usuário
+⚠️ Token de instalação inválido ou expirado
+
+2026-10-14 10:48:25.31
+4d78d473
+Usuário
+🔗 Novo peer conectado: 9c9d84a2-ba20-470f-96ca-e4c924653443
+
+2026-10-14 10:48:25.31
+4d78d473
+Usuário
+🎥 Broadcaster conectado (sem autenticação JWT)
+
+2026-10-14 10:48:25.42
+4d78d473
+Usuário
+📊 Monitoramento recebido de broadcaster aacb3c21-bf30-4589-991b-50ea1572cab6
+
+2026-10-14 10:48:25.44
+4d78d473
+Usuário
+✅ Dados enviados para 0 viewer(s)
+
+2026-10-14 10:48:25.47
+4d78d473
+Usuário
+⚠️ Broadcaster 9c9d84a2-ba20-470f-96ca-e4c924653443 não encontrado
+
+2026-10-14 10:48:25.47
+4d78d473
+Usuário
+📊 Monitoramento recebido de broadcaster 9c9d84a2-ba20-470f-96ca-e4c924653443
+
+2026-10-14 10:48:25.51
+4d78d473
+Usuário
+⚠️ Token de instalação inválido ou expirado
+
+2026-10-14 10:48:25.52
+4d78d473
+Usuário
+❌ Peer desconectado: 2320435a-cf50-43d8-a496-729adcfc4447 (broadcaster)
+
+2026-10-14 10:48:25.52
+4d78d473
+Usuário
+❌ Peer desconectado: 2320435a-cf50-43d8-a496-729adcfc4447
+
+2026-10-14 10:48:25.54
+4d78d473
+Usuário
+❌ Peer desconectado: 1ed9e8a7-4025-4438-a07e-48f606d716a3
+
+2026-10-14 10:48:25.54
+4d78d473
+Usuário
+❌ Peer desconectado: 1ed9e8a7-4025-4438-a07e-48f606d716a3 (broadcaster)
+
+2026-10-14 10:48:30.15
+4d78d473
+Usuário
+📊 Monitoramento recebido de broadcaster 17b518dd-1961-43b7-9b29-939f6cbf2e5d
+
+2026-10-14 10:48:30.37
+4d78d473
+Usuário
+📊 Monitoramento recebido de broadcaster f2091c24-dd93-4641-a2fb-01873bfce211
+
+2026-10-14 10:48:30.39
+4d78d473
+Usuário
+🔗 Novo peer conectado: 2983d6cd-7565-44aa-a25f-28ea157a2bda
+
+2026-10-14 10:48:30.39
+4d78d473
+Usuário
+🎥 Broadcaster conectado (sem autenticação JWT)
+
+2026-10-14 10:48:30.42
+4d78d473
+Usuário
+🎥 Broadcaster conectado (sem autenticação JWT)
+
+2026-10-14 10:48:30.42
+4d78d473
+Usuário
+🔗 Novo peer conectado: 908414fa-ccad-4f6f-87d0-e25870513dfb
+
+2026-10-14 10:48:30.55
+4d78d473
+Usuário
+⚠️ Broadcaster 2983d6cd-7565-44aa-a25f-28ea157a2bda não encontrado
+
+2026-10-14 10:48:30.55
+4d78d473
+Usuário
+📊 Monitoramento recebido de broadcaster 2983d6cd-7565-44aa-a25f-28ea157a2bda
+
+2026-10-14 10:48:30.59
+4d78d473
+Usuário
+📊 Monitoramento recebido de broadcaster 908414fa-ccad-4f6f-87d0-e25870513dfb
+
+2026-10-14 10:48:30.59
+4d78d473
+Usuário
+⚠️ Broadcaster 908414fa-ccad-4f6f-87d0-e25870513dfb não encontrado
+
+2026-10-14 10:48:30.59
+4d78d473
+Usuário
+⚠️ Token de instalação inválido ou expirado
+
+2026-10-14 10:48:30.62
+4d78d473
+Usuário
+⚠️ Token de instalação inválido ou expirado
+
+2026-10-14 10:48:30.81
+4d78d473
+Usuário
+🎥 Broadcaster conectado (sem autenticação JWT)
+
+2026-10-14 10:48:30.81
+4d78d473
+Usuário
+🔗 Novo peer conectado: f3e45293-ca10-44b4-9d88-cf2d68867395
+
+2026-10-14 10:48:30.83
+4d78d473
+Usuário
+📊 Monitoramento recebido de broadcaster 94253568-20e5-4b9d-bc17-2fbf3dbad4ef
+
+2026-10-14 10:48:30.86
+4d78d473
+Usuário
+✅ Dados enviados para 0 viewer(s)
+
+2026-10-14 10:48:30.86
+4d78d473
+Usuário
+📊 Monitoramento recebido de broadcaster ac93d5f4-0526-4634-94db-fd135a729609
+
+2026-10-14 10:48:30.88
+4d78d473
+Usuário
+❌ Peer desconectado: 2983d6cd-7565-44aa-a25f-28ea157a2bda
+
+2026-10-14 10:48:30.88
+4d78d473
+Usuário
+❌ Peer desconectado: 2983d6cd-7565-44aa-a25f-28ea157a2bda (broadcaster)
+
+2026-10-14 10:48:30.89
+4d78d473
+Usuário
+✅ Dados enviados para 0 viewer(s)
+
+2026-10-14 10:48:30.89
+4d78d473
+Usuário
+✅ Dados enviados para 0 viewer(s)
+
+2026-10-14 10:48:34.86
+4d78d473
+Usuário
+📊 Monitoramento recebido de broadcaster 94253568-20e5-4b9d-bc17-2fbf3dbad4ef
+
+2026-10-14 10:48:34.88
+4d78d473
+Usuário
+📊 Monitoramento recebido de broadcaster ac93d5f4-0526-4634-94db-fd135a729609
+
+2026-10-14 10:48:34.88
+4d78d473
+Usuário
+✅ Dados enviados para 0 viewer(s)
+
+2026-10-14 10:48:34.90
+4d78d473
+Usuário
+❌ Peer desconectado: 713db825-68e1-45c5-ae42-977ba8b5df67 (broadcaster)
+
+2026-10-14 10:48:34.90
+4d78d473
+Usuário
+❌ Peer desconectado: 713db825-68e1-45c5-ae42-977ba8b5df67
+
+2026-10-14 10:48:34.90
+4d78d473
+Usuário
+✅ Dados enviados para 0 viewer(s)
+
+2026-10-14 10:48:35.07
+4d78d473
+Usuário
+📊 Monitoramento recebido de broadcaster a04e7a65-f001-4251-985c-920a80cddaf1
+
+2026-10-14 10:48:35.09
+4d78d473
+Usuário
+✅ Dados enviados para 0 viewer(s)
+
+2026-10-14 10:48:35.22
+4d78d473
+Usuário
+📊 Monitoramento recebido de broadcaster be1bf0f5-73a0-40b2-8a88-73c079282c46
+
+2026-10-14 10:48:35.24
+4d78d473
+Usuário
+✅ Dados enviados para 0 viewer(s)
+
+2026-10-14 10:48:35.50
+4d78d473
+Usuário
+📊 Monitoramento recebido de broadcaster aacb3c21-bf30-4589-991b-50ea1572cab6
+
+2026-10-14 10:48:35.53
+4d78d473
+Usuário
+✅ Dados enviados para 0 viewer(s)
+
+2026-10-14 10:48:35.73
+4d78d473
+Usuário
+📊 Monitoramento recebido de broadcaster b30af764-673e-40a8-8e5e-3186a3b9d1fa
+
+2026-10-14 10:48:35.75
+4d78d473
+Usuário
+✅ Dados enviados para 0 viewer(s)
+
+2026-10-14 10:48:35.87
+4d78d473
+Usuário
+🎥 Broadcaster conectado (sem autenticação JWT)
+
+2026-10-14 10:48:35.87
+4d78d473
+Usuário
+🔗 Novo peer conectado: 6b7b3c92-a747-44db-9b68-b35bc6e2b9f2
+
+2026-10-14 10:48:35.88
+4d78d473
+Usuário
+🎥 Broadcaster conectado (sem autenticação JWT)
+
+2026-10-14 10:48:35.88
+4d78d473
+Usuário
+🔗 Novo peer conectado: 2109cad9-567c-453a-b2a4-147ffe3a7d78
+
+2026-10-14 10:48:36.02
+4d78d473
+Usuário
+📊 Monitoramento recebido de broadcaster 6b7b3c92-a747-44db-9b68-b35bc6e2b9f2
+
+2026-10-14 10:48:36.04
+4d78d473
+Usuário
+⚠️ Broadcaster 2109cad9-567c-453a-b2a4-147ffe3a7d78 não encontrado
+
+2026-10-14 10:48:40.10
+4d78d473
+Usuário
+❌ Peer desconectado: 5db6b585-f0a1-4c9e-88e1-9945d12e8c62
+
+2026-10-14 10:48:40.10
+4d78d473
+Usuário
+❌ Peer desconectado: 5db6b585-f0a1-4c9e-88e1-9945d12e8c62 (broadcaster)
+
+2026-10-14 10:48:40.11
+4d78d473
+Usuário
+🔗 Novo peer conectado: eda820bf-1275-4d5b-83a2-480cc13e61f5
+
+2026-10-14 10:48:40.11
+4d78d473
+Usuário
+🎥 Broadcaster conectado (sem autenticação JWT)
+
+2026-10-14 10:48:40.12
+4d78d473
+Usuário
+❌ Peer desconectado: 3363f660-5756-44af-bd7b-b5c116b95cec
+
+2026-10-14 10:48:40.12
+4d78d473
+Usuário
+❌ Peer desconectado: 3363f660-5756-44af-bd7b-b5c116b95cec (broadcaster)
+
+2026-10-14 10:48:40.20
+4d78d473
+Usuário
+📊 Monitoramento recebido de broadcaster 17b518dd-1961-43b7-9b29-939f6cbf2e5d
+
+2026-10-14 10:48:40.22
+4d78d473
+Usuário
+✅ Dados enviados para 0 viewer(s)
+
+2026-10-14 10:48:40.27
+4d78d473
+Usuário
+⚠️ Broadcaster eda820bf-1275-4d5b-83a2-480cc13e61f5 não encontrado
+
+2026-10-14 10:48:40.27
+4d78d473
+Usuário
+📊 Monitoramento recebido de broadcaster eda820bf-1275-4d5b-83a2-480cc13e61f5
+
+2026-10-14 10:48:40.31
+4d78d473
+Usuário
+⚠️ Token de instalação inválido ou expirado
+
+2026-10-14 10:48:40.42
+4d78d473
+Usuário
+📊 Monitoramento recebido de broadcaster f2091c24-dd93-4641-a2fb-01873bfce211
+
+2026-10-14 10:48:40.45
+4d78d473
+Usuário
+✅ Dados enviados para 0 viewer(s)
+
+2026-10-14 10:48:40.62
+4d78d473
+Usuário
+❌ Peer desconectado: eda820bf-1275-4d5b-83a2-480cc13e61f5 (broadcaster)
+
+2026-10-14 10:48:40.62
+4d78d473
+Usuário
+❌ Peer desconectado: eda820bf-1275-4d5b-83a2-480cc13e61f5
+
+2026-10-14 10:48:40.92
